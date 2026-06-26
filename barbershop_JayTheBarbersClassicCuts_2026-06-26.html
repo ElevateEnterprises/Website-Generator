@@ -1,0 +1,907 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8"/>
+<meta name="viewport" content="width=device-width,initial-scale=1.0"/>
+<title>Jay the Barber's Classic Cuts — Manchester, NH</title>
+<link rel="preconnect" href="https://fonts.googleapis.com"/>
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin/>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,400&family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet"/>
+<style>
+:root{
+  --gold:#C9A84C;
+  --gold-light:#E4C97A;
+  --bg:#080808;
+  --bg2:#111111;
+  --bg3:#1A1A1A;
+  --text:#E8E8E0;
+  --text-muted:#888;
+  --border:#2A2A2A;
+  --nav-h:68px;
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:15px;line-height:1.6;overflow-x:hidden}
+@media(prefers-reduced-motion:reduce){*{animation-duration:.01ms!important;transition-duration:.01ms!important}}
+
+/* ── NAV ── */
+#nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(8,8,8,.95);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 32px}
+#nav-brand{font-family:'Bebas Neue',sans-serif;font-size:22px;letter-spacing:3px;color:var(--gold);white-space:nowrap}
+#nav-links{display:flex;gap:4px;list-style:none}
+#nav-links li button{background:none;border:none;color:var(--text-muted);font-family:'Inter',sans-serif;font-size:12px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:8px 14px;cursor:pointer;position:relative;transition:color .25s}
+#nav-links li button::after{content:'';position:absolute;bottom:0;left:14px;right:14px;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .25s}
+#nav-links li button.active{color:var(--text)}
+#nav-links li button.active::after{transform:scaleX(1)}
+#nav-links li button:hover{color:var(--text)}
+#hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+#hamburger span{display:block;width:24px;height:2px;background:var(--text);transition:all .3s}
+#hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+#hamburger.open span:nth-child(2){opacity:0}
+#hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+#mobile-menu{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(8,8,8,.98);padding:20px;z-index:999;border-bottom:1px solid var(--border)}
+#mobile-menu.open{display:block}
+#mobile-menu ul{list-style:none;display:flex;flex-direction:column;gap:4px}
+#mobile-menu ul li button{background:none;border:none;color:var(--text-muted);font-family:'Inter',sans-serif;font-size:13px;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:12px 16px;cursor:pointer;width:100%;text-align:left;transition:color .2s}
+#mobile-menu ul li button.active,#mobile-menu ul li button:hover{color:var(--gold)}
+
+/* ── PAGES ── */
+.page{display:none;min-height:100vh;padding-top:var(--nav-h);animation:fadeIn .45s ease}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:none}}
+
+/* ── HERO ── */
+.hero{position:relative;height:420px;overflow:hidden;display:flex;align-items:flex-end}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.55)}
+.hero-img-bg{position:absolute;inset:0;background-size:cover;background-position:center;filter:brightness(.55)}
+.hero-grad{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,1) 0%,rgba(8,8,8,.5) 50%,rgba(8,8,8,.1) 100%)}
+.hero-content{position:relative;z-index:1;padding:0 48px 48px;width:100%}
+.hero-eyebrow{font-family:'Cormorant Garamond',serif;font-size:14px;letter-spacing:4px;color:var(--gold);text-transform:uppercase;margin-bottom:8px}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(48px,7vw,90px);letter-spacing:4px;line-height:1;color:#fff}
+
+/* ── SECTIONS ── */
+.section{padding:72px 48px;max-width:1200px;margin:0 auto}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:42px;letter-spacing:3px;color:var(--gold);margin-bottom:8px}
+.section-sub{font-family:'Cormorant Garamond',serif;font-size:18px;color:var(--text-muted);font-style:italic;margin-bottom:48px}
+h3{font-family:'Bebas Neue',sans-serif;letter-spacing:2px;font-size:22px;color:var(--text)}
+
+/* ── SERVICES FLOW ── */
+#services-flow{display:flex;gap:40px;flex-wrap:wrap}
+#services-left{flex:1;min-width:280px}
+#services-summary-panel{width:300px;flex-shrink:0}
+
+.flow-step{margin-bottom:40px;opacity:.4;pointer-events:none;transition:opacity .3s}
+.flow-step.unlocked{opacity:1;pointer-events:all}
+.flow-step-header{display:flex;align-items:center;gap:12px;margin-bottom:20px}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:32px;color:var(--gold);line-height:1}
+.step-label{font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:2px;color:var(--text-muted)}
+
+.barber-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:16px}
+.barber-card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:20px 14px;text-align:center;cursor:pointer;transition:all .25s}
+.barber-card:hover{border-color:var(--gold);transform:translateY(-3px)}
+.barber-card.selected{border-color:var(--gold);box-shadow:0 0 18px rgba(201,168,76,.35);transform:translateY(-3px)}
+.barber-mono{width:60px;height:60px;border-radius:50%;background:var(--bg3);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:22px;color:var(--gold);margin:0 auto 12px}
+.barber-card.selected .barber-mono{border-color:var(--gold)}
+.barber-name{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1.5px;margin-bottom:4px}
+.barber-role{font-size:11px;color:var(--text-muted);letter-spacing:1px;text-transform:uppercase;margin-bottom:8px}
+.barber-specialty{font-size:11px;color:var(--gold);font-style:italic;font-family:'Cormorant Garamond',serif;font-size:13px}
+
+.service-options{display:flex;flex-direction:column;gap:10px}
+.service-opt{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:16px 20px;display:flex;align-items:center;justify-content:space-between;cursor:pointer;transition:all .25s}
+.service-opt:hover{border-color:var(--gold);transform:translateX(4px)}
+.service-opt.selected{border-color:var(--gold);box-shadow:0 0 12px rgba(201,168,76,.2)}
+.service-opt-name{font-family:'Bebas Neue',sans-serif;font-size:17px;letter-spacing:1.5px}
+.service-opt-meta{text-align:right}
+.service-opt-price{font-family:'Bebas Neue',sans-serif;font-size:20px;color:var(--gold)}
+.service-opt-duration{font-size:11px;color:var(--text-muted);letter-spacing:1px}
+
+.addon-options{display:grid;grid-template-columns:1fr 1fr;gap:10px}
+.addon-opt{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:14px 16px;cursor:pointer;transition:all .25s;position:relative}
+.addon-opt:hover{border-color:var(--gold)}
+.addon-opt.selected{border-color:var(--gold);background:rgba(201,168,76,.07)}
+.addon-opt.selected::after{content:'✓';position:absolute;top:8px;right:10px;color:var(--gold);font-size:13px;font-weight:600}
+.addon-name{font-family:'Bebas Neue',sans-serif;font-size:14px;letter-spacing:1px;margin-bottom:4px}
+.addon-price{font-size:12px;color:var(--gold)}
+
+/* ── SUMMARY PANEL ── */
+#services-summary-panel{position:sticky;top:calc(var(--nav-h) + 24px)}
+.summary-box{background:var(--bg2);border:1px solid var(--gold);border-radius:4px;padding:28px 24px}
+.summary-box h3{font-size:20px;margin-bottom:20px;color:var(--gold)}
+.summary-row{display:flex;justify-content:space-between;align-items:baseline;padding:10px 0;border-bottom:1px solid var(--border)}
+.summary-row:last-of-type{border-bottom:none}
+.summary-label{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted)}
+.summary-value{font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px;color:var(--text)}
+.summary-total{margin-top:20px;padding-top:16px;border-top:1px solid var(--gold)}
+.summary-total-price{font-family:'Bebas Neue',sans-serif;font-size:42px;color:var(--gold);line-height:1}
+.summary-total-time{font-size:12px;color:var(--text-muted);letter-spacing:1px}
+.book-btn{display:block;width:100%;margin-top:20px;background:var(--gold);color:#000;border:none;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;padding:16px;cursor:pointer;border-radius:2px;transition:background .25s,transform .15s}
+.book-btn:hover{background:var(--gold-light);transform:translateY(-2px)}
+.book-btn:disabled{background:var(--bg3);color:var(--text-muted);cursor:not-allowed;transform:none}
+
+/* ── TEAM ── */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:32px}
+.team-card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;overflow:hidden;transition:all .3s}
+.team-card:hover{transform:translateY(-6px);box-shadow:0 16px 48px rgba(201,168,76,.15);border-color:var(--gold)}
+.team-photo{height:240px;background:var(--bg3);display:flex;align-items:center;justify-content:center}
+.team-mono{font-family:'Bebas Neue',sans-serif;font-size:72px;color:var(--gold);opacity:.6}
+.team-info{padding:24px}
+.team-name{font-family:'Bebas Neue',sans-serif;font-size:26px;letter-spacing:2px;margin-bottom:4px}
+.team-role{font-size:11px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:12px}
+.team-bio{font-size:13px;line-height:1.7;color:var(--text-muted);margin-bottom:16px}
+.tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{font-size:10px;letter-spacing:1px;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.4);padding:3px 8px;border-radius:2px}
+
+/* ── LOCATION ── */
+.hours-table{width:100%;border-collapse:collapse;margin-bottom:48px}
+.hours-table tr{border-bottom:1px solid var(--border);transition:background .2s}
+.hours-table tr td{padding:14px 16px;font-size:14px}
+.hours-table tr td:first-child{font-weight:500;text-transform:uppercase;letter-spacing:1px;font-size:12px;color:var(--text-muted)}
+.hours-table tr td:last-child{text-align:right;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:1px}
+.hours-table tr.today{background:rgba(201,168,76,.08)}
+.hours-table tr.today td{color:var(--gold)}
+.today-pill{display:inline-block;font-family:'Inter',sans-serif;font-size:9px;font-weight:600;letter-spacing:1.5px;text-transform:uppercase;background:var(--gold);color:#000;padding:2px 7px;border-radius:20px;margin-left:8px;vertical-align:middle}
+.location-grid{display:grid;grid-template-columns:1fr 1fr;gap:40px;margin-bottom:48px}
+.info-block{margin-bottom:24px}
+.info-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:6px}
+.info-value{font-size:15px;line-height:1.6}
+.map-wrap{border-radius:4px;overflow:hidden;border:1px solid var(--border);height:360px}
+.map-wrap iframe{width:100%;height:100%;border:none;filter:grayscale(80%) invert(1) hue-rotate(180deg) brightness(.8)}
+.gallery-title{font-family:'Bebas Neue',sans-serif;font-size:32px;letter-spacing:2px;color:var(--gold);margin-bottom:24px}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px}
+.gallery-item{aspect-ratio:4/3;overflow:hidden;border-radius:4px;cursor:pointer;position:relative;border:1px solid var(--border)}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s,filter .4s}
+.gallery-item:hover img{transform:scale(1.06);filter:brightness(.75)}
+.gallery-item::after{content:'⤢';position:absolute;bottom:8px;right:10px;font-size:18px;color:#fff;opacity:0;transition:opacity .3s}
+.gallery-item:hover::after{opacity:1}
+
+/* ── LIGHTBOX ── */
+#lightbox{position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:2000;display:none;align-items:center;justify-content:center}
+#lightbox.open{display:flex}
+#lightbox-img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:2px}
+#lightbox-close{position:absolute;top:20px;right:28px;background:none;border:none;color:#fff;font-size:32px;cursor:pointer;line-height:1;opacity:.7;transition:opacity .2s}
+#lightbox-close:hover{opacity:1}
+#lightbox-prev,#lightbox-next{position:absolute;top:50%;transform:translateY(-50%);background:rgba(255,255,255,.08);border:1px solid rgba(255,255,255,.2);color:#fff;font-size:24px;padding:12px 16px;cursor:pointer;border-radius:2px;transition:background .2s}
+#lightbox-prev{left:20px}
+#lightbox-next{right:20px}
+#lightbox-prev:hover,#lightbox-next:hover{background:rgba(201,168,76,.3);border-color:var(--gold)}
+
+/* ── REVIEWS ── */
+.rating-hero{text-align:center;padding:48px 0;border-bottom:1px solid var(--border);margin-bottom:48px}
+.rating-score{font-family:'Bebas Neue',sans-serif;font-size:96px;color:var(--gold);line-height:1}
+.rating-stars{color:var(--gold);font-size:28px;letter-spacing:4px;margin-bottom:8px}
+.rating-count{font-size:13px;color:var(--text-muted);letter-spacing:1.5px;text-transform:uppercase}
+.star-bars{max-width:320px;margin:32px auto 0}
+.star-bar{display:flex;align-items:center;gap:12px;margin-bottom:8px}
+.star-bar-label{font-size:12px;color:var(--text-muted);width:40px;text-align:right;white-space:nowrap}
+.star-bar-track{flex:1;height:6px;background:var(--bg3);border-radius:3px;overflow:hidden}
+.star-bar-fill{height:100%;background:var(--gold);border-radius:3px;transition:width 1s ease}
+.star-bar-pct{font-size:11px;color:var(--text-muted);width:36px}
+.featured-review{background:var(--bg2);border:1px solid var(--gold);border-radius:4px;padding:32px;margin-bottom:48px;position:relative}
+.featured-label{font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--gold);margin-bottom:16px}
+.featured-quote{font-family:'Cormorant Garamond',serif;font-size:22px;line-height:1.6;font-style:italic;color:var(--text);margin-bottom:16px}
+.featured-author{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-muted)}
+.reviews-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.review-card{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:24px;transition:all .3s}
+.review-card:hover{border-color:var(--gold);transform:translateY(-4px);box-shadow:0 12px 36px rgba(201,168,76,.1)}
+.review-stars{color:var(--gold);font-size:14px;letter-spacing:3px;margin-bottom:12px}
+.review-text{font-family:'Cormorant Garamond',serif;font-size:16px;line-height:1.7;color:var(--text-muted);margin-bottom:16px;font-style:italic}
+.review-author{font-size:11px;letter-spacing:1.5px;text-transform:uppercase;color:var(--text)}
+
+/* ── CONTACT ── */
+.contact-grid{display:grid;grid-template-columns:1fr 1.4fr;gap:60px}
+.contact-left h3{font-size:32px;margin-bottom:8px}
+.contact-tagline{font-family:'Cormorant Garamond',serif;font-size:18px;font-style:italic;color:var(--text-muted);margin-bottom:32px}
+.ig-btn{display:inline-flex;align-items:center;gap:10px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;border:none;font-family:'Bebas Neue',sans-serif;font-size:16px;letter-spacing:2px;padding:14px 28px;border-radius:3px;cursor:pointer;text-decoration:none;transition:transform .2s,box-shadow .2s;margin-bottom:40px}
+.ig-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(253,29,29,.3)}
+.contact-form{background:var(--bg2);border:1px solid var(--border);border-radius:4px;padding:36px}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:10px;letter-spacing:2px;text-transform:uppercase;color:var(--text-muted);margin-bottom:8px}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--bg3);border:1px solid var(--border);border-radius:3px;color:var(--text);font-family:'Inter',sans-serif;font-size:14px;padding:12px 16px;transition:border-color .2s;outline:none}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--gold)}
+.form-group textarea{resize:vertical;min-height:100px}
+.form-group select option{background:var(--bg2)}
+.form-row{display:grid;grid-template-columns:1fr 1fr;gap:16px}
+.submit-btn{width:100%;background:var(--gold);color:#000;border:none;font-family:'Bebas Neue',sans-serif;font-size:18px;letter-spacing:3px;padding:16px;cursor:pointer;border-radius:2px;transition:background .25s,transform .15s;margin-top:8px}
+.submit-btn:hover{background:var(--gold-light);transform:translateY(-2px)}
+#form-success{display:none;text-align:center;padding:48px 24px}
+#form-success .success-icon{font-size:48px;margin-bottom:16px}
+#form-success h3{font-size:28px;margin-bottom:8px;color:var(--gold)}
+#form-success p{color:var(--text-muted);font-size:14px}
+
+/* ── FOOTER ── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:40px 48px;text-align:center}
+.footer-brand{font-family:'Bebas Neue',sans-serif;font-size:24px;letter-spacing:4px;color:var(--gold);margin-bottom:8px}
+.footer-addr{font-size:13px;color:var(--text-muted);margin-bottom:4px}
+.footer-copy{font-size:11px;color:var(--border);letter-spacing:1px;margin-top:16px}
+.footer-divider{width:40px;height:1px;background:var(--gold);margin:16px auto}
+
+/* ── UTILITIES ── */
+.gold{color:var(--gold)}
+a{color:var(--gold);text-decoration:none}
+a:hover{text-decoration:underline}
+
+/* ── RESPONSIVE ── */
+@media(max-width:900px){
+  #nav-links{display:none}
+  #hamburger{display:flex}
+  .section{padding:48px 24px}
+  .hero-content{padding:0 24px 36px}
+  .location-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr 1fr}
+  .reviews-grid{grid-template-columns:1fr}
+  .contact-grid{grid-template-columns:1fr}
+  .barber-cards{grid-template-columns:1fr}
+  .addon-options{grid-template-columns:1fr}
+  #services-flow{flex-direction:column}
+  #services-summary-panel{width:100%;position:static}
+  .form-row{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  #nav{padding:0 16px}
+  .hero{height:320px}
+  .hero-title{font-size:42px}
+  .gallery-grid{grid-template-columns:1fr}
+  .hero-content{padding:0 16px 28px}
+}
+</style>
+</head>
+<body>
+
+<!-- ══ NAV ══ -->
+<nav id="nav">
+  <div id="nav-brand">Jay the Barber</div>
+  <ul id="nav-links">
+    <li><button class="active" onclick="showPage('services',this)">Services</button></li>
+    <li><button onclick="showPage('team',this)">Our Team</button></li>
+    <li><button onclick="showPage('location',this)">Location &amp; Hours</button></li>
+    <li><button onclick="showPage('reviews',this)">Reviews</button></li>
+    <li><button onclick="showPage('contact',this)">Contact Us</button></li>
+  </ul>
+  <button id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<div id="mobile-menu">
+  <ul>
+    <li><button class="active" onclick="showPage('services',this);toggleMenu()">Services</button></li>
+    <li><button onclick="showPage('team',this);toggleMenu()">Our Team</button></li>
+    <li><button onclick="showPage('location',this);toggleMenu()">Location &amp; Hours</button></li>
+    <li><button onclick="showPage('reviews',this);toggleMenu()">Reviews</button></li>
+    <li><button onclick="showPage('contact',this);toggleMenu()">Contact Us</button></li>
+  </ul>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 1 — SERVICES
+══════════════════════════════════════ -->
+<div class="page active" id="page-services">
+  <div class="hero">
+    <div class="hero-img-bg" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mOzdWWZIZurgvrhyvOGbbZ3McV2o9FQCD6qFBuPyHu3qVi-i-N9okcr8W6nD8Carj0qi8K4W4cq9M2XKjSCZO6vwJYuzdxs3KO-nlYkh4qgNRQhcFSMQggL5u1mCuPGiPyyO1ao5dLdAisGM2KOP6_bRwKH1WFz1VRQYQ5_mcOxnqNHJCPkYwvpwh0TRtq4xFxbcsGVvveeH2KrpfRF45EOKz6YSpyf46Z5O8vR6oygTduREIdymGDsUKXFoaZSD354-NRuqUd3nRJWp9JyvE4QSkOiVqslGnscmKHjqUJE3M8kicMyF_og4zWusOENDeMKJwqZ4dzuarqFpFH_0blW8AonLC8WFvncF_hTloZnUr5h4qPWjLIntIIE3VUfHsSfcNB5RW0ONoOybhbjZQNf37BwjlMZRZQnLdBG4_GVg&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')"></div>
+    <div class="hero-grad"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Book Your Experience</div>
+      <div class="hero-title">Services</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Book Your Cut</div>
+    <div class="section-sub">Choose your barber, select a service, and customize your experience.</div>
+
+    <div id="services-flow">
+      <div id="services-left">
+
+        <!-- STEP 1 -->
+        <div class="flow-step unlocked" id="step1">
+          <div class="flow-step-header">
+            <div class="step-num">01</div>
+            <div class="step-label">Choose Your Barber</div>
+          </div>
+          <div class="barber-cards">
+            <div class="barber-card" onclick="selectBarber(this,'Jay','Owner &amp; Master Barber')">
+              <div class="barber-mono">JB</div>
+              <div class="barber-name">Jay</div>
+              <div class="barber-role">Owner &amp; Master Barber</div>
+              <div class="barber-specialty">Classic Cuts · Skin Fades · Vintage Styles</div>
+            </div>
+            <div class="barber-card" onclick="selectBarber(this,'Marcus','Senior Barber')">
+              <div class="barber-mono">MC</div>
+              <div class="barber-name">Marcus</div>
+              <div class="barber-role">Senior Barber</div>
+              <div class="barber-specialty">Modern Fades · Beard Sculpting · Kids Cuts</div>
+            </div>
+            <div class="barber-card" onclick="selectBarber(this,'Devon','Barber')">
+              <div class="barber-mono">DK</div>
+              <div class="barber-name">Devon</div>
+              <div class="barber-role">Barber</div>
+              <div class="barber-specialty">Restyle Transformations · Textured Cuts · Line-ups</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="flow-step" id="step2">
+          <div class="flow-step-header">
+            <div class="step-num">02</div>
+            <div class="step-label">Choose Your Service</div>
+          </div>
+          <div class="service-options">
+            <div class="service-opt" onclick="selectService(this,'Haircut',30,45)">
+              <div class="service-opt-name">Haircut</div>
+              <div class="service-opt-meta"><div class="service-opt-price">$30</div><div class="service-opt-duration">45 MIN</div></div>
+            </div>
+            <div class="service-opt" onclick="selectService(this,'Skin Fade',35,50)">
+              <div class="service-opt-name">Skin Fade</div>
+              <div class="service-opt-meta"><div class="service-opt-price">$35</div><div class="service-opt-duration">50 MIN</div></div>
+            </div>
+            <div class="service-opt" onclick="selectService(this,'Buzz Cut',20,25)">
+              <div class="service-opt-name">Buzz Cut</div>
+              <div class="service-opt-meta"><div class="service-opt-price">$20</div><div class="service-opt-duration">25 MIN</div></div>
+            </div>
+            <div class="service-opt" onclick="selectService(this,'Restyle / Full Transformation',50,75)">
+              <div class="service-opt-name">Restyle / Full Transformation</div>
+              <div class="service-opt-meta"><div class="service-opt-price">$50</div><div class="service-opt-duration">75 MIN</div></div>
+            </div>
+            <div class="service-opt" onclick="selectService(this,'Kids Cut',22,30)">
+              <div class="service-opt-name">Kids Cut <span style="font-size:12px;color:var(--text-muted);font-family:Inter,sans-serif">(Under 12)</span></div>
+              <div class="service-opt-meta"><div class="service-opt-price">$22</div><div class="service-opt-duration">30 MIN</div></div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="flow-step" id="step3">
+          <div class="flow-step-header">
+            <div class="step-num">03</div>
+            <div class="step-label">Add-Ons</div>
+          </div>
+          <div class="addon-options">
+            <div class="addon-opt" onclick="toggleAddon(this,'Beard Trim',10,15)">
+              <div class="addon-name">Beard Trim</div>
+              <div class="addon-price">+$10 · +15 min</div>
+            </div>
+            <div class="addon-opt" onclick="toggleAddon(this,'Line-up / Edge',8,10)">
+              <div class="addon-name">Line-up / Edge</div>
+              <div class="addon-price">+$8 · +10 min</div>
+            </div>
+            <div class="addon-opt" id="addon-fade-upgrade" onclick="toggleAddon(this,'Skin Fade Upgrade',8,10)">
+              <div class="addon-name">Skin Fade Upgrade</div>
+              <div class="addon-price">+$8 · +10 min</div>
+            </div>
+            <div class="addon-opt" onclick="toggleAddon(this,'Wash &amp; Style',12,15)">
+              <div class="addon-name">Wash &amp; Style</div>
+              <div class="addon-price">+$12 · +15 min</div>
+            </div>
+            <div class="addon-opt" onclick="toggleAddon(this,'Eyebrow Cleanup',7,10)">
+              <div class="addon-name">Eyebrow Cleanup</div>
+              <div class="addon-price">+$7 · +10 min</div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /services-left -->
+
+      <!-- SUMMARY PANEL -->
+      <div id="services-summary-panel">
+        <div class="summary-box">
+          <h3>Your Selection</h3>
+          <div class="summary-row">
+            <div class="summary-label">Barber</div>
+            <div class="summary-value" id="sum-barber">—</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-label">Service</div>
+            <div class="summary-value" id="sum-service">—</div>
+          </div>
+          <div class="summary-row" id="sum-addons-row" style="flex-direction:column;gap:4px;align-items:flex-start">
+            <div class="summary-label">Add-Ons</div>
+            <div class="summary-value" id="sum-addons" style="font-size:13px;color:var(--text-muted);font-family:Inter,sans-serif">None selected</div>
+          </div>
+          <div class="summary-total">
+            <div class="summary-label" style="margin-bottom:4px">Estimated Total</div>
+            <div class="summary-total-price" id="sum-price">$0</div>
+            <div class="summary-total-time" id="sum-time">0 MIN</div>
+          </div>
+          <button class="book-btn" id="book-btn" disabled onclick="alert('Thanks! We\'ll be in touch shortly to confirm your booking.')">Book Now</button>
+        </div>
+      </div>
+    </div><!-- /services-flow -->
+  </div>
+
+  <footer>
+    <div class="footer-brand">Jay the Barber's Classic Cuts</div>
+    <div class="footer-divider"></div>
+    <div class="footer-addr">915 Holt Ave, Manchester, NH 03109</div>
+    <div class="footer-addr"><a href="tel:6037224922">(603) 722-4922</a></div>
+    <div class="footer-copy">&copy; <span class="yr"></span> Jay the Barber's Classic Cuts. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 2 — OUR TEAM
+══════════════════════════════════════ -->
+<div class="page" id="page-team">
+  <div class="hero">
+    <div class="hero-img-bg" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lhI6-62rrAPOtB476zI6CG-tkbbR45jcJQPTOXGn57nE-VgCJC72SEHgFuLdIJ5XL7NwKJVUO67WVz0XGxkQ1K9-D63AswXkCF6EXwwOjF15syPVKSLLDnsdkIu0tVuq7CP08J-GuQfzYOFBlce0tHjYFw2bGlBp9hkiQw2z8-Dux825Rq1K9oPE6civPqLjJK_EUg89xDcJNm34zyGhAdpET8lISQb_O9MvUlL9xfXYcthTUmTyZ-hsy5KsTNxO-Qsh2psoRfKKsHNWM__EJ6Cj1J4gt4ogcMsKpjYG82GWOQ8zpvrzQ1Fxso6hZdt_tKjS-Utr-Srmuxuhz-WO8P9-7gGqTENvN3Xj6iAV27y2UzJkzltfw0Qow7OlvApLzNo8kS9qhG6Qb23ZE0eyMjFq2qy2D2kxWMjN72U9qNtVea&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')"></div>
+    <div class="hero-grad"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">The Craftsmen Behind the Chair</div>
+      <div class="hero-title">Our Team</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Meet the Barbers</div>
+    <div class="section-sub">Skilled hands. Sharp eyes. Decades of combined experience.</div>
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-photo"><div class="team-mono">JB</div></div>
+        <div class="team-info">
+          <div class="team-name">Jay</div>
+          <div class="team-role">Owner &amp; Master Barber</div>
+          <div class="team-bio">Jay has been shaping up Manchester for over a decade. Known for his precision fades, warm personality, and a shop that feels more like a hangout than a barbershop — complete with a custom arcade console, ambient lighting, and a beer fridge. He's a musician, a community figure, and the reason most clients never go anywhere else.</div>
+          <div class="tags">
+            <span class="tag">Classic Cuts</span>
+            <span class="tag">Skin Fades</span>
+            <span class="tag">Vintage Styles</span>
+            <span class="tag">Beard Craft</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo"><div class="team-mono">MC</div></div>
+        <div class="team-info">
+          <div class="team-name">Marcus</div>
+          <div class="team-role">Senior Barber</div>
+          <div class="team-bio">Marcus brings eight years of chair experience and a meticulous eye for detail. His specialties include high-contrast fades, full beard sculpts, and patient, thorough kids' cuts. Clients trust him to translate a vague idea into a sharp, clean execution every single time.</div>
+          <div class="tags">
+            <span class="tag">Modern Fades</span>
+            <span class="tag">Beard Sculpting</span>
+            <span class="tag">Kids Cuts</span>
+            <span class="tag">Line-ups</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo"><div class="team-mono">DK</div></div>
+        <div class="team-info">
+          <div class="team-name">Devon</div>
+          <div class="team-role">Barber</div>
+          <div class="team-bio">Devon is the shop's transformation specialist. Whether you're looking to switch up your style entirely or refine a textured look, he brings creative instinct and technical precision to every cut. Clients looking for a fresh chapter in their style book Devon first.</div>
+          <div class="tags">
+            <span class="tag">Restyle</span>
+            <span class="tag">Textured Cuts</span>
+            <span class="tag">Line-ups</span>
+            <span class="tag">Full Transformations</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Jay the Barber's Classic Cuts</div>
+    <div class="footer-divider"></div>
+    <div class="footer-addr">915 Holt Ave, Manchester, NH 03109</div>
+    <div class="footer-addr"><a href="tel:6037224922">(603) 722-4922</a></div>
+    <div class="footer-copy">&copy; <span class="yr"></span> Jay the Barber's Classic Cuts. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 3 — LOCATION & HOURS
+══════════════════════════════════════ -->
+<div class="page" id="page-location">
+  <div class="hero">
+    <div class="hero-img-bg" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lUS0vX21Q5yAg7_h-dHLtVulhdc7s3TFtZKjI8AQdsFug98kWUOZ28TsqjxF-Yu87sprBWOClXtl0qP7kSo06VYXdEpRoI5YF6Z7_rWLZQ1p4RRBGkCr3TGjHz6PpVHCxpdtKLoD1uQsADdst06C_WguO-_Bt0Q7REODLmE1mou5POQNS4RJJacLxWy2TKgQJJF5GoEJmzJGyblG5DQDTFaRn4PwT938m8st4-IX5J_xzfhOV81TmpDmF4YBIEceyIsoHowaAIX5fpY3BY3jJgbH6lQm9dgxS50UvxXvl5F5_6xMm0-B846_5veWvXyKO_gQWr5iFKk6v1qRDDk8CHlggRtFmgYl5zazMKh4EEOcL6CxIyFUryiyRNui7IiWCf0oBoAmX9km_f9rceeWUWncXuuHHMSYMkwCpbdjPqnInl&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')"></div>
+    <div class="hero-grad"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Find Us in Manchester</div>
+      <div class="hero-title">Location &amp; Hours</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Hours &amp; Info</div>
+    <div class="section-sub">Walk-ins welcome. Appointments recommended.</div>
+
+    <div class="location-grid">
+      <div>
+        <table class="hours-table" id="hours-table">
+          <tbody>
+            <tr data-day="0"><td>Monday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr data-day="1"><td>Tuesday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr data-day="2"><td>Wednesday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr data-day="3"><td>Thursday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr data-day="4"><td>Friday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr data-day="5"><td>Saturday</td><td>8:00 AM – 5:00 PM</td></tr>
+            <tr data-day="6"><td>Sunday</td><td style="color:var(--text-muted)">Closed</td></tr>
+          </tbody>
+        </table>
+
+        <div class="info-block">
+          <div class="info-label">Address</div>
+          <div class="info-value">915 Holt Ave<br>Manchester, NH 03109</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Phone</div>
+          <div class="info-value"><a href="tel:6037224922">(603) 722-4922</a></div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Parking</div>
+          <div class="info-value">Free street parking available directly in front of the shop and along Holt Ave.</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Accessibility</div>
+          <div class="info-value">Ground-level entry. Fully accessible for wheelchairs and mobility devices.</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="map-wrap">
+          <iframe
+            src="https://maps.google.com/maps?q=915+Holt+Ave,+Manchester,+NH+03109,+USA&output=embed&z=15"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Jay the Barber's Classic Cuts location"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-title">Photo Gallery</div>
+    <div class="gallery-grid" id="gallery">
+      <div class="gallery-item" onclick="openLightbox(0)"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lhI6-62rrAPOtB476zI6CG-tkbbR45jcJQPTOXGn57nE-VgCJC72SEHgFuLdIJ5XL7NwKJVUO67WVz0XGxkQ1K9-D63AswXkCF6EXwwOjF15syPVKSLLDnsdkIu0tVuq7CP08J-GuQfzYOFBlce0tHjYFw2bGlBp9hkiQw2z8-Dux825Rq1K9oPE6civPqLjJK_EUg89xDcJNm34zyGhAdpET8lISQb_O9MvUlL9xfXYcthTUmTyZ-hsy5KsTNxO-Qsh2psoRfKKsHNWM__EJ6Cj1J4gt4ogcMsKpjYG82GWOQ8zpvrzQ1Fxso6hZdt_tKjS-Utr-Srmuxuhz-WO8P9-7gGqTENvN3Xj6iAV27y2UzJkzltfw0Qow7OlvApLzNo8kS9qhG6Qb23ZE0eyMjFq2qy2D2kxWMjN72U9qNtVea&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Shop interior 1" loading="lazy"/></div>
+      <div class="gallery-item" onclick="openLightbox(1)"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lUS0vX21Q5yAg7_h-dHLtVulhdc7s3TFtZKjI8AQdsFug98kWUOZ28TsqjxF-Yu87sprBWOClXtl0qP7kSo06VYXdEpRoI5YF6Z7_rWLZQ1p4RRBGkCr3TGjHz6PpVHCxpdtKLoD1uQsADdst06C_WguO-_Bt0Q7REODLmE1mou5POQNS4RJJacLxWy2TKgQJJF5GoEJmzJGyblG5DQDTFaRn4PwT938m8st4-IX5J_xzfhOV81TmpDmF4YBIEceyIsoHowaAIX5fpY3BY3jJgbH6lQm9dgxS50UvxXvl5F5_6xMm0-B846_5veWvXyKO_gQWr5iFKk6v1qRDDk8CHlggRtFmgYl5zazMKh4EEOcL6CxIyFUryiyRNui7IiWCf0oBoAmX9km_f9rceeWUWncXuuHHMSYMkwCpbdjPqnInl&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Shop interior 2" loading="lazy"/></div>
+      <div class="gallery-item" onclick="openLightbox(2)"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mjpLlo4eTQfEWaUD8xmixx0LsAkruC2ilK_6SNMG56eF74aWH9x2qK0KtfVL4XWdTstloOZ-utDy_b44QhkiyTPAZtNSFpddwImwJgUlO_GUshFuu60F9CU7UPKeRcrAAA4bniLSv5hN68HmHRkEnhzuxDdfli1oYD9KJpTFrL3HR7P4mkvowUXgJhTVKT-OJEzZwGmKP-9DVWfPrmWo7KhqsjA4WfCIYONSjFO9c6IYUECApMi1UR_iPD6Cd6AHvl3SYCf81WTQX5SfwK2dKZ7xucUdZJh8yoWhD_x2pIRQdLOmISWj-a4_Pay6hcHNtHTUug5PQEcRP6RA8sSBmm7LlaXNCpTiimOG4QusSoEUW_GraCnlgZkGhu1TONsjptqbxYyxL0Y_78MUsM_GPBZ0xClR-h3Cw8vAFqleJndHY&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Shop interior 3" loading="lazy"/></div>
+      <div class="gallery-item" onclick="openLightbox(3)"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mw64oJuCgB0T5m193H43tj1IThZd89PCiTeMOYfBqFZFPU9s7D4e-4iSSZ0JggugUVYTdSCiW3LoEdNuih7Q260AE1Uo1o64aIr2nEXQaEyNZa5Cq8GVoXxJoMa7ZR3THzj5N8g4EtiYm6GrFN2NjXVJrcIUL7Xph0lmbSy_3s7i_GMz9nqkpwc1smuwUJDtD4lM4o0X9cIVEZr6f5LG4YdsRWw_OEUSWthVq-HD8iGvlWoeTJg2Vv34Tnfamv84CozOvOQJt-AQStEIZUe6uEbBtCs98gcZOvFauZN6kasN02n22_01zVJno-sDBXCZ6e73hwWZolHUi2U8S5vzJVnHlOLLNUM1e4fsKzUCSJrnqu9wfIMh57LbQeRcywY7jIcxTFLdxttQPcRdC4AeagVyYBWy6IWtMwl23LDADLjw&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Shop interior 4" loading="lazy"/></div>
+      <div class="gallery-item" onclick="openLightbox(4)"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3nlg-3C0F5s10HOU0RloVBp1uq7f8s1tjAEJHZ0SP7bdRVCa4ph8sG6Ku9ZDET-27K3drz2CkURgZjqomLQKlCOPc4buWoMTGhmIIUaJrUZ6oihYe8tyv_uLoOhYehIOXx27C5QrrRuFL-3EnnaiO6o7B-9P_9uQ8cjn36yBBAzNZdXNdbLm0QlZ-M1sfBBsPU7Fi1zjDWckj_7EU-eq0g4vHvy1WxRhF65N5JmTBeTgY9rTW4_K0VjDouoHkR20IGVrv7bwcdVJ4Eh51EWBKzQZBWVG3QK1Or6MLjUcIGLImYD-RNX0MM_X5xK0c2q_gzXpYRifjMbSF_dae8fsjtsV6nA4q8_WgQNNGIowyMgAmfCvhLpBdebxVqWbgZnmGOcaTEeXYr0vRyzDQCRJe0rD29iO1B0iv_hCOfBARUDpKM&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Shop interior 5" loading="lazy"/></div>
+      <div class="gallery-item" onclick="openLightbox(5)"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lxt5mo2I_yj1R3aqDnnOHnNxaYylzRzHpWcihEfx62aisPPOZfdoZZDe6Jnx5nRkaklatCAzO0jF9ABbyjGCMndhcsdZIRpwhGvB9BLaaFiLqDxWMfytYUSz59huO2W49acvDdHHOVxpg9vk_rJitCA9wuxfdXGU5ZJ9hhJJgQPAqOY6KnqbJW1gOJkZe-k-H_MT87umk_QaTzJJuP2T3TAzm4IXPNtHqh8Sn0P2kGY-fpIPMRz1KP0d6KfFvX3hW8c15X6MyPmoVdkUdYDOsS48vMaen-RtcizWWs3nF5zsh-s_Mk4u0yzHfA0furmKIQaEmbUV6xTKWiIi8EQAiI-xmsgR96yfAwb17ddR85Qe2knWUyr3n-EJJnomvSsQxsHAofOpw_daRjLLWxV56Q9iLS2ZHUFy99_oxHUortj_Xs&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Shop interior 6" loading="lazy"/></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Jay the Barber's Classic Cuts</div>
+    <div class="footer-divider"></div>
+    <div class="footer-addr">915 Holt Ave, Manchester, NH 03109</div>
+    <div class="footer-addr"><a href="tel:6037224922">(603) 722-4922</a></div>
+    <div class="footer-copy">&copy; <span class="yr"></span> Jay the Barber's Classic Cuts. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 4 — REVIEWS
+══════════════════════════════════════ -->
+<div class="page" id="page-reviews">
+  <div class="hero">
+    <div class="hero-img-bg" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mjpLlo4eTQfEWaUD8xmixx0LsAkruC2ilK_6SNMG56eF74aWH9x2qK0KtfVL4XWdTstloOZ-utDy_b44QhkiyTPAZtNSFpddwImwJgUlO_GUshFuu60F9CU7UPKeRcrAAA4bniLSv5hN68HmHRkEnhzuxDdfli1oYD9KJpTFrL3HR7P4mkvowUXgJhTVKT-OJEzZwGmKP-9DVWfPrmWo7KhqsjA4WfCIYONSjFO9c6IYUECApMi1UR_iPD6Cd6AHvl3SYCf81WTQX5SfwK2dKZ7xucUdZJh8yoWhD_x2pIRQdLOmISWj-a4_Pay6hcHNtHTUug5PQEcRP6RA8sSBmm7LlaXNCpTiimOG4QusSoEUW_GraCnlgZkGhu1TONsjptqbxYyxL0Y_78MUsM_GPBZ0xClR-h3Cw8vAFqleJndHY&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')"></div>
+    <div class="hero-grad"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">What Our Clients Say</div>
+      <div class="hero-title">Reviews</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="rating-hero">
+      <div class="rating-score">5.0</div>
+      <div class="rating-stars">★★★★★</div>
+      <div class="rating-count">Based on 76 Google Reviews</div>
+      <div class="star-bars">
+        <div class="star-bar"><span class="star-bar-label">5 ★</span><div class="star-bar-track"><div class="star-bar-fill" style="width:96%"></div></div><span class="star-bar-pct">96%</span></div>
+        <div class="star-bar"><span class="star-bar-label">4 ★</span><div class="star-bar-track"><div class="star-bar-fill" style="width:4%"></div></div><span class="star-bar-pct">4%</span></div>
+        <div class="star-bar"><span class="star-bar-label">3 ★</span><div class="star-bar-track"><div class="star-bar-fill" style="width:0%"></div></div><span class="star-bar-pct">0%</span></div>
+        <div class="star-bar"><span class="star-bar-label">2 ★</span><div class="star-bar-track"><div class="star-bar-fill" style="width:0%"></div></div><span class="star-bar-pct">0%</span></div>
+        <div class="star-bar"><span class="star-bar-label">1 ★</span><div class="star-bar-track"><div class="star-bar-fill" style="width:0%"></div></div><span class="star-bar-pct">0%</span></div>
+      </div>
+    </div>
+
+    <div class="featured-review">
+      <div class="featured-label">Featured Review</div>
+      <div class="featured-quote">"Finding a barber that is not only great at cutting hair, but is comfortable and easy to converse with, is an oddly difficult task. I've been getting my hair cut by Jay for close to a decade, and over that time he's become a friend and someone I love catching up with each month — the haircut is just a bonus. Jay is an awesome dude and his shop is top notch with ambient lighting, a beer fridge, an arcade with thousands of preloaded games, and instruments. Just give Jay a try and you won't be disappointed. It's more than a cut, it's an experience."</div>
+      <div class="rating-stars" style="font-size:14px;margin-bottom:8px">★★★★★</div>
+      <div class="featured-author">— 10-Year Regular</div>
+    </div>
+
+    <div class="reviews-grid">
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Took my son for the first time to see Jay for a haircut — found him by accident. I googled haircut near me and little did I know he was only a half mile away. Place was spotless and conversation was great! Jay's patience with my son was superb. We will definitely be new regulars going forward."</div>
+        <div class="review-author">— First-Time Customer</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Best barber in Manchester. I've been going to Jay for years. Easy to make an appointment, good conversation and great tunes. Jay has an incredible video game console with all the old school games to play. This is by far the best barbershop near me."</div>
+        <div class="review-author">— Long-Time Regular</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Jay is a great, personable guy who is easy to communicate your needs to and is very patient in meeting the customer's needs. Professional, clean and inviting is what comes to mind. Priced fairly — he is a good value and I recommend his services to all."</div>
+        <div class="review-author">— Satisfied Client</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Jay always delivers a quality cut, excellent atmosphere, and awesome service. He's the best around! The shop is comfortable and welcoming every single time. Thanks Jay — see you next month!"</div>
+        <div class="review-author">— Loyal Customer</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Jay completely transformed my look with a fresh skin fade and shape-up. I walked in looking rough and walked out feeling like a new man. The atmosphere is unlike any barbershop I've been to — cool vibes, great music, and an arcade cabinet in the corner. Book him now."</div>
+        <div class="review-author">— New Regular</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"I've tried a dozen barbershops in the Manchester area and nothing compares to Jay's. The attention to detail, the relaxed atmosphere, the genuine care for every client — it shows in every cut. If you haven't been, you're missing out on something special."</div>
+        <div class="review-author">— Manchester Local</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Jay the Barber's Classic Cuts</div>
+    <div class="footer-divider"></div>
+    <div class="footer-addr">915 Holt Ave, Manchester, NH 03109</div>
+    <div class="footer-addr"><a href="tel:6037224922">(603) 722-4922</a></div>
+    <div class="footer-copy">&copy; <span class="yr"></span> Jay the Barber's Classic Cuts. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE 5 — CONTACT
+══════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <div class="hero">
+    <div class="hero-img-bg" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mw64oJuCgB0T5m193H43tj1IThZd89PCiTeMOYfBqFZFPU9s7D4e-4iSSZ0JggugUVYTdSCiW3LoEdNuih7Q260AE1Uo1o64aIr2nEXQaEyNZa5Cq8GVoXxJoMa7ZR3THzj5N8g4EtiYm6GrFN2NjXVJrcIUL7Xph0lmbSy_3s7i_GMz9nqkpwc1smuwUJDtD4lM4o0X9cIVEZr6f5LG4YdsRWw_OEUSWthVq-HD8iGvlWoeTJg2Vv34Tnfamv84CozOvOQJt-AQStEIZUe6uEbBtCs98gcZOvFauZN6kasN02n22_01zVJno-sDBXCZ6e73hwWZolHUi2U8S5vzJVnHlOLLNUM1e4fsKzUCSJrnqu9wfIMh57LbQeRcywY7jIcxTFLdxttQPcRdC4AeagVyYBWy6IWtMwl23LDADLjw&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')"></div>
+    <div class="hero-grad"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">We'd Love to Hear from You</div>
+      <div class="hero-title">Contact Us</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="contact-grid">
+      <div class="contact-left">
+        <h3>Get in Touch</h3>
+        <div class="contact-tagline">Questions, bookings, or just want to say hello — we're here.</div>
+
+        <a class="ig-btn" href="https://www.instagram.com/p/DLaQCctxWKO/" target="_blank" rel="noopener">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zm0-2.163c-3.259 0-3.667.014-4.947.072-4.358.2-6.78 2.618-6.98 6.98-.059 1.281-.073 1.689-.073 4.948 0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98 1.281.058 1.689.072 4.948.072 3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98-1.281-.059-1.69-.073-4.949-.073zm0 5.838c-3.403 0-6.162 2.759-6.162 6.162s2.759 6.163 6.162 6.163 6.162-2.759 6.162-6.163c0-3.403-2.759-6.162-6.162-6.162zm0 10.162c-2.209 0-4-1.79-4-4 0-2.209 1.791-4 4-4s4 1.791 4 4c0 2.21-1.791 4-4 4zm6.406-11.845c-.796 0-1.441.645-1.441 1.44s.645 1.44 1.441 1.44c.795 0 1.439-.645 1.439-1.44s-.644-1.44-1.439-1.44z"/></svg>
+          Follow on Instagram
+        </a>
+
+        <div class="info-block">
+          <div class="info-label">Address</div>
+          <div class="info-value">915 Holt Ave, Manchester, NH 03109</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Phone</div>
+          <div class="info-value"><a href="tel:6037224922">(603) 722-4922</a></div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Hours</div>
+          <div class="info-value">Mon – Fri: 9:00 AM – 7:00 PM<br>Saturday: 8:00 AM – 5:00 PM<br>Sunday: Closed</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="contact-form">
+          <div id="form-success">
+            <div class="success-icon">✓</div>
+            <h3>Message Sent!</h3>
+            <p>Thanks for reaching out. We'll get back to you within 24 hours.</p>
+          </div>
+          <form id="contact-form" onsubmit="submitForm(event)">
+            <div class="form-row">
+              <div class="form-group">
+                <label for="fname">First Name</label>
+                <input type="text" id="fname" placeholder="John" required/>
+              </div>
+              <div class="form-group">
+                <label for="lname">Last Name</label>
+                <input type="text" id="lname" placeholder="Smith" required/>
+              </div>
+            </div>
+            <div class="form-group">
+              <label for="email">Email</label>
+              <input type="email" id="email" placeholder="john@example.com" required/>
+            </div>
+            <div class="form-group">
+              <label for="phone">Phone (optional)</label>
+              <input type="tel" id="phone" placeholder="(603) 000-0000"/>
+            </div>
+            <div class="form-group">
+              <label for="subject">Subject</label>
+              <select id="subject">
+                <option value="">Select a topic...</option>
+                <option>Appointment Booking</option>
+                <option>Service Question</option>
+                <option>Pricing Inquiry</option>
+                <option>General Feedback</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="message">Message</label>
+              <textarea id="message" placeholder="How can we help you?" required></textarea>
+            </div>
+            <button type="submit" class="submit-btn">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Jay the Barber's Classic Cuts</div>
+    <div class="footer-divider"></div>
+    <div class="footer-addr">915 Holt Ave, Manchester, NH 03109</div>
+    <div class="footer-addr"><a href="tel:6037224922">(603) 722-4922</a></div>
+    <div class="footer-copy">&copy; <span class="yr"></span> Jay the Barber's Classic Cuts. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ══ LIGHTBOX ══ -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image viewer" onclick="closeLightboxOutside(event)">
+  <button id="lightbox-close" onclick="closeLightbox()" aria-label="Close">&times;</button>
+  <button id="lightbox-prev" onclick="lightboxNav(-1)" aria-label="Previous">&#8249;</button>
+  <img id="lightbox-img" src="" alt="Gallery image"/>
+  <button id="lightbox-next" onclick="lightboxNav(1)" aria-label="Next">&#8250;</button>
+</div>
+
+<script>
+// ── DATA ──
+const GALLERY_IMGS = [
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lhI6-62rrAPOtB476zI6CG-tkbbR45jcJQPTOXGn57nE-VgCJC72SEHgFuLdIJ5XL7NwKJVUO67WVz0XGxkQ1K9-D63AswXkCF6EXwwOjF15syPVKSLLDnsdkIu0tVuq7CP08J-GuQfzYOFBlce0tHjYFw2bGlBp9hkiQw2z8-Dux825Rq1K9oPE6civPqLjJK_EUg89xDcJNm34zyGhAdpET8lISQb_O9MvUlL9xfXYcthTUmTyZ-hsy5KsTNxO-Qsh2psoRfKKsHNWM__EJ6Cj1J4gt4ogcMsKpjYG82GWOQ8zpvrzQ1Fxso6hZdt_tKjS-Utr-Srmuxuhz-WO8P9-7gGqTENvN3Xj6iAV27y2UzJkzltfw0Qow7OlvApLzNo8kS9qhG6Qb23ZE0eyMjFq2qy2D2kxWMjN72U9qNtVea&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8',
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lUS0vX21Q5yAg7_h-dHLtVulhdc7s3TFtZKjI8AQdsFug98kWUOZ28TsqjxF-Yu87sprBWOClXtl0qP7kSo06VYXdEpRoI5YF6Z7_rWLZQ1p4RRBGkCr3TGjHz6PpVHCxpdtKLoD1uQsADdst06C_WguO-_Bt0Q7REODLmE1mou5POQNS4RJJacLxWy2TKgQJJF5GoEJmzJGyblG5DQDTFaRn4PwT938m8st4-IX5J_xzfhOV81TmpDmF4YBIEceyIsoHowaAIX5fpY3BY3jJgbH6lQm9dgxS50UvxXvl5F5_6xMm0-B846_5veWvXyKO_gQWr5iFKk6v1qRDDk8CHlggRtFmgYl5zazMKh4EEOcL6CxIyFUryiyRNui7IiWCf0oBoAmX9km_f9rceeWUWncXuuHHMSYMkwCpbdjPqnInl&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8',
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mjpLlo4eTQfEWaUD8xmixx0LsAkruC2ilK_6SNMG56eF74aWH9x2qK0KtfVL4XWdTstloOZ-utDy_b44QhkiyTPAZtNSFpddwImwJgUlO_GUshFuu60F9CU7UPKeRcrAAA4bniLSv5hN68HmHRkEnhzuxDdfli1oYD9KJpTFrL3HR7P4mkvowUXgJhTVKT-OJEzZwGmKP-9DVWfPrmWo7KhqsjA4WfCIYONSjFO9c6IYUECApMi1UR_iPD6Cd6AHvl3SYCf81WTQX5SfwK2dKZ7xucUdZJh8yoWhD_x2pIRQdLOmISWj-a4_Pay6hcHNtHTUug5PQEcRP6RA8sSBmm7LlaXNCpTiimOG4QusSoEUW_GraCnlgZkGhu1TONsjptqbxYyxL0Y_78MUsM_GPBZ0xClR-h3Cw8vAFqleJndHY&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8',
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mw64oJuCgB0T5m193H43tj1IThZd89PCiTeMOYfBqFZFPU9s7D4e-4iSSZ0JggugUVYTdSCiW3LoEdNuih7Q260AE1Uo1o64aIr2nEXQaEyNZa5Cq8GVoXxJoMa7ZR3THzj5N8g4EtiYm6GrFN2NjXVJrcIUL7Xph0lmbSy_3s7i_GMz9nqkpwc1smuwUJDtD4lM4o0X9cIVEZr6f5LG4YdsRWw_OEUSWthVq-HD8iGvlWoeTJg2Vv34Tnfamv84CozOvOQJt-AQStEIZUe6uEbBtCs98gcZOvFauZN6kasN02n22_01zVJno-sDBXCZ6e73hwWZolHUi2U8S5vzJVnHlOLLNUM1e4fsKzUCSJrnqu9wfIMh57LbQeRcywY7jIcxTFLdxttQPcRdC4AeagVyYBWy6IWtMwl23LDADLjw&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8',
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3nlg-3C0F5s10HOU0RloVBp1uq7f8s1tjAEJHZ0SP7bdRVCa4ph8sG6Ku9ZDET-27K3drz2CkURgZjqomLQKlCOPc4buWoMTGhmIIUaJrUZ6oihYe8tyv_uLoOhYehIOXx27C5QrrRuFL-3EnnaiO6o7B-9P_9uQ8cjn36yBBAzNZdXNdbLm0QlZ-M1sfBBsPU7Fi1zjDWckj_7EU-eq0g4vHvy1WxRhF65N5JmTBeTgY9rTW4_K0VjDouoHkR20IGVrv7bwcdVJ4Eh51EWBKzQZBWVG3QK1Or6MLjUcIGLImYD-RNX0MM_X5xK0c2q_gzXpYRifjMbSF_dae8fsjtsV6nA4q8_WgQNNGIowyMgAmfCvhLpBdebxVqWbgZnmGOcaTEeXYr0vRyzDQCRJe0rD29iO1B0iv_hCOfBARUDpKM&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8',
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lxt5mo2I_yj1R3aqDnnOHnNxaYylzRzHpWcihEfx62aisPPOZfdoZZDe6Jnx5nRkaklatCAzO0jF9ABbyjGCMndhcsdZIRpwhGvB9BLaaFiLqDxWMfytYUSz59huO2W49acvDdHHOVxpg9vk_rJitCA9wuxfdXGU5ZJ9hhJJgQPAqOY6KnqbJW1gOJkZe-k-H_MT87umk_QaTzJJuP2T3TAzm4IXPNtHqh8Sn0P2kGY-fpIPMRz1KP0d6KfFvX3hW8c15X6MyPmoVdkUdYDOsS48vMaen-RtcizWWs3nF5zsh-s_Mk4u0yzHfA0furmKIQaEmbUV6xTKWiIi8EQAiI-xmsgR96yfAwb17ddR85Qe2knWUyr3n-EJJnomvSsQxsHAofOpw_daRjLLWxV56Q9iLS2ZHUFy99_oxHUortj_Xs&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8'
+];
+
+// ── STATE ──
+let sel = {barber:null, service:null, servicePrice:0, serviceDuration:0, addons:[]};
+let lbIndex = 0;
+
+// ── NAV ──
+function showPage(name, btn) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.getElementById('page-' + name).classList.add('active');
+  document.querySelectorAll('#nav-links button, #mobile-menu button').forEach(b => b.classList.remove('active'));
+  if (btn) {
+    const label = btn.textContent.trim();
+    document.querySelectorAll('#nav-links button, #mobile-menu button').forEach(b => {
+      if (b.textContent.trim() === label) b.classList.add('active');
+    });
+  }
+  window.scrollTo(0,0);
+}
+
+function toggleMenu() {
+  const hb = document.getElementById('hamburger');
+  const mm = document.getElementById('mobile-menu');
+  hb.classList.toggle('open');
+  mm.classList.toggle('open');
+}
+
+// ── SERVICES FLOW ──
+function selectBarber(card, name, role) {
+  document.querySelectorAll('.barber-card').forEach(c => c.classList.remove('selected'));
+  card.classList.add('selected');
+  sel.barber = name;
+  document.getElementById('sum-barber').textContent = name;
+  document.getElementById('step2').classList.add('unlocked');
+  updateBookBtn();
+}
+
+function selectService(el, name, price, duration) {
+  document.querySelectorAll('.service-opt').forEach(o => o.classList.remove('selected'));
+  el.classList.add('selected');
+  sel.service = name;
+  sel.servicePrice = price;
+  sel.serviceDuration = duration;
+  document.getElementById('sum-service').textContent = name;
+  // Hide skin fade upgrade if already skin fade
+  const fadeUpgrade = document.getElementById('addon-fade-upgrade');
+  if (name === 'Skin Fade') {
+    fadeUpgrade.style.opacity = '.3';
+    fadeUpgrade.style.pointerEvents = 'none';
+    sel.addons = sel.addons.filter(a => a.name !== 'Skin Fade Upgrade');
+    fadeUpgrade.classList.remove('selected');
+  } else {
+    fadeUpgrade.style.opacity = '';
+    fadeUpgrade.style.pointerEvents = '';
+  }
+  document.getElementById('step3').classList.add('unlocked');
+  updateSummary();
+  updateBookBtn();
+}
+
+function toggleAddon(el, name, price, duration) {
+  const idx = sel.addons.findIndex(a => a.name === name);
+  if (idx > -1) {
+    sel.addons.splice(idx, 1);
+    el.classList.remove('selected');
+  } else {
+    sel.addons.push({name, price, duration});
+    el.classList.add('selected');
+  }
+  updateSummary();
+}
+
+function updateSummary() {
+  const totalPrice = sel.servicePrice + sel.addons.reduce((s,a) => s + a.price, 0);
+  const totalMin   = sel.serviceDuration + sel.addons.reduce((s,a) => s + a.duration, 0);
+  document.getElementById('sum-price').textContent = '$' + totalPrice;
+  document.getElementById('sum-time').textContent  = totalMin + ' MIN ESTIMATED';
+  const addonEl = document.getElementById('sum-addons');
+  if (sel.addons.length === 0) {
+    addonEl.textContent = 'None selected';
+    addonEl.style.color = 'var(--text-muted)';
+    addonEl.style.fontFamily = 'Inter,sans-serif';
+  } else {
+    addonEl.textContent = sel.addons.map(a => a.name).join(', ');
+    addonEl.style.color = 'var(--text)';
+  }
+  updateBookBtn();
+}
+
+function updateBookBtn() {
+  const btn = document.getElementById('book-btn');
+  btn.disabled = !(sel.barber && sel.service);
+}
+
+// ── LIGHTBOX ──
+function openLightbox(i) {
+  lbIndex = i;
+  document.getElementById('lightbox-img').src = GALLERY_IMGS[i];
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.body.style.overflow = '';
+}
+function closeLightboxOutside(e) {
+  if (e.target === document.getElementById('lightbox')) closeLightbox();
+}
+function lightboxNav(dir) {
+  lbIndex = (lbIndex + dir + GALLERY_IMGS.length) % GALLERY_IMGS.length;
+  document.getElementById('lightbox-img').src = GALLERY_IMGS[lbIndex];
+}
+document.addEventListener('keydown', e => {
+  if (e.key === 'Escape') closeLightbox();
+  if (e.key === 'ArrowLeft') lightboxNav(-1);
+  if (e.key === 'ArrowRight') lightboxNav(1);
+});
+
+// ── HOURS TODAY HIGHLIGHT ──
+(function() {
+  const d = new Date();
+  const dayOfWeek = d.getDay(); // 0=Sun,1=Mon...6=Sat
+  const idx = (dayOfWeek + 6) % 7; // Mon=0 ... Sun=6
+  const rows = document.querySelectorAll('#hours-table tbody tr');
+  if (rows[idx]) {
+    rows[idx].classList.add('today');
+    const firstCell = rows[idx].querySelector('td:first-child');
+    firstCell.innerHTML += '<span class="today-pill">Today</span>';
+  }
+})();
+
+// ── FOOTER YEAR ──
+document.querySelectorAll('.yr').forEach(el => el.textContent = new Date().getFullYear());
+
+// ── CONTACT FORM ──
+function submitForm(e) {
+  e.preventDefault();
+  document.getElementById('contact-form').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
+</script>
+</body>
+</html>
