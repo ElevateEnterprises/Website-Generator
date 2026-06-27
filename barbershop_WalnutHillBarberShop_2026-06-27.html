@@ -1,0 +1,1178 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Walnut Hill Barber Shop — Gaithersburg, MD</title>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;0,700;1,300;1,400&family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+:root {
+  --bg: #080808;
+  --bg2: #0f0f0f;
+  --bg3: #161616;
+  --bg4: #1e1e1e;
+  --gold: #C9A84C;
+  --gold-light: #e2c06a;
+  --gold-dim: rgba(201,168,76,0.18);
+  --gold-glow: 0 0 24px rgba(201,168,76,0.45);
+  --text: #e8e0d0;
+  --text-dim: #9e9485;
+  --border: rgba(201,168,76,0.2);
+  --white: #ffffff;
+  --radius: 4px;
+  --transition: 0.35s cubic-bezier(0.4,0,0.2,1);
+}
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden;min-height:100vh}
+img{display:block;max-width:100%}
+a{color:var(--gold);text-decoration:none}
+
+/* ──────────── NAV ──────────── */
+#nav{position:fixed;top:0;left:0;right:0;z-index:9999;background:rgba(8,8,8,0.97);backdrop-filter:blur(12px);border-bottom:1px solid var(--border);height:64px;display:flex;align-items:center;justify-content:space-between;padding:0 40px}
+.nav-brand{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;color:var(--gold);letter-spacing:0.12em;white-space:nowrap}
+.nav-tabs{display:flex;gap:4px;list-style:none}
+.nav-tabs li button{background:none;border:none;color:var(--text-dim);font-family:'Inter',sans-serif;font-size:0.78rem;font-weight:500;letter-spacing:0.08em;text-transform:uppercase;cursor:pointer;padding:8px 16px;position:relative;transition:color var(--transition)}
+.nav-tabs li button::after{content:'';position:absolute;bottom:-1px;left:16px;right:16px;height:2px;background:var(--gold);transform:scaleX(0);transform-origin:center;transition:transform var(--transition)}
+.nav-tabs li button.active,
+.nav-tabs li button:hover{color:var(--gold)}
+.nav-tabs li button.active::after{transform:scaleX(1)}
+#hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:4px}
+#hamburger span{display:block;width:24px;height:2px;background:var(--gold);transition:var(--transition)}
+#mobile-menu{display:none;position:fixed;top:64px;left:0;right:0;bottom:0;background:rgba(8,8,8,0.98);z-index:9998;flex-direction:column;align-items:center;justify-content:center;gap:28px}
+#mobile-menu.open{display:flex}
+#mobile-menu button{background:none;border:none;color:var(--text);font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:0.12em;cursor:pointer;transition:color var(--transition)}
+#mobile-menu button:hover,#mobile-menu button.active{color:var(--gold)}
+
+/* ──────────── PAGE SYSTEM ──────────── */
+.page{display:none;min-height:100vh;padding-top:64px;animation:fadeIn 0.45s ease forwards}
+.page.active{display:block}
+@keyframes fadeIn{from{opacity:0;transform:translateY(12px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.page,.page *{animation:none!important;transition:none!important}}
+
+/* ──────────── HERO ──────────── */
+.hero{position:relative;height:420px;display:flex;align-items:flex-end;overflow:hidden}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(0.45)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,0.95) 0%,rgba(8,8,8,0.45) 60%,transparent 100%)}
+.hero-content{position:relative;z-index:2;padding:0 60px 48px}
+.hero-content h1{font-family:'Bebas Neue',sans-serif;font-size:clamp(2.4rem,5vw,4rem);color:var(--white);letter-spacing:0.1em;line-height:1.05}
+.hero-content p{font-family:'Cormorant Garamond',serif;font-size:1.15rem;color:var(--gold);font-style:italic;margin-top:6px}
+
+/* ──────────── SECTION WRAPPER ──────────── */
+.section{padding:72px 60px;max-width:1280px;margin:0 auto}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:0.12em;color:var(--gold);margin-bottom:8px}
+.section-sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-dim);margin-bottom:40px;font-size:1.05rem}
+
+/* ──────────── GOLD DIVIDER ──────────── */
+.gold-line{display:block;width:60px;height:2px;background:var(--gold);margin:12px 0 40px}
+
+/* ──────────── SERVICES PAGE ──────────── */
+/* Step indicator */
+.step-track{display:flex;align-items:center;gap:0;margin-bottom:52px}
+.step-item{display:flex;flex-direction:column;align-items:center;position:relative;flex:1}
+.step-num{width:36px;height:36px;border-radius:50%;background:var(--bg4);border:2px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:1rem;color:var(--text-dim);transition:var(--transition);position:relative;z-index:2}
+.step-item.done .step-num,.step-item.active .step-num{background:var(--gold);border-color:var(--gold);color:var(--bg);box-shadow:var(--gold-glow)}
+.step-label{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--text-dim);margin-top:8px;white-space:nowrap;font-weight:500}
+.step-item.active .step-label,.step-item.done .step-label{color:var(--gold)}
+.step-connector{flex:1;height:2px;background:var(--border);position:relative;top:-10px}
+.step-connector.done{background:var(--gold)}
+
+/* Barber selection */
+.barber-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(200px,1fr));gap:24px}
+.barber-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:28px 20px;text-align:center;cursor:pointer;transition:var(--transition);position:relative;overflow:hidden}
+.barber-card:hover{transform:translateY(-4px);border-color:var(--gold);box-shadow:var(--gold-glow)}
+.barber-card.selected{border-color:var(--gold);box-shadow:var(--gold-glow);background:var(--bg4)}
+.barber-card.selected::after{content:'✓';position:absolute;top:12px;right:14px;color:var(--gold);font-size:1rem;font-weight:700}
+.barber-monogram{width:80px;height:80px;border-radius:50%;background:linear-gradient(135deg,var(--gold-dim),var(--bg4));border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 16px;font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold)}
+.barber-card h3{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-weight:600;color:var(--white);margin-bottom:4px}
+.barber-card .role{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);font-weight:500}
+.barber-card .specialty{font-size:0.82rem;color:var(--text-dim);margin-top:10px;font-style:italic}
+
+/* Service options */
+.service-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px}
+.service-option{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:20px;cursor:pointer;transition:var(--transition);position:relative}
+.service-option:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 0 18px rgba(201,168,76,0.25)}
+.service-option.selected{border-color:var(--gold);background:var(--bg4);box-shadow:var(--gold-glow)}
+.service-option.selected::after{content:'✓';position:absolute;top:10px;right:12px;color:var(--gold);font-weight:700}
+.service-option h4{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:0.06em;color:var(--white);margin-bottom:6px}
+.service-option .svc-price{color:var(--gold);font-size:0.95rem;font-weight:600}
+.service-option .svc-dur{color:var(--text-dim);font-size:0.78rem;margin-top:4px}
+
+/* Add-on options */
+.addon-options{display:grid;grid-template-columns:repeat(auto-fit,minmax(180px,1fr));gap:18px}
+.addon-option{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:18px;cursor:pointer;transition:var(--transition);position:relative;display:flex;align-items:center;gap:14px}
+.addon-option:hover{border-color:var(--gold);box-shadow:0 0 14px rgba(201,168,76,0.2)}
+.addon-option.selected{border-color:var(--gold);background:var(--bg4)}
+.addon-check{width:20px;height:20px;border-radius:3px;border:2px solid var(--border);flex-shrink:0;transition:var(--transition);display:flex;align-items:center;justify-content:center}
+.addon-option.selected .addon-check{background:var(--gold);border-color:var(--gold);color:var(--bg)}
+.addon-check::after{content:'✓';font-size:0.75rem;color:var(--bg);display:none}
+.addon-option.selected .addon-check::after{display:block}
+.addon-option h4{font-size:0.92rem;font-weight:500;color:var(--white)}
+.addon-option .addon-price{font-size:0.8rem;color:var(--gold);margin-top:2px}
+
+/* Summary panel */
+.summary-panel{background:linear-gradient(135deg,var(--bg3),var(--bg4));border:1px solid var(--gold);border-radius:var(--radius);padding:32px 36px;position:sticky;top:80px}
+.summary-panel h3{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:0.1em;color:var(--gold);margin-bottom:20px;border-bottom:1px solid var(--border);padding-bottom:14px}
+.summary-row{display:flex;justify-content:space-between;align-items:center;padding:8px 0;border-bottom:1px solid rgba(201,168,76,0.08)}
+.summary-label{font-size:0.78rem;text-transform:uppercase;letter-spacing:0.08em;color:var(--text-dim)}
+.summary-val{font-size:0.92rem;color:var(--text);font-weight:500;text-align:right;max-width:160px}
+.summary-addons-list{font-size:0.82rem;color:var(--text-dim);text-align:right}
+.summary-total{display:flex;justify-content:space-between;align-items:baseline;margin-top:20px;padding-top:16px;border-top:1px solid var(--border)}
+.summary-total .label{font-family:'Bebas Neue',sans-serif;font-size:1.15rem;letter-spacing:0.08em;color:var(--text-dim)}
+.summary-total .price{font-family:'Bebas Neue',sans-serif;font-size:2rem;color:var(--gold);letter-spacing:0.05em}
+.summary-dur{text-align:center;font-size:0.82rem;color:var(--text-dim);margin-top:6px}
+.btn-book{display:block;width:100%;margin-top:24px;padding:16px;background:var(--gold);color:var(--bg);font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:0.14em;border:none;cursor:pointer;border-radius:var(--radius);transition:var(--transition)}
+.btn-book:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:var(--gold-glow)}
+.btn-book:disabled{background:var(--bg4);color:var(--text-dim);cursor:not-allowed;box-shadow:none;transform:none}
+
+/* Step sections */
+.step-section{display:none}
+.step-section.visible{display:block}
+.step-heading{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:0.1em;color:var(--white);margin-bottom:6px}
+.step-hint{font-size:0.82rem;color:var(--text-dim);margin-bottom:24px;font-style:italic}
+
+/* Services layout */
+.services-layout{display:grid;grid-template-columns:1fr 320px;gap:48px;align-items:flex-start}
+.services-steps{min-width:0}
+
+/* ──────────── TEAM PAGE ──────────── */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(280px,1fr));gap:32px}
+.team-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;transition:var(--transition)}
+.team-card:hover{transform:translateY(-6px);border-color:var(--gold);box-shadow:var(--gold-glow)}
+.team-photo{height:240px;background:linear-gradient(135deg,#1a1509,var(--bg4));display:flex;align-items:center;justify-content:center;position:relative;overflow:hidden}
+.team-monogram{font-family:'Bebas Neue',sans-serif;font-size:5rem;color:var(--gold);opacity:0.85}
+.team-photo::before{content:'';position:absolute;inset:0;background:linear-gradient(to bottom,transparent 50%,var(--bg3) 100%)}
+.team-info{padding:24px}
+.team-name{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-weight:600;color:var(--white);margin-bottom:4px}
+.team-role{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);font-weight:500;margin-bottom:12px}
+.team-bio{font-size:0.9rem;color:var(--text-dim);line-height:1.65;margin-bottom:16px}
+.team-tags{display:flex;flex-wrap:wrap;gap:8px}
+.tag{font-size:0.7rem;text-transform:uppercase;letter-spacing:0.08em;padding:4px 10px;border:1px solid var(--border);border-radius:2px;color:var(--text-dim);font-weight:500;transition:var(--transition)}
+.team-card:hover .tag{border-color:var(--gold-dim);color:var(--gold)}
+
+/* ──────────── LOCATION PAGE ──────────── */
+.location-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+.hours-table{width:100%;border-collapse:collapse}
+.hours-table td{padding:12px 0;border-bottom:1px solid rgba(201,168,76,0.08);font-size:0.9rem}
+.hours-table td:first-child{color:var(--text-dim);text-transform:uppercase;letter-spacing:0.08em;font-size:0.8rem;font-weight:500}
+.hours-table td:last-child{text-align:right;color:var(--text);font-weight:400}
+.hours-table tr.today td{color:var(--gold);font-weight:600}
+.today-pill{display:inline-block;background:var(--gold);color:var(--bg);font-size:0.6rem;font-weight:700;text-transform:uppercase;letter-spacing:0.1em;padding:2px 8px;border-radius:20px;margin-left:8px;vertical-align:middle}
+.closed{color:var(--text-dim)!important;opacity:0.6}
+.info-block{margin-bottom:28px}
+.info-label{font-size:0.72rem;text-transform:uppercase;letter-spacing:0.12em;color:var(--gold);font-weight:600;margin-bottom:6px}
+.info-val{font-size:0.92rem;color:var(--text)}
+.map-wrap{width:100%;height:320px;border-radius:var(--radius);overflow:hidden;border:1px solid var(--border);margin-top:40px}
+.map-wrap iframe{width:100%;height:100%;border:none}
+.gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:12px;margin-top:16px}
+.gallery-item{aspect-ratio:4/3;overflow:hidden;border-radius:var(--radius);cursor:pointer;border:1px solid var(--border);transition:var(--transition)}
+.gallery-item:hover{border-color:var(--gold);box-shadow:var(--gold-glow)}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform 0.5s ease}
+.gallery-item:hover img{transform:scale(1.06)}
+
+/* ──────────── LIGHTBOX ──────────── */
+#lightbox{display:none;position:fixed;inset:0;z-index:99999;background:rgba(0,0,0,0.93);align-items:center;justify-content:center;cursor:zoom-out}
+#lightbox.open{display:flex}
+#lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;border:1px solid var(--border);border-radius:var(--radius)}
+#lightbox-close{position:absolute;top:24px;right:32px;font-size:2rem;color:var(--gold);cursor:pointer;background:none;border:none;line-height:1}
+
+/* ──────────── REVIEWS PAGE ──────────── */
+.rating-hero{display:flex;align-items:center;gap:40px;margin-bottom:48px;padding:36px 40px;background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius)}
+.rating-score{text-align:center}
+.rating-num{font-family:'Bebas Neue',sans-serif;font-size:5rem;color:var(--gold);line-height:1}
+.rating-stars{display:flex;gap:4px;justify-content:center;margin:8px 0}
+.star{font-size:1.3rem;color:var(--gold)}
+.star.half{position:relative;display:inline-block}
+.star.half::after{content:'★';position:absolute;top:0;left:0;color:var(--bg3);clip-path:inset(0 50% 0 0)}
+.rating-count{font-size:0.8rem;color:var(--text-dim)}
+.rating-bars{flex:1}
+.bar-row{display:flex;align-items:center;gap:12px;margin-bottom:10px}
+.bar-label{font-size:0.78rem;color:var(--text-dim);width:36px;text-align:right;flex-shrink:0}
+.bar-track{flex:1;height:8px;background:var(--bg4);border-radius:4px;overflow:hidden}
+.bar-fill{height:100%;background:var(--gold);border-radius:4px;transition:width 1s ease}
+.bar-count{font-size:0.78rem;color:var(--text-dim);width:28px}
+.featured-review{background:linear-gradient(135deg,var(--bg3),var(--bg4));border:1px solid var(--gold);border-radius:var(--radius);padding:32px 36px;margin-bottom:40px;position:relative}
+.featured-badge{position:absolute;top:-1px;left:24px;background:var(--gold);color:var(--bg);font-size:0.65rem;font-weight:700;text-transform:uppercase;letter-spacing:0.12em;padding:4px 12px;border-radius:0 0 4px 4px}
+.featured-review blockquote{font-family:'Cormorant Garamond',serif;font-size:1.3rem;font-style:italic;color:var(--text);line-height:1.65;margin-bottom:16px}
+.review-meta{display:flex;align-items:center;gap:12px}
+.reviewer-icon{width:36px;height:36px;border-radius:50%;background:var(--gold-dim);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;color:var(--gold)}
+.reviewer-name{font-size:0.9rem;font-weight:600;color:var(--white)}
+.reviewer-stars{display:flex;gap:2px;font-size:0.85rem;color:var(--gold)}
+.reviews-grid{display:grid;grid-template-columns:1fr 1fr;gap:24px}
+.review-card{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:24px;transition:var(--transition)}
+.review-card:hover{border-color:var(--gold);transform:translateY(-3px);box-shadow:0 0 18px rgba(201,168,76,0.2)}
+.review-card blockquote{font-family:'Cormorant Garamond',serif;font-size:1.05rem;font-style:italic;color:var(--text);line-height:1.6;margin-bottom:14px}
+.review-card .review-meta{flex-direction:column;align-items:flex-start;gap:4px}
+.review-card .reviewer-name{font-size:0.85rem;color:var(--white)}
+
+/* ──────────── CONTACT PAGE ──────────── */
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:60px;align-items:flex-start}
+.contact-info h2{font-family:'Cormorant Garamond',serif;font-size:2.2rem;font-weight:600;color:var(--white);margin-bottom:8px}
+.contact-info p{font-size:0.9rem;color:var(--text-dim);line-height:1.7;margin-bottom:32px}
+.contact-detail{display:flex;align-items:flex-start;gap:16px;margin-bottom:22px}
+.contact-icon{width:40px;height:40px;border-radius:50%;background:var(--gold-dim);border:1px solid var(--border);display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:1.1rem}
+.contact-detail-text strong{display:block;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);font-weight:600;margin-bottom:3px}
+.contact-detail-text span{font-size:0.9rem;color:var(--text)}
+.btn-instagram{display:inline-flex;align-items:center;gap:10px;padding:14px 28px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;border-radius:4px;font-size:0.85rem;font-weight:600;letter-spacing:0.06em;transition:var(--transition);margin-top:12px;border:none;cursor:pointer}
+.btn-instagram:hover{transform:translateY(-2px);box-shadow:0 6px 20px rgba(253,29,29,0.3)}
+.contact-form-wrap{background:var(--bg3);border:1px solid var(--border);border-radius:var(--radius);padding:40px}
+.form-group{margin-bottom:22px}
+.form-group label{display:block;font-size:0.72rem;text-transform:uppercase;letter-spacing:0.1em;color:var(--gold);margin-bottom:8px;font-weight:600}
+.form-group input,
+.form-group textarea,
+.form-group select{width:100%;background:var(--bg4);border:1px solid var(--border);border-radius:var(--radius);color:var(--text);font-family:'Inter',sans-serif;font-size:0.9rem;padding:12px 14px;transition:border-color var(--transition);outline:none}
+.form-group input:focus,
+.form-group textarea:focus,
+.form-group select:focus{border-color:var(--gold)}
+.form-group textarea{resize:vertical;min-height:110px}
+.btn-submit{width:100%;padding:15px;background:var(--gold);color:var(--bg);font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:0.14em;border:none;cursor:pointer;border-radius:var(--radius);transition:var(--transition)}
+.btn-submit:hover{background:var(--gold-light);transform:translateY(-2px);box-shadow:var(--gold-glow)}
+.form-success{display:none;text-align:center;padding:40px 20px}
+.form-success .check{font-size:3rem;color:var(--gold);margin-bottom:16px}
+.form-success h3{font-family:'Cormorant Garamond',serif;font-size:1.8rem;color:var(--white);margin-bottom:8px}
+.form-success p{color:var(--text-dim);font-size:0.9rem}
+
+/* ──────────── FOOTER ──────────── */
+footer{background:var(--bg2);border-top:1px solid var(--border);padding:36px 60px;text-align:center}
+.footer-brand{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--gold);letter-spacing:0.12em;margin-bottom:8px}
+.footer-addr{font-size:0.82rem;color:var(--text-dim);margin-bottom:6px}
+.footer-copy{font-size:0.75rem;color:rgba(158,148,133,0.5)}
+
+/* ──────────── SCROLL PROMPT ──────────── */
+.scroll-hint{text-align:center;padding:48px 0 0;font-size:0.8rem;color:var(--text-dim);font-style:italic}
+
+/* ──────────── RESPONSIVE ──────────── */
+@media(max-width:1024px){
+  .services-layout{grid-template-columns:1fr}
+  .summary-panel{position:static;margin-top:40px}
+  .location-grid{grid-template-columns:1fr}
+  .contact-layout{grid-template-columns:1fr}
+  .reviews-grid{grid-template-columns:1fr}
+}
+@media(max-width:768px){
+  #nav{padding:0 20px}
+  .nav-tabs{display:none}
+  #hamburger{display:flex}
+  .hero{height:280px}
+  .hero-content{padding:0 24px 32px}
+  .section{padding:48px 24px}
+  .rating-hero{flex-direction:column;gap:24px;padding:24px}
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .contact-form-wrap{padding:24px}
+  footer{padding:28px 24px}
+}
+@media(max-width:480px){
+  .barber-grid,.service-options,.addon-options{grid-template-columns:1fr}
+  .team-grid{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:1fr}
+}
+
+/* ──────────── HOVER GLOW CARDS ──────────── */
+.glow-card{transition:var(--transition)}
+.glow-card:hover{box-shadow:var(--gold-glow);border-color:var(--gold)}
+
+/* Service card gold sweep */
+.service-card{border-bottom:2px solid transparent;transition:border-color var(--transition),box-shadow var(--transition),transform var(--transition)}
+.service-card:hover{border-bottom-color:var(--gold)}
+</style>
+</head>
+<body>
+
+<!-- ════════ NAV ════════ -->
+<nav id="nav">
+  <div class="nav-brand">Walnut Hill Barber Shop</div>
+  <ul class="nav-tabs">
+    <li><button class="active" data-page="services">Services</button></li>
+    <li><button data-page="team">Our Team</button></li>
+    <li><button data-page="location">Location & Hours</button></li>
+    <li><button data-page="reviews">Reviews</button></li>
+    <li><button data-page="contact">Contact Us</button></li>
+  </ul>
+  <button id="hamburger" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- Mobile Menu -->
+<div id="mobile-menu">
+  <button class="active" data-page="services">Services</button>
+  <button data-page="team">Our Team</button>
+  <button data-page="location">Location &amp; Hours</button>
+  <button data-page="reviews">Reviews</button>
+  <button data-page="contact">Contact Us</button>
+</div>
+
+<!-- ════════ LIGHTBOX ════════ -->
+<div id="lightbox">
+  <button id="lightbox-close">&#10005;</button>
+  <img id="lightbox-img" src="" alt="">
+</div>
+
+<!-- ════════════════════════════════════ -->
+<!--  PAGE: SERVICES                      -->
+<!-- ════════════════════════════════════ -->
+<div class="page active" id="page-services">
+
+  <div class="hero">
+    <img class="hero-img" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3l0mT8hW72cxB53Nq2ogko-BMNxBep37xOwYsEaifVrG07fJx97A7dtd1fqiGwJXoZ5cf4jO1zcr7IxAXDNqfFOvLEuU1eU3-18oKz-Saw7a3jkOKKWuMVnkUCYst6LxZMIqXxnQQoM6CpLbRhklVVtuV3z6mXhiqu5qpZQblH_2-EpLveG9ISEgqlm0_TpLP2clSh7KlIm2aWfi_XgZYY6NFILkAnenmzPPiJgSGc_DLAg9DxsIAOXK6wLbXw7e_J4yjoGDJsHOl21SFx79LN0BSkIUQvijWuVaInDL7qvsCsJlMQ8l9UQf077FupY99dCL3RE-Q4_NtF1DxzMdbwM2EVsKeSOgMmO6vhpNSC3x4HQgzxLrz4IsgW97h4ZHHiFVX4vB7FexNdFQjEl3ut7cGbgaZh4wmB8fVfZAZ_QFk0&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Walnut Hill Barber Shop">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Our Services</h1>
+      <p>Select your barber, choose your look, and book your experience.</p>
+    </div>
+  </div>
+
+  <div class="section">
+
+    <!-- Step Track -->
+    <div class="step-track">
+      <div class="step-item active" id="track-1">
+        <div class="step-num">1</div>
+        <div class="step-label">Choose Barber</div>
+      </div>
+      <div class="step-connector" id="conn-1"></div>
+      <div class="step-item" id="track-2">
+        <div class="step-num">2</div>
+        <div class="step-label">Choose Service</div>
+      </div>
+      <div class="step-connector" id="conn-2"></div>
+      <div class="step-item" id="track-3">
+        <div class="step-num">3</div>
+        <div class="step-label">Add-ons</div>
+      </div>
+      <div class="step-connector" id="conn-3"></div>
+      <div class="step-item" id="track-4">
+        <div class="step-num">4</div>
+        <div class="step-label">Summary</div>
+      </div>
+    </div>
+
+    <div class="services-layout">
+      <div class="services-steps">
+
+        <!-- STEP 1: Choose Barber -->
+        <div class="step-section visible" id="step-1">
+          <h2 class="step-heading">Step 1 — Choose Your Barber</h2>
+          <p class="step-hint">Click a barber to select them for your visit.</p>
+          <div class="barber-grid">
+
+            <div class="barber-card" data-barber="George" data-barber-role="Master Barber &amp; Owner">
+              <div class="barber-monogram">GH</div>
+              <h3>George Harrison</h3>
+              <div class="role">Master Barber &amp; Owner</div>
+              <p class="specialty">Classic cuts · Straight razor shaves · 40+ yrs experience</p>
+            </div>
+
+            <div class="barber-card" data-barber="Marcus" data-barber-role="Senior Barber">
+              <div class="barber-monogram">MT</div>
+              <h3>Marcus Thompson</h3>
+              <div class="role">Senior Barber</div>
+              <p class="specialty">Skin fades · Modern styles · Beard sculpting</p>
+            </div>
+
+            <div class="barber-card" data-barber="David" data-barber-role="Barber">
+              <div class="barber-monogram">DC</div>
+              <h3>David Cruz</h3>
+              <div class="role">Barber</div>
+              <p class="specialty">Kids cuts · Line-ups · Texture &amp; curl work</p>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- STEP 2: Choose Service -->
+        <div class="step-section" id="step-2">
+          <h2 class="step-heading">Step 2 — Choose Your Service</h2>
+          <p class="step-hint">Select one haircut service.</p>
+          <div class="service-options">
+
+            <div class="service-option" data-service="Haircut" data-price="22" data-dur="30">
+              <h4>Haircut</h4>
+              <div class="svc-price">$22</div>
+              <div class="svc-dur">~30 min</div>
+            </div>
+
+            <div class="service-option" data-service="Skin Fade" data-price="28" data-dur="45">
+              <h4>Skin Fade</h4>
+              <div class="svc-price">$28</div>
+              <div class="svc-dur">~45 min</div>
+            </div>
+
+            <div class="service-option" data-service="Buzz Cut" data-price="16" data-dur="20">
+              <h4>Buzz Cut</h4>
+              <div class="svc-price">$16</div>
+              <div class="svc-dur">~20 min</div>
+            </div>
+
+            <div class="service-option" data-service="Restyle / Full Transformation" data-price="45" data-dur="60">
+              <h4>Restyle / Full Transformation</h4>
+              <div class="svc-price">$45</div>
+              <div class="svc-dur">~60 min</div>
+            </div>
+
+            <div class="service-option" data-service="Kids Cut" data-price="16" data-dur="20">
+              <h4>Kids Cut</h4>
+              <div class="svc-price">$16</div>
+              <div class="svc-dur">~20 min</div>
+            </div>
+
+          </div>
+        </div>
+
+        <!-- STEP 3: Add-ons -->
+        <div class="step-section" id="step-3">
+          <h2 class="step-heading">Step 3 — Enhance Your Experience</h2>
+          <p class="step-hint">Select as many add-ons as you like. Prices are added automatically.</p>
+          <div class="addon-options">
+
+            <div class="addon-option" data-addon="Beard Trim" data-price="10" data-dur="15">
+              <div class="addon-check"></div>
+              <div>
+                <h4>Beard Trim</h4>
+                <div class="addon-price">+$10 · ~15 min</div>
+              </div>
+            </div>
+
+            <div class="addon-option" data-addon="Line-up / Edge" data-price="8" data-dur="10">
+              <div class="addon-check"></div>
+              <div>
+                <h4>Line-up / Edge</h4>
+                <div class="addon-price">+$8 · ~10 min</div>
+              </div>
+            </div>
+
+            <div class="addon-option" data-addon="Skin Fade Upgrade" data-price="10" data-dur="15">
+              <div class="addon-check"></div>
+              <div>
+                <h4>Skin Fade Upgrade</h4>
+                <div class="addon-price">+$10 · ~15 min</div>
+              </div>
+            </div>
+
+            <div class="addon-option" data-addon="Wash &amp; Style" data-price="12" data-dur="15">
+              <div class="addon-check"></div>
+              <div>
+                <h4>Wash &amp; Style</h4>
+                <div class="addon-price">+$12 · ~15 min</div>
+              </div>
+            </div>
+
+            <div class="addon-option" data-addon="Eyebrow Cleanup" data-price="8" data-dur="10">
+              <div class="addon-check"></div>
+              <div>
+                <h4>Eyebrow Cleanup</h4>
+                <div class="addon-price">+$8 · ~10 min</div>
+              </div>
+            </div>
+
+          </div>
+        </div>
+
+      </div><!-- /services-steps -->
+
+      <!-- LIVE SUMMARY PANEL (Step 4) -->
+      <div class="summary-panel">
+        <h3>Your Booking Summary</h3>
+
+        <div class="summary-row">
+          <span class="summary-label">Barber</span>
+          <span class="summary-val" id="sum-barber">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Service</span>
+          <span class="summary-val" id="sum-service">—</span>
+        </div>
+        <div class="summary-row">
+          <span class="summary-label">Add-ons</span>
+          <span class="summary-val">
+            <span class="summary-addons-list" id="sum-addons">None selected</span>
+          </span>
+        </div>
+
+        <div class="summary-total">
+          <span class="label">Est. Total</span>
+          <span class="price" id="sum-price">$0</span>
+        </div>
+        <div class="summary-dur" id="sum-dur">Estimated time: — min</div>
+
+        <button class="btn-book" id="btn-book" disabled>Book Now</button>
+      </div>
+
+    </div><!-- /services-layout -->
+  </div>
+
+  <footer>
+    <div class="footer-brand">Walnut Hill Barber Shop</div>
+    <div class="footer-addr">16527 S Frederick Ave, Gaithersburg, MD 20877 &nbsp;|&nbsp; (301) 926-9402</div>
+    <div class="footer-copy">&copy; 2026 Walnut Hill Barber Shop. All rights reserved.</div>
+  </footer>
+</div><!-- /page-services -->
+
+
+<!-- ════════════════════════════════════ -->
+<!--  PAGE: OUR TEAM                      -->
+<!-- ════════════════════════════════════ -->
+<div class="page" id="page-team">
+
+  <div class="hero">
+    <img class="hero-img" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kiGQ1TsT6ANKG-jlYmFqk4d5_9gXaBexi1vi5gcVHuIsXKD6Z2rdi_9Vw8qY-av2IqaIfKqprQhinP-bI3G_fr69Fae0JTxElzcs7N5QKtaJPMtQWXOFRAVeDYZH-A82J85_sW0t1bYKWNpoGijPO9ro1u-ptqAjLUv27A78t9KQFyEX2iy3yMtJ4y6-pU2MVWXk3qbvAGJBXjQv3Vpd46Dr4P9Od3QyCr3bfyrD2AxFZgFrv0Cy9z-ZwWYqyID-PucSLYaIp-Gtyf7WMLi3oE4tgXYiFWTlera5wdrJTUMhq9VvxSk8ia5-P2TegxdHdsjE5i0h4HRMNSC4bthprt4_FiusTJY4q-2-mmD-exiEn8rQefNLjpiHfVmf8dV5neycfR6XvEsxaCrvFGfQVLnWIYAL3WhjXU5ACCRMQ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Our Team">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Our Team</h1>
+      <p>Master craftsmen who have dedicated their lives to the art of barbering.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Meet the Barbers</div>
+    <span class="gold-line"></span>
+
+    <div class="team-grid">
+
+      <div class="team-card">
+        <div class="team-photo">
+          <div class="team-monogram">GH</div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">George Harrison</div>
+          <div class="team-role">Master Barber &amp; Owner</div>
+          <p class="team-bio">George has been behind the chair since the 1980s, carrying forward a tradition of precision cuts and old-school hospitality. He learned the craft from his father and has spent over four decades mastering the art of the straight razor shave and the perfect taper. His clients aren't customers — they're family.</p>
+          <div class="team-tags">
+            <span class="tag">Classic Cuts</span>
+            <span class="tag">Straight Razor</span>
+            <span class="tag">Tapers</span>
+            <span class="tag">40+ yrs</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo">
+          <div class="team-monogram">MT</div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">Marcus Thompson</div>
+          <div class="team-role">Senior Barber</div>
+          <p class="team-bio">Marcus brings 15 years of experience and a modern eye to the shop. Trained in both traditional and contemporary techniques, he specializes in skin fades, beard sculpting, and bold restyling that keeps clients looking fresh between visits. His clientele spans all ages and hair types.</p>
+          <div class="team-tags">
+            <span class="tag">Skin Fades</span>
+            <span class="tag">Beard Sculpt</span>
+            <span class="tag">Modern Styles</span>
+            <span class="tag">15 yrs</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo">
+          <div class="team-monogram">DC</div>
+        </div>
+        <div class="team-info">
+          <div class="team-name">David Cruz</div>
+          <div class="team-role">Barber</div>
+          <p class="team-bio">David is the shop's specialist in kids' cuts, line-ups, and textured curl work. With 8 years behind the chair, he has a gentle, patient approach that makes even the most restless clients feel at ease. Parents love him because kids leave looking sharp and actually smile doing it.</p>
+          <div class="team-tags">
+            <span class="tag">Kids Cuts</span>
+            <span class="tag">Line-ups</span>
+            <span class="tag">Curl Work</span>
+            <span class="tag">8 yrs</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Walnut Hill Barber Shop</div>
+    <div class="footer-addr">16527 S Frederick Ave, Gaithersburg, MD 20877 &nbsp;|&nbsp; (301) 926-9402</div>
+    <div class="footer-copy">&copy; 2026 Walnut Hill Barber Shop. All rights reserved.</div>
+  </footer>
+</div><!-- /page-team -->
+
+
+<!-- ════════════════════════════════════ -->
+<!--  PAGE: LOCATION & HOURS              -->
+<!-- ════════════════════════════════════ -->
+<div class="page" id="page-location">
+
+  <div class="hero">
+    <img class="hero-img" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kisPntXWEzY6jNhcWIUDJPzXSysNiDQD0JCs4BeaFoYrpapE8X4hSM9kV1LIauQQMH-VEjSNbL2tiFEBgJslvpSoVvQxdKLFx10yTVcmZ2VOUI57v_Ano7QoFMAfX-4hXSkuaFXpGi6E1EwLJmqamsayZkXaIN_3RTi7WmRHCPvF5r47TJuNZh3ykTZvkdL-OzkeRFSq4f2djEjSJHXd8_9V9UCo84ISvn8XOCf11mz0RrkOIITwPQhPz9-MgR0Tuw4-L0J40eYzg9eU-OWU5aOCAoRbdfJwRKk8Ivzq6sf1TP0gOAfoPXMrK5cVwXpwQIgaq91rUG4UheHmyUc906fuqvCA5cpOkVbj3Lk7yi48qqz0GojnktwBNVQemQ8LFj6zRYxTl_OWCVfcJ9uHfYnp0Sd0geoTWJFusC_I03NKncWec1S1LvGZSSAA&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Location">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Location &amp; Hours</h1>
+      <p>Come find us in the heart of Gaithersburg, MD.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="location-grid">
+
+      <!-- Left: Hours + Info -->
+      <div>
+        <div class="section-title">Hours of Operation</div>
+        <span class="gold-line"></span>
+
+        <table class="hours-table" id="hours-table">
+          <tbody>
+            <tr data-day="1">
+              <td>Monday</td>
+              <td>9:00 AM – 6:00 PM</td>
+            </tr>
+            <tr data-day="2">
+              <td>Tuesday</td>
+              <td>9:00 AM – 6:00 PM</td>
+            </tr>
+            <tr data-day="3">
+              <td>Wednesday</td>
+              <td>9:00 AM – 6:00 PM</td>
+            </tr>
+            <tr data-day="4">
+              <td>Thursday</td>
+              <td>9:00 AM – 6:00 PM</td>
+            </tr>
+            <tr data-day="5">
+              <td>Friday</td>
+              <td>9:00 AM – 6:00 PM</td>
+            </tr>
+            <tr data-day="6">
+              <td>Saturday</td>
+              <td>8:00 AM – 5:00 PM</td>
+            </tr>
+            <tr data-day="0">
+              <td>Sunday</td>
+              <td class="closed">Closed</td>
+            </tr>
+          </tbody>
+        </table>
+
+        <div style="height:48px"></div>
+        <div class="section-title">Find Us</div>
+        <span class="gold-line"></span>
+
+        <div class="info-block">
+          <div class="info-label">Address</div>
+          <div class="info-val">16527 S Frederick Ave<br>Gaithersburg, MD 20877</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Phone</div>
+          <div class="info-val"><a href="tel:+13019269402">(301) 926-9402</a></div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Parking</div>
+          <div class="info-val">Free parking available directly in front of the shop and in the adjacent strip mall lot.</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Accessibility</div>
+          <div class="info-val">Street-level entry, fully accessible to wheelchair users. Please call ahead and we'll ensure a smooth visit.</div>
+        </div>
+        <div class="info-block">
+          <div class="info-label">Payment</div>
+          <div class="info-val">Cash &amp; check preferred. We do not accept credit cards or mobile pay — ATM available nearby.</div>
+        </div>
+      </div>
+
+      <!-- Right: Map + Gallery -->
+      <div>
+        <div class="section-title">On the Map</div>
+        <span class="gold-line"></span>
+        <div class="map-wrap">
+          <iframe
+            src="https://maps.google.com/maps?q=16527+S+Frederick+Ave+Gaithersburg+MD+20877&output=embed"
+            allowfullscreen
+            loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Walnut Hill Barber Shop Location">
+          </iframe>
+        </div>
+
+        <div style="height:48px"></div>
+        <div class="section-title">Shop Gallery</div>
+        <span class="gold-line"></span>
+        <div class="gallery-grid">
+          <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3l0mT8hW72cxB53Nq2ogko-BMNxBep37xOwYsEaifVrG07fJx97A7dtd1fqiGwJXoZ5cf4jO1zcr7IxAXDNqfFOvLEuU1eU3-18oKz-Saw7a3jkOKKWuMVnkUCYst6LxZMIqXxnQQoM6CpLbRhklVVtuV3z6mXhiqu5qpZQblH_2-EpLveG9ISEgqlm0_TpLP2clSh7KlIm2aWfi_XgZYY6NFILkAnenmzPPiJgSGc_DLAg9DxsIAOXK6wLbXw7e_J4yjoGDJsHOl21SFx79LN0BSkIUQvijWuVaInDL7qvsCsJlMQ8l9UQf077FupY99dCL3RE-Q4_NtF1DxzMdbwM2EVsKeSOgMmO6vhpNSC3x4HQgzxLrz4IsgW97h4ZHHiFVX4vB7FexNdFQjEl3ut7cGbgaZh4wmB8fVfZAZ_QFk0&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Shop photo 1" loading="lazy">
+          </div>
+          <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kiGQ1TsT6ANKG-jlYmFqk4d5_9gXaBexi1vi5gcVHuIsXKD6Z2rdi_9Vw8qY-av2IqaIfKqprQhinP-bI3G_fr69Fae0JTxElzcs7N5QKtaJPMtQWXOFRAVeDYZH-A82J85_sW0t1bYKWNpoGijPO9ro1u-ptqAjLUv27A78t9KQFyEX2iy3yMtJ4y6-pU2MVWXk3qbvAGJBXjQv3Vpd46Dr4P9Od3QyCr3bfyrD2AxFZgFrv0Cy9z-ZwWYqyID-PucSLYaIp-Gtyf7WMLi3oE4tgXYiFWTlera5wdrJTUMhq9VvxSk8ia5-P2TegxdHdsjE5i0h4HRMNSC4bthprt4_FiusTJY4q-2-mmD-exiEn8rQefNLjpiHfVmf8dV5neycfR6XvEsxaCrvFGfQVLnWIYAL3WhjXU5ACCRMQ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Shop photo 2" loading="lazy">
+          </div>
+          <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kisPntXWEzY6jNhcWIUDJPzXSysNiDQD0JCs4BeaFoYrpapE8X4hSM9kV1LIauQQMH-VEjSNbL2tiFEBgJslvpSoVvQxdKLFx10yTVcmZ2VOUI57v_Ano7QoFMAfX-4hXSkuaFXpGi6E1EwLJmqamsayZkXaIN_3RTi7WmRHCPvF5r47TJuNZh3ykTZvkdL-OzkeRFSq4f2djEjSJHXd8_9V9UCo84ISvn8XOCf11mz0RrkOIITwPQhPz9-MgR0Tuw4-L0J40eYzg9eU-OWU5aOCAoRbdfJwRKk8Ivzq6sf1TP0gOAfoPXMrK5cVwXpwQIgaq91rUG4UheHmyUc906fuqvCA5cpOkVbj3Lk7yi48qqz0GojnktwBNVQemQ8LFj6zRYxTl_OWCVfcJ9uHfYnp0Sd0geoTWJFusC_I03NKncWec1S1LvGZSSAA&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Shop photo 3" loading="lazy">
+          </div>
+          <div class="gallery-item" onclick="openLightbox(this)">
+            <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3n1wO5Ue42qIEY7vqIMJWJWp_YPRpPLKspl2pJPsrnNQN2UYmUOcehKGgku0hcpJ9zetR71ZNGlCLUAK6pxNxL0JO4sQjai6yuPAouSQvAsbNzHxQuJueCNq0ECywMpmUNmQYeL_dzkLvRUElMyqYWDKgzKfrBoa66Yhj92ZsYf3NK-SWohVrgEvpCIZ-kE4VQRARN4WxMx2gxXYHOKIXxd1U8PxipxERIoseBvK3boMPW1rOGsgjKBKrQtKt5swZ4ssRUszyJf7Ekle8D-FhVNeQkMWlKpQka37lNdta5frLTozzQHTmk16voXbo2haQEjEhtrTcJIfYkqb2tVGMd5DRtWVRd4ApkEfiejxr6AH3C47Gfvml-H5OQukDApHh-BOwUSrJcNpcfx3e4x-o5dQqN02K8nPBY0q-SXFEU&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Shop photo 4" loading="lazy">
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Walnut Hill Barber Shop</div>
+    <div class="footer-addr">16527 S Frederick Ave, Gaithersburg, MD 20877 &nbsp;|&nbsp; (301) 926-9402</div>
+    <div class="footer-copy">&copy; 2026 Walnut Hill Barber Shop. All rights reserved.</div>
+  </footer>
+</div><!-- /page-location -->
+
+
+<!-- ════════════════════════════════════ -->
+<!--  PAGE: REVIEWS                       -->
+<!-- ════════════════════════════════════ -->
+<div class="page" id="page-reviews">
+
+  <div class="hero">
+    <img class="hero-img" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3n1wO5Ue42qIEY7vqIMJWJWp_YPRpPLKspl2pJPsrnNQN2UYmUOcehKGgku0hcpJ9zetR71ZNGlCLUAK6pxNxL0JO4sQjai6yuPAouSQvAsbNzHxQuJueCNq0ECywMpmUNmQYeL_dzkLvRUElMyqYWDKgzKfrBoa66Yhj92ZsYf3NK-SWohVrgEvpCIZ-kE4VQRARN4WxMx2gxXYHOKIXxd1U8PxipxERIoseBvK3boMPW1rOGsgjKBKrQtKt5swZ4ssRUszyJf7Ekle8D-FhVNeQkMWlKpQka37lNdta5frLTozzQHTmk16voXbo2haQEjEhtrTcJIfYkqb2tVGMd5DRtWVRd4ApkEfiejxr6AH3C47Gfvml-H5OQukDApHh-BOwUSrJcNpcfx3e4x-o5dQqN02K8nPBY0q-SXFEU&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Reviews">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>What Our Clients Say</h1>
+      <p>Over 54 five-star reviews and counting.</p>
+    </div>
+  </div>
+
+  <div class="section">
+
+    <!-- Rating Hero -->
+    <div class="rating-hero">
+      <div class="rating-score">
+        <div class="rating-num">4.5</div>
+        <div class="rating-stars">
+          <span class="star">★</span>
+          <span class="star">★</span>
+          <span class="star">★</span>
+          <span class="star">★</span>
+          <span class="star">★</span>
+        </div>
+        <div class="rating-count">Based on 54 Google Reviews</div>
+      </div>
+      <div class="rating-bars">
+        <div class="bar-row">
+          <span class="bar-label">5★</span>
+          <div class="bar-track"><div class="bar-fill" style="width:72%"></div></div>
+          <span class="bar-count">39</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">4★</span>
+          <div class="bar-track"><div class="bar-fill" style="width:15%"></div></div>
+          <span class="bar-count">8</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">3★</span>
+          <div class="bar-track"><div class="bar-fill" style="width:7%"></div></div>
+          <span class="bar-count">4</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">2★</span>
+          <div class="bar-track"><div class="bar-fill" style="width:4%"></div></div>
+          <span class="bar-count">2</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">1★</span>
+          <div class="bar-track"><div class="bar-fill" style="width:2%"></div></div>
+          <span class="bar-count">1</span>
+        </div>
+      </div>
+    </div>
+
+    <!-- Featured Review -->
+    <div class="featured-review">
+      <div class="featured-badge">Featured Review</div>
+      <blockquote>"The owner cut my hair today — he was phenomenal. He has been a barber since the 50's! The haircut was first class, and he made me feel at home. The place was clean and beautiful. Highly recommend!"</blockquote>
+      <div class="review-meta">
+        <div class="reviewer-icon">R</div>
+        <div>
+          <div class="reviewer-name">Robert M.</div>
+          <div class="reviewer-stars">★★★★★</div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Review Grid -->
+    <div class="reviews-grid">
+
+      <div class="review-card">
+        <blockquote>"Little barber shop where the staff is friendly and everyone knows your name. I have been going there for a long time and the staff has all been there for years. Quite accommodating — I've even called ahead near closing and they let me show up. Things like this you can't get anywhere else."</blockquote>
+        <div class="review-meta">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="reviewer-icon">J</div>
+            <div>
+              <div class="reviewer-name">James T.</div>
+              <div class="reviewer-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <blockquote>"Excellent place to go. Friendly people and a professional job every single time. You won't leave disappointed."</blockquote>
+        <div class="review-meta">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="reviewer-icon">M</div>
+            <div>
+              <div class="reviewer-name">Michael S.</div>
+              <div class="reviewer-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <blockquote>"I've been going here for over 40 years. They do a great job at a great price. There is a reason this place has been around so long — real barbers, real quality."</blockquote>
+        <div class="review-meta">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="reviewer-icon">D</div>
+            <div>
+              <div class="reviewer-name">David K.</div>
+              <div class="reviewer-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <blockquote>"Classic barbershop experience. You can still get a straight razor shave if desired. Most cuts are by the numbers but they can do custom work if needed. Bring cash — they don't take cards."</blockquote>
+        <div class="review-meta">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="reviewer-icon">T</div>
+            <div>
+              <div class="reviewer-name">Tom W.</div>
+              <div class="reviewer-stars">★★★★☆</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <blockquote>"Absolutely love this place. Marcus always knows exactly what I want without me having to explain much. Great atmosphere, super clean shop, and prices that can't be beat. Won't go anywhere else."</blockquote>
+        <div class="review-meta">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="reviewer-icon">A</div>
+            <div>
+              <div class="reviewer-name">Andre L.</div>
+              <div class="reviewer-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <div class="review-card">
+        <blockquote>"Took my son here for his first real haircut and he walked out looking like a little gentleman. David was so patient and gentle. We're regulars now. Couldn't recommend this place more highly."</blockquote>
+        <div class="review-meta">
+          <div style="display:flex;align-items:center;gap:10px">
+            <div class="reviewer-icon">P</div>
+            <div>
+              <div class="reviewer-name">Patricia G.</div>
+              <div class="reviewer-stars">★★★★★</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Walnut Hill Barber Shop</div>
+    <div class="footer-addr">16527 S Frederick Ave, Gaithersburg, MD 20877 &nbsp;|&nbsp; (301) 926-9402</div>
+    <div class="footer-copy">&copy; 2026 Walnut Hill Barber Shop. All rights reserved.</div>
+  </footer>
+</div><!-- /page-reviews -->
+
+
+<!-- ════════════════════════════════════ -->
+<!--  PAGE: CONTACT US                    -->
+<!-- ════════════════════════════════════ -->
+<div class="page" id="page-contact">
+
+  <div class="hero">
+    <img class="hero-img" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3l0mT8hW72cxB53Nq2ogko-BMNxBep37xOwYsEaifVrG07fJx97A7dtd1fqiGwJXoZ5cf4jO1zcr7IxAXDNqfFOvLEuU1eU3-18oKz-Saw7a3jkOKKWuMVnkUCYst6LxZMIqXxnQQoM6CpLbRhklVVtuV3z6mXhiqu5qpZQblH_2-EpLveG9ISEgqlm0_TpLP2clSh7KlIm2aWfi_XgZYY6NFILkAnenmzPPiJgSGc_DLAg9DxsIAOXK6wLbXw7e_J4yjoGDJsHOl21SFx79LN0BSkIUQvijWuVaInDL7qvsCsJlMQ8l9UQf077FupY99dCL3RE-Q4_NtF1DxzMdbwM2EVsKeSOgMmO6vhpNSC3x4HQgzxLrz4IsgW97h4ZHHiFVX4vB7FexNdFQjEl3ut7cGbgaZh4wmB8fVfZAZ_QFk0&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Contact Us">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <h1>Contact Us</h1>
+      <p>We'd love to hear from you. Reach out any time.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="contact-layout">
+
+      <!-- Left: Info -->
+      <div class="contact-info">
+        <h2>Get In Touch</h2>
+        <p>Have a question, need to reach us directly, or want to follow our latest work? We're always happy to connect.</p>
+
+        <div class="contact-detail">
+          <div class="contact-icon">📍</div>
+          <div class="contact-detail-text">
+            <strong>Address</strong>
+            <span>16527 S Frederick Ave<br>Gaithersburg, MD 20877</span>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <div class="contact-icon">📞</div>
+          <div class="contact-detail-text">
+            <strong>Phone</strong>
+            <span><a href="tel:+13019269402">(301) 926-9402</a></span>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <div class="contact-icon">🕐</div>
+          <div class="contact-detail-text">
+            <strong>Hours</strong>
+            <span>Mon–Fri: 9:00 AM – 6:00 PM<br>Sat: 8:00 AM – 5:00 PM<br>Sun: Closed</span>
+          </div>
+        </div>
+
+        <div class="contact-detail">
+          <div class="contact-icon">💳</div>
+          <div class="contact-detail-text">
+            <strong>Payment</strong>
+            <span>Cash &amp; check only. No cards or mobile pay.</span>
+          </div>
+        </div>
+
+        <a href="https://www.instagram.com/p/DN8yyowATdr/" target="_blank" rel="noopener" class="btn-instagram">
+          <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><path d="M16 11.37A4 4 0 1 1 12.63 8 4 4 0 0 1 16 11.37z"/><line x1="17.5" y1="6.5" x2="17.51" y2="6.5"/></svg>
+          Follow Us on Instagram
+        </a>
+      </div>
+
+      <!-- Right: Form -->
+      <div class="contact-form-wrap">
+        <div id="contact-form-inner">
+          <div style="margin-bottom:28px">
+            <div class="section-title" style="margin-bottom:0">Send a Message</div>
+            <span class="gold-line" style="margin-bottom:0"></span>
+          </div>
+          <form id="contact-form" onsubmit="submitForm(event)">
+            <div class="form-group">
+              <label for="c-name">Your Name</label>
+              <input type="text" id="c-name" placeholder="John Smith" required>
+            </div>
+            <div class="form-group">
+              <label for="c-email">Email Address</label>
+              <input type="email" id="c-email" placeholder="john@example.com" required>
+            </div>
+            <div class="form-group">
+              <label for="c-phone">Phone Number</label>
+              <input type="tel" id="c-phone" placeholder="(301) 555-0100">
+            </div>
+            <div class="form-group">
+              <label for="c-subject">Subject</label>
+              <select id="c-subject">
+                <option value="">Select a subject…</option>
+                <option>General Inquiry</option>
+                <option>Appointment Question</option>
+                <option>Services &amp; Pricing</option>
+                <option>Other</option>
+              </select>
+            </div>
+            <div class="form-group">
+              <label for="c-message">Message</label>
+              <textarea id="c-message" placeholder="How can we help you?" required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Send Message</button>
+          </form>
+        </div>
+        <div class="form-success" id="form-success">
+          <div class="check">✓</div>
+          <h3>Message Sent!</h3>
+          <p>Thank you for reaching out. We'll get back to you within one business day.</p>
+        </div>
+      </div>
+
+    </div>
+  </div>
+
+  <footer>
+    <div class="footer-brand">Walnut Hill Barber Shop</div>
+    <div class="footer-addr">16527 S Frederick Ave, Gaithersburg, MD 20877 &nbsp;|&nbsp; (301) 926-9402</div>
+    <div class="footer-copy">&copy; 2026 Walnut Hill Barber Shop. All rights reserved.</div>
+  </footer>
+</div><!-- /page-contact -->
+
+
+<!-- ════════════════════════════════════ -->
+<!--  JAVASCRIPT                          -->
+<!-- ════════════════════════════════════ -->
+<script>
+/* ── PAGE NAVIGATION ── */
+function showPage(name) {
+  document.querySelectorAll('.page').forEach(p => p.classList.remove('active'));
+  document.querySelectorAll('.nav-tabs button, #mobile-menu button').forEach(b => {
+    b.classList.toggle('active', b.dataset.page === name);
+  });
+  var page = document.getElementById('page-' + name);
+  if (page) { page.classList.add('active'); window.scrollTo(0,0); }
+}
+
+document.querySelectorAll('[data-page]').forEach(function(btn) {
+  btn.addEventListener('click', function() {
+    showPage(this.dataset.page);
+    if (document.getElementById('mobile-menu').classList.contains('open')) {
+      toggleMobile();
+    }
+  });
+});
+
+/* ── HAMBURGER ── */
+function toggleMobile() {
+  document.getElementById('mobile-menu').classList.toggle('open');
+}
+document.getElementById('hamburger').addEventListener('click', toggleMobile);
+
+/* ── HOURS HIGHLIGHT ── */
+(function() {
+  var today = new Date().getDay();
+  var rows = document.querySelectorAll('#hours-table tr[data-day]');
+  rows.forEach(function(row) {
+    if (parseInt(row.dataset.day) === today) {
+      row.classList.add('today');
+      var dayCell = row.querySelector('td:first-child');
+      var pill = document.createElement('span');
+      pill.className = 'today-pill';
+      pill.textContent = 'Today';
+      dayCell.appendChild(pill);
+    }
+  });
+})();
+
+/* ── GUIDED SERVICES FLOW ── */
+var state = {
+  barber: null, barberRole: null,
+  service: null, servicePrice: 0, serviceDur: 0,
+  addons: []
+};
+
+function updateStepTrack(step) {
+  for (var i = 1; i <= 4; i++) {
+    var el = document.getElementById('track-' + i);
+    el.classList.remove('active','done');
+    if (i < step) el.classList.add('done');
+    if (i === step) el.classList.add('active');
+    if (i < 4) {
+      var conn = document.getElementById('conn-' + i);
+      conn.classList.toggle('done', i < step);
+    }
+  }
+}
+
+function showStep(num) {
+  document.querySelectorAll('.step-section').forEach(function(s){ s.classList.remove('visible'); });
+  for (var i = 1; i <= Math.min(num, 3); i++) {
+    var el = document.getElementById('step-' + i);
+    if (el) el.classList.add('visible');
+  }
+  updateStepTrack(num);
+}
+
+function updateSummary() {
+  document.getElementById('sum-barber').textContent = state.barber ? (state.barber + ' — ' + state.barberRole) : '—';
+  document.getElementById('sum-service').textContent = state.service || '—';
+
+  var addonsText = state.addons.length ? state.addons.join(', ') : 'None selected';
+  document.getElementById('sum-addons').textContent = addonsText;
+
+  var totalPrice = state.servicePrice;
+  var totalDur = state.serviceDur;
+  state.addons.forEach(function(name) {
+    var el = document.querySelector('.addon-option[data-addon="' + name + '"]');
+    if (el) {
+      totalPrice += parseInt(el.dataset.price) || 0;
+      totalDur += parseInt(el.dataset.dur) || 0;
+    }
+  });
+
+  document.getElementById('sum-price').textContent = '$' + totalPrice;
+  document.getElementById('sum-dur').textContent = 'Estimated time: ' + (totalDur || '—') + ' min';
+
+  var bookBtn = document.getElementById('btn-book');
+  bookBtn.disabled = !(state.barber && state.service);
+
+  var step = state.barber ? (state.service ? 3 : 2) : 1;
+  updateStepTrack(state.barber && state.service ? 4 : step);
+}
+
+/* Barber selection */
+document.querySelectorAll('.barber-card').forEach(function(card) {
+  card.addEventListener('click', function() {
+    document.querySelectorAll('.barber-card').forEach(function(c){ c.classList.remove('selected'); });
+    this.classList.add('selected');
+    state.barber = this.dataset.barber;
+    state.barberRole = this.dataset.barberRole;
+    showStep(2);
+    updateSummary();
+  });
+});
+
+/* Service selection */
+document.querySelectorAll('.service-option').forEach(function(opt) {
+  opt.addEventListener('click', function() {
+    document.querySelectorAll('.service-option').forEach(function(o){ o.classList.remove('selected'); });
+    this.classList.add('selected');
+    state.service = this.dataset.service;
+    state.servicePrice = parseInt(this.dataset.price) || 0;
+    state.serviceDur = parseInt(this.dataset.dur) || 0;
+    showStep(3);
+    updateSummary();
+  });
+});
+
+/* Add-on selection (multi-select) */
+document.querySelectorAll('.addon-option').forEach(function(opt) {
+  opt.addEventListener('click', function() {
+    this.classList.toggle('selected');
+    var name = this.dataset.addon;
+    var idx = state.addons.indexOf(name);
+    if (idx > -1) { state.addons.splice(idx, 1); }
+    else { state.addons.push(name); }
+    updateSummary();
+  });
+});
+
+/* Book Now */
+document.getElementById('btn-book').addEventListener('click', function() {
+  if (!this.disabled) {
+    alert('Thank you, ' + (state.barber ? 'you selected ' + state.barber : '') + '!\n\nPlease call us at (301) 926-9402 to confirm your appointment.\n\nWalnut Hill Barber Shop\n16527 S Frederick Ave, Gaithersburg, MD 20877');
+  }
+});
+
+/* Initial state */
+showStep(1);
+updateSummary();
+
+/* ── LIGHTBOX ── */
+function openLightbox(el) {
+  var img = el.querySelector('img');
+  if (!img) return;
+  document.getElementById('lightbox-img').src = img.src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow = 'hidden';
+}
+
+function closeLightbox() {
+  document.getElementById('lightbox').classList.remove('open');
+  document.getElementById('lightbox-img').src = '';
+  document.body.style.overflow = '';
+}
+
+document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+document.getElementById('lightbox').addEventListener('click', function(e) {
+  if (e.target === this) closeLightbox();
+});
+document.addEventListener('keydown', function(e) {
+  if (e.key === 'Escape') closeLightbox();
+});
+
+/* ── CONTACT FORM ── */
+function submitForm(e) {
+  e.preventDefault();
+  document.getElementById('contact-form-inner').style.display = 'none';
+  document.getElementById('form-success').style.display = 'block';
+}
+</script>
+
+</body>
+</html>
