@@ -1,0 +1,894 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Exclusive Cuts LLC — Premium Barbershop | Gaithersburg, MD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --bg:#080808;--bg2:#101010;--bg3:#181818;
+  --gold:#C9A84C;--gold-l:#E8C97A;
+  --text:#E8E8E8;--dim:#999;--nav-h:72px
+}
+html{scroll-behavior:smooth}
+body{background:var(--bg);color:var(--text);font-family:'Inter',sans-serif;font-size:16px;line-height:1.6;overflow-x:hidden}
+
+/* NAV */
+nav{position:fixed;top:0;left:0;right:0;z-index:100;height:var(--nav-h);background:rgba(8,8,8,.97);border-bottom:1px solid rgba(201,168,76,.2);display:flex;align-items:center;justify-content:space-between;padding:0 40px;backdrop-filter:blur(10px)}
+.nav-brand{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600;letter-spacing:.08em;color:var(--gold);white-space:nowrap}
+.nav-brand span{font-weight:300;color:var(--text)}
+.nav-tabs{display:flex;list-style:none;gap:0}
+.nav-tab{font-family:'Inter',sans-serif;font-size:.75rem;font-weight:500;letter-spacing:.1em;text-transform:uppercase;color:var(--dim);padding:8px 16px;cursor:pointer;position:relative;transition:color .3s;border:none;background:none}
+.nav-tab::after{content:'';position:absolute;bottom:-1px;left:16px;right:16px;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s ease}
+.nav-tab:hover{color:var(--text)}
+.nav-tab.active{color:var(--gold)}
+.nav-tab.active::after{transform:scaleX(1)}
+.hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;padding:8px;background:none;border:none}
+.hamburger span{display:block;width:24px;height:2px;background:var(--text);transition:all .3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(8,8,8,.98);border-bottom:1px solid rgba(201,168,76,.2);z-index:99;padding:16px 0;flex-direction:column}
+.mobile-menu.open{display:flex}
+.mobile-menu .nav-tab{padding:14px 32px;font-size:.88rem}
+.mobile-menu .nav-tab::after{left:32px;right:32px}
+
+/* PAGES */
+.page{display:none;opacity:0;min-height:100vh;padding-top:var(--nav-h)}
+.page.active{display:block;animation:fadeIn .45s ease forwards}
+@keyframes fadeIn{from{opacity:0;transform:translateY(10px)}to{opacity:1;transform:translateY(0)}}
+@media(prefers-reduced-motion:reduce){.page{animation:none;opacity:1}}
+
+/* HERO */
+.hero{position:relative;height:44vh;min-height:280px;overflow:hidden}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;object-position:center}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to bottom,rgba(8,8,8,.25) 0%,rgba(8,8,8,.93) 100%)}
+.hero-content{position:relative;z-index:1;display:flex;flex-direction:column;align-items:center;justify-content:flex-end;height:100%;padding:0 40px 52px;text-align:center}
+.hero-eyebrow{font-family:'Inter',sans-serif;font-size:.7rem;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,7vw,6rem);letter-spacing:.05em;line-height:1;color:var(--text)}
+.hero-sub{font-family:'Cormorant Garamond',serif;font-size:1.1rem;font-style:italic;color:var(--dim);margin-top:10px}
+
+/* LAYOUT */
+.container{max-width:1200px;margin:0 auto;padding:0 40px}
+.sec-header{text-align:center;padding:60px 0 44px}
+.sec-eyebrow{font-size:.7rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:10px}
+.sec-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(2rem,4vw,3.5rem);letter-spacing:.05em;color:var(--text)}
+.sec-line{width:56px;height:2px;background:var(--gold);margin:18px auto 0}
+
+/* FOOTER */
+footer{background:#050505;border-top:1px solid rgba(201,168,76,.12);padding:40px;text-align:center;margin-top:80px}
+.ft-brand{font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-weight:600;color:var(--gold);margin-bottom:6px}
+.ft-addr{font-size:.8rem;color:var(--dim);margin-bottom:10px}
+.ft-copy{font-size:.72rem;color:#444}
+
+/* ── SERVICES ── */
+.booking-layout{display:grid;grid-template-columns:1fr 340px;gap:40px;align-items:start;padding-bottom:80px}
+.flow-step{margin-bottom:44px;opacity:0;transform:translateY(18px);transition:opacity .4s ease,transform .4s ease;pointer-events:none}
+.flow-step.visible{opacity:1;transform:translateY(0);pointer-events:all}
+.step-hd{display:flex;align-items:center;gap:14px;margin-bottom:26px}
+.step-num{font-family:'Bebas Neue',sans-serif;font-size:3rem;color:var(--gold);line-height:1;min-width:44px}
+.step-lbl{font-family:'Cormorant Garamond',serif;font-size:1.45rem;font-weight:600;color:var(--text)}
+.step-sub{font-size:.8rem;color:var(--dim)}
+
+.barber-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:18px}
+.barber-card{background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:3px;padding:28px 20px;text-align:center;cursor:pointer;transition:all .3s ease;position:relative}
+.barber-card:hover{transform:translateY(-5px);box-shadow:0 14px 44px rgba(201,168,76,.15);border-color:rgba(201,168,76,.4)}
+.barber-card.selected{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 14px 44px rgba(201,168,76,.25)}
+.b-mono{width:76px;height:76px;border-radius:50%;background:linear-gradient(135deg,rgba(201,168,76,.18),rgba(201,168,76,.04));border:1px solid rgba(201,168,76,.3);display:flex;align-items:center;justify-content:center;margin:0 auto 14px;font-family:'Cormorant Garamond',serif;font-size:1.9rem;font-weight:600;color:var(--gold)}
+.b-name{font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.05em;color:var(--text);margin-bottom:4px}
+.b-role{font-size:.72rem;color:var(--gold);letter-spacing:.1em;text-transform:uppercase;margin-bottom:6px}
+.b-spec{font-size:.78rem;color:var(--dim);font-style:italic}
+
+.svc-options{display:grid;grid-template-columns:repeat(auto-fill,minmax(165px,1fr));gap:14px}
+.svc-opt{background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:3px;padding:22px 18px;cursor:pointer;transition:all .3s ease;position:relative;overflow:hidden}
+.svc-opt::after{content:'';position:absolute;bottom:0;left:0;right:0;height:2px;background:var(--gold);transform:scaleX(0);transition:transform .3s ease}
+.svc-opt:hover{transform:translateY(-3px);box-shadow:0 10px 30px rgba(201,168,76,.12);border-color:rgba(201,168,76,.3)}
+.svc-opt:hover::after,.svc-opt.selected::after{transform:scaleX(1)}
+.svc-opt.selected{border-color:var(--gold);box-shadow:0 0 0 1px var(--gold),0 8px 28px rgba(201,168,76,.18)}
+.svc-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:.04em;color:var(--text);margin-bottom:6px}
+.svc-price{font-family:'Cormorant Garamond',serif;font-size:1.5rem;color:var(--gold);font-weight:600;margin-bottom:3px}
+.svc-dur{font-size:.74rem;color:var(--dim);letter-spacing:.04em}
+
+.addon-opts{display:grid;grid-template-columns:1fr 1fr;gap:11px}
+.addon-opt{background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:3px;padding:14px 18px;cursor:pointer;transition:all .3s;display:flex;align-items:center;gap:13px}
+.addon-opt:hover{border-color:rgba(201,168,76,.3);transform:translateY(-2px)}
+.addon-opt.selected{border-color:var(--gold);background:rgba(201,168,76,.05)}
+.addon-chk{width:20px;height:20px;border:1.5px solid rgba(255,255,255,.2);border-radius:3px;display:flex;align-items:center;justify-content:center;flex-shrink:0;transition:all .2s}
+.addon-opt.selected .addon-chk{background:var(--gold);border-color:var(--gold)}
+.chk-mark{display:none;color:#080808;font-size:11px;font-weight:700;line-height:1}
+.addon-opt.selected .chk-mark{display:block}
+.addon-nm{font-size:.88rem;font-weight:500;color:var(--text);margin-bottom:2px}
+.addon-pr{font-size:.76rem;color:var(--gold)}
+
+/* SUMMARY PANEL */
+.summary-panel{background:#0c0c0c;border:1px solid rgba(201,168,76,.25);border-radius:3px;padding:30px;position:sticky;top:calc(var(--nav-h) + 18px);opacity:0;transform:translateX(18px);transition:opacity .4s ease,transform .4s ease}
+.summary-panel.visible{opacity:1;transform:translateX(0)}
+.sum-title{font-family:'Bebas Neue',sans-serif;font-size:1.35rem;letter-spacing:.08em;color:var(--gold);margin-bottom:22px;padding-bottom:14px;border-bottom:1px solid rgba(201,168,76,.18)}
+.sum-row{display:flex;justify-content:space-between;align-items:flex-start;margin-bottom:11px;gap:10px}
+.sum-lbl{font-size:.72rem;letter-spacing:.08em;text-transform:uppercase;color:var(--dim);min-width:80px}
+.sum-val{font-size:.88rem;color:var(--text);text-align:right;flex:1}
+.sum-val.ph{color:#444;font-style:italic}
+.sum-div{height:1px;background:rgba(255,255,255,.06);margin:14px 0}
+.sum-total{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:6px}
+.sum-total-lbl{font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.08em;color:var(--dim)}
+.sum-total-price{font-family:'Cormorant Garamond',serif;font-size:2.1rem;font-weight:600;color:var(--gold)}
+.sum-dur-txt{font-size:.76rem;color:var(--dim);text-align:right;margin-bottom:22px}
+.book-btn{width:100%;padding:15px;background:var(--gold);color:#080808;border:none;border-radius:2px;font-family:'Bebas Neue',sans-serif;font-size:1.05rem;letter-spacing:.15em;cursor:pointer;transition:all .3s ease}
+.book-btn:hover:not(:disabled){background:var(--gold-l);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.4)}
+.book-btn:disabled{opacity:.35;cursor:not-allowed}
+
+/* ── TEAM ── */
+.team-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:28px;padding-bottom:80px}
+.team-card{background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:3px;overflow:hidden;transition:all .3s ease}
+.team-card:hover{transform:translateY(-6px);box-shadow:0 20px 60px rgba(201,168,76,.15);border-color:rgba(201,168,76,.28)}
+.team-photo{height:220px;background:linear-gradient(135deg,#181818,#0d0d0d);display:flex;align-items:center;justify-content:center}
+.team-mono{width:110px;height:110px;border-radius:50%;background:linear-gradient(135deg,rgba(201,168,76,.14),rgba(201,168,76,.03));border:2px solid rgba(201,168,76,.28);display:flex;align-items:center;justify-content:center;font-family:'Cormorant Garamond',serif;font-size:3.2rem;font-weight:300;color:var(--gold)}
+.team-body{padding:26px}
+.team-name{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;letter-spacing:.04em;color:var(--text);margin-bottom:4px}
+.team-role{font-size:.72rem;letter-spacing:.12em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.team-bio{font-size:.85rem;color:var(--dim);line-height:1.75;margin-bottom:18px}
+.team-tags{display:flex;flex-wrap:wrap;gap:7px}
+.team-tag{font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;color:var(--gold);border:1px solid rgba(201,168,76,.28);padding:3px 9px;border-radius:2px}
+
+/* ── LOCATION ── */
+.loc-grid{display:grid;grid-template-columns:1fr 1fr;gap:48px;padding-bottom:60px}
+.hrs-table{width:100%;border-collapse:collapse}
+.hrs-table td{padding:11px 0;border-bottom:1px solid rgba(255,255,255,.05);font-size:.87rem}
+.hrs-table td:first-child{color:var(--dim);font-weight:500}
+.hrs-table td:last-child{text-align:right;color:var(--text)}
+.hrs-table tr.today td{color:var(--gold);font-weight:600}
+.today-pill{display:inline-flex;align-items:center;background:rgba(201,168,76,.14);border:1px solid rgba(201,168,76,.38);color:var(--gold);font-size:.6rem;letter-spacing:.12em;text-transform:uppercase;padding:2px 7px;border-radius:20px;margin-left:7px;vertical-align:middle}
+.info-blk{margin-top:28px}
+.info-lbl{font-size:.68rem;letter-spacing:.16em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.info-val{font-size:.9rem;color:var(--text);line-height:1.65}
+.info-val a{color:inherit;text-decoration:none}
+.map-wrap{border-radius:3px;overflow:hidden;border:1px solid rgba(255,255,255,.08);height:280px;margin-bottom:28px}
+.map-wrap iframe{width:100%;height:100%;border:none;filter:grayscale(40%) contrast(1.1)}
+
+.gallery-section{padding-bottom:80px}
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(210px,1fr));gap:14px}
+.gal-item{aspect-ratio:1;overflow:hidden;border-radius:3px;cursor:pointer;position:relative}
+.gal-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+.gal-item:hover img{transform:scale(1.07)}
+.gal-item::after{content:'';position:absolute;inset:0;background:transparent;transition:background .3s}
+.gal-item:hover::after{background:rgba(8,8,8,.18)}
+
+/* LIGHTBOX */
+.lightbox{display:none;position:fixed;inset:0;z-index:200;background:rgba(0,0,0,.93);align-items:center;justify-content:center;padding:40px}
+.lightbox.open{display:flex}
+.lb-img{max-width:90vw;max-height:86vh;object-fit:contain;border-radius:2px}
+.lb-close{position:absolute;top:22px;right:22px;background:none;border:1px solid rgba(255,255,255,.2);color:var(--text);width:40px;height:40px;border-radius:50%;font-size:1.1rem;cursor:pointer;display:flex;align-items:center;justify-content:center;transition:all .2s}
+.lb-close:hover{border-color:var(--gold);color:var(--gold)}
+
+/* ── REVIEWS ── */
+.reviews-wrap{padding-bottom:80px}
+.rating-hero{text-align:center;padding:40px 0 56px}
+.rating-score{font-family:'Bebas Neue',sans-serif;font-size:clamp(5rem,11vw,9rem);color:var(--gold);line-height:1;margin-bottom:14px}
+.rating-stars{font-size:2rem;color:var(--gold);letter-spacing:4px;margin-bottom:10px}
+.rating-cnt{font-size:.83rem;color:var(--dim)}
+.rating-bars{max-width:370px;margin:30px auto 0}
+.bar-row{display:flex;align-items:center;gap:11px;margin-bottom:9px}
+.bar-lbl{font-size:.78rem;color:var(--dim);min-width:36px;text-align:right}
+.bar-track{flex:1;height:4px;background:rgba(255,255,255,.07);border-radius:2px;overflow:hidden}
+.bar-fill{height:100%;background:var(--gold);border-radius:2px}
+.bar-cnt{font-size:.76rem;color:var(--dim);min-width:24px}
+
+.feat-review{background:linear-gradient(135deg,rgba(201,168,76,.07),rgba(201,168,76,.02));border:1px solid rgba(201,168,76,.24);border-radius:3px;padding:38px;margin-bottom:44px;position:relative}
+.feat-review::before{content:'"';position:absolute;top:12px;left:28px;font-family:'Cormorant Garamond',serif;font-size:7rem;color:rgba(201,168,76,.12);line-height:1}
+.feat-lbl{font-size:.66rem;letter-spacing:.2em;text-transform:uppercase;color:var(--gold);margin-bottom:14px}
+.feat-stars{color:var(--gold);font-size:.9rem;letter-spacing:2px;margin-bottom:10px}
+.feat-txt{font-family:'Cormorant Garamond',serif;font-size:1.2rem;font-style:italic;color:var(--text);line-height:1.75;margin-bottom:18px}
+.feat-auth{font-size:.8rem;color:var(--dim)}
+
+.reviews-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:22px}
+.rev-card{background:var(--bg3);border:1px solid rgba(255,255,255,.05);border-radius:3px;padding:26px;transition:all .3s ease}
+.rev-card:hover{transform:translateY(-4px);box-shadow:0 12px 40px rgba(201,168,76,.1);border-color:rgba(201,168,76,.18)}
+.rev-stars{color:var(--gold);font-size:.83rem;letter-spacing:2px;margin-bottom:11px}
+.rev-txt{font-size:.86rem;color:var(--dim);line-height:1.72;margin-bottom:14px}
+.rev-auth{font-size:.76rem;color:var(--text);font-weight:500}
+
+/* ── CONTACT ── */
+.contact-layout{display:grid;grid-template-columns:1fr 1.15fr;gap:56px;padding-bottom:80px}
+.ct-info-blk{margin-bottom:32px}
+.ct-lbl{font-size:.68rem;letter-spacing:.18em;text-transform:uppercase;color:var(--gold);margin-bottom:7px}
+.ct-val{font-size:.9rem;color:var(--text);line-height:1.65}
+.ct-val a{color:inherit;text-decoration:none}
+.ig-btn{display:inline-flex;align-items:center;gap:10px;padding:13px 26px;background:linear-gradient(135deg,#833ab4,#fd1d1d 50%,#fcb045);color:#fff;border:none;border-radius:3px;font-family:'Bebas Neue',sans-serif;font-size:.95rem;letter-spacing:.12em;cursor:pointer;text-decoration:none;transition:all .3s ease;margin-top:6px}
+.ig-btn:hover{transform:translateY(-2px);box-shadow:0 8px 24px rgba(253,29,29,.3)}
+.ct-form-wrap{background:var(--bg3);border:1px solid rgba(255,255,255,.06);border-radius:3px;padding:38px}
+.ct-form-title{font-family:'Bebas Neue',sans-serif;font-size:1.55rem;letter-spacing:.07em;color:var(--text);margin-bottom:6px}
+.ct-form-sub{font-size:.8rem;color:var(--dim);margin-bottom:28px}
+.form-grp{margin-bottom:18px}
+.form-lbl{display:block;font-size:.68rem;letter-spacing:.12em;text-transform:uppercase;color:var(--dim);margin-bottom:7px}
+.form-inp,.form-ta{width:100%;background:rgba(255,255,255,.04);border:1px solid rgba(255,255,255,.1);border-radius:2px;color:var(--text);font-family:'Inter',sans-serif;font-size:.88rem;padding:11px 15px;transition:border-color .2s;outline:none}
+.form-inp:focus,.form-ta:focus{border-color:rgba(201,168,76,.5)}
+.form-ta{resize:vertical;min-height:118px}
+.form-sub-btn{width:100%;padding:14px;background:var(--gold);color:#080808;border:none;border-radius:2px;font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:.15em;cursor:pointer;transition:all .3s ease;margin-top:6px}
+.form-sub-btn:hover{background:var(--gold-l);transform:translateY(-2px);box-shadow:0 8px 24px rgba(201,168,76,.35)}
+.form-success{display:none;text-align:center;padding:44px 20px}
+.form-success.show{display:block}
+.success-ico{font-size:2.8rem;margin-bottom:14px;color:var(--gold)}
+.success-ttl{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;letter-spacing:.07em;color:var(--gold);margin-bottom:8px}
+.success-txt{font-size:.86rem;color:var(--dim)}
+
+/* RESPONSIVE */
+@media(max-width:960px){
+  nav{padding:0 20px}
+  .nav-tabs{display:none}
+  .hamburger{display:flex}
+  .container{padding:0 20px}
+  .booking-layout{grid-template-columns:1fr}
+  .summary-panel{position:static;transform:none;opacity:1;order:-1}
+  .summary-panel.visible{transform:none}
+  .team-grid{grid-template-columns:1fr}
+  .loc-grid{grid-template-columns:1fr}
+  .reviews-grid{grid-template-columns:1fr}
+  .contact-layout{grid-template-columns:1fr}
+  .hero-content{padding:0 20px 40px}
+  footer{padding:32px 20px}
+  .barber-cards{grid-template-columns:1fr}
+}
+@media(max-width:600px){
+  .addon-opts{grid-template-columns:1fr}
+  .gallery-grid{grid-template-columns:repeat(2,1fr)}
+  .svc-options{grid-template-columns:1fr 1fr}
+  .ct-form-wrap{padding:26px 18px}
+}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">Exclusive <span>Cuts</span></div>
+  <ul class="nav-tabs">
+    <li><button class="nav-tab active" data-page="services">Services</button></li>
+    <li><button class="nav-tab" data-page="team">Our Team</button></li>
+    <li><button class="nav-tab" data-page="location">Location &amp; Hours</button></li>
+    <li><button class="nav-tab" data-page="reviews">Reviews</button></li>
+    <li><button class="nav-tab" data-page="contact">Contact Us</button></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="nav-tab active" data-page="services">Services</button>
+  <button class="nav-tab" data-page="team">Our Team</button>
+  <button class="nav-tab" data-page="location">Location &amp; Hours</button>
+  <button class="nav-tab" data-page="reviews">Reviews</button>
+  <button class="nav-tab" data-page="contact">Contact Us</button>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox">
+  <button class="lb-close" id="lbClose">&#10005;</button>
+  <img class="lb-img" id="lbImg" src="" alt="Shop photo">
+</div>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PAGE: SERVICES                             -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="page active" id="page-services">
+  <div class="hero">
+    <img class="hero-img" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3k4QNIWYwmcUtirsFF-CmnSu3PJuQq9DFR0B7m1SkCwd2NiBXeNXegVZHc6iEWFJj4fZnnxNIl-lHWibFfO5cUuqX-zTWVTCqAQ5Et-pzR1cRtyb04pz-EwUoDXsO3OQ2HxD1UQIZsiGf7ef1LtshSaw3XPvCqm6-UXnPPaaRnXOALM3BI08iaQKpNsZIFhS3S5UcAfKQ6R3-TN-LJytD8jtWBBIRP6DKSE_OJH31Ze_9oMMQIZDD02nkknv5u1dPg6BAXtk3q60scHFdDEmjuLGawlihfzVmIUJ0BB3lpJj0JtvyepzUDbjtEMcQrtHFWNIfUsxU8WE1kAHaVjESCv9VeffxnM_YRV_b_vzoUWKh9npUp7hBNKh2QGSp7eKuT1QnQkQ5zxl2VGrpHF17sv2KH3YtmRJfqmMGLRVLLWSA&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Exclusive Cuts LLC">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Book Your Experience</p>
+      <h1 class="hero-title">Services</h1>
+      <p class="hero-sub">Precision cuts. Flawless fades. Timeless style.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="sec-header">
+      <p class="sec-eyebrow">Guided Booking</p>
+      <h2 class="sec-title">Build Your Appointment</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="booking-layout">
+      <!-- STEPS -->
+      <div>
+        <!-- STEP 1: BARBER -->
+        <div class="flow-step visible" id="step1">
+          <div class="step-hd">
+            <div class="step-num">01</div>
+            <div>
+              <div class="step-lbl">Choose Your Barber</div>
+              <div class="step-sub">Select the stylist that fits your vibe</div>
+            </div>
+          </div>
+          <div class="barber-cards">
+            <div class="barber-card" data-barber="Steve Vargas" onclick="selectBarber(this)">
+              <div class="b-mono">SV</div>
+              <div class="b-name">Steve Vargas</div>
+              <div class="b-role">Owner &amp; Master Barber</div>
+              <div class="b-spec">Precision fades, classics &amp; family cuts</div>
+            </div>
+            <div class="barber-card" data-barber="Marcus Rivera" onclick="selectBarber(this)">
+              <div class="b-mono">MR</div>
+              <div class="b-name">Marcus Rivera</div>
+              <div class="b-role">Senior Barber</div>
+              <div class="b-spec">Skin fades, restyling &amp; beard sculpting</div>
+            </div>
+            <div class="barber-card" data-barber="Terri Vargas" onclick="selectBarber(this)">
+              <div class="b-mono">TV</div>
+              <div class="b-name">Terri Vargas</div>
+              <div class="b-role">Licensed Stylist &amp; Co-Owner</div>
+              <div class="b-spec">Women's styling, color &amp; textured hair</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: SERVICE -->
+        <div class="flow-step" id="step2">
+          <div class="step-hd">
+            <div class="step-num">02</div>
+            <div>
+              <div class="step-lbl">Choose Your Service</div>
+              <div class="step-sub">Select the cut that suits you best</div>
+            </div>
+          </div>
+          <div class="svc-options">
+            <div class="svc-opt" data-service="Haircut" data-price="25" data-mins="30" onclick="selectService(this)">
+              <div class="svc-name">Haircut</div>
+              <div class="svc-price">$25</div>
+              <div class="svc-dur">30 min</div>
+            </div>
+            <div class="svc-opt" data-service="Skin Fade" data-price="35" data-mins="45" onclick="selectService(this)">
+              <div class="svc-name">Skin Fade</div>
+              <div class="svc-price">$35</div>
+              <div class="svc-dur">45 min</div>
+            </div>
+            <div class="svc-opt" data-service="Buzz Cut" data-price="20" data-mins="20" onclick="selectService(this)">
+              <div class="svc-name">Buzz Cut</div>
+              <div class="svc-price">$20</div>
+              <div class="svc-dur">20 min</div>
+            </div>
+            <div class="svc-opt" data-service="Restyle / Full Transformation" data-price="45" data-mins="60" onclick="selectService(this)">
+              <div class="svc-name">Restyle / Full Transformation</div>
+              <div class="svc-price">$45</div>
+              <div class="svc-dur">60 min</div>
+            </div>
+            <div class="svc-opt" data-service="Kids Cut" data-price="20" data-mins="30" onclick="selectService(this)">
+              <div class="svc-name">Kids Cut</div>
+              <div class="svc-price">$20</div>
+              <div class="svc-dur">30 min</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: ADD-ONS -->
+        <div class="flow-step" id="step3">
+          <div class="step-hd">
+            <div class="step-num">03</div>
+            <div>
+              <div class="step-lbl">Add-Ons</div>
+              <div class="step-sub">Enhance your experience — select any that apply</div>
+            </div>
+          </div>
+          <div class="addon-opts">
+            <div class="addon-opt" data-addon="Beard Trim" data-price="10" data-mins="15" onclick="toggleAddon(this)">
+              <div class="addon-chk"><span class="chk-mark">&#10003;</span></div>
+              <div><div class="addon-nm">Beard Trim</div><div class="addon-pr">+$10 &middot; 15 min</div></div>
+            </div>
+            <div class="addon-opt" data-addon="Line-up / Edge" data-price="8" data-mins="10" onclick="toggleAddon(this)">
+              <div class="addon-chk"><span class="chk-mark">&#10003;</span></div>
+              <div><div class="addon-nm">Line-up / Edge</div><div class="addon-pr">+$8 &middot; 10 min</div></div>
+            </div>
+            <div class="addon-opt" data-addon="Skin Fade Upgrade" data-price="10" data-mins="15" id="sfUpgrade" onclick="toggleAddon(this)">
+              <div class="addon-chk"><span class="chk-mark">&#10003;</span></div>
+              <div><div class="addon-nm">Skin Fade Upgrade</div><div class="addon-pr">+$10 &middot; 15 min</div></div>
+            </div>
+            <div class="addon-opt" data-addon="Wash &amp; Style" data-price="12" data-mins="15" onclick="toggleAddon(this)">
+              <div class="addon-chk"><span class="chk-mark">&#10003;</span></div>
+              <div><div class="addon-nm">Wash &amp; Style</div><div class="addon-pr">+$12 &middot; 15 min</div></div>
+            </div>
+            <div class="addon-opt" data-addon="Eyebrow Cleanup" data-price="8" data-mins="10" onclick="toggleAddon(this)">
+              <div class="addon-chk"><span class="chk-mark">&#10003;</span></div>
+              <div><div class="addon-nm">Eyebrow Cleanup</div><div class="addon-pr">+$8 &middot; 10 min</div></div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUMMARY PANEL -->
+      <div class="summary-panel" id="summaryPanel">
+        <div class="sum-title">Your Booking Summary</div>
+        <div class="sum-row"><div class="sum-lbl">Barber</div><div class="sum-val ph" id="sumBarber">Not selected</div></div>
+        <div class="sum-row"><div class="sum-lbl">Service</div><div class="sum-val ph" id="sumService">Not selected</div></div>
+        <div class="sum-row"><div class="sum-lbl">Add-Ons</div><div class="sum-val ph" id="sumAddons">None</div></div>
+        <div class="sum-div"></div>
+        <div class="sum-total">
+          <div class="sum-total-lbl">Estimated Total</div>
+          <div class="sum-total-price" id="sumPrice">—</div>
+        </div>
+        <div class="sum-dur-txt" id="sumDur">— min estimated</div>
+        <button class="book-btn" id="bookBtn" disabled>Book Now</button>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="ft-brand">Exclusive Cuts LLC</div>
+    <div class="ft-addr">469 S Frederick Ave, Gaithersburg, MD 20877 &middot; (301) 990-7330</div>
+    <div class="ft-copy">&copy; 2026 Exclusive Cuts LLC. All rights reserved.</div>
+  </footer>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PAGE: TEAM                                 -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="page" id="page-team">
+  <div class="hero">
+    <img class="hero-img" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3k4QNIWYwmcUtirsFF-CmnSu3PJuQq9DFR0B7m1SkCwd2NiBXeNXegVZHc6iEWFJj4fZnnxNIl-lHWibFfO5cUuqX-zTWVTCqAQ5Et-pzR1cRtyb04pz-EwUoDXsO3OQ2HxD1UQIZsiGf7ef1LtshSaw3XPvCqm6-UXnPPaaRnXOALM3BI08iaQKpNsZIFhS3S5UcAfKQ6R3-TN-LJytD8jtWBBIRP6DKSE_OJH31Ze_9oMMQIZDD02nkknv5u1dPg6BAXtk3q60scHFdDEmjuLGawlihfzVmIUJ0BB3lpJj0JtvyepzUDbjtEMcQrtHFWNIfUsxU8WE1kAHaVjESCv9VeffxnM_YRV_b_vzoUWKh9npUp7hBNKh2QGSp7eKuT1QnQkQ5zxl2VGrpHF17sv2KH3YtmRJfqmMGLRVLLWSA&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Our Team">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">The Craft Behind Every Cut</p>
+      <h1 class="hero-title">Our Team</h1>
+      <p class="hero-sub">Seasoned hands. Sharp eyes. Uncompromising standards.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="sec-header">
+      <p class="sec-eyebrow">Meet the Artists</p>
+      <h2 class="sec-title">The People Behind the Chair</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-photo"><div class="team-mono">SV</div></div>
+        <div class="team-body">
+          <div class="team-name">Steve Vargas</div>
+          <div class="team-role">Owner &amp; Master Barber &middot; 20+ Years</div>
+          <p class="team-bio">Steve has been shaping the Gaithersburg community one cut at a time since 2003. Known for precision fades and meticulous detail, he's built a loyal following that spans generations — clients who started as kids now bring their own children to the chair. A true craftsman who takes pride in every single line.</p>
+          <div class="team-tags">
+            <span class="team-tag">Precision Fades</span>
+            <span class="team-tag">Classic Cuts</span>
+            <span class="team-tag">Kids Cuts</span>
+            <span class="team-tag">Line-ups</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo"><div class="team-mono">MR</div></div>
+        <div class="team-body">
+          <div class="team-name">Marcus Rivera</div>
+          <div class="team-role">Senior Barber &middot; 8 Years</div>
+          <p class="team-bio">Marcus brings a modern edge to a classic craft. Trained at the Maryland Barber Institute and specializing in high skin fades and contemporary restyling, his creative instincts and steady hand make him the go-to for clients looking to refresh — or completely reinvent — their look.</p>
+          <div class="team-tags">
+            <span class="team-tag">Skin Fades</span>
+            <span class="team-tag">Restyling</span>
+            <span class="team-tag">Beard Sculpting</span>
+            <span class="team-tag">Textured Hair</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card">
+        <div class="team-photo"><div class="team-mono">TV</div></div>
+        <div class="team-body">
+          <div class="team-name">Terri Vargas</div>
+          <div class="team-role">Licensed Stylist &amp; Co-Owner</div>
+          <p class="team-bio">Terri is the other half of the Exclusive Cuts legacy. A licensed cosmetologist and co-owner, she brings expertise in women's styling, color treatments, and textured hair care. Her warmth and technical skill ensure every client — male or female — feels completely at home in the chair.</p>
+          <div class="team-tags">
+            <span class="team-tag">Women's Styling</span>
+            <span class="team-tag">Color</span>
+            <span class="team-tag">Textured Hair</span>
+            <span class="team-tag">Blow-out</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="ft-brand">Exclusive Cuts LLC</div>
+    <div class="ft-addr">469 S Frederick Ave, Gaithersburg, MD 20877 &middot; (301) 990-7330</div>
+    <div class="ft-copy">&copy; 2026 Exclusive Cuts LLC. All rights reserved.</div>
+  </footer>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PAGE: LOCATION & HOURS                     -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="page" id="page-location">
+  <div class="hero">
+    <img class="hero-img" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3m3HgGbEzaUO83cZoyd1StLLksMCEA3-5BS3lcQUZ81Y-3f4khUZHuIWHK9Jett_Hv7C-uzDlNfjHNZHRpWiIVfgHPfbCLHdShy31mh1___YOVBEfs6mJ8hJhKazOTE6mruhPrhi5nw92JAhPbH9XXua4PhgvWgwriUOVy4q5natN4pRcQ54EywftEo9I0ZV0FtBixAGGyXV5rRWwZspmcHMTmWwLfoG24vTsr97cq9yJ14efCdLQOtnj_quJFD49Fjz-tCXncbHH12137yeUC88TZa1jbt5zwo_FKxoFJDIKmjNlCUs37tQCFYrTiMgHvydl_HB5Eb08Ed7_Z7SWvehPREs7oQ7KEtQzrriPo9qdVdx6aGLOxis2tHD9L_4J7rW-DGVQvKhfJUaY1si9wHyb1xpxl-lLb-AoTC2P8ZOQ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Exclusive Cuts Location">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">Find Us</p>
+      <h1 class="hero-title">Location &amp; Hours</h1>
+      <p class="hero-sub">Conveniently located in the heart of Gaithersburg.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="sec-header">
+      <p class="sec-eyebrow">Visit Us</p>
+      <h2 class="sec-title">Hours &amp; Directions</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="loc-grid">
+      <div>
+        <table class="hrs-table" id="hrsTable">
+          <tr data-day="0"><td>Sunday</td><td>Closed</td></tr>
+          <tr data-day="1"><td>Monday</td><td>9:00 AM – 7:00 PM</td></tr>
+          <tr data-day="2"><td>Tuesday</td><td>9:00 AM – 7:00 PM</td></tr>
+          <tr data-day="3"><td>Wednesday</td><td>9:00 AM – 7:00 PM</td></tr>
+          <tr data-day="4"><td>Thursday</td><td>9:00 AM – 7:00 PM</td></tr>
+          <tr data-day="5"><td>Friday</td><td>9:00 AM – 7:00 PM</td></tr>
+          <tr data-day="6"><td>Saturday</td><td>8:00 AM – 6:00 PM</td></tr>
+        </table>
+
+        <div class="info-blk">
+          <div class="info-lbl">Address</div>
+          <div class="info-val">469 S Frederick Ave<br>Gaithersburg, MD 20877</div>
+        </div>
+        <div class="info-blk">
+          <div class="info-lbl">Phone</div>
+          <div class="info-val"><a href="tel:+13019907330">(301) 990-7330</a></div>
+        </div>
+        <div class="info-blk">
+          <div class="info-lbl">Parking</div>
+          <div class="info-val">Free parking available directly in front of the shop and along S Frederick Ave.</div>
+        </div>
+        <div class="info-blk">
+          <div class="info-lbl">Accessibility</div>
+          <div class="info-val">Wheelchair accessible entrance. Call ahead if you need accommodations.</div>
+        </div>
+      </div>
+
+      <div>
+        <div class="map-wrap">
+          <iframe
+            src="https://maps.google.com/maps?q=469+S+Frederick+Ave,+Gaithersburg,+MD+20877&output=embed"
+            allowfullscreen loading="lazy"
+            referrerpolicy="no-referrer-when-downgrade"
+            title="Exclusive Cuts LLC on Google Maps">
+          </iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="gallery-section">
+      <div class="sec-header" style="padding-top:0">
+        <p class="sec-eyebrow">Inside the Shop</p>
+        <h2 class="sec-title">Photo Gallery</h2>
+        <div class="sec-line"></div>
+      </div>
+      <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="ft-brand">Exclusive Cuts LLC</div>
+    <div class="ft-addr">469 S Frederick Ave, Gaithersburg, MD 20877 &middot; (301) 990-7330</div>
+    <div class="ft-copy">&copy; 2026 Exclusive Cuts LLC. All rights reserved.</div>
+  </footer>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PAGE: REVIEWS                              -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="page" id="page-reviews">
+  <div class="hero">
+    <img class="hero-img" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kekIPPaZchqWbHDHpC_D2mUd5gjjpjhpGM38dOX7_58jAFfHLmgtKmGLseyzAUkRy_9Wm0wRpAD2kn7zhFaOgxWf3jakl2skMZ0N14_hIkRBCLRCylsBGHKXlorVPw1tPBkknL5Ju1-bBWlV9cotYiMU9Zk-kMkNUFjIufD5kgSML3OriYUD5dcEBF7zc9XmBlh7YzQbK2wBUKLSTsnq0ysLUqMUr3K9Hz6Fgn_7CluP-S64IVJwvSu8Mc07fM2f3shN4iJJQX5QvoNg8w777lI937llmOPaARg345-Ic6YaLIokLtp0LcmSsvAtIi9a8ps1xLboIov0cKDtKUMeq8ZsjdUGK0iF8SKmjFWz5VMa631Tm9tixVrSBKUCaQ2aFREuYjDzoFWoeecCyg9lu6kUwRydOPXQSGbEJBn8PZBQ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Customer Reviews">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">What Clients Say</p>
+      <h1 class="hero-title">Reviews</h1>
+      <p class="hero-sub">Trusted by the Gaithersburg community for over two decades.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="reviews-wrap">
+      <div class="rating-hero">
+        <div class="rating-score">4.4</div>
+        <div class="rating-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+        <div class="rating-cnt">Based on 86 Google Reviews</div>
+        <div class="rating-bars">
+          <div class="bar-row"><div class="bar-lbl">5 &#9733;</div><div class="bar-track"><div class="bar-fill" style="width:65%"></div></div><div class="bar-cnt">56</div></div>
+          <div class="bar-row"><div class="bar-lbl">4 &#9733;</div><div class="bar-track"><div class="bar-fill" style="width:20%"></div></div><div class="bar-cnt">17</div></div>
+          <div class="bar-row"><div class="bar-lbl">3 &#9733;</div><div class="bar-track"><div class="bar-fill" style="width:8%"></div></div><div class="bar-cnt">7</div></div>
+          <div class="bar-row"><div class="bar-lbl">2 &#9733;</div><div class="bar-track"><div class="bar-fill" style="width:4%"></div></div><div class="bar-cnt">3</div></div>
+          <div class="bar-row"><div class="bar-lbl">1 &#9733;</div><div class="bar-track"><div class="bar-fill" style="width:3%"></div></div><div class="bar-cnt">3</div></div>
+        </div>
+      </div>
+
+      <div class="feat-review">
+        <div class="feat-lbl">&#9733; Featured Review</div>
+        <div class="feat-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="feat-txt">I have known Steve since 2003 and he has been cutting my hair since. We are Family. Even though my hairline started going bald in 2010, I continue going to Steve — I make the hour drive from Baltimore to Exclusive Cuts. Steve also cuts my Son's hair. We talk about current events and sports, so I might spend hours at the shop. I recommend everyone to use Exclusive Cuts for their hair needs. It's a professional environment and you will be treated like Family.</p>
+        <div class="feat-auth">— Loyal Client &middot; Baltimore, MD &middot; 5 Stars</div>
+      </div>
+
+      <div class="reviews-grid">
+        <div class="rev-card">
+          <div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="rev-txt">Great barbershop. Steve is my guy. He cuts fast and efficient but not rushed. I'm always pleased with his work — he's definitely an experienced barber. Everyone here is friendly and nice. I've gone to several barbershops locally to find a good barber. Once I was recommended to come here, my search ended.</p>
+          <div class="rev-auth">— Google Reviewer &middot; 5 Stars</div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="rev-txt">I couldn't go to my normal barber because our schedules have been out of sync. Tried this shop — no wait, and my cut was great. Exactly what I asked for. My hairline is a naturally funny shape but the barber made it look super crisp and straight. Very pleased with the shop.</p>
+          <div class="rev-auth">— Google Reviewer &middot; 5 Stars</div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="rev-txt">A great place. I've been getting my hair cut here lately because of a friend, and I love coming here. The guy who owns it is very nice and cool. Overall I'm happy with the way he cuts my hair and takes his time. It's a good place to get your cut taken.</p>
+          <div class="rev-auth">— Google Reviewer &middot; 5 Stars</div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+          <p class="rev-txt">Great haircut at a good price. Super cool dude. My only gripe is that the hours on Google can sometimes be misleading. Best to call prior to coming. But the quality of the cut itself? Excellent — worth every dollar and then some.</p>
+          <div class="rev-auth">— Google Reviewer &middot; 4 Stars</div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="rev-txt">Walked in without an appointment on a Saturday and still got seen right away. Steve knows exactly what he's doing — clean fade, sharp line-up, genuine conversation. This is the kind of neighborhood barber you don't find often anymore. My new regular spot, no question.</p>
+          <div class="rev-auth">— Marcus T. &middot; 5 Stars</div>
+        </div>
+        <div class="rev-card">
+          <div class="rev-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+          <p class="rev-txt">I make the drive from Hanover, PA to Gaithersburg, MD to keep supporting my brother's business. Steve and Terri run a truly professional, family-oriented shop. The atmosphere is welcoming, the cuts are consistently top-tier, and you leave feeling like you stepped out of a premium lounge.</p>
+          <div class="rev-auth">— Loyal Client &middot; Hanover, PA &middot; 5 Stars</div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="ft-brand">Exclusive Cuts LLC</div>
+    <div class="ft-addr">469 S Frederick Ave, Gaithersburg, MD 20877 &middot; (301) 990-7330</div>
+    <div class="ft-copy">&copy; 2026 Exclusive Cuts LLC. All rights reserved.</div>
+  </footer>
+</section>
+
+<!-- ═══════════════════════════════════════════ -->
+<!-- PAGE: CONTACT                              -->
+<!-- ═══════════════════════════════════════════ -->
+<section class="page" id="page-contact">
+  <div class="hero">
+    <img class="hero-img" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3nC8hWrrHZekIPx7msZNfRvMBQ-G7hksutBtEz76_y2-x3GGL6om4edlTFFz5wv9pLtthGXK8PowwMuFOMH2iBrXHiLPMEWPgdltB_f29GMY0BtPiXya_lUsNjOmx9evM059cW_RBG-d3o6e3Z0XFe0FUBjD8ZgAu40ZE0OkG3VEn9bJu3BAxoc7mOkkwrsoeRoY_d0nC87gDMq-Bf-1nJvGkkQk29R28dYSlXofRny0nG7zv-3uciYwBBWo_D1QWo430icFrYpbS3H-KTbmvNu06LanUxJFC5tZwEaNo-UaAYtUgK2mw6V_zSIecAZibTAB9JDAWDPokP1rLlj0ULyxxt9nJ-6Mr5f_fVwn_rhc6bh6EZOXLWgXQv-XJ_q_zqVBU5cd88gHE3818ZdhYlNNSYvAoJWuDkrbvGNPwq0oA&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Contact Exclusive Cuts">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <p class="hero-eyebrow">We'd Love to Hear From You</p>
+      <h1 class="hero-title">Contact Us</h1>
+      <p class="hero-sub">Questions, bookings, or just saying hello.</p>
+    </div>
+  </div>
+
+  <div class="container">
+    <div class="sec-header">
+      <p class="sec-eyebrow">Get In Touch</p>
+      <h2 class="sec-title">Reach Out</h2>
+      <div class="sec-line"></div>
+    </div>
+
+    <div class="contact-layout">
+      <div>
+        <div class="ct-info-blk">
+          <div class="ct-lbl">Location</div>
+          <div class="ct-val">469 S Frederick Ave<br>Gaithersburg, MD 20877</div>
+        </div>
+        <div class="ct-info-blk">
+          <div class="ct-lbl">Phone</div>
+          <div class="ct-val"><a href="tel:+13019907330">(301) 990-7330</a></div>
+        </div>
+        <div class="ct-info-blk">
+          <div class="ct-lbl">Hours</div>
+          <div class="ct-val">Mon – Fri: 9:00 AM – 7:00 PM<br>Saturday: 8:00 AM – 6:00 PM<br>Sunday: Closed</div>
+        </div>
+        <div class="ct-info-blk">
+          <div class="ct-lbl">Follow Us</div>
+          <a href="https://www.instagram.com/p/CNy94qNB1Xr/" target="_blank" rel="noopener" class="ig-btn">
+            <svg width="18" height="18" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round"><rect x="2" y="2" width="20" height="20" rx="5" ry="5"/><circle cx="12" cy="12" r="4"/><circle cx="17.5" cy="6.5" r="1.5" fill="currentColor" stroke="none"/></svg>
+            Follow on Instagram
+          </a>
+        </div>
+      </div>
+
+      <div class="ct-form-wrap">
+        <div id="formFields">
+          <div class="ct-form-title">Send a Message</div>
+          <div class="ct-form-sub">We typically respond within a few hours.</div>
+          <form id="contactForm" onsubmit="submitForm(event)">
+            <div class="form-grp">
+              <label class="form-lbl" for="fname">Full Name</label>
+              <input class="form-inp" type="text" id="fname" placeholder="John Smith" required>
+            </div>
+            <div class="form-grp">
+              <label class="form-lbl" for="femail">Email Address</label>
+              <input class="form-inp" type="email" id="femail" placeholder="john@example.com" required>
+            </div>
+            <div class="form-grp">
+              <label class="form-lbl" for="fphone">Phone (Optional)</label>
+              <input class="form-inp" type="tel" id="fphone" placeholder="(301) 555-0100">
+            </div>
+            <div class="form-grp">
+              <label class="form-lbl" for="fmsg">Message</label>
+              <textarea class="form-ta" id="fmsg" placeholder="Questions, appointment requests, or anything else…" required></textarea>
+            </div>
+            <button type="submit" class="form-sub-btn">Send Message</button>
+          </form>
+        </div>
+        <div class="form-success" id="formSuccess">
+          <div class="success-ico">&#10003;</div>
+          <div class="success-ttl">Message Sent!</div>
+          <p class="success-txt">Thanks for reaching out. We'll get back to you within a few hours. See you in the chair!</p>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="ft-brand">Exclusive Cuts LLC</div>
+    <div class="ft-addr">469 S Frederick Ave, Gaithersburg, MD 20877 &middot; (301) 990-7330</div>
+    <div class="ft-copy">&copy; 2026 Exclusive Cuts LLC. All rights reserved.</div>
+  </footer>
+</section>
+
+<script>
+// ── NAV ──────────────────────────────────────
+const PAGES=['services','team','location','reviews','contact'];
+
+function showPage(id){
+  PAGES.forEach(p=>{
+    const el=document.getElementById('page-'+p);
+    el.classList.remove('active');
+    el.style.animation='none';
+  });
+  document.querySelectorAll('.nav-tab').forEach(t=>t.classList.toggle('active',t.dataset.page===id));
+  const target=document.getElementById('page-'+id);
+  target.style.animation='none';
+  target.offsetHeight;
+  target.style.animation='';
+  target.classList.add('active');
+  window.scrollTo(0,0);
+  closeMobile();
+}
+
+document.querySelectorAll('.nav-tab').forEach(btn=>btn.addEventListener('click',()=>showPage(btn.dataset.page)));
+
+const hamburger=document.getElementById('hamburger');
+const mobileMenu=document.getElementById('mobileMenu');
+hamburger.addEventListener('click',()=>{hamburger.classList.toggle('open');mobileMenu.classList.toggle('open');});
+function closeMobile(){hamburger.classList.remove('open');mobileMenu.classList.remove('open');}
+
+// ── HIGHLIGHT TODAY ───────────────────────────
+(function(){
+  const d=new Date().getDay();
+  document.querySelectorAll('#hrsTable tr').forEach(row=>{
+    if(parseInt(row.dataset.day)===d){
+      row.classList.add('today');
+      row.cells[0].innerHTML+=` <span class="today-pill">Today</span>`;
+    }
+  });
+})();
+
+// ── GALLERY ───────────────────────────────────
+const GALLERY=[
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3m3HgGbEzaUO83cZoyd1StLLksMCEA3-5BS3lcQUZ81Y-3f4khUZHuIWHK9Jett_Hv7C-uzDlNfjHNZHRpWiIVfgHPfbCLHdShy31mh1___YOVBEfs6mJ8hJhKazOTE6mruhPrhi5nw92JAhPbH9XXua4PhgvWgwriUOVy4q5natN4pRcQ54EywftEo9I0ZV0FtBixAGGyXV5rRWwZspmcHMTmWwLfoG24vTsr97cq9yJ14efCdLQOtnj_quJFD49Fjz-tCXncbHH12137yeUC88TZa1jbt5zwo_FKxoFJDIKmjNlCUs37tQCFYrTiMgHvydl_HB5Eb08Ed7_Z7SWvehPREs7oQ7KEtQzrriPo9qdVdx6aGLOxis2tHD9L_4J7rW-DGVQvKhfJUaY1si9wHyb1xpxl-lLb-AoTC2P8ZOQ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8',
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mJi5bA-ywNCPWUjrosw6tudFLcFcEqiV6hemU2KaegRhIGgmkHNMFdAtTZttHByxcLgbMaSq68Rfx3GuhwEUiuqMEv6VizuGWkLN-KjQ_8oeDxl3q7FzOFWkzMib0ua3RmexzfJ7BzXlKe2xtMnt7AU8iVpz8Gevxtt0rgFqBjTFEn0KNK59vz2dT6GdYe4hn1Hf9KtoVVudKBKGoooQ6RIOCBsfl2Eux90GXLJPSPHazWKX0HsWktgqG_WDRSs6dW1o-hwHNQOSL9eZ1PqS4XyJ5fFTO7BP_XFcXADpK30tgA8TRAdezp2sKMossnAliRo_oxeO6EjO7n6dr28wOyiwyEwFq4B5Kbyl88DGI8Koo0k6Vqqx3o-8m90vTkAIHOoQnOUmQ6rDyDCtOk2PQVzF7yYA4hkyt1JO-dfvb4Zg&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8',
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kekIPPaZchqWbHDHpC_D2mUd5gjjpjhpGM38dOX7_58jAFfHLmgtKmGLseyzAUkRy_9Wm0wRpAD2kn7zhFaOgxWf3jakl2skMZ0N14_hIkRBCLRCylsBGHKXlorVPw1tPBkknL5Ju1-bBWlV9cotYiMU9Zk-kMkNUFjIufD5kgSML3OriYUD5dcEBF7zc9XmBlh7YzQbK2wBUKLSTsnq0ysLUqMUr3K9Hz6Fgn_7CluP-S64IVJwvSu8Mc07fM2f3shN4iJJQX5QvoNg8w777lI937llmOPaARg345-Ic6YaLIokLtp0LcmSsvAtIi9a8ps1xLboIov0cKDtKUMeq8ZsjdUGK0iF8SKmjFWz5VMa631Tm9tixVrSBKUCaQ2aFREuYjDzoFWoeecCyg9lu6kUwRydOPXQSGbEJBn8PZBQ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8',
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3nC8hWrrHZekIPx7msZNfRvMBQ-G7hksutBtEz76_y2-x3GGL6om4edlTFFz5wv9pLtthGXK8PowwMuFOMH2iBrXHiLPMEWPgdltB_f29GMY0BtPiXya_lUsNjOmx9evM059cW_RBG-d3o6e3Z0XFe0FUBjD8ZgAu40ZE0OkG3VEn9bJu3BAxoc7mOkkwrsoeRoY_d0nC87gDMq-Bf-1nJvGkkQk29R28dYSlXofRny0nG7zv-3uciYwBBWo_D1QWo430icFrYpbS3H-KTbmvNu06LanUxJFC5tZwEaNo-UaAYtUgK2mw6V_zSIecAZibTAB9JDAWDPokP1rLlj0ULyxxt9nJ-6Mr5f_fVwn_rhc6bh6EZOXLWgXQv-XJ_q_zqVBU5cd88gHE3818ZdhYlNNSYvAoJWuDkrbvGNPwq0oA&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8',
+  'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3ngyZqmPlVIZP_G9cPcLfJ-3ipDyZ7Zg9uWMSm9zepz3d4HOwa-mgn8jls6bYQkBU38l7cERRyv4vA8YP0UuLbhL-LLuO1dP6iRmSLOMe0sX5mfIZLGeEtXySgHeihCXH1DfcVAWRDCKcWJKAjiV-F6sfJrM4XawX2tvd2Zdn-5ozh3Be2ydZeJH9iX8H6cEiJ9OBUsJvrpXjlThDyhBt5MscUqHSy32EVpAifThbfGORzZjRPP0KIorOFv4k_LaGQVOIRlsMKTaHzZWm8QMJcejoligVcIOuaBW_vc0F4Sh4M53lrNF1BZCuaHpK90oS2NZCyhFbkpGvWC5H4y1E6DGkR4WYUci_mT-r_i0l_gUDNZTSPLBGWITc-4BSzO5YcDXisx91JKOoNhRMThsATVmjdJbCmJxS5ENTkzDywrUw&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8'
+];
+
+(function(){
+  const g=document.getElementById('galleryGrid');
+  GALLERY.forEach((src,i)=>{
+    const d=document.createElement('div');
+    d.className='gal-item';
+    d.onclick=()=>openLB(src);
+    d.innerHTML=`<img src="${src}" alt="Exclusive Cuts Gallery ${i+1}" loading="lazy">`;
+    g.appendChild(d);
+  });
+})();
+
+// ── LIGHTBOX ──────────────────────────────────
+const lb=document.getElementById('lightbox');
+const lbImg=document.getElementById('lbImg');
+function openLB(src){lbImg.src=src;lb.classList.add('open');document.body.style.overflow='hidden';}
+function closeLB(){lb.classList.remove('open');document.body.style.overflow='';lbImg.src='';}
+document.getElementById('lbClose').onclick=closeLB;
+lb.addEventListener('click',e=>{if(e.target===lb)closeLB();});
+document.addEventListener('keydown',e=>{if(e.key==='Escape')closeLB();});
+
+// ── BOOKING FLOW ──────────────────────────────
+let selBarber=null,selService=null,basePrice=0,baseMins=0;
+const selAddons=[];
+
+function selectBarber(card){
+  document.querySelectorAll('.barber-card').forEach(c=>c.classList.remove('selected'));
+  card.classList.add('selected');
+  selBarber=card.dataset.barber;
+  document.getElementById('summaryPanel').classList.add('visible');
+  document.getElementById('step2').classList.add('visible');
+  updateSum();
+}
+
+function selectService(opt){
+  document.querySelectorAll('.svc-opt').forEach(o=>o.classList.remove('selected'));
+  opt.classList.add('selected');
+  selService=opt.dataset.service;
+  basePrice=parseInt(opt.dataset.price);
+  baseMins=parseInt(opt.dataset.mins);
+  document.getElementById('step3').classList.add('visible');
+  const sf=document.getElementById('sfUpgrade');
+  if(selService==='Skin Fade'){
+    sf.style.display='none';
+    const idx=selAddons.findIndex(a=>a.n==='Skin Fade Upgrade');
+    if(idx>-1){selAddons.splice(idx,1);sf.classList.remove('selected');}
+  } else {
+    sf.style.display='';
+  }
+  updateSum();
+}
+
+function toggleAddon(opt){
+  const n=opt.dataset.addon,p=parseInt(opt.dataset.price),m=parseInt(opt.dataset.mins);
+  if(opt.classList.contains('selected')){
+    opt.classList.remove('selected');
+    const i=selAddons.findIndex(a=>a.n===n);
+    if(i>-1)selAddons.splice(i,1);
+  } else {
+    opt.classList.add('selected');
+    selAddons.push({n,p,m});
+  }
+  updateSum();
+}
+
+function updateSum(){
+  const sb=document.getElementById('sumBarber');
+  sb.textContent=selBarber||'Not selected';
+  sb.className='sum-val'+(selBarber?'':' ph');
+
+  const ss=document.getElementById('sumService');
+  ss.textContent=selService||'Not selected';
+  ss.className='sum-val'+(selService?'':' ph');
+
+  const sa=document.getElementById('sumAddons');
+  sa.textContent=selAddons.length?selAddons.map(a=>a.n).join(', '):'None';
+  sa.className='sum-val'+(selAddons.length?'':' ph');
+
+  if(selService){
+    const ap=selAddons.reduce((s,a)=>s+a.p,0);
+    const am=selAddons.reduce((s,a)=>s+a.m,0);
+    document.getElementById('sumPrice').textContent='$'+(basePrice+ap);
+    document.getElementById('sumDur').textContent='~'+(baseMins+am)+' min estimated';
+    document.getElementById('bookBtn').disabled=false;
+  } else {
+    document.getElementById('sumPrice').textContent='—';
+    document.getElementById('sumDur').textContent='— min estimated';
+    document.getElementById('bookBtn').disabled=true;
+  }
+}
+
+document.getElementById('bookBtn').addEventListener('click',()=>{
+  if(!selBarber||!selService)return;
+  alert('Booking Request Submitted!\n\nBarber: '+selBarber+'\nService: '+selService+'\nAdd-ons: '+(selAddons.length?selAddons.map(a=>a.n).join(', '):'None')+'\n\nWe will reach out to confirm your appointment.\nCall us at (301) 990-7330.');
+});
+
+// ── CONTACT FORM ──────────────────────────────
+function submitForm(e){
+  e.preventDefault();
+  document.getElementById('formFields').style.display='none';
+  document.getElementById('formSuccess').classList.add('show');
+}
+</script>
+</body>
+</html>
