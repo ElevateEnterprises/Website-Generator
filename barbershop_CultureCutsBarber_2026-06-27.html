@@ -1,0 +1,838 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Culture Cuts Barbershop | Seattle, WA</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Bebas+Neue&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+*,*::before,*::after{box-sizing:border-box;margin:0;padding:0}
+:root{
+  --black:#080808;
+  --black2:#111111;
+  --black3:#1a1a1a;
+  --gold:#C9A84C;
+  --gold-light:#e0c070;
+  --gold-dim:rgba(201,168,76,0.15);
+  --text:#e8e8e8;
+  --text-dim:#999;
+  --nav-h:70px;
+}
+html{scroll-behavior:smooth}
+body{background:var(--black);color:var(--text);font-family:'Inter',sans-serif;font-weight:400;line-height:1.6;overflow-x:hidden}
+@media(prefers-reduced-motion:reduce){*{animation:none!important;transition:none!important}}
+
+/* ─── NAV ─── */
+nav{position:fixed;top:0;left:0;right:0;height:var(--nav-h);background:rgba(8,8,8,0.97);backdrop-filter:blur(12px);border-bottom:1px solid rgba(201,168,76,0.2);z-index:1000;display:flex;align-items:center;justify-content:space-between;padding:0 32px}
+.nav-brand{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--gold);letter-spacing:3px;cursor:pointer}
+.nav-links{display:flex;gap:4px}
+.nav-btn{background:none;border:none;color:var(--text-dim);font-family:'Inter',sans-serif;font-size:.78rem;font-weight:500;letter-spacing:1.5px;text-transform:uppercase;padding:8px 14px;cursor:pointer;position:relative;transition:color .3s}
+.nav-btn::after{content:'';position:absolute;bottom:0;left:50%;right:50%;height:2px;background:var(--gold);transition:left .3s,right .3s}
+.nav-btn:hover{color:var(--text)}
+.nav-btn.active{color:var(--gold)}
+.nav-btn.active::after{left:14px;right:14px}
+.hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:4px}
+.hamburger span{display:block;width:24px;height:2px;background:var(--gold);transition:transform .3s,opacity .3s}
+.hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+.hamburger.open span:nth-child(2){opacity:0}
+.hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+.mobile-menu{display:none;position:fixed;top:var(--nav-h);left:0;right:0;background:rgba(8,8,8,0.98);padding:16px 0;z-index:999;border-bottom:1px solid rgba(201,168,76,0.2)}
+.mobile-menu.open{display:block}
+.mobile-btn{display:block;width:100%;background:none;border:none;color:var(--text-dim);font-family:'Inter',sans-serif;font-size:.85rem;letter-spacing:2px;text-transform:uppercase;padding:14px 32px;text-align:left;cursor:pointer}
+.mobile-btn:hover,.mobile-btn.active{color:var(--gold)}
+@media(max-width:768px){.nav-links{display:none}.hamburger{display:flex}}
+
+/* ─── PAGES ─── */
+.page{display:none;opacity:0;transition:opacity .4s;padding-top:var(--nav-h);min-height:100vh}
+.page.active{display:block;animation:fadeIn .4s forwards}
+@keyframes fadeIn{from{opacity:0}to{opacity:1}}
+
+/* ─── HERO ─── */
+.hero{position:relative;height:420px;overflow:hidden;display:flex;align-items:flex-end;padding:0 0 48px 48px}
+.hero-img{position:absolute;inset:0;width:100%;height:100%;object-fit:cover;filter:brightness(.45)}
+.hero-overlay{position:absolute;inset:0;background:linear-gradient(to top,rgba(8,8,8,.92) 0%,rgba(8,8,8,.3) 60%,transparent 100%)}
+.hero-content{position:relative;z-index:1}
+.hero-eyebrow{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1rem;color:var(--gold);letter-spacing:3px;margin-bottom:8px}
+.hero-title{font-family:'Bebas Neue',sans-serif;font-size:clamp(3rem,8vw,5.5rem);letter-spacing:4px;line-height:1;color:#fff}
+@media(max-width:600px){.hero{height:300px;padding:0 0 32px 24px}}
+
+/* ─── SECTIONS ─── */
+.section{padding:72px 48px;max-width:1200px;margin:0 auto}
+.section-title{font-family:'Bebas Neue',sans-serif;font-size:2.4rem;letter-spacing:3px;color:var(--gold);margin-bottom:8px}
+.section-sub{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;color:var(--text-dim);margin-bottom:40px}
+@media(max-width:600px){.section{padding:48px 20px}}
+
+/* ─── SERVICES FLOW ─── */
+.flow-step{margin-bottom:48px;opacity:.4;pointer-events:none;transition:opacity .4s}
+.flow-step.unlocked{opacity:1;pointer-events:all}
+.step-label{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:3px;color:var(--gold);margin-bottom:20px;display:flex;align-items:center;gap:12px}
+.step-num{width:28px;height:28px;border:1px solid var(--gold);border-radius:50%;display:inline-flex;align-items:center;justify-content:center;font-size:.75rem}
+.barber-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:20px}
+.barber-select-card{background:var(--black2);border:1px solid #2a2a2a;border-radius:8px;padding:24px 20px;text-align:center;cursor:pointer;transition:border-color .3s,box-shadow .3s,transform .3s}
+.barber-select-card:hover{transform:translateY(-4px);border-color:var(--gold)}
+.barber-select-card.selected{border-color:var(--gold);box-shadow:0 0 20px rgba(201,168,76,0.35)}
+.barber-monogram{width:72px;height:72px;border-radius:50%;background:linear-gradient(135deg,#1a1a1a,#2a2a2a);border:2px solid var(--gold);display:flex;align-items:center;justify-content:center;margin:0 auto 12px;font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--gold)}
+.barber-select-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;color:#fff}
+.barber-select-role{font-size:.75rem;color:var(--text-dim);margin-top:4px}
+.service-cards{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.service-card-select{background:var(--black2);border:1px solid #2a2a2a;border-radius:8px;padding:20px;cursor:pointer;transition:border-color .3s,box-shadow .3s,transform .3s;position:relative;overflow:hidden}
+.service-card-select::after{content:'';position:absolute;bottom:0;left:0;right:100%;height:2px;background:var(--gold);transition:right .4s}
+.service-card-select:hover::after{right:0}
+.service-card-select:hover{transform:translateY(-3px)}
+.service-card-select.selected{border-color:var(--gold);box-shadow:0 0 16px rgba(201,168,76,0.3)}
+.sc-name{font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:2px;color:#fff;margin-bottom:4px}
+.sc-price{color:var(--gold);font-weight:600;font-size:.9rem}
+.sc-dur{font-size:.75rem;color:var(--text-dim);margin-top:4px}
+.addon-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:16px}
+.addon-card{background:var(--black2);border:1px solid #2a2a2a;border-radius:8px;padding:18px;cursor:pointer;transition:border-color .3s,transform .3s;display:flex;align-items:center;gap:14px}
+.addon-card:hover{transform:translateY(-2px);border-color:#444}
+.addon-card.selected{border-color:var(--gold);background:rgba(201,168,76,0.07)}
+.addon-check{width:20px;height:20px;border:1px solid #444;border-radius:4px;flex-shrink:0;display:flex;align-items:center;justify-content:center;transition:background .3s,border-color .3s;font-size:.7rem}
+.addon-card.selected .addon-check{background:var(--gold);border-color:var(--gold);color:#000}
+.addon-info{}
+.addon-name{font-size:.85rem;font-weight:500;color:#fff}
+.addon-price{font-size:.75rem;color:var(--gold)}
+
+/* ─── SUMMARY PANEL ─── */
+.summary-panel{background:var(--black2);border:1px solid rgba(201,168,76,0.25);border-radius:12px;padding:28px;margin-top:32px;position:sticky;top:calc(var(--nav-h) + 16px)}
+.summary-title{font-family:'Bebas Neue',sans-serif;font-size:1.3rem;letter-spacing:3px;color:var(--gold);margin-bottom:20px}
+.summary-row{display:flex;justify-content:space-between;align-items:flex-start;padding:10px 0;border-bottom:1px solid #1e1e1e;font-size:.85rem}
+.summary-row:last-of-type{border:none}
+.summary-row-label{color:var(--text-dim);font-size:.75rem;letter-spacing:1px;text-transform:uppercase}
+.summary-row-val{color:#fff;font-weight:500;text-align:right;max-width:60%}
+.summary-total{display:flex;justify-content:space-between;align-items:center;margin-top:20px;padding-top:20px;border-top:1px solid rgba(201,168,76,0.2)}
+.summary-total-label{font-family:'Bebas Neue',sans-serif;letter-spacing:2px;font-size:1rem}
+.summary-total-val{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gold)}
+.book-btn{width:100%;margin-top:20px;background:var(--gold);color:#000;border:none;border-radius:6px;padding:14px;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;cursor:pointer;transition:background .3s,transform .2s}
+.book-btn:hover{background:var(--gold-light);transform:translateY(-2px)}
+.book-btn:active{transform:translateY(0)}
+
+.services-layout{display:grid;grid-template-columns:1fr 300px;gap:40px;align-items:start}
+@media(max-width:900px){.services-layout{grid-template-columns:1fr}.summary-panel{position:static}}
+
+/* ─── TEAM ─── */
+.team-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(280px,1fr));gap:28px}
+.team-card{background:var(--black2);border:1px solid #1e1e1e;border-radius:12px;overflow:hidden;transition:transform .3s,box-shadow .3s}
+.team-card:hover{transform:translateY(-6px);box-shadow:0 16px 40px rgba(201,168,76,0.15)}
+.team-photo{height:220px;background:linear-gradient(135deg,#111,#1e1e1e);display:flex;align-items:center;justify-content:center}
+.team-monogram{font-family:'Bebas Neue',sans-serif;font-size:4rem;color:var(--gold);opacity:.6}
+.team-body{padding:24px}
+.team-name{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;color:#fff;margin-bottom:4px}
+.team-role{color:var(--gold);font-size:.8rem;letter-spacing:2px;text-transform:uppercase;margin-bottom:12px}
+.team-bio{font-size:.85rem;color:var(--text-dim);line-height:1.7;margin-bottom:16px}
+.team-tags{display:flex;flex-wrap:wrap;gap:6px}
+.tag{background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);color:var(--gold);font-size:.7rem;letter-spacing:1px;padding:3px 10px;border-radius:20px}
+
+/* ─── HOURS ─── */
+.hours-layout{display:grid;grid-template-columns:1fr 1fr;gap:48px}
+@media(max-width:768px){.hours-layout{grid-template-columns:1fr}}
+.hours-table{width:100%;border-collapse:collapse}
+.hours-table tr{border-bottom:1px solid #1a1a1a;transition:background .2s}
+.hours-table tr:hover{background:rgba(201,168,76,0.04)}
+.hours-table td{padding:14px 0;font-size:.9rem}
+.hours-table td:last-child{text-align:right;color:var(--gold)}
+.hours-table .today-row td{color:#000}
+.hours-table .today-row{background:rgba(201,168,76,0.12);border-radius:6px}
+.hours-table .today-row td:first-child{display:flex;align-items:center;gap:8px;color:var(--gold);font-weight:600}
+.today-pill{background:var(--gold);color:#000;font-size:.65rem;font-weight:700;letter-spacing:1px;padding:2px 8px;border-radius:20px;font-family:'Bebas Neue',sans-serif}
+.info-block{margin-bottom:28px}
+.info-block h3{font-family:'Bebas Neue',sans-serif;font-size:1rem;letter-spacing:2px;color:var(--gold);margin-bottom:10px}
+.info-block p,.info-block a{font-size:.9rem;color:var(--text-dim);line-height:1.7;text-decoration:none}
+.info-block a:hover{color:var(--gold)}
+.map-wrap{margin-top:48px;border-radius:12px;overflow:hidden;border:1px solid #1e1e1e;height:360px}
+.map-wrap iframe{width:100%;height:100%;border:none;filter:grayscale(80%) contrast(1.1)}
+
+/* ─── GALLERY ─── */
+.gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:12px;margin-top:48px}
+.gallery-item{aspect-ratio:1;overflow:hidden;border-radius:8px;cursor:pointer;position:relative}
+.gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s,filter .4s;filter:brightness(.8)}
+.gallery-item:hover img{transform:scale(1.08);filter:brightness(1)}
+.gallery-item::after{content:'⤢';position:absolute;bottom:8px;right:10px;color:var(--gold);opacity:0;transition:opacity .3s;font-size:1.2rem}
+.gallery-item:hover::after{opacity:1}
+
+/* ─── LIGHTBOX ─── */
+.lightbox{display:none;position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:2000;align-items:center;justify-content:center}
+.lightbox.open{display:flex}
+.lightbox img{max-width:90vw;max-height:90vh;object-fit:contain;border-radius:4px;box-shadow:0 0 80px rgba(0,0,0,.8)}
+.lightbox-close{position:fixed;top:20px;right:24px;background:none;border:none;color:#fff;font-size:2rem;cursor:pointer;opacity:.7;transition:opacity .2s}
+.lightbox-close:hover{opacity:1}
+
+/* ─── REVIEWS ─── */
+.rating-hero{text-align:center;margin-bottom:56px}
+.rating-num{font-family:'Bebas Neue',sans-serif;font-size:6rem;color:var(--gold);line-height:1}
+.rating-stars{font-size:1.8rem;color:var(--gold);letter-spacing:4px;margin:8px 0}
+.rating-count{font-size:.85rem;color:var(--text-dim)}
+.rating-bars{max-width:300px;margin:28px auto 0}
+.rating-bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;font-size:.78rem}
+.rating-bar-row span:first-child{width:20px;color:var(--text-dim);text-align:right}
+.bar-track{flex:1;height:4px;background:#1e1e1e;border-radius:2px;overflow:hidden}
+.bar-fill{height:100%;background:var(--gold);border-radius:2px}
+.reviews-grid{display:grid;grid-template-columns:1fr 1fr;gap:20px}
+@media(max-width:700px){.reviews-grid{grid-template-columns:1fr}}
+.review-card{background:var(--black2);border:1px solid #1e1e1e;border-radius:10px;padding:24px;transition:transform .3s,box-shadow .3s}
+.review-card:hover{transform:translateY(-4px);box-shadow:0 12px 32px rgba(0,0,0,.4)}
+.review-card.featured{border-color:rgba(201,168,76,0.4);background:rgba(201,168,76,0.05);grid-column:1/-1}
+.review-stars{color:var(--gold);font-size:.9rem;margin-bottom:10px}
+.review-text{font-family:'Cormorant Garamond',serif;font-size:1.05rem;color:var(--text);line-height:1.7;margin-bottom:16px}
+.review-author{font-size:.75rem;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase}
+
+/* ─── CONTACT ─── */
+.contact-layout{display:grid;grid-template-columns:1fr 1fr;gap:64px;align-items:start}
+@media(max-width:768px){.contact-layout{grid-template-columns:1fr}}
+.contact-info h2{font-family:'Bebas Neue',sans-serif;font-size:2rem;letter-spacing:3px;color:#fff;margin-bottom:8px}
+.contact-info .sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--text-dim);margin-bottom:32px}
+.contact-detail{display:flex;gap:14px;margin-bottom:20px;align-items:flex-start}
+.contact-icon{width:36px;height:36px;border:1px solid rgba(201,168,76,0.3);border-radius:50%;display:flex;align-items:center;justify-content:center;flex-shrink:0;font-size:.9rem;color:var(--gold)}
+.contact-detail-text{font-size:.9rem;color:var(--text-dim);line-height:1.6}
+.contact-detail-text strong{color:#fff;display:block;margin-bottom:2px;font-size:.8rem;letter-spacing:1px;text-transform:uppercase}
+.ig-btn{display:inline-flex;align-items:center;gap:10px;margin-top:28px;background:linear-gradient(135deg,#833ab4,#fd1d1d,#fcb045);color:#fff;text-decoration:none;padding:12px 24px;border-radius:8px;font-family:'Inter',sans-serif;font-size:.85rem;font-weight:600;letter-spacing:.5px;transition:opacity .3s,transform .2s}
+.ig-btn:hover{opacity:.9;transform:translateY(-2px)}
+.ig-btn svg{width:18px;height:18px}
+.contact-form-wrap h3{font-family:'Bebas Neue',sans-serif;font-size:1.5rem;letter-spacing:2px;color:#fff;margin-bottom:24px}
+.form-group{margin-bottom:20px}
+.form-group label{display:block;font-size:.75rem;letter-spacing:2px;text-transform:uppercase;color:var(--text-dim);margin-bottom:8px}
+.form-group input,.form-group textarea,.form-group select{width:100%;background:var(--black2);border:1px solid #2a2a2a;border-radius:6px;color:#fff;font-family:'Inter',sans-serif;font-size:.9rem;padding:12px 16px;outline:none;transition:border-color .3s}
+.form-group input:focus,.form-group textarea:focus,.form-group select:focus{border-color:var(--gold)}
+.form-group textarea{resize:vertical;min-height:110px}
+.form-group select option{background:#111}
+.submit-btn{width:100%;background:var(--gold);color:#000;border:none;border-radius:6px;padding:14px;font-family:'Bebas Neue',sans-serif;font-size:1.1rem;letter-spacing:3px;cursor:pointer;transition:background .3s,transform .2s}
+.submit-btn:hover{background:var(--gold-light);transform:translateY(-2px)}
+.success-msg{display:none;background:rgba(201,168,76,0.1);border:1px solid rgba(201,168,76,0.3);border-radius:8px;padding:20px;text-align:center;color:var(--gold);font-family:'Cormorant Garamond',serif;font-size:1.1rem;margin-top:16px}
+.success-msg.show{display:block}
+
+/* ─── FOOTER ─── */
+footer{background:var(--black2);border-top:1px solid #1a1a1a;padding:32px 48px;text-align:center}
+footer .brand{font-family:'Bebas Neue',sans-serif;font-size:1.4rem;letter-spacing:4px;color:var(--gold);margin-bottom:8px}
+footer p{font-size:.78rem;color:var(--text-dim);line-height:1.8}
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand" onclick="showPage('services')">CULTURE CUTS</div>
+  <div class="nav-links">
+    <button class="nav-btn active" onclick="showPage('services')">Services</button>
+    <button class="nav-btn" onclick="showPage('team')">Our Team</button>
+    <button class="nav-btn" onclick="showPage('location')">Location &amp; Hours</button>
+    <button class="nav-btn" onclick="showPage('reviews')">Reviews</button>
+    <button class="nav-btn" onclick="showPage('contact')">Contact Us</button>
+  </div>
+  <button class="hamburger" id="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="mobile-btn active" onclick="showPage('services');closeMenu()">Services</button>
+  <button class="mobile-btn" onclick="showPage('team');closeMenu()">Our Team</button>
+  <button class="mobile-btn" onclick="showPage('location');closeMenu()">Location &amp; Hours</button>
+  <button class="mobile-btn" onclick="showPage('reviews');closeMenu()">Reviews</button>
+  <button class="mobile-btn" onclick="showPage('contact');closeMenu()">Contact Us</button>
+</div>
+
+<!-- LIGHTBOX -->
+<div class="lightbox" id="lightbox" onclick="closeLightbox(event)">
+  <button class="lightbox-close" onclick="closeLightbox()">&times;</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: SERVICES
+══════════════════════════════════════ -->
+<div class="page active" id="page-services">
+  <div class="hero">
+    <img class="hero-img" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lL00GAU3vnvWoE6p4fAxSgHMer-oxegdIC7pxVlYapdSxTz7v-iO-rZAp7Ei6ZcJWCtXgkxTl03q4F2H6QS8IRP-bXf6vUB89Qpoc7hTLag01Yh8l3L_LSoZn1Mk4CaiIrTQ2TE19bDdFVQYXUqoE9PdQJQ4O-yD2WtTWsdTBZWr8fl2YEjO8gls-TzEwkJ_IH6C3uLr5ISraaKUl8BwWwbKSn4p-uFCQgFyngHRwjJi_Rizp5CqIjfZRDKpFDByTbzf-DuJY3w_b_ET1wGu8WnHyoFz3XJvzEfPnEPy4iKrJbHMwH-6V_ecpqSh4lFMCf_Jxzvwa8ug2wBa0x-UUw3UWQjYO8Ybo7mQZbj8v0YRcrFaY-reXhZ1tioqs9eRZiaeTldBPPJO1hv6wdDzRO8UPIuI-BP74jxzrx5IXy-SGUy4tjSRltedVV6A&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Culture Cuts Barbershop">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Premium Grooming Experience</div>
+      <div class="hero-title">Services</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="services-layout">
+      <div>
+        <!-- STEP 1 -->
+        <div class="flow-step unlocked" id="step1">
+          <div class="step-label"><span class="step-num">1</span> Choose Your Barber</div>
+          <div class="barber-cards">
+            <div class="barber-select-card" onclick="selectBarber(this,'Harrison','Senior Barber')">
+              <div class="barber-monogram">H</div>
+              <div class="barber-select-name">Harrison</div>
+              <div class="barber-select-role">Senior Barber</div>
+            </div>
+            <div class="barber-select-card" onclick="selectBarber(this,'Redi','Master Barber')">
+              <div class="barber-monogram">R</div>
+              <div class="barber-select-name">Redi</div>
+              <div class="barber-select-role">Master Barber</div>
+            </div>
+            <div class="barber-select-card" onclick="selectBarber(this,'Marcus','Fade Specialist')">
+              <div class="barber-monogram">M</div>
+              <div class="barber-select-name">Marcus</div>
+              <div class="barber-select-role">Fade Specialist</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2 -->
+        <div class="flow-step" id="step2">
+          <div class="step-label"><span class="step-num">2</span> Choose Your Service</div>
+          <div class="service-cards">
+            <div class="service-card-select" onclick="selectService(this,'Haircut',30,30)">
+              <div class="sc-name">Haircut</div>
+              <div class="sc-price">$30</div>
+              <div class="sc-dur">⏱ 30 min</div>
+            </div>
+            <div class="service-card-select" onclick="selectService(this,'Skin Fade',35,40)">
+              <div class="sc-name">Skin Fade</div>
+              <div class="sc-price">$35</div>
+              <div class="sc-dur">⏱ 40 min</div>
+            </div>
+            <div class="service-card-select" onclick="selectService(this,'Buzz Cut',20,20)">
+              <div class="sc-name">Buzz Cut</div>
+              <div class="sc-price">$20</div>
+              <div class="sc-dur">⏱ 20 min</div>
+            </div>
+            <div class="service-card-select" onclick="selectService(this,'Restyle / Full Transformation',50,60)">
+              <div class="sc-name">Restyle / Full Transformation</div>
+              <div class="sc-price">$50</div>
+              <div class="sc-dur">⏱ 60 min</div>
+            </div>
+            <div class="service-card-select" onclick="selectService(this,'Kids Cut',25,25)">
+              <div class="sc-name">Kids Cut</div>
+              <div class="sc-price">$25</div>
+              <div class="sc-dur">⏱ 25 min</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3 -->
+        <div class="flow-step" id="step3">
+          <div class="step-label"><span class="step-num">3</span> Add-Ons (Optional)</div>
+          <div class="addon-grid">
+            <div class="addon-card" onclick="toggleAddon(this,'Beard Trim',10,15)">
+              <div class="addon-check">✓</div>
+              <div class="addon-info">
+                <div class="addon-name">Beard Trim</div>
+                <div class="addon-price">+$10 · +15 min</div>
+              </div>
+            </div>
+            <div class="addon-card" onclick="toggleAddon(this,'Line-up / Edge',8,10)">
+              <div class="addon-check">✓</div>
+              <div class="addon-info">
+                <div class="addon-name">Line-up / Edge</div>
+                <div class="addon-price">+$8 · +10 min</div>
+              </div>
+            </div>
+            <div class="addon-card" id="fadeUpgradeCard" onclick="toggleAddon(this,'Skin Fade Upgrade',10,15)">
+              <div class="addon-check">✓</div>
+              <div class="addon-info">
+                <div class="addon-name">Skin Fade Upgrade</div>
+                <div class="addon-price">+$10 · +15 min</div>
+              </div>
+            </div>
+            <div class="addon-card" onclick="toggleAddon(this,'Wash &amp; Style',12,20)">
+              <div class="addon-check">✓</div>
+              <div class="addon-info">
+                <div class="addon-name">Wash &amp; Style</div>
+                <div class="addon-price">+$12 · +20 min</div>
+              </div>
+            </div>
+            <div class="addon-card" onclick="toggleAddon(this,'Eyebrow Cleanup',8,10)">
+              <div class="addon-check">✓</div>
+              <div class="addon-info">
+                <div class="addon-name">Eyebrow Cleanup</div>
+                <div class="addon-price">+$8 · +10 min</div>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUMMARY PANEL -->
+      <div>
+        <div class="summary-panel">
+          <div class="summary-title">Your Selection</div>
+          <div class="summary-row">
+            <div class="summary-row-label">Barber</div>
+            <div class="summary-row-val" id="sum-barber" style="color:var(--text-dim)">— Select a barber</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-row-label">Service</div>
+            <div class="summary-row-val" id="sum-service" style="color:var(--text-dim)">— Choose a service</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-row-label">Add-ons</div>
+            <div class="summary-row-val" id="sum-addons" style="color:var(--text-dim)">None selected</div>
+          </div>
+          <div class="summary-row">
+            <div class="summary-row-label">Est. Duration</div>
+            <div class="summary-row-val" id="sum-dur" style="color:var(--text-dim)">—</div>
+          </div>
+          <div class="summary-total">
+            <div class="summary-total-label">TOTAL</div>
+            <div class="summary-total-val" id="sum-price">$0</div>
+          </div>
+          <button class="book-btn" onclick="bookNow()">BOOK NOW</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="brand">CULTURE CUTS BARBERSHOP</div>
+    <p>3101 W Jameson St, Seattle, WA 98199<br>&copy; <span id="yr1"></span> Culture Cuts Barbershop. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: OUR TEAM
+══════════════════════════════════════ -->
+<div class="page" id="page-team">
+  <div class="hero">
+    <img class="hero-img" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3nqUcl8asSILk5cnEIbHAqz4kheoM8uejZInxNEWoJ9ISRPw2DdRgkqtCxH9FM971Y5FTCBzVMp-7T6kL5SEdcQZkU2QrNrpYTXWtokMXVrMSETtd-rnI2CaivDgbWCzktF2usO3idi9xft7tELAKjKGqeQbqCeZZin_z9D_MEMTNBEB-s6JoCKCHgq9jfewAp4Fzt1FwbL7QWhNxBUWnpVzMnXHyEH0Io_B1HJcezbSFPBPdHuDPdGhoPR2Yd3EQr_ESLYgDN1Ij0ImII7_kxSnWkrUAOtaO_7T8UPeEFCmEJ6MDs20YlSpImCx0V0jNnOloQoyqQWbiitghD9Cd__owelzTk_OzMoAQUHhRVNbepEjmR3B-pToGQ9Nca3H6tw3_nVbBOpfBlHWdaoW5d0Fw7m_pHz4lomnW3990DZ8MMDZqPD5RVUiYMZtv05&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Our Team">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">The Craftsmen Behind the Chair</div>
+      <div class="hero-title">Our Team</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Meet The Barbers</div>
+    <div class="section-sub">Every cut is a conversation. Every barber, a craftsman.</div>
+    <div class="team-grid">
+      <div class="team-card">
+        <div class="team-photo"><div class="team-monogram">H</div></div>
+        <div class="team-body">
+          <div class="team-name">Harrison</div>
+          <div class="team-role">Senior Barber</div>
+          <div class="team-bio">Harrison brings over 6 years of precision cutting to Culture Cuts. His relaxed energy and sharp eye for detail have made him a go-to for clients who want a clean, classic look that holds up. He's the kind of barber who listens first and cuts second.</div>
+          <div class="team-tags">
+            <span class="tag">Skin Fades</span>
+            <span class="tag">Classic Cuts</span>
+            <span class="tag">Tapers</span>
+            <span class="tag">Texture Work</span>
+          </div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo"><div class="team-monogram">R</div></div>
+        <div class="team-body">
+          <div class="team-name">Redi</div>
+          <div class="team-role">Master Barber</div>
+          <div class="team-bio">Redi is the shop's creative force — equal parts artist and technician. With a background in men's grooming across two countries, his cuts blend precision with personality. Clients leave not just looking better, but feeling seen.</div>
+          <div class="team-tags">
+            <span class="tag">Beard Design</span>
+            <span class="tag">Restyling</span>
+            <span class="tag">Line-ups</span>
+            <span class="tag">Full Transformations</span>
+          </div>
+        </div>
+      </div>
+      <div class="team-card">
+        <div class="team-photo"><div class="team-monogram">M</div></div>
+        <div class="team-body">
+          <div class="team-name">Marcus</div>
+          <div class="team-role">Fade Specialist</div>
+          <div class="team-bio">Marcus grew up in the chair and now runs it. His specialty is seamless fades — the kind that still look fresh a week later. He's got a natural gift with kids and a following of loyal regulars who wouldn't trust anyone else with their lineup.</div>
+          <div class="team-tags">
+            <span class="tag">Buzz Cuts</span>
+            <span class="tag">High Fades</span>
+            <span class="tag">Kids Cuts</span>
+            <span class="tag">Edge-ups</span>
+          </div>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="brand">CULTURE CUTS BARBERSHOP</div>
+    <p>3101 W Jameson St, Seattle, WA 98199<br>&copy; <span id="yr2"></span> Culture Cuts Barbershop. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: LOCATION & HOURS
+══════════════════════════════════════ -->
+<div class="page" id="page-location">
+  <div class="hero">
+    <img class="hero-img" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mBQTE_FirbimaPPXs-DVX6p-1qISQ-DM4wjGFJd40f6Wi88-SpfDt-XKG9EsdzRFbDgvOWNAQFp-MwynpmCwhHDA1S1d7p1C-I1aZIoDHGqjwUgypygwEE5BGRhO-jS0wd1XubmggZb5Gta4C1Hcgk9LH-3NIYOJ9IawpHxhWnCEwfCnv7IEMNjo64w6PY-KWuA4jQ8y74iCflxeBl6cXvt3yx2RPzN49vxAqkUJkH1aVKscKNd6VOe9QGx4edmDAmqklMzY-skSoGUQ2r34NKk-fqvoxLI5U3cN3WD2ba3dgXAH2k_6uyHhfkRxWUkympaYxiVjY-hcFTZbYrRGnGK3hI4Wv8lPWChD_cB6eeplsDjNE2d5kxXhIqSDKgxCJ6qqDwZFAH2xtLWSmFumQkThfwvLEdDcWfzZQlnwelpZ7iiDmGmMeuSB2UXQ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Location">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">Find Us in Seattle</div>
+      <div class="hero-title">Location &amp; Hours</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="hours-layout">
+      <div>
+        <div class="section-title">Hours</div>
+        <div class="section-sub">Walk-ins welcome. Appointments preferred.</div>
+        <table class="hours-table" id="hoursTable">
+          <tbody>
+            <tr data-day="1"><td>Monday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr data-day="2"><td>Tuesday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr data-day="3"><td>Wednesday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr data-day="4"><td>Thursday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr data-day="5"><td>Friday</td><td>9:00 AM – 8:00 PM</td></tr>
+            <tr data-day="6"><td>Saturday</td><td>8:00 AM – 8:00 PM</td></tr>
+            <tr data-day="0"><td>Sunday</td><td>10:00 AM – 5:00 PM</td></tr>
+          </tbody>
+        </table>
+      </div>
+      <div>
+        <div class="section-title">Find Us</div>
+        <div class="section-sub">Seattle's West Side</div>
+        <div class="info-block">
+          <h3>Address</h3>
+          <p>3101 W Jameson St<br>Seattle, WA 98199</p>
+        </div>
+        <div class="info-block">
+          <h3>Phone</h3>
+          <p><a href="tel:+12063350254">(206) 335-0254</a></p>
+        </div>
+        <div class="info-block">
+          <h3>Parking</h3>
+          <p>Free street parking available on W Jameson St and adjacent side streets. Lot parking accessible from the alley behind the building.</p>
+        </div>
+        <div class="info-block">
+          <h3>Accessibility</h3>
+          <p>Wheelchair accessible entrance. Accessible restrooms available on-site. Please call ahead if you need additional accommodations — we're happy to help.</p>
+        </div>
+      </div>
+    </div>
+
+    <div class="map-wrap">
+      <iframe
+        src="https://maps.google.com/maps?q=3101+W+Jameson+St,+Seattle,+WA+98199&output=embed"
+        allowfullscreen
+        loading="lazy"
+        title="Culture Cuts Location">
+      </iframe>
+    </div>
+
+    <div style="margin-top:64px">
+      <div class="section-title">Gallery</div>
+      <div class="section-sub">Inside Culture Cuts</div>
+      <div class="gallery-grid">
+        <div class="gallery-item" onclick="openLightbox('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3nqUcl8asSILk5cnEIbHAqz4kheoM8uejZInxNEWoJ9ISRPw2DdRgkqtCxH9FM971Y5FTCBzVMp-7T6kL5SEdcQZkU2QrNrpYTXWtokMXVrMSETtd-rnI2CaivDgbWCzktF2usO3idi9xft7tELAKjKGqeQbqCeZZin_z9D_MEMTNBEB-s6JoCKCHgq9jfewAp4Fzt1FwbL7QWhNxBUWnpVzMnXHyEH0Io_B1HJcezbSFPBPdHuDPdGhoPR2Yd3EQr_ESLYgDN1Ij0ImII7_kxSnWkrUAOtaO_7T8UPeEFCmEJ6MDs20YlSpImCx0V0jNnOloQoyqQWbiitghD9Cd__owelzTk_OzMoAQUHhRVNbepEjmR3B-pToGQ9Nca3H6tw3_nVbBOpfBlHWdaoW5d0Fw7m_pHz4lomnW3990DZ8MMDZqPD5RVUiYMZtv05&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')">
+          <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AaVGc3nqUcl8asSILk5cnEIbHAqz4kheoM8uejZInxNEWoJ9ISRPw2DdRgkqtCxH9FM971Y5FTCBzVMp-7T6kL5SEdcQZkU2QrNrpYTXWtokMXVrMSETtd-rnI2CaivDgbWCzktF2usO3idi9xft7tELAKjKGqeQbqCeZZin_z9D_MEMTNBEB-s6JoCKCHgq9jfewAp4Fzt1FwbL7QWhNxBUWnpVzMnXHyEH0Io_B1HJcezbSFPBPdHuDPdGhoPR2Yd3EQr_ESLYgDN1Ij0ImII7_kxSnWkrUAOtaO_7T8UPeEFCmEJ6MDs20YlSpImCx0V0jNnOloQoyqQWbiitghD9Cd__owelzTk_OzMoAQUHhRVNbepEjmR3B-pToGQ9Nca3H6tw3_nVbBOpfBlHWdaoW5d0Fw7m_pHz4lomnW3990DZ8MMDZqPD5RVUiYMZtv05&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Culture Cuts Gallery 1" loading="lazy">
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3n1_QCgJK7tSdLlE_kF0zcPApnRZAGyQJsACkjQvN3zRGBXPSRuHVIqnoslECHZr8U-9RYilZYIN_sP8Wp0roAy77UprLpXMr9snLNdVYN_P_HSyFgcT6TpIzkPXcpDKns8nbBvmDmMqjBec4E4uurL30ZYJlZgFP_7EqpMMMN-8FP8ChkeZ-ZD4aRbjjfxOWBMNDijV1TInwbGMSIdw6RnKN81W3wEmwv7vnf31PM4PX1IRNqRAkWSN658GfnWosmVSqwD_NogcY5iUlVu20IEB_tISNii_33_6KqcWGyniutn88nIRzfBPMir6IOe0DFGGbfhi0qP1OFCSumWcLS0yOb4FBOuScQHN2LWDODY4mavCLaAHt2cMo1Rg5JuhjgvgpR_-iP84Nc9NgCgtBSoLHkqMClWKI1qgo70veNl0IUnPbxMQON-YI6cgIwI&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')">
+          <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AaVGc3n1_QCgJK7tSdLlE_kF0zcPApnRZAGyQJsACkjQvN3zRGBXPSRuHVIqnoslECHZr8U-9RYilZYIN_sP8Wp0roAy77UprLpXMr9snLNdVYN_P_HSyFgcT6TpIzkPXcpDKns8nbBvmDmMqjBec4E4uurL30ZYJlZgFP_7EqpMMMN-8FP8ChkeZ-ZD4aRbjjfxOWBMNDijV1TInwbGMSIdw6RnKN81W3wEmwv7vnf31PM4PX1IRNqRAkWSN658GfnWosmVSqwD_NogcY5iUlVu20IEB_tISNii_33_6KqcWGyniutn88nIRzfBPMir6IOe0DFGGbfhi0qP1OFCSumWcLS0yOb4FBOuScQHN2LWDODY4mavCLaAHt2cMo1Rg5JuhjgvgpR_-iP84Nc9NgCgtBSoLHkqMClWKI1qgo70veNl0IUnPbxMQON-YI6cgIwI&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Culture Cuts Gallery 2" loading="lazy">
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mBQTE_FirbimaPPXs-DVX6p-1qISQ-DM4wjGFJd40f6Wi88-SpfDt-XKG9EsdzRFbDgvOWNAQFp-MwynpmCwhHDA1S1d7p1C-I1aZIoDHGqjwUgypygwEE5BGRhO-jS0wd1XubmggZb5Gta4C1Hcgk9LH-3NIYOJ9IawpHxhWnCEwfCnv7IEMNjo64w6PY-KWuA4jQ8y74iCflxeBl6cXvt3yx2RPzN49vxAqkUJkH1aVKscKNd6VOe9QGx4edmDAmqklMzY-skSoGUQ2r34NKk-fqvoxLI5U3cN3WD2ba3dgXAH2k_6uyHhfkRxWUkympaYxiVjY-hcFTZbYrRGnGK3hI4Wv8lPWChD_cB6eeplsDjNE2d5kxXhIqSDKgxCJ6qqDwZFAH2xtLWSmFumQkThfwvLEdDcWfzZQlnwelpZ7iiDmGmMeuSB2UXQ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')">
+          <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AaVGc3mBQTE_FirbimaPPXs-DVX6p-1qISQ-DM4wjGFJd40f6Wi88-SpfDt-XKG9EsdzRFbDgvOWNAQFp-MwynpmCwhHDA1S1d7p1C-I1aZIoDHGqjwUgypygwEE5BGRhO-jS0wd1XubmggZb5Gta4C1Hcgk9LH-3NIYOJ9IawpHxhWnCEwfCnv7IEMNjo64w6PY-KWuA4jQ8y74iCflxeBl6cXvt3yx2RPzN49vxAqkUJkH1aVKscKNd6VOe9QGx4edmDAmqklMzY-skSoGUQ2r34NKk-fqvoxLI5U3cN3WD2ba3dgXAH2k_6uyHhfkRxWUkympaYxiVjY-hcFTZbYrRGnGK3hI4Wv8lPWChD_cB6eeplsDjNE2d5kxXhIqSDKgxCJ6qqDwZFAH2xtLWSmFumQkThfwvLEdDcWfzZQlnwelpZ7iiDmGmMeuSB2UXQ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Culture Cuts Gallery 3" loading="lazy">
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kNUPOb9F5pAfmoErOyvbraJaPxheI-nirZu0TyyIpcEiH4L6FIHh-8G4z2l3R8gY__-6cV2Ty1soh6jgEx9pT7C5ayFLCBNvIeXPzCRvv6HbM_I236FOVmH6nIE0AKRvbFjG7bSKYLEHe-gwsnEf06d7om2udMvs9fMNIcSh5Rj9Ca3BD8KkMx2Fxa8InTJc9GozG9blt6sLWwkwz6XCrpCfTdqyCIHFKi9cX1AQn6nqNlEu3uEJ1QMQYHmIy95OaCxq1-f4AN5Ozuyc8VZHE8czkmEtF-Sk6_6rJ1ytCzG0rGZvmx6ZVcUuo-yFg3bBlblGH915jqSdKuMPvMFDQ3lO4Czb0qpUu-Ic5L57v0pe-fk43S1PGr7jtgX3VHEzQMDCuGoFoFa0FDra-4xWcaPrfHIDcW3yDUwkh5K--0gqvLerdi2HhCjkg5JjIJ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')">
+          <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AaVGc3kNUPOb9F5pAfmoErOyvbraJaPxheI-nirZu0TyyIpcEiH4L6FIHh-8G4z2l3R8gY__-6cV2Ty1soh6jgEx9pT7C5ayFLCBNvIeXPzCRvv6HbM_I236FOVmH6nIE0AKRvbFjG7bSKYLEHe-gwsnEf06d7om2udMvs9fMNIcSh5Rj9Ca3BD8KkMx2Fxa8InTJc9GozG9blt6sLWwkwz6XCrpCfTdqyCIHFKi9cX1AQn6nqNlEu3uEJ1QMQYHmIy95OaCxq1-f4AN5Ozuyc8VZHE8czkmEtF-Sk6_6rJ1ytCzG0rGZvmx6ZVcUuo-yFg3bBlblGH915jqSdKuMPvMFDQ3lO4Czb0qpUu-Ic5L57v0pe-fk43S1PGr7jtgX3VHEzQMDCuGoFoFa0FDra-4xWcaPrfHIDcW3yDUwkh5K--0gqvLerdi2HhCjkg5JjIJ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Culture Cuts Gallery 4" loading="lazy">
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lVcB0KJyr89ph9yOmnzlCfWxs-v7I0H10kcM7FUeQ8-peL60UziPYNLVctYAvB_YFIoTdl_9WQfmnyTq_FzeQtJmn1pp3Jhwv3DpimiK7ARqRu3tQGlNQhMBpyvyt1YBClFh2QR1zG5EC5gP5obqLwqZjQy6A3MK-j1FDub6y7DvEqFBjyZSc_VE6Qu3wRcG725btqA8WQj_suMDw53BPyjSBS7hxXWgYZD6hgphClB_t2CqOsqZUS_tAyGEEhxs54h892FO2IAMNn7EnVLd2n_BfVpy6bFMBvzKhm7JbBCvQ3cWAIhfpfsazPxMsowQJLp1raGUoHpJxV-kR_NqQrmsVuzBR-YNX1Hb8XeMn3XY3ebINt6sRzMJZlBh_Vg6WCDDdGL0gb50bdVhqPKu9krKKIy338MlNWEGqb_2KQHwOZ8jj6GXb5XBJUhYjM&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')">
+          <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AaVGc3lVcB0KJyr89ph9yOmnzlCfWxs-v7I0H10kcM7FUeQ8-peL60UziPYNLVctYAvB_YFIoTdl_9WQfmnyTq_FzeQtJmn1pp3Jhwv3DpimiK7ARqRu3tQGlNQhMBpyvyt1YBClFh2QR1zG5EC5gP5obqLwqZjQy6A3MK-j1FDub6y7DvEqFBjyZSc_VE6Qu3wRcG725btqA8WQj_suMDw53BPyjSBS7hxXWgYZD6hgphClB_t2CqOsqZUS_tAyGEEhxs54h892FO2IAMNn7EnVLd2n_BfVpy6bFMBvzKhm7JbBCvQ3cWAIhfpfsazPxMsowQJLp1raGUoHpJxV-kR_NqQrmsVuzBR-YNX1Hb8XeMn3XY3ebINt6sRzMJZlBh_Vg6WCDDdGL0gb50bdVhqPKu9krKKIy338MlNWEGqb_2KQHwOZ8jj6GXb5XBJUhYjM&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Culture Cuts Gallery 5" loading="lazy">
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3ntxJpsJ-vYGeXy5dnutlY8upXs06QAFKWly-ZArL7XHCt-IW_W8PmkZxf4gJwHjZgLAlX9PaKHyg-7cDydRpoaYOzO1xij-qxtTuERYeR1lJTtkUyY81PnPhqSGjloskkQ58JvsX4bc3a_d7zcFgxauS5-LDYHhfDhKf3JSluJZajVWe1ZAfTDnUWHf4fvb_wUlLKEiIVPHEONzX-_O6irZxNV_03t1xTGZC5o468sdWBgrCXLbCJIClPcWiHlgdB2yIod6WyMNTYTizpPwvTPxEiHQXuUrYV1Euuc1u3Gc07PlT2VthtXRiDvTULm8WGHdCrAbbJ8snLquV1dLu4uwRxGYvIQr-2SuwcqYcmCCNXRiTJ-sv2B91b5T9JzQOoNgf3tWzdcPh8oh7j02s-t-Ku2UphU29FkD4FD_Yvx-e4EbgrM3O6g3Fd--zc1&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')">
+          <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AaVGc3ntxJpsJ-vYGeXy5dnutlY8upXs06QAFKWly-ZArL7XHCt-IW_W8PmkZxf4gJwHjZgLAlX9PaKHyg-7cDydRpoaYOzO1xij-qxtTuERYeR1lJTtkUyY81PnPhqSGjloskkQ58JvsX4bc3a_d7zcFgxauS5-LDYHhfDhKf3JSluJZajVWe1ZAfTDnUWHf4fvb_wUlLKEiIVPHEONzX-_O6irZxNV_03t1xTGZC5o468sdWBgrCXLbCJIClPcWiHlgdB2yIod6WyMNTYTizpPwvTPxEiHQXuUrYV1Euuc1u3Gc07PlT2VthtXRiDvTULm8WGHdCrAbbJ8snLquV1dLu4uwRxGYvIQr-2SuwcqYcmCCNXRiTJ-sv2B91b5T9JzQOoNgf3tWzdcPh8oh7j02s-t-Ku2UphU29FkD4FD_Yvx-e4EbgrM3O6g3Fd--zc1&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Culture Cuts Gallery 6" loading="lazy">
+        </div>
+        <div class="gallery-item" onclick="openLightbox('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mmRnSvOrOaha6hbBiQTyRVTNnI0vycbZzP6JGasdZeGTriEwKOX_-AMhEJ56AZzJ8v1KoXn2xiUnEtFbkf0whJiVwGEkgBwhEcgefgBo_3xbl7y3t403pVrmSO9ZDcQ1CB6DFdSCbsslxF2cbOvawkTnMEjbzc9CcD6lLweIFECgpzXntLIeSrVOzLGF1KPOGUNhEYaFaoptsPihpJ2hhQ5amkkTfTmoY2yoH2DYKKO21_xM_GR4t_uoDt3LhKiEwKbIRqDWpI2gd0zKQ_HDE7-fICMGiJHo9jlaqkvzg5iskDRidjWl8n-qwA58kgVdGSgJNLx3HHM0kbX9hTC_cRLCabyzEgdoUH_l169xJvfYwCH8FxoTvK0ZNAJlwVRlu-gJzt7I1rAQtHmABMrrLpNNCqbQW0i9sNnrjbl8flwL2uROB1MFiWdm87hQ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')">
+          <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=400&photo_reference=AaVGc3mmRnSvOrOaha6hbBiQTyRVTNnI0vycbZzP6JGasdZeGTriEwKOX_-AMhEJ56AZzJ8v1KoXn2xiUnEtFbkf0whJiVwGEkgBwhEcgefgBo_3xbl7y3t403pVrmSO9ZDcQ1CB6DFdSCbsslxF2cbOvawkTnMEjbzc9CcD6lLweIFECgpzXntLIeSrVOzLGF1KPOGUNhEYaFaoptsPihpJ2hhQ5amkkTfTmoY2yoH2DYKKO21_xM_GR4t_uoDt3LhKiEwKbIRqDWpI2gd0zKQ_HDE7-fICMGiJHo9jlaqkvzg5iskDRidjWl8n-qwA58kgVdGSgJNLx3HHM0kbX9hTC_cRLCabyzEgdoUH_l169xJvfYwCH8FxoTvK0ZNAJlwVRlu-gJzt7I1rAQtHmABMrrLpNNCqbQW0i9sNnrjbl8flwL2uROB1MFiWdm87hQ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Culture Cuts Gallery 7" loading="lazy">
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="brand">CULTURE CUTS BARBERSHOP</div>
+    <p>3101 W Jameson St, Seattle, WA 98199<br>&copy; <span id="yr3"></span> Culture Cuts Barbershop. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: REVIEWS
+══════════════════════════════════════ -->
+<div class="page" id="page-reviews">
+  <div class="hero">
+    <img class="hero-img" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lVcB0KJyr89ph9yOmnzlCfWxs-v7I0H10kcM7FUeQ8-peL60UziPYNLVctYAvB_YFIoTdl_9WQfmnyTq_FzeQtJmn1pp3Jhwv3DpimiK7ARqRu3tQGlNQhMBpyvyt1YBClFh2QR1zG5EC5gP5obqLwqZjQy6A3MK-j1FDub6y7DvEqFBjyZSc_VE6Qu3wRcG725btqA8WQj_suMDw53BPyjSBS7hxXWgYZD6hgphClB_t2CqOsqZUS_tAyGEEhxs54h892FO2IAMNn7EnVLd2n_BfVpy6bFMBvzKhm7JbBCvQ3cWAIhfpfsazPxMsowQJLp1raGUoHpJxV-kR_NqQrmsVuzBR-YNX1Hb8XeMn3XY3ebINt6sRzMJZlBh_Vg6WCDDdGL0gb50bdVhqPKu9krKKIy338MlNWEGqb_2KQHwOZ8jj6GXb5XBJUhYjM&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Reviews">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">What Our Clients Are Saying</div>
+      <div class="hero-title">Reviews</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="rating-hero">
+      <div class="rating-num">5.0</div>
+      <div class="rating-stars">★★★★★</div>
+      <div class="rating-count">Based on 62 Google reviews</div>
+      <div class="rating-bars">
+        <div class="rating-bar-row"><span>5</span><div class="bar-track"><div class="bar-fill" style="width:94%"></div></div><span>58</span></div>
+        <div class="rating-bar-row"><span>4</span><div class="bar-track"><div class="bar-fill" style="width:4%"></div></div><span>3</span></div>
+        <div class="rating-bar-row"><span>3</span><div class="bar-track"><div class="bar-fill" style="width:2%"></div></div><span>1</span></div>
+        <div class="rating-bar-row"><span>2</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span>0</span></div>
+        <div class="rating-bar-row"><span>1</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span>0</span></div>
+      </div>
+    </div>
+
+    <div class="reviews-grid">
+      <div class="review-card featured">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Really the best barbers out of Seattle rn. All super cool young men who love sparking up good convos. Everytime I go to them I get blessed beyond measure. Tap in with them!!"</div>
+        <div class="review-author">Google Review · Verified Client</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Great new shop! Shout out to Harrison, best haircut I've had in a while. Highly recommended."</div>
+        <div class="review-author">Google Review · Verified Client</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"I just got a cut here yesterday and it was the best experience I've ever had. The people there are very friendly and they are very experienced with the clippers. I would definitely recommend it to everyone."</div>
+        <div class="review-author">Google Review · Verified Client</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"My barber Redi really helped me out with that haircut. Really great place to go to."</div>
+        <div class="review-author">Google Review · Verified Client</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Great barbershop with amazing people! Would highly recommend."</div>
+        <div class="review-author">Google Review · Verified Client</div>
+      </div>
+      <div class="review-card">
+        <div class="review-stars">★★★★★</div>
+        <div class="review-text">"Came in as a walk-in on a Saturday afternoon and was taken care of right away. The vibe is immaculate and my fade was crisp. Definitely my new go-to shop in Seattle."</div>
+        <div class="review-author">Google Review · Verified Client</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="brand">CULTURE CUTS BARBERSHOP</div>
+    <p>3101 W Jameson St, Seattle, WA 98199<br>&copy; <span id="yr4"></span> Culture Cuts Barbershop. All rights reserved.</p>
+  </footer>
+</div>
+
+<!-- ══════════════════════════════════════
+     PAGE: CONTACT US
+══════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <div class="hero">
+    <img class="hero-img" src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mmRnSvOrOaha6hbBiQTyRVTNnI0vycbZzP6JGasdZeGTriEwKOX_-AMhEJ56AZzJ8v1KoXn2xiUnEtFbkf0whJiVwGEkgBwhEcgefgBo_3xbl7y3t403pVrmSO9ZDcQ1CB6DFdSCbsslxF2cbOvawkTnMEjbzc9CcD6lLweIFECgpzXntLIeSrVOzLGF1KPOGUNhEYaFaoptsPihpJ2hhQ5amkkTfTmoY2yoH2DYKKO21_xM_GR4t_uoDt3LhKiEwKbIRqDWpI2gd0zKQ_HDE7-fICMGiJHo9jlaqkvzg5iskDRidjWl8n-qwA58kgVdGSgJNLx3HHM0kbX9hTC_cRLCabyzEgdoUH_l169xJvfYwCH8FxoTvK0ZNAJlwVRlu-gJzt7I1rAQtHmABMrrLpNNCqbQW0i9sNnrjbl8flwL2uROB1MFiWdm87hQ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Contact">
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-eyebrow">We'd Love to Hear from You</div>
+      <div class="hero-title">Contact Us</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="contact-layout">
+      <div class="contact-info">
+        <h2>Get In Touch</h2>
+        <div class="sub">Visit us, call us, or slide into our DMs.</div>
+        <div class="contact-detail">
+          <div class="contact-icon">📍</div>
+          <div class="contact-detail-text">
+            <strong>Address</strong>
+            3101 W Jameson St<br>Seattle, WA 98199
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">📞</div>
+          <div class="contact-detail-text">
+            <strong>Phone</strong>
+            <a href="tel:+12063350254" style="color:var(--text-dim);text-decoration:none">(206) 335-0254</a>
+          </div>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-icon">🕐</div>
+          <div class="contact-detail-text">
+            <strong>Hours</strong>
+            Mon–Thu: 9AM–7PM<br>
+            Fri: 9AM–8PM<br>
+            Sat: 8AM–8PM<br>
+            Sun: 10AM–5PM
+          </div>
+        </div>
+        <a class="ig-btn" href="https://www.instagram.com/reel/DApJ2KwyQ9U/?hl=zh-cn" target="_blank" rel="noopener">
+          <svg viewBox="0 0 24 24" fill="currentColor"><path d="M12 2.163c3.204 0 3.584.012 4.85.07 3.252.148 4.771 1.691 4.919 4.919.058 1.265.069 1.645.069 4.849 0 3.205-.012 3.584-.069 4.849-.149 3.225-1.664 4.771-4.919 4.919-1.266.058-1.644.07-4.85.07-3.204 0-3.584-.012-4.849-.07-3.26-.149-4.771-1.699-4.919-4.92-.058-1.265-.07-1.644-.07-4.849 0-3.204.013-3.583.07-4.849.149-3.227 1.664-4.771 4.919-4.919 1.266-.057 1.645-.069 4.849-.069zM12 0C8.741 0 8.333.014 7.053.072 2.695.272.273 2.69.073 7.052.014 8.333 0 8.741 0 12c0 3.259.014 3.668.072 4.948.2 4.358 2.618 6.78 6.98 6.98C8.333 23.986 8.741 24 12 24c3.259 0 3.668-.014 4.948-.072 4.354-.2 6.782-2.618 6.979-6.98.059-1.28.073-1.689.073-4.948 0-3.259-.014-3.667-.072-4.947-.196-4.354-2.617-6.78-6.979-6.98C15.668.014 15.259 0 12 0zm0 5.838a6.162 6.162 0 100 12.324 6.162 6.162 0 000-12.324zM12 16a4 4 0 110-8 4 4 0 010 8zm6.406-11.845a1.44 1.44 0 100 2.881 1.44 1.44 0 000-2.881z"/></svg>
+          Follow on Instagram
+        </a>
+      </div>
+      <div class="contact-form-wrap">
+        <h3>Send Us a Message</h3>
+        <form id="contactForm" onsubmit="submitForm(event)">
+          <div class="form-group">
+            <label>Your Name</label>
+            <input type="text" placeholder="John Smith" required>
+          </div>
+          <div class="form-group">
+            <label>Email Address</label>
+            <input type="email" placeholder="john@example.com" required>
+          </div>
+          <div class="form-group">
+            <label>Phone (Optional)</label>
+            <input type="tel" placeholder="(206) 555-0100">
+          </div>
+          <div class="form-group">
+            <label>Subject</label>
+            <select>
+              <option>General Inquiry</option>
+              <option>Appointment Request</option>
+              <option>Pricing Question</option>
+              <option>Group Booking</option>
+              <option>Other</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label>Message</label>
+            <textarea placeholder="Tell us how we can help..."></textarea>
+          </div>
+          <button type="submit" class="submit-btn">SEND MESSAGE</button>
+        </form>
+        <div class="success-msg" id="successMsg">
+          ✓ Message sent! We'll be in touch within 24 hours.
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <div class="brand">CULTURE CUTS BARBERSHOP</div>
+    <p>3101 W Jameson St, Seattle, WA 98199<br>&copy; <span id="yr5"></span> Culture Cuts Barbershop. All rights reserved.</p>
+  </footer>
+</div>
+
+<script>
+// ─── STATE ───
+const state = {barber:null,barberRole:null,service:null,servicePrice:0,serviceDur:0,addons:[],addonPrice:0,addonDur:0};
+
+// ─── NAV ───
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.querySelectorAll('.nav-btn').forEach(b=>b.classList.remove('active'));
+  document.querySelectorAll('.mobile-btn').forEach(b=>b.classList.remove('active'));
+  const pages={services:'page-services',team:'page-team',location:'page-location',reviews:'page-reviews',contact:'page-contact'};
+  document.getElementById(pages[id]).classList.add('active');
+  const idx={services:0,team:1,location:2,reviews:3,contact:4}[id];
+  document.querySelectorAll('.nav-btn')[idx].classList.add('active');
+  document.querySelectorAll('.mobile-btn')[idx].classList.add('active');
+  window.scrollTo(0,0);
+}
+function toggleMenu(){
+  const h=document.getElementById('hamburger'),m=document.getElementById('mobileMenu');
+  h.classList.toggle('open');m.classList.toggle('open');
+}
+function closeMenu(){
+  document.getElementById('hamburger').classList.remove('open');
+  document.getElementById('mobileMenu').classList.remove('open');
+}
+document.addEventListener('keydown',e=>{if(e.key==='Escape'){closeMenu();closeLightbox();}});
+
+// ─── BARBER SELECTION ───
+function selectBarber(el,name,role){
+  document.querySelectorAll('.barber-select-card').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  state.barber=name;state.barberRole=role;
+  document.getElementById('sum-barber').textContent=name+' · '+role;
+  document.getElementById('sum-barber').style.color='#fff';
+  document.getElementById('step2').classList.add('unlocked');
+  updateSummary();
+}
+
+// ─── SERVICE SELECTION ───
+function selectService(el,name,price,dur){
+  document.querySelectorAll('.service-card-select').forEach(c=>c.classList.remove('selected'));
+  el.classList.add('selected');
+  state.service=name;state.servicePrice=price;state.serviceDur=dur;
+  document.getElementById('sum-service').textContent=name+' · $'+price;
+  document.getElementById('sum-service').style.color='#fff';
+  document.getElementById('step3').classList.add('unlocked');
+  // hide fade upgrade if skin fade selected
+  const fu=document.getElementById('fadeUpgradeCard');
+  if(name==='Skin Fade'){fu.style.opacity='.3';fu.style.pointerEvents='none';fu.classList.remove('selected');removeAddon('Skin Fade Upgrade');}
+  else{fu.style.opacity='1';fu.style.pointerEvents='all';}
+  updateSummary();
+}
+
+// ─── ADDON TOGGLE ───
+function toggleAddon(el,name,price,dur){
+  el.classList.toggle('selected');
+  if(el.classList.contains('selected')){state.addons.push({name,price,dur});}
+  else{removeAddon(name);}
+  updateSummary();
+}
+function removeAddon(name){state.addons=state.addons.filter(a=>a.name!==name);}
+
+// ─── UPDATE SUMMARY ───
+function updateSummary(){
+  const totalPrice=state.servicePrice+state.addons.reduce((s,a)=>s+a.price,0);
+  const totalDur=state.serviceDur+state.addons.reduce((s,a)=>s+a.dur,0);
+  document.getElementById('sum-price').textContent='$'+totalPrice;
+  if(totalDur>0){
+    const h=Math.floor(totalDur/60),m=totalDur%60;
+    document.getElementById('sum-dur').textContent=h?h+'h '+(m?m+'min':''):m+'min';
+    document.getElementById('sum-dur').style.color='#fff';
+  }
+  if(state.addons.length>0){
+    document.getElementById('sum-addons').textContent=state.addons.map(a=>a.name).join(', ');
+    document.getElementById('sum-addons').style.color='#fff';
+  } else {
+    document.getElementById('sum-addons').textContent='None selected';
+    document.getElementById('sum-addons').style.color='var(--text-dim)';
+  }
+}
+
+// ─── BOOK NOW ───
+function bookNow(){
+  if(!state.barber){alert('Please select a barber first.');return;}
+  if(!state.service){alert('Please select a service.');return;}
+  alert('Booking confirmed!\n\n'+state.barber+' · '+state.service+(state.addons.length?' + '+state.addons.map(a=>a.name).join(', '):'')+'\nTotal: $'+(state.servicePrice+state.addons.reduce((s,a)=>s+a.price,0))+'\nWe\'ll call you at (206) 335-0254 to confirm.');
+}
+
+// ─── HOURS HIGHLIGHT ───
+(function(){
+  const today=new Date().getDay();
+  document.querySelectorAll('#hoursTable tr').forEach(row=>{
+    if(parseInt(row.dataset.day)===today){
+      row.classList.add('today-row');
+      const pill=document.createElement('span');
+      pill.className='today-pill';pill.textContent='TODAY';
+      row.cells[0].appendChild(pill);
+    }
+  });
+})();
+
+// ─── LIGHTBOX ───
+function openLightbox(src){
+  document.getElementById('lightboxImg').src=src;
+  document.getElementById('lightbox').classList.add('open');
+  document.body.style.overflow='hidden';
+}
+function closeLightbox(e){
+  if(!e||e.target===document.getElementById('lightbox')||e.target.classList.contains('lightbox-close')){
+    document.getElementById('lightbox').classList.remove('open');
+    document.getElementById('lightboxImg').src='';
+    document.body.style.overflow='';
+  }
+}
+
+// ─── CONTACT FORM ───
+function submitForm(e){
+  e.preventDefault();
+  document.getElementById('contactForm').style.display='none';
+  document.getElementById('successMsg').classList.add('show');
+}
+
+// ─── YEAR ───
+const y=new Date().getFullYear();
+['yr1','yr2','yr3','yr4','yr5'].forEach(id=>{const el=document.getElementById(id);if(el)el.textContent=y;});
+</script>
+</body>
+</html>
