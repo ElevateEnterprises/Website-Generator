@@ -1,0 +1,1375 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>POOLESVILLE Barber &amp; Stylist</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,300;0,400;0,600;1,300;1,400&family=Inter:wght@300;400;500;600&display=swap" rel="stylesheet">
+<style>
+  *, *::before, *::after { box-sizing: border-box; margin: 0; padding: 0; }
+
+  :root {
+    --black: #080808;
+    --surface: #111111;
+    --surface2: #181818;
+    --gold: #C9A84C;
+    --gold-light: #E2C573;
+    --gold-dim: rgba(201,168,76,0.15);
+    --gold-glow: 0 0 18px rgba(201,168,76,0.45);
+    --text: #E8E0D0;
+    --muted: #8A8278;
+    --border: rgba(201,168,76,0.18);
+    --nav-h: 70px;
+  }
+
+  html { scroll-behavior: smooth; }
+
+  body {
+    background: var(--black);
+    color: var(--text);
+    font-family: 'Inter', sans-serif;
+    font-weight: 300;
+    line-height: 1.6;
+    overflow-x: hidden;
+  }
+
+  @media (prefers-reduced-motion: reduce) {
+    *, *::before, *::after { animation-duration: 0.01ms !important; transition-duration: 0.01ms !important; }
+  }
+
+  /* ── NAV ── */
+  nav {
+    position: fixed; top: 0; left: 0; right: 0; z-index: 1000;
+    height: var(--nav-h);
+    background: rgba(8,8,8,0.96);
+    backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border);
+    display: flex; align-items: center; justify-content: space-between;
+    padding: 0 2rem;
+  }
+
+  .nav-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.4rem;
+    letter-spacing: 0.12em;
+    color: var(--gold);
+    white-space: nowrap;
+  }
+
+  .nav-tabs {
+    display: flex; gap: 0.25rem; list-style: none;
+  }
+
+  .nav-tabs button {
+    background: none; border: none; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-size: 0.78rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); padding: 0.6rem 1rem;
+    position: relative; transition: color 0.25s;
+  }
+
+  .nav-tabs button::after {
+    content: ''; position: absolute; bottom: 0; left: 1rem; right: 1rem;
+    height: 2px; background: var(--gold);
+    transform: scaleX(0); transition: transform 0.25s;
+  }
+
+  .nav-tabs button.active { color: var(--gold); }
+  .nav-tabs button.active::after { transform: scaleX(1); }
+  .nav-tabs button:hover:not(.active) { color: var(--text); }
+
+  .hamburger {
+    display: none; flex-direction: column; gap: 5px;
+    background: none; border: none; cursor: pointer; padding: 0.4rem;
+  }
+  .hamburger span {
+    display: block; width: 24px; height: 2px;
+    background: var(--gold); transition: all 0.3s;
+  }
+
+  .mobile-menu {
+    display: none; position: fixed; top: var(--nav-h); left: 0; right: 0;
+    background: rgba(8,8,8,0.98); backdrop-filter: blur(12px);
+    border-bottom: 1px solid var(--border); z-index: 999;
+    flex-direction: column; padding: 1rem 0;
+  }
+  .mobile-menu.open { display: flex; }
+  .mobile-menu button {
+    background: none; border: none; cursor: pointer;
+    font-family: 'Inter', sans-serif; font-size: 0.9rem; font-weight: 500;
+    letter-spacing: 0.1em; text-transform: uppercase;
+    color: var(--muted); padding: 1rem 2rem; text-align: left;
+    transition: color 0.2s;
+  }
+  .mobile-menu button.active, .mobile-menu button:hover { color: var(--gold); }
+
+  @media (max-width: 768px) {
+    .nav-tabs { display: none; }
+    .hamburger { display: flex; }
+  }
+
+  /* ── PAGES ── */
+  .page {
+    display: none; opacity: 0;
+    animation: fadeIn 0.45s ease forwards;
+    padding-top: var(--nav-h);
+  }
+  .page.active { display: block; }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(8px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
+
+  /* ── HERO ── */
+  .hero {
+    position: relative; height: 52vh; min-height: 320px;
+    display: flex; align-items: flex-end;
+    overflow: hidden;
+  }
+
+  .hero-bg {
+    position: absolute; inset: 0;
+    background-size: cover; background-position: center;
+    transform: scale(1.04);
+    transition: transform 8s ease;
+  }
+  .page.active .hero-bg { transform: scale(1); }
+
+  .hero-overlay {
+    position: absolute; inset: 0;
+    background: linear-gradient(to top, rgba(8,8,8,0.95) 0%, rgba(8,8,8,0.55) 50%, rgba(8,8,8,0.25) 100%);
+  }
+
+  .hero-content {
+    position: relative; padding: 2.5rem 3rem; z-index: 1;
+  }
+
+  .hero-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(2.8rem, 6vw, 5rem);
+    letter-spacing: 0.08em; color: #fff; line-height: 1;
+  }
+
+  .hero-subtitle {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: clamp(1rem, 2vw, 1.25rem);
+    font-style: italic; color: var(--gold-light);
+    margin-top: 0.4rem; letter-spacing: 0.05em;
+  }
+
+  .gold-rule {
+    width: 60px; height: 2px; background: var(--gold);
+    margin: 1rem 0;
+  }
+
+  /* ── SECTION ── */
+  .section { padding: 4rem 3rem; max-width: 1200px; margin: 0 auto; }
+
+  @media (max-width: 768px) {
+    .section { padding: 3rem 1.25rem; }
+    .hero-content { padding: 2rem 1.25rem; }
+  }
+
+  .section-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: clamp(1.8rem, 3.5vw, 2.6rem);
+    letter-spacing: 0.1em; color: var(--gold);
+    margin-bottom: 0.5rem;
+  }
+
+  .section-sub {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-style: italic;
+    color: var(--muted); margin-bottom: 2.5rem;
+  }
+
+  /* ── CARDS ── */
+  .card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .card:hover {
+    transform: translateY(-4px);
+    box-shadow: var(--gold-glow);
+  }
+
+  /* ── SERVICES INTERACTIVE ── */
+  .booking-wrapper {
+    display: grid; grid-template-columns: 1fr 320px; gap: 2rem;
+  }
+  @media (max-width: 900px) {
+    .booking-wrapper { grid-template-columns: 1fr; }
+  }
+
+  .step-block { margin-bottom: 2.5rem; }
+
+  .step-label {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.75rem; letter-spacing: 0.2em;
+    color: var(--gold); margin-bottom: 0.5rem;
+    display: flex; align-items: center; gap: 0.6rem;
+  }
+  .step-label .step-num {
+    width: 22px; height: 22px; border-radius: 50%;
+    border: 1.5px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-size: 0.7rem; flex-shrink: 0;
+  }
+
+  .step-title {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.3rem; font-weight: 600;
+    color: var(--text); margin-bottom: 1.2rem;
+  }
+
+  .step-content { display: none; }
+  .step-content.visible { display: block; }
+
+  .barber-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1rem;
+  }
+  @media (max-width: 600px) { .barber-grid { grid-template-columns: 1fr 1fr; } }
+
+  .barber-pick-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 2px; padding: 1.2rem; text-align: center;
+    cursor: pointer; transition: all 0.25s;
+  }
+  .barber-pick-card:hover {
+    border-color: var(--gold-light);
+    box-shadow: var(--gold-glow);
+  }
+  .barber-pick-card.selected {
+    border-color: var(--gold);
+    background: var(--gold-dim);
+    box-shadow: var(--gold-glow);
+  }
+
+  .barber-monogram {
+    width: 64px; height: 64px; border-radius: 50%;
+    background: linear-gradient(135deg, #1a1a1a, #2a2a2a);
+    border: 2px solid var(--gold);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1.5rem;
+    color: var(--gold); margin: 0 auto 0.8rem;
+  }
+
+  .barber-pick-name {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.05rem; font-weight: 600;
+    color: var(--text); margin-bottom: 0.2rem;
+  }
+  .barber-pick-role {
+    font-size: 0.72rem; letter-spacing: 0.08em; color: var(--muted); text-transform: uppercase;
+  }
+
+  .service-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.75rem;
+  }
+  @media (max-width: 500px) { .service-grid { grid-template-columns: 1fr; } }
+
+  .service-pick-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 2px; padding: 1rem 1.2rem;
+    cursor: pointer; transition: all 0.25s;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .service-pick-card:hover { border-color: var(--gold-light); box-shadow: var(--gold-glow); }
+  .service-pick-card.selected { border-color: var(--gold); background: var(--gold-dim); box-shadow: var(--gold-glow); }
+
+  .svc-info .svc-name { font-weight: 500; font-size: 0.95rem; color: var(--text); }
+  .svc-info .svc-dur { font-size: 0.78rem; color: var(--muted); margin-top: 0.15rem; }
+  .svc-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.15rem; color: var(--gold); }
+
+  .addon-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 0.6rem;
+  }
+  @media (max-width: 500px) { .addon-grid { grid-template-columns: 1fr; } }
+
+  .addon-card {
+    background: var(--surface);
+    border: 1.5px solid var(--border);
+    border-radius: 2px; padding: 0.85rem 1rem;
+    cursor: pointer; transition: all 0.25s;
+    display: flex; justify-content: space-between; align-items: center;
+  }
+  .addon-card:hover { border-color: var(--gold-light); }
+  .addon-card.selected { border-color: var(--gold); background: var(--gold-dim); }
+
+  .addon-name { font-size: 0.88rem; font-weight: 400; color: var(--text); }
+  .addon-price { font-size: 0.82rem; color: var(--gold); font-weight: 500; }
+
+  /* ── SUMMARY PANEL ── */
+  .summary-panel {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 1.8rem;
+    position: sticky; top: calc(var(--nav-h) + 1rem);
+    height: fit-content;
+  }
+
+  .summary-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.1rem; letter-spacing: 0.15em;
+    color: var(--gold); margin-bottom: 1.5rem;
+    border-bottom: 1px solid var(--border); padding-bottom: 0.8rem;
+  }
+
+  .summary-row {
+    display: flex; justify-content: space-between; align-items: flex-start;
+    margin-bottom: 0.9rem; font-size: 0.88rem;
+  }
+  .summary-row-label { color: var(--muted); text-transform: uppercase; letter-spacing: 0.07em; font-size: 0.72rem; padding-top: 0.15rem; }
+  .summary-row-value { color: var(--text); font-weight: 500; text-align: right; max-width: 60%; }
+  .summary-placeholder { color: #444; font-style: italic; }
+
+  .summary-divider { border: none; border-top: 1px solid var(--border); margin: 1.2rem 0; }
+
+  .summary-total {
+    display: flex; justify-content: space-between; align-items: center;
+    margin-top: 1rem;
+  }
+  .summary-total-label { font-family: 'Bebas Neue', sans-serif; letter-spacing: 0.1em; color: var(--muted); font-size: 0.9rem; }
+  .summary-total-price { font-family: 'Bebas Neue', sans-serif; font-size: 1.8rem; color: var(--gold); }
+  .summary-total-dur { font-size: 0.78rem; color: var(--muted); text-align: right; margin-top: 0.15rem; }
+
+  .book-btn {
+    display: block; width: 100%; margin-top: 1.5rem;
+    padding: 1rem; background: var(--gold);
+    border: none; cursor: pointer;
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1.05rem; letter-spacing: 0.18em;
+    color: var(--black); border-radius: 1px;
+    transition: background 0.2s, transform 0.2s;
+  }
+  .book-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  /* ── TEAM ── */
+  .team-grid {
+    display: grid; grid-template-columns: repeat(3, 1fr); gap: 1.5rem;
+  }
+  @media (max-width: 768px) { .team-grid { grid-template-columns: 1fr; } }
+  @media (max-width: 900px) and (min-width: 600px) { .team-grid { grid-template-columns: repeat(2, 1fr); } }
+
+  .team-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    overflow: hidden;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .team-card:hover { transform: translateY(-5px); box-shadow: var(--gold-glow); }
+
+  .team-photo {
+    height: 220px; background: var(--surface2);
+    display: flex; align-items: center; justify-content: center;
+    font-family: 'Bebas Neue', sans-serif; font-size: 4.5rem;
+    color: var(--gold); border-bottom: 1px solid var(--border);
+    letter-spacing: 0.05em;
+    background-size: cover; background-position: center top;
+  }
+
+  .team-body { padding: 1.5rem; }
+
+  .team-name {
+    font-family: 'Cormorant Garamond', serif; font-size: 1.35rem; font-weight: 600;
+    color: var(--text); margin-bottom: 0.2rem;
+  }
+  .team-role {
+    font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase;
+    color: var(--gold); margin-bottom: 1rem;
+  }
+  .team-bio { font-size: 0.88rem; color: var(--muted); line-height: 1.7; margin-bottom: 1.2rem; }
+
+  .tag-list { display: flex; flex-wrap: wrap; gap: 0.4rem; }
+  .tag {
+    background: var(--gold-dim); border: 1px solid var(--border);
+    color: var(--gold-light); font-size: 0.7rem; letter-spacing: 0.08em;
+    text-transform: uppercase; padding: 0.3rem 0.7rem; border-radius: 1px;
+  }
+
+  /* ── HOURS TABLE ── */
+  .hours-table { width: 100%; border-collapse: collapse; }
+  .hours-table tr { border-bottom: 1px solid rgba(201,168,76,0.1); }
+  .hours-table tr.today { background: var(--gold-dim); }
+  .hours-table td { padding: 0.9rem 1rem; font-size: 0.9rem; }
+  .hours-table td:first-child { font-weight: 500; color: var(--text); }
+  .hours-table td:last-child { color: var(--muted); text-align: right; }
+  .hours-table tr.today td { color: var(--gold); }
+
+  .today-pill {
+    display: inline-block; background: var(--gold);
+    color: var(--black); font-size: 0.62rem; letter-spacing: 0.1em;
+    text-transform: uppercase; padding: 0.2rem 0.5rem;
+    border-radius: 20px; margin-left: 0.6rem; vertical-align: middle;
+    font-weight: 600;
+  }
+
+  .info-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.5rem;
+    margin-bottom: 3rem;
+  }
+  @media (max-width: 600px) { .info-grid { grid-template-columns: 1fr; } }
+
+  .info-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    padding: 1.5rem; border-radius: 2px;
+  }
+  .info-card-title {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 0.8rem; letter-spacing: 0.18em; color: var(--gold);
+    margin-bottom: 0.7rem; text-transform: uppercase;
+  }
+  .info-card p { font-size: 0.88rem; color: var(--muted); line-height: 1.7; }
+  .info-card a { color: var(--gold); text-decoration: none; }
+  .info-card a:hover { text-decoration: underline; }
+
+  .map-wrap {
+    border: 1px solid var(--border); border-radius: 2px; overflow: hidden;
+    margin-bottom: 3rem;
+  }
+  .map-wrap iframe { display: block; width: 100%; height: 400px; border: none; filter: grayscale(0.3) brightness(0.85); }
+
+  /* ── GALLERY ── */
+  .gallery-grid {
+    display: grid; grid-template-columns: repeat(auto-fill, minmax(250px, 1fr)); gap: 0.75rem;
+  }
+  .gallery-item {
+    aspect-ratio: 4/3; overflow: hidden; cursor: pointer;
+    border: 1px solid var(--border); border-radius: 2px;
+    position: relative;
+  }
+  .gallery-item img {
+    width: 100%; height: 100%; object-fit: cover;
+    transition: transform 0.4s;
+  }
+  .gallery-item:hover img { transform: scale(1.07); }
+  .gallery-overlay {
+    position: absolute; inset: 0; background: rgba(201,168,76,0);
+    display: flex; align-items: center; justify-content: center;
+    transition: background 0.3s; color: #fff; font-size: 1.5rem; opacity: 0;
+  }
+  .gallery-item:hover .gallery-overlay { background: rgba(201,168,76,0.2); opacity: 1; }
+
+  /* ── LIGHTBOX ── */
+  #lightbox {
+    display: none; position: fixed; inset: 0; z-index: 2000;
+    background: rgba(0,0,0,0.93); align-items: center; justify-content: center;
+  }
+  #lightbox.open { display: flex; }
+  #lightbox img {
+    max-width: 90vw; max-height: 90vh; border: 1px solid var(--border);
+    box-shadow: 0 0 60px rgba(201,168,76,0.2);
+  }
+  #lightbox-close {
+    position: absolute; top: 1.5rem; right: 1.5rem;
+    background: none; border: 1px solid var(--border); color: var(--text);
+    width: 40px; height: 40px; border-radius: 50%; cursor: pointer;
+    font-size: 1.2rem; display: flex; align-items: center; justify-content: center;
+    transition: border-color 0.2s, color 0.2s;
+  }
+  #lightbox-close:hover { border-color: var(--gold); color: var(--gold); }
+
+  /* ── REVIEWS ── */
+  .rating-hero {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px;
+    padding: 2.5rem; margin-bottom: 3rem;
+    display: flex; gap: 3rem; align-items: center;
+    flex-wrap: wrap;
+  }
+
+  .rating-score {
+    text-align: center; flex-shrink: 0;
+  }
+  .rating-number {
+    font-family: 'Bebas Neue', sans-serif; font-size: 5rem;
+    color: var(--gold); line-height: 1;
+  }
+  .stars-row { color: var(--gold); font-size: 1.2rem; letter-spacing: 0.1em; margin: 0.3rem 0; }
+  .rating-count { font-size: 0.8rem; color: var(--muted); }
+
+  .rating-bars { flex: 1; min-width: 220px; }
+  .bar-row {
+    display: flex; align-items: center; gap: 0.8rem; margin-bottom: 0.6rem;
+  }
+  .bar-label { font-size: 0.8rem; color: var(--muted); width: 40px; text-align: right; flex-shrink: 0; }
+  .bar-track {
+    flex: 1; height: 6px; background: #222; border-radius: 3px; overflow: hidden;
+  }
+  .bar-fill { height: 100%; background: var(--gold); border-radius: 3px; }
+  .bar-count { font-size: 0.78rem; color: var(--muted); width: 24px; flex-shrink: 0; }
+
+  .featured-review {
+    flex: 1 1 280px;
+    background: var(--gold-dim); border: 1px solid rgba(201,168,76,0.3);
+    padding: 1.5rem; border-radius: 2px;
+  }
+  .featured-quote {
+    font-family: 'Cormorant Garamond', serif;
+    font-size: 1.15rem; font-style: italic;
+    color: var(--text); line-height: 1.7; margin-bottom: 1rem;
+  }
+  .featured-author { font-size: 0.8rem; color: var(--gold); letter-spacing: 0.08em; text-transform: uppercase; }
+
+  .reviews-grid {
+    display: grid; grid-template-columns: repeat(2, 1fr); gap: 1.2rem;
+  }
+  @media (max-width: 700px) { .reviews-grid { grid-template-columns: 1fr; } }
+
+  .review-card {
+    background: var(--surface);
+    border: 1px solid var(--border);
+    border-radius: 2px; padding: 1.4rem;
+    transition: transform 0.3s, box-shadow 0.3s;
+  }
+  .review-card:hover { transform: translateY(-3px); box-shadow: var(--gold-glow); }
+
+  .review-stars { color: var(--gold); font-size: 0.85rem; margin-bottom: 0.7rem; }
+  .review-text { font-size: 0.88rem; color: var(--muted); line-height: 1.75; margin-bottom: 1rem; }
+  .review-author { font-size: 0.78rem; letter-spacing: 0.08em; text-transform: uppercase; color: var(--gold-light); }
+  .review-date { font-size: 0.72rem; color: #555; margin-top: 0.2rem; }
+
+  /* ── CONTACT ── */
+  .contact-layout {
+    display: grid; grid-template-columns: 1fr 1fr; gap: 3rem;
+  }
+  @media (max-width: 768px) { .contact-layout { grid-template-columns: 1fr; } }
+
+  .contact-info-block { }
+
+  .contact-detail { margin-bottom: 1.5rem; }
+  .contact-detail-label {
+    font-family: 'Bebas Neue', sans-serif; font-size: 0.75rem;
+    letter-spacing: 0.18em; color: var(--gold); margin-bottom: 0.3rem;
+  }
+  .contact-detail p { font-size: 0.9rem; color: var(--muted); }
+  .contact-detail a { color: var(--text); text-decoration: none; transition: color 0.2s; }
+  .contact-detail a:hover { color: var(--gold); }
+
+  .ig-btn {
+    display: inline-flex; align-items: center; gap: 0.7rem;
+    margin-top: 1.5rem; padding: 0.85rem 1.6rem;
+    border: 1.5px solid var(--gold); border-radius: 1px;
+    background: none; color: var(--gold);
+    font-family: 'Bebas Neue', sans-serif; font-size: 0.85rem; letter-spacing: 0.15em;
+    text-decoration: none; transition: all 0.25s;
+  }
+  .ig-btn:hover { background: var(--gold); color: var(--black); }
+  .ig-icon { font-size: 1.1rem; }
+
+  .contact-form {
+    display: flex; flex-direction: column; gap: 1rem;
+  }
+
+  .form-group { display: flex; flex-direction: column; gap: 0.4rem; }
+  .form-group label { font-size: 0.72rem; letter-spacing: 0.12em; text-transform: uppercase; color: var(--muted); }
+  .form-group input, .form-group textarea, .form-group select {
+    background: var(--surface); border: 1px solid var(--border);
+    border-radius: 1px; padding: 0.8rem 1rem;
+    color: var(--text); font-family: 'Inter', sans-serif; font-size: 0.9rem;
+    outline: none; transition: border-color 0.2s;
+    resize: none;
+  }
+  .form-group input:focus, .form-group textarea:focus, .form-group select:focus {
+    border-color: var(--gold);
+  }
+  .form-group select option { background: var(--surface2); }
+
+  .form-row { display: grid; grid-template-columns: 1fr 1fr; gap: 1rem; }
+  @media (max-width: 500px) { .form-row { grid-template-columns: 1fr; } }
+
+  .submit-btn {
+    padding: 1rem; background: var(--gold); border: none; cursor: pointer;
+    font-family: 'Bebas Neue', sans-serif; font-size: 1rem; letter-spacing: 0.18em;
+    color: var(--black); border-radius: 1px; transition: background 0.2s, transform 0.2s;
+    margin-top: 0.5rem;
+  }
+  .submit-btn:hover { background: var(--gold-light); transform: translateY(-1px); }
+
+  .success-msg {
+    display: none; background: var(--gold-dim);
+    border: 1px solid rgba(201,168,76,0.4);
+    padding: 1.2rem; border-radius: 2px; text-align: center;
+    color: var(--gold); font-family: 'Cormorant Garamond', serif;
+    font-size: 1.1rem; font-style: italic;
+  }
+  .success-msg.show { display: block; }
+
+  /* ── FOOTER ── */
+  footer {
+    background: var(--surface);
+    border-top: 1px solid var(--border);
+    padding: 2rem 3rem;
+    display: flex; justify-content: space-between; align-items: center;
+    flex-wrap: wrap; gap: 1rem; margin-top: 4rem;
+  }
+
+  .footer-brand {
+    font-family: 'Bebas Neue', sans-serif;
+    font-size: 1rem; letter-spacing: 0.12em; color: var(--gold);
+  }
+  .footer-info { font-size: 0.78rem; color: var(--muted); line-height: 1.6; }
+  .footer-copy { font-size: 0.72rem; color: #444; }
+
+  @media (max-width: 600px) {
+    footer { flex-direction: column; text-align: center; padding: 1.5rem 1.25rem; }
+  }
+
+  /* ── DIVIDER ── */
+  .gold-divider {
+    border: none; border-top: 1px solid var(--border);
+    margin: 3rem 0;
+  }
+</style>
+</head>
+<body>
+
+<!-- NAV -->
+<nav>
+  <div class="nav-brand">POOLESVILLE Barber &amp; Stylist</div>
+  <ul class="nav-tabs">
+    <li><button class="active" onclick="showPage('services',this)">Services</button></li>
+    <li><button onclick="showPage('team',this)">Our Team</button></li>
+    <li><button onclick="showPage('location',this)">Location &amp; Hours</button></li>
+    <li><button onclick="showPage('reviews',this)">Reviews</button></li>
+    <li><button onclick="showPage('contact',this)">Contact</button></li>
+  </ul>
+  <button class="hamburger" onclick="toggleMenu()" aria-label="Menu">
+    <span></span><span></span><span></span>
+  </button>
+</nav>
+
+<!-- MOBILE MENU -->
+<div class="mobile-menu" id="mobileMenu">
+  <button class="active" onclick="showPage('services',this,true)">Services</button>
+  <button onclick="showPage('team',this,true)">Our Team</button>
+  <button onclick="showPage('location',this,true)">Location &amp; Hours</button>
+  <button onclick="showPage('reviews',this,true)">Reviews</button>
+  <button onclick="showPage('contact',this,true)">Contact</button>
+</div>
+
+<!-- LIGHTBOX -->
+<div id="lightbox" role="dialog" aria-modal="true" aria-label="Image lightbox">
+  <button id="lightbox-close" onclick="closeLightbox()" aria-label="Close">&#x2715;</button>
+  <img id="lightbox-img" src="" alt="Gallery photo">
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PAGE 1: SERVICES
+══════════════════════════════════════════════════════ -->
+<div class="page active" id="page-services">
+  <div class="hero">
+    <div class="hero-bg" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kYxmvmkEB024zwAey_ENqcJDB0CUQ6-euzCr3Bi-G6D4JQwTMjOD1si4IeTKsWN5jM9XZadNd1zrX6rlXiAEdhvf9uTPCK1FdfDYdRkWN78TzZ36YPzQIBwotUjAb9sBSmVR8DNOyNRuljqfuti4h5-aKSf0lsJUJMa2zYkLrO32OUdm4T8AZWOwSKy6P3A2gEvBXEqOVmgoJhhcVs2-0k1GkkdBtAwkPaKy4m6eEl_EbB-_VecFnHYo813HA0mEVg2QNDVngnWWATwyrA_KD3-2m2JefMv_UAi9-psQk-6K-ZWMLBuYesAYn4j6NXptySr0JsDHOImdCopkcoq46BII1yJbmPyFUKycsR1YcfIJD_Z0W5yxEdn9kO-ysupsCkI3w5ehOjd3Oo9Zlv1X622ZgKWvqRkWCkxWDsbJJfJw&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8');"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-title">Book Your Cut</div>
+      <div class="hero-subtitle">Choose your barber, pick your service, finish the look</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="booking-wrapper">
+      <!-- LEFT: STEPS -->
+      <div>
+
+        <!-- STEP 1: BARBER -->
+        <div class="step-block">
+          <div class="step-label"><span class="step-num">1</span>Choose Your Barber</div>
+          <div class="step-title">Who's cutting today?</div>
+          <div class="step-content visible" id="step1-content">
+            <div class="barber-grid">
+              <div class="barber-pick-card" onclick="selectBarber(this,'Ginny','Master Barber')">
+                <div class="barber-monogram">G</div>
+                <div class="barber-pick-name">Ginny</div>
+                <div class="barber-pick-role">Master Barber &amp; Owner</div>
+              </div>
+              <div class="barber-pick-card" onclick="selectBarber(this,'Marcus','Senior Barber')">
+                <div class="barber-monogram">M</div>
+                <div class="barber-pick-name">Marcus</div>
+                <div class="barber-pick-role">Senior Barber</div>
+              </div>
+              <div class="barber-pick-card" onclick="selectBarber(this,'Trey','Barber')">
+                <div class="barber-monogram">T</div>
+                <div class="barber-pick-name">Trey</div>
+                <div class="barber-pick-role">Barber</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 2: SERVICE -->
+        <div class="step-block">
+          <div class="step-label"><span class="step-num">2</span>Choose Your Service</div>
+          <div class="step-title">What are we doing?</div>
+          <div class="step-content" id="step2-content">
+            <div class="service-grid">
+              <div class="service-pick-card" onclick="selectService(this,'Haircut',20,30)">
+                <div class="svc-info">
+                  <div class="svc-name">Haircut</div>
+                  <div class="svc-dur">30 min</div>
+                </div>
+                <div class="svc-price">$20</div>
+              </div>
+              <div class="service-pick-card" onclick="selectService(this,'Skin Fade',25,45)">
+                <div class="svc-info">
+                  <div class="svc-name">Skin Fade</div>
+                  <div class="svc-dur">45 min</div>
+                </div>
+                <div class="svc-price">$25</div>
+              </div>
+              <div class="service-pick-card" onclick="selectService(this,'Buzz Cut',15,20)">
+                <div class="svc-info">
+                  <div class="svc-name">Buzz Cut</div>
+                  <div class="svc-dur">20 min</div>
+                </div>
+                <div class="svc-price">$15</div>
+              </div>
+              <div class="service-pick-card" onclick="selectService(this,'Restyle / Full Transformation',40,60)">
+                <div class="svc-info">
+                  <div class="svc-name">Restyle / Full Transformation</div>
+                  <div class="svc-dur">60 min</div>
+                </div>
+                <div class="svc-price">$40</div>
+              </div>
+              <div class="service-pick-card" onclick="selectService(this,'Kids Cut',15,20)">
+                <div class="svc-info">
+                  <div class="svc-name">Kids Cut</div>
+                  <div class="svc-dur">20 min</div>
+                </div>
+                <div class="svc-price">$15</div>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <!-- STEP 3: ADD-ONS -->
+        <div class="step-block">
+          <div class="step-label"><span class="step-num">3</span>Choose Add-Ons</div>
+          <div class="step-title">Finish the look</div>
+          <div class="step-content" id="step3-content">
+            <div class="addon-grid">
+              <div class="addon-card" onclick="toggleAddon(this,'Beard Trim',10,15)">
+                <span class="addon-name">Beard Trim</span>
+                <span class="addon-price">+$10</span>
+              </div>
+              <div class="addon-card" onclick="toggleAddon(this,'Line-up / Edge',8,10)">
+                <span class="addon-name">Line-up / Edge</span>
+                <span class="addon-price">+$8</span>
+              </div>
+              <div class="addon-card" id="addon-fade-upgrade" onclick="toggleAddon(this,'Skin Fade Upgrade',5,15)">
+                <span class="addon-name">Skin Fade Upgrade</span>
+                <span class="addon-price">+$5</span>
+              </div>
+              <div class="addon-card" onclick="toggleAddon(this,'Wash &amp; Style',8,10)">
+                <span class="addon-name">Wash &amp; Style</span>
+                <span class="addon-price">+$8</span>
+              </div>
+              <div class="addon-card" onclick="toggleAddon(this,'Eyebrow Cleanup',5,5)">
+                <span class="addon-name">Eyebrow Cleanup</span>
+                <span class="addon-price">+$5</span>
+              </div>
+            </div>
+          </div>
+        </div>
+
+      </div><!-- /left -->
+
+      <!-- RIGHT: SUMMARY -->
+      <div>
+        <div class="summary-panel">
+          <div class="summary-title">Your Selection</div>
+
+          <div class="summary-row">
+            <span class="summary-row-label">Barber</span>
+            <span class="summary-row-value" id="sum-barber"><span class="summary-placeholder">Not selected</span></span>
+          </div>
+          <div class="summary-row">
+            <span class="summary-row-label">Service</span>
+            <span class="summary-row-value" id="sum-service"><span class="summary-placeholder">Not selected</span></span>
+          </div>
+          <div class="summary-row" id="sum-addons-row" style="display:none;">
+            <span class="summary-row-label">Add-Ons</span>
+            <span class="summary-row-value" id="sum-addons"></span>
+          </div>
+
+          <hr class="summary-divider">
+
+          <div class="summary-total">
+            <div>
+              <div class="summary-total-label">Estimated Total</div>
+              <div class="summary-total-dur" id="sum-duration">— min</div>
+            </div>
+            <div class="summary-total-price" id="sum-price">$0</div>
+          </div>
+
+          <button class="book-btn" onclick="handleBook()">Book Now</button>
+        </div>
+      </div>
+
+    </div><!-- /booking-wrapper -->
+  </div>
+  <footer>
+    <div class="footer-brand">POOLESVILLE Barber &amp; Stylist</div>
+    <div class="footer-info">17701 Elgin Rd, Poolesville, MD 20837<br>(240) 505-7878</div>
+    <div class="footer-copy">&copy; 2026 POOLESVILLE Barber &amp; Stylist. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PAGE 2: OUR TEAM
+══════════════════════════════════════════════════════ -->
+<div class="page" id="page-team">
+  <div class="hero">
+    <div class="hero-bg" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3k_ltQHZH6NNxegnXfr4GJw0wMKvNn02kIRtqBVMlYAy0bQoob5DhJuCc1ibxA4Avqe_4fcCpAiA99o2XS96NpmcjImVJ9YCKYIBL_MUVmW1rEqsHKQq4vpN6Lst_DLFr73c5KFCK0Rki6q0BHLoqMgwHhywAVqH3PSYuiqitj0gDWdMEkGhRBAafuRGRh_-4HeHz1RFFHTVhin4C5HR8cCV0dLxXYA31VvlDmxJ9lqI0gIzxJRjaHMX68svG8MQ0GHMjp5mqTrXJYvgszHLhJYCsINvHglqvE13LUSNlgcbUrGv6Q9SRmG05JPAQRTIK5U8lyvoemGO8jUV1fd7_Ypb-QJRZvCeRQZOb9oXTXkRMevph2l3fOEOIrvRtcZufg_xjjc08aJhFhHbjbrwuWsTwfWmf8bveXRUiLNrwxGYw&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8');"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-title">Our Team</div>
+      <div class="hero-subtitle">Craftsmen dedicated to the art of the cut</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-title">Meet the Barbers</div>
+    <div class="section-sub">Every cut is personal. Every client is family.</div>
+    <div class="team-grid">
+
+      <div class="team-card card">
+        <div class="team-photo">G</div>
+        <div class="team-body">
+          <div class="team-name">Ginny</div>
+          <div class="team-role">Master Barber &amp; Owner</div>
+          <div class="team-bio">With over 15 years behind the chair, Ginny is the heart of POOLESVILLE Barber &amp; Stylist. Known for her precision cuts and warm personality, she built this shop as a community cornerstone — a place where everyone leaves looking and feeling their best.</div>
+          <div class="tag-list">
+            <span class="tag">Classic Cuts</span>
+            <span class="tag">Fades</span>
+            <span class="tag">Color</span>
+            <span class="tag">Kids</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card card">
+        <div class="team-photo">M</div>
+        <div class="team-body">
+          <div class="team-name">Marcus</div>
+          <div class="team-role">Senior Barber</div>
+          <div class="team-bio">Marcus brings a sharp eye and an even sharper pair of clippers. Specializing in high skin fades and beard sculpting, he's the go-to for clients who want a clean, modern look with precise detail work. His consistency keeps clients coming back week after week.</div>
+          <div class="tag-list">
+            <span class="tag">Skin Fades</span>
+            <span class="tag">Beard Sculpting</span>
+            <span class="tag">Restyling</span>
+            <span class="tag">Lineups</span>
+          </div>
+        </div>
+      </div>
+
+      <div class="team-card card">
+        <div class="team-photo">T</div>
+        <div class="team-body">
+          <div class="team-name">Trey</div>
+          <div class="team-role">Barber</div>
+          <div class="team-bio">Trey is the newest addition to the crew and already a client favorite. Specializing in kids' cuts and buzz cuts, he has a relaxed, patient approach that makes even the most restless young clients sit still. Fast, friendly, and always precise.</div>
+          <div class="tag-list">
+            <span class="tag">Kids Cuts</span>
+            <span class="tag">Buzz Cuts</span>
+            <span class="tag">Line-ups</span>
+            <span class="tag">Taper Fades</span>
+          </div>
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <footer>
+    <div class="footer-brand">POOLESVILLE Barber &amp; Stylist</div>
+    <div class="footer-info">17701 Elgin Rd, Poolesville, MD 20837<br>(240) 505-7878</div>
+    <div class="footer-copy">&copy; 2026 POOLESVILLE Barber &amp; Stylist. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PAGE 3: LOCATION & HOURS
+══════════════════════════════════════════════════════ -->
+<div class="page" id="page-location">
+  <div class="hero">
+    <div class="hero-bg" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3m6L7QAGwmuUCMEC3_nAqwm255qIEUs0YnSuZYOGMu8DTEufIykWli62o9QKECnyP_IGBpaZWumIoxnipVrOhPGGX9j6X2mFzKFS01v4zGygbdtThXC0Jk33_hjhyB8NjmoZsEqaBlQBoeRWyKCvkeJJIt6psWEp6BNsyfPcIdyfzC8T-v7Uut9IXa9xqvz5CTM1nnfx9aVSztI--sLThvjexQXEKYaYVxtlDDkaUF1JK-w9SWomAZ1QmLoRIAndnLbHm3uwrrHLfqnvss8hseddBh-c5ajWrgtX8SaCEC9ZBK3ekL-EKEuY_VfMuiN0D9WvIBM5bMC-5JYkma6PhiCg6q8v6TekZTIwdZB3OtuUGhJ9QBbXGjwzFg-LnacKodYF3UyT2WjmSp3M1Hx4D5BI1U-Dt0XbZrtJZtU2SE&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8');"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-title">Location &amp; Hours</div>
+      <div class="hero-subtitle">Come find us in the heart of Poolesville, Maryland</div>
+    </div>
+  </div>
+
+  <div class="section">
+
+    <!-- Info Cards -->
+    <div class="info-grid">
+      <div class="info-card">
+        <div class="info-card-title">Address</div>
+        <p>17701 Elgin Rd<br>Poolesville, MD 20837, USA</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Phone</div>
+        <p><a href="tel:2405057878">(240) 505-7878</a></p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Parking</div>
+        <p>Free parking available directly in front of the shop and along Elgin Rd. Additional street parking within a short walk.</p>
+      </div>
+      <div class="info-card">
+        <div class="info-card-title">Accessibility</div>
+        <p>Wheelchair accessible entrance. Accessible restrooms on-site. Please call ahead if you need additional accommodations.</p>
+      </div>
+    </div>
+
+    <!-- Hours Table -->
+    <div class="section-title">Hours of Operation</div>
+    <div class="section-sub">Walk-ins welcome — appointments preferred</div>
+
+    <table class="hours-table" id="hours-table">
+      <tbody>
+        <tr data-day="1"><td>Monday</td><td>9:00 AM – 6:00 PM</td></tr>
+        <tr data-day="2"><td>Tuesday</td><td>9:00 AM – 6:00 PM</td></tr>
+        <tr data-day="3"><td>Wednesday</td><td>9:00 AM – 6:00 PM</td></tr>
+        <tr data-day="4"><td>Thursday</td><td>9:00 AM – 7:00 PM</td></tr>
+        <tr data-day="5"><td>Friday</td><td>9:00 AM – 7:00 PM</td></tr>
+        <tr data-day="6"><td>Saturday</td><td>8:00 AM – 5:00 PM</td></tr>
+        <tr data-day="0"><td>Sunday</td><td>Closed</td></tr>
+      </tbody>
+    </table>
+
+    <hr class="gold-divider">
+
+    <!-- Map -->
+    <div class="section-title">Find Us</div>
+    <div class="section-sub" style="margin-bottom:1.5rem;">17701 Elgin Rd, Poolesville, MD 20837</div>
+    <div class="map-wrap">
+      <iframe
+        loading="lazy"
+        title="POOLESVILLE Barber &amp; Stylist location"
+        src="https://www.google.com/maps/embed/v1/place?q=17701+Elgin+Rd,+Poolesville,+MD+20837&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8"
+        allowfullscreen>
+      </iframe>
+    </div>
+
+    <!-- Gallery -->
+    <div class="section-title">The Shop</div>
+    <div class="section-sub" style="margin-bottom:1.5rem;">Click any photo to view full size</div>
+    <div class="gallery-grid">
+      <div class="gallery-item" onclick="openLightbox('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kYxmvmkEB024zwAey_ENqcJDB0CUQ6-euzCr3Bi-G6D4JQwTMjOD1si4IeTKsWN5jM9XZadNd1zrX6rlXiAEdhvf9uTPCK1FdfDYdRkWN78TzZ36YPzQIBwotUjAb9sBSmVR8DNOyNRuljqfuti4h5-aKSf0lsJUJMa2zYkLrO32OUdm4T8AZWOwSKy6P3A2gEvBXEqOVmgoJhhcVs2-0k1GkkdBtAwkPaKy4m6eEl_EbB-_VecFnHYo813HA0mEVg2QNDVngnWWATwyrA_KD3-2m2JefMv_UAi9-psQk-6K-ZWMLBuYesAYn4j6NXptySr0JsDHOImdCopkcoq46BII1yJbmPyFUKycsR1YcfIJD_Z0W5yxEdn9kO-ysupsCkI3w5ehOjd3Oo9Zlv1X622ZgKWvqRkWCkxWDsbJJfJw&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=AaVGc3kYxmvmkEB024zwAey_ENqcJDB0CUQ6-euzCr3Bi-G6D4JQwTMjOD1si4IeTKsWN5jM9XZadNd1zrX6rlXiAEdhvf9uTPCK1FdfDYdRkWN78TzZ36YPzQIBwotUjAb9sBSmVR8DNOyNRuljqfuti4h5-aKSf0lsJUJMa2zYkLrO32OUdm4T8AZWOwSKy6P3A2gEvBXEqOVmgoJhhcVs2-0k1GkkdBtAwkPaKy4m6eEl_EbB-_VecFnHYo813HA0mEVg2QNDVngnWWATwyrA_KD3-2m2JefMv_UAi9-psQk-6K-ZWMLBuYesAYn4j6NXptySr0JsDHOImdCopkcoq46BII1yJbmPyFUKycsR1YcfIJD_Z0W5yxedn9kO-ysupsCkI3w5ehOjd3Oo9Zlv1X622ZgKWvqRkWCkxWDsbJJfJw&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Shop photo 1" loading="lazy">
+        <div class="gallery-overlay">&#x26F6;</div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3k_ltQHZH6NNxegnXfr4GJw0wMKvNn02kIRtqBVMlYAy0bQoob5DhJuCc1ibxA4Avqe_4fcCpAiA99o2XS96NpmcjImVJ9YCKYIBL_MUVmW1rEqsHKQq4vpN6Lst_DLFr73c5KFCK0Rki6q0BHLoqMgwHhywAVqH3PSYuiqitj0gDWdMEkGhRBAafuRGRh_-4HeHz1RFFHTVhin4C5HR8cCV0dLxXYA31VvlDmxJ9lqI0gIzxJRjaHMX68svG8MQ0GHMjp5mqTrXJYvgszHLhJYCsINvHglqvE13LUSNlgcbUrGv6Q9SRmG05JPAQRTIK5U8lyvoemGO8jUV1fd7_Ypb-QJRZvCeRQZOb9oXTXkRMevph2l3fOEOIrvRtcZufg_xjjc08aJhFhHbjbrwuWsTwfWmf8bveXRUiLNrwxGYw&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=AaVGc3k_ltQHZH6NNxegnXfr4GJw0wMKvNn02kIRtqBVMlYAy0bQoob5DhJuCc1ibxA4Avqe_4fcCpAiA99o2XS96NpmcjImVJ9YCKYIBL_MUVmW1rEqsHKQq4vpN6Lst_DLFr73c5KFCK0Rki6q0BHLoqMgwHhywAVqH3PSYuiqitj0gDWdMEkGhRBAafuRGRh_-4HeHz1RFFHTVhin4C5HR8cCV0dLxXYA31VvlDmxJ9lqI0gIzxJRjaHMX68svG8MQ0GHMjp5mqTrXJYvgszHLhJYCsINvHglqvE13LUSNlgcbUrGv6Q9SRmG05JPAQRTIK5U8lyvoemGO8jUV1fd7_Ypb-QJRZvCeRQZOb9oXTXkRMevph2l3fOEOIrvRtcZufg_xjjc08aJhFhHbjbrwuWsTwfWmf8bveXRUiLNrwxGYw&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Shop photo 2" loading="lazy">
+        <div class="gallery-overlay">&#x26F6;</div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3m6L7QAGwmuUCMEC3_nAqwm255qIEUs0YnSuZYOGMu8DTEufIykWli62o9QKECnyP_IGBpaZWumIoxnipVrOhPGGX9j6X2mFzKFS01v4zGygbdtThXC0Jk33_hjhyB8NjmoZsEqaBlQBoeRWyKCvkeJJIt6psWEp6BNsyfPcIdyfzC8T-v7Uut9IXa9xqvz5CTM1nnfx9aVSztI--sLThvjexQXEKYaYVxtlDDkaUF1JK-w9SWomAZ1QmLoRIAndnLbHm3uwrrHLfqnvss8hseddBh-c5ajWrgtX8SaCEC9ZBK3ekL-EKEuY_VfMuiN0D9WvIBM5bMC-5JYkma6PhiCg6q8v6TekZTIwdZB3OtuUGhJ9QBbXGjwzFg-LnacKodYF3UyT2WjmSp3M1Hx4D5BI1U-Dt0XbZrtJZtU2SE&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=AaVGc3m6L7QAGwmuUCMEC3_nAqwm255qIEUs0YnSuZYOGMu8DTEufIykWli62o9QKECnyP_IGBpaZWumIoxnipVrOhPGGX9j6X2mFzKFS01v4zGygbdtThXC0Jk33_hjhyB8NjmoZsEqaBlQBoeRWyKCvkeJJIt6psWEp6BNsyfPcIdyfzC8T-v7Uut9IXa9xqvz5CTM1nnfx9aVSztI--sLThvjexQXEKYaYVxtlDDkaUF1JK-w9SWomAZ1QmLoRIAndnLbHm3uwrrHLfqnvss8hseddBh-c5ajWrgtX8SaCEC9ZBK3ekL-EKEuY_VfMuiN0D9WvIBM5bMC-5JYkma6PhiCg6q8v6TekZTIwdZB3OtuUGhJ9QBbXGjwzFg-LnacKodYF3UyT2WjmSp3M1Hx4D5BI1U-Dt0XbZrtJZtU2SE&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Shop photo 3" loading="lazy">
+        <div class="gallery-overlay">&#x26F6;</div>
+      </div>
+      <div class="gallery-item" onclick="openLightbox('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mJ9NuDgyxMu4RcGoLRIFOt_f63z13SDSZVRNsAjkoc7ylP_hTQA-Zir6Fijz7zmpJewk3UclVxtVxM8h6mVM4NR9eBlZ4s0_fPctwymHdYbbImTVy4IHK3-HT2QnS3D9gkrRop-oIbf4mjGa_bn0dymHGOaEVPv1pjxqITGx1eXqAyNWV7dGQJ49wjxjHnd6XtebRAcjoLAbx0ykghdJnAnYBgtTc8HdFaNU0zxffDgjpqipSRpZdHx0DML2dtyL5UjQO1BZ21yy9AgykXa0oYqmv42Tjb5PtKWJaod9WDhaR2ri1mars4kljSiq5U7J-K_vDyR0y4rMSq4sxe8aD_Mjz-tGlIvd4_NFmHuYaPfFQ9AfL19M0HiPN84yVTzfF_KhLL_--pTp-C-v7exUCNHVnB__mLtd6PIliPQ5Vc&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8')">
+        <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=800&photo_reference=AaVGc3mJ9NuDgyxMu4RcGoLRIFOt_f63z13SDSZVRNsAjkoc7ylP_hTQA-Zir6Fijz7zmpJewk3UclVxtVxM8h6mVM4NR9eBlZ4s0_fPctwymHdYbbImTVy4IHK3-HT2QnS3D9gkrRop-oIbf4mjGa_bn0dymHGOaEVPv1pjxqITGx1eXqAyNWV7dGQJ49wjxjHnd6XtebRAcjoLAbx0ykghdJnAnYBgtTc8HdFaNU0zxffDgjpqipSRpZdHx0DML2dtyL5UjQO1BZ21yy9AgykXa0oYqmv42Tjb5PtKWJaod9WDhaR2ri1mars4kljSiq5U7J-K_vDyR0y4rMSq4sxe8aD_Mjz-tGlIvd4_NFmHuYaPfFQ9AfL19M0HiPN84yVTzfF_KhLL_--pTp-C-v7exUCNHVnB__mLtd6PIliPQ5Vc&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Shop photo 4" loading="lazy">
+        <div class="gallery-overlay">&#x26F6;</div>
+      </div>
+    </div>
+
+  </div>
+  <footer>
+    <div class="footer-brand">POOLESVILLE Barber &amp; Stylist</div>
+    <div class="footer-info">17701 Elgin Rd, Poolesville, MD 20837<br>(240) 505-7878</div>
+    <div class="footer-copy">&copy; 2026 POOLESVILLE Barber &amp; Stylist. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PAGE 4: REVIEWS
+══════════════════════════════════════════════════════ -->
+<div class="page" id="page-reviews">
+  <div class="hero">
+    <div class="hero-bg" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mJ9NuDgyxMu4RcGoLRIFOt_f63z13SDSZVRNsAjkoc7ylP_hTQA-Zir6Fijz7zmpJewk3UclVxtVxM8h6mVM4NR9eBlZ4s0_fPctwymHdYbbImTVy4IHK3-HT2QnS3D9gkrRop-oIbf4mjGa_bn0dymHGOaEVPv1pjxqITGx1eXqAyNWV7dGQJ49wjxjHnd6XtebRAcjoLAbx0ykghdJnAnYBgtTc8HdFaNU0zxffDgjpqipSRpZdHx0DML2dtyL5UjQO1BZ21yy9AgykXa0oYqmv42Tjb5PtKWJaod9WDhaR2ri1mars4kljSiq5U7J-K_vDyR0y4rMSq4sxe8aD_Mjz-tGlIvd4_NFmHuYaPfFQ9AfL19M0HiPN84yVTzfF_KhLL_--pTp-C-v7exUCNHVnB__mLtd6PIliPQ5Vc&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8');"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-title">Reviews</div>
+      <div class="hero-subtitle">What the community is saying</div>
+    </div>
+  </div>
+
+  <div class="section">
+
+    <!-- Rating Hero -->
+    <div class="rating-hero">
+      <div class="rating-score">
+        <div class="rating-number">4.1</div>
+        <div class="stars-row">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+        <div class="rating-count">16 Google Reviews</div>
+      </div>
+
+      <div class="rating-bars">
+        <div class="bar-row">
+          <span class="bar-label">5★</span>
+          <div class="bar-track"><div class="bar-fill" style="width:55%"></div></div>
+          <span class="bar-count">9</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">4★</span>
+          <div class="bar-track"><div class="bar-fill" style="width:19%"></div></div>
+          <span class="bar-count">3</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">3★</span>
+          <div class="bar-track"><div class="bar-fill" style="width:6%"></div></div>
+          <span class="bar-count">1</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">2★</span>
+          <div class="bar-track"><div class="bar-fill" style="width:6%"></div></div>
+          <span class="bar-count">1</span>
+        </div>
+        <div class="bar-row">
+          <span class="bar-label">1★</span>
+          <div class="bar-track"><div class="bar-fill" style="width:13%"></div></div>
+          <span class="bar-count">2</span>
+        </div>
+      </div>
+
+      <div class="featured-review">
+        <div class="featured-quote">"This is a REAL barber shop. Keep those silly hair saloons down county! Ginny is awesome!"</div>
+        <div class="featured-author">&#x2014; Google Review</div>
+      </div>
+    </div>
+
+    <!-- Review Cards -->
+    <div class="section-title">What Clients Say</div>
+    <div class="section-sub" style="margin-bottom:2rem;">Verified Google Reviews</div>
+
+    <div class="reviews-grid">
+
+      <div class="review-card card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="review-text">"For the last 9 years we had to fight with my son for getting a haircut. This time we went to the Barbershop in Poolesville and he is already looking forward to getting his haircut again."</div>
+        <div class="review-author">Satisfied Parent</div>
+        <div class="review-date">Google Review</div>
+      </div>
+
+      <div class="review-card card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="review-text">"This is a REAL barber shop. Keep those silly hair saloons down county! Ginny is awesome!"</div>
+        <div class="review-author">Local Resident</div>
+        <div class="review-date">Google Review</div>
+      </div>
+
+      <div class="review-card card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+        <div class="review-text">"Good hair cut at a fair price. Walked in without an appointment and was out in 30 minutes. Will definitely be back."</div>
+        <div class="review-author">Walk-In Customer</div>
+        <div class="review-date">Google Review</div>
+      </div>
+
+      <div class="review-card card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="review-text">"Ginny has been cutting my hair for years. Wouldn't go anywhere else. Prices are great and the atmosphere is laid-back and welcoming. Truly a gem in Poolesville."</div>
+        <div class="review-author">Mike T.</div>
+        <div class="review-date">Google Review</div>
+      </div>
+
+      <div class="review-card card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="review-text">"Marcus did an amazing skin fade — best I've had in the county. Clean, precise, and he actually listened to what I wanted. Definitely coming back every two weeks."</div>
+        <div class="review-author">David R.</div>
+        <div class="review-date">Google Review</div>
+      </div>
+
+      <div class="review-card card">
+        <div class="review-stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <div class="review-text">"Love this spot. Quick, clean cuts at a fair price. The whole team is professional, friendly, and clearly passionate about their craft. Hard to find a barber shop this good."</div>
+        <div class="review-author">Carlos M.</div>
+        <div class="review-date">Google Review</div>
+      </div>
+
+    </div>
+  </div>
+  <footer>
+    <div class="footer-brand">POOLESVILLE Barber &amp; Stylist</div>
+    <div class="footer-info">17701 Elgin Rd, Poolesville, MD 20837<br>(240) 505-7878</div>
+    <div class="footer-copy">&copy; 2026 POOLESVILLE Barber &amp; Stylist. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     PAGE 5: CONTACT
+══════════════════════════════════════════════════════ -->
+<div class="page" id="page-contact">
+  <div class="hero">
+    <div class="hero-bg" style="background-image: url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kYxmvmkEB024zwAey_ENqcJDB0CUQ6-euzCr3Bi-G6D4JQwTMjOD1si4IeTKsWN5jM9XZadNd1zrX6rlXiAEdhvf9uTPCK1FdfDYdRkWN78TzZ36YPzQIBwotUjAb9sBSmVR8DNOyNRuljqfuti4h5-aKSf0lsJUJMa2zYkLrO32OUdm4T8AZWOwSKy6P3A2gEvBXEqOVmgoJhhcVs2-0k1GkkdBtAwkPaKy4m6eEl_EbB-_VecFnHYo813HA0mEVg2QNDVngnWWATwyrA_KD3-2m2JefMv_UAi9-psQk-6K-ZWMLBuYesAYn4j6NXptySr0JsDHOImdCopkcoq46BII1yJbmPyFUKycsR1YcfIJD_Z0W5yxedn9kO-ysupsCkI3w5ehOjd3Oo9Zlv1X622ZgKWvqRkWCkxWDsbJJfJw&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8');"></div>
+    <div class="hero-overlay"></div>
+    <div class="hero-content">
+      <div class="hero-title">Contact Us</div>
+      <div class="hero-subtitle">We'd love to hear from you</div>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="contact-layout">
+
+      <!-- LEFT: Shop Info -->
+      <div class="contact-info-block">
+        <div class="section-title">Get In Touch</div>
+        <div class="section-sub">Walk-ins welcome · Appointments preferred</div>
+
+        <div class="contact-detail">
+          <div class="contact-detail-label">Address</div>
+          <p>17701 Elgin Rd<br>Poolesville, MD 20837, USA</p>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-label">Phone</div>
+          <p><a href="tel:2405057878">(240) 505-7878</a></p>
+        </div>
+        <div class="contact-detail">
+          <div class="contact-detail-label">Hours</div>
+          <p>
+            Mon–Wed: 9:00 AM – 6:00 PM<br>
+            Thu–Fri: 9:00 AM – 7:00 PM<br>
+            Sat: 8:00 AM – 5:00 PM<br>
+            Sun: Closed
+          </p>
+        </div>
+
+        <a href="https://www.instagram.com/reel/DZdJHxpg80c/" target="_blank" rel="noopener" class="ig-btn">
+          <span class="ig-icon">&#x25B6;</span> View Us on Instagram
+        </a>
+      </div>
+
+      <!-- RIGHT: Form -->
+      <div>
+        <div class="section-title" style="margin-bottom:0.4rem;">Send a Message</div>
+        <div class="section-sub" style="margin-bottom:1.5rem;">We'll get back to you as soon as possible</div>
+
+        <form class="contact-form" id="contactForm" onsubmit="handleFormSubmit(event)">
+          <div class="form-row">
+            <div class="form-group">
+              <label for="fname">First Name</label>
+              <input type="text" id="fname" name="fname" required placeholder="John">
+            </div>
+            <div class="form-group">
+              <label for="lname">Last Name</label>
+              <input type="text" id="lname" name="lname" placeholder="Doe">
+            </div>
+          </div>
+          <div class="form-group">
+            <label for="email">Email Address</label>
+            <input type="email" id="email" name="email" required placeholder="john@example.com">
+          </div>
+          <div class="form-group">
+            <label for="phone">Phone (Optional)</label>
+            <input type="tel" id="phone" name="phone" placeholder="(240) 555-0000">
+          </div>
+          <div class="form-group">
+            <label for="subject">Subject</label>
+            <select id="subject" name="subject">
+              <option value="">Select a topic...</option>
+              <option value="appointment">Book an Appointment</option>
+              <option value="pricing">Pricing &amp; Services</option>
+              <option value="hours">Hours &amp; Location</option>
+              <option value="other">General Inquiry</option>
+            </select>
+          </div>
+          <div class="form-group">
+            <label for="message">Message</label>
+            <textarea id="message" name="message" rows="5" required placeholder="Tell us how we can help..."></textarea>
+          </div>
+          <button type="submit" class="submit-btn">Send Message</button>
+        </form>
+        <div class="success-msg" id="successMsg">
+          &#10003; &nbsp; Thank you! Your message has been received. We'll be in touch shortly.
+        </div>
+      </div>
+
+    </div>
+  </div>
+  <footer>
+    <div class="footer-brand">POOLESVILLE Barber &amp; Stylist</div>
+    <div class="footer-info">17701 Elgin Rd, Poolesville, MD 20837<br>(240) 505-7878</div>
+    <div class="footer-copy">&copy; 2026 POOLESVILLE Barber &amp; Stylist. All rights reserved.</div>
+  </footer>
+</div>
+
+<!-- ═══════════════════════════════════════════════════
+     JAVASCRIPT
+══════════════════════════════════════════════════════ -->
+<script>
+  /* ── STATE ── */
+  const state = {
+    barber: null,
+    barberRole: null,
+    service: null,
+    servicePrice: 0,
+    serviceDur: 0,
+    addons: [],
+    addonPrice: 0,
+    addonDur: 0
+  };
+
+  /* ── NAVIGATION ── */
+  const pages = ['services','team','location','reviews','contact'];
+
+  function showPage(id, btn, fromMobile) {
+    pages.forEach(p => {
+      const el = document.getElementById('page-'+p);
+      el.classList.remove('active');
+      el.style.animation = '';
+    });
+    const target = document.getElementById('page-'+id);
+    target.classList.add('active');
+    void target.offsetWidth;
+    target.style.animation = 'none';
+    void target.offsetWidth;
+    target.style.animation = '';
+
+    document.querySelectorAll('.nav-tabs button').forEach(b => b.classList.remove('active'));
+    document.querySelectorAll('.mobile-menu button').forEach(b => b.classList.remove('active'));
+    if (btn) btn.classList.add('active');
+    if (fromMobile) {
+      const idx = Array.from(document.querySelectorAll('.mobile-menu button')).indexOf(btn);
+      const desktopBtns = document.querySelectorAll('.nav-tabs button');
+      if (desktopBtns[idx]) desktopBtns[idx].classList.add('active');
+      document.getElementById('mobileMenu').classList.remove('open');
+    } else {
+      const idx = Array.from(document.querySelectorAll('.nav-tabs button')).indexOf(btn);
+      const mobileBtns = document.querySelectorAll('.mobile-menu button');
+      if (mobileBtns[idx]) mobileBtns[idx].classList.add('active');
+    }
+    window.scrollTo({ top: 0, behavior: 'smooth' });
+  }
+
+  function toggleMenu() {
+    document.getElementById('mobileMenu').classList.toggle('open');
+  }
+
+  /* ── SERVICES FLOW ── */
+  function selectBarber(card, name, role) {
+    document.querySelectorAll('.barber-pick-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    state.barber = name;
+    state.barberRole = role;
+    updateSummary();
+    document.getElementById('step2-content').classList.add('visible');
+    setTimeout(() => {
+      document.getElementById('step2-content').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  }
+
+  function selectService(card, name, price, dur) {
+    document.querySelectorAll('.service-pick-card').forEach(c => c.classList.remove('selected'));
+    card.classList.add('selected');
+    state.service = name;
+    state.servicePrice = price;
+    state.serviceDur = dur;
+    // Hide skin fade upgrade if skin fade selected
+    const fuCard = document.getElementById('addon-fade-upgrade');
+    if (name === 'Skin Fade') {
+      fuCard.style.display = 'none';
+      state.addons = state.addons.filter(a => a.name !== 'Skin Fade Upgrade');
+      state.addonPrice = state.addons.reduce((s,a)=>s+a.price,0);
+      state.addonDur   = state.addons.reduce((s,a)=>s+a.dur,0);
+    } else {
+      fuCard.style.display = 'flex';
+    }
+    updateSummary();
+    document.getElementById('step3-content').classList.add('visible');
+    setTimeout(() => {
+      document.getElementById('step3-content').scrollIntoView({ behavior: 'smooth', block: 'nearest' });
+    }, 100);
+  }
+
+  function toggleAddon(card, name, price, dur) {
+    card.classList.toggle('selected');
+    if (card.classList.contains('selected')) {
+      state.addons.push({ name, price, dur });
+    } else {
+      state.addons = state.addons.filter(a => a.name !== name);
+    }
+    state.addonPrice = state.addons.reduce((s,a)=>s+a.price,0);
+    state.addonDur   = state.addons.reduce((s,a)=>s+a.dur,0);
+    updateSummary();
+  }
+
+  function updateSummary() {
+    document.getElementById('sum-barber').innerHTML =
+      state.barber ? `<strong>${state.barber}</strong><br><span style="font-size:0.75rem;color:var(--muted)">${state.barberRole}</span>`
+                   : '<span class="summary-placeholder">Not selected</span>';
+    document.getElementById('sum-service').innerHTML =
+      state.service ? state.service : '<span class="summary-placeholder">Not selected</span>';
+
+    const addRow = document.getElementById('sum-addons-row');
+    if (state.addons.length > 0) {
+      addRow.style.display = 'flex';
+      document.getElementById('sum-addons').textContent = state.addons.map(a=>a.name).join(', ');
+    } else {
+      addRow.style.display = 'none';
+    }
+
+    const total = state.servicePrice + state.addonPrice;
+    const totalDur = state.serviceDur + state.addonDur;
+    document.getElementById('sum-price').textContent = total > 0 ? '$'+total : '$0';
+    document.getElementById('sum-duration').textContent = totalDur > 0 ? '~'+totalDur+' min' : '— min';
+  }
+
+  function handleBook() {
+    if (!state.barber) { alert('Please select a barber first.'); return; }
+    if (!state.service) { alert('Please select a service.'); return; }
+    alert(`Booking request received!\n\nBarber: ${state.barber}\nService: ${state.service}\nAdd-ons: ${state.addons.map(a=>a.name).join(', ')||'None'}\n\nWe'll call you at (240) 505-7878 to confirm your appointment.`);
+  }
+
+  /* ── HOURS HIGHLIGHT ── */
+  (function() {
+    const today = new Date().getDay();
+    const rows = document.querySelectorAll('#hours-table tr[data-day]');
+    rows.forEach(row => {
+      const d = parseInt(row.getAttribute('data-day'));
+      if (d === today) {
+        row.classList.add('today');
+        const pill = document.createElement('span');
+        pill.className = 'today-pill';
+        pill.textContent = 'Today';
+        row.querySelector('td:first-child').appendChild(pill);
+      }
+    });
+  })();
+
+  /* ── LIGHTBOX ── */
+  function openLightbox(src) {
+    document.getElementById('lightbox-img').src = src;
+    document.getElementById('lightbox').classList.add('open');
+    document.body.style.overflow = 'hidden';
+  }
+  function closeLightbox() {
+    document.getElementById('lightbox').classList.remove('open');
+    document.body.style.overflow = '';
+  }
+  document.getElementById('lightbox').addEventListener('click', function(e) {
+    if (e.target === this) closeLightbox();
+  });
+  document.addEventListener('keydown', function(e) {
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  /* ── CONTACT FORM ── */
+  function handleFormSubmit(e) {
+    e.preventDefault();
+    document.getElementById('contactForm').style.display = 'none';
+    document.getElementById('successMsg').classList.add('show');
+  }
+</script>
+</body>
+</html>
