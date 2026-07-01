@@ -1,0 +1,864 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bowie Town Barbers | Premium Barbershop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:wght@400;500;600;700&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080808;
+    --bg-alt:#111111;
+    --card:#141414;
+    --gold:#C9A84C;
+    --gold-soft:rgba(201,168,76,.35);
+    --text:#f2ece0;
+    --text-dim:#a9a29a;
+    --border:#242118;
+    --danger:#8a2f2f;
+  }
+  *{box-sizing:border-box;margin:0;padding:0;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{font-family:'Cormorant Garamond',serif;font-weight:600;letter-spacing:.02em;}
+  .display, .hero-title, .stat-num, .price-num{font-family:'Bebas Neue',sans-serif;letter-spacing:.04em;}
+  a{color:var(--gold);text-decoration:none;}
+  img{max-width:100%;display:block;}
+  ul{list-style:none;}
+
+  /* ===== NAV ===== */
+  header.site-nav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    background:rgba(8,8,8,.92);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-inner{
+    max-width:1280px;margin:0 auto;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:16px 28px;
+  }
+  .brand{
+    font-family:'Cormorant Garamond',serif;
+    font-size:1.6rem;font-weight:700;color:var(--text);
+    letter-spacing:.03em;
+  }
+  .brand span{color:var(--gold);}
+  nav.tabs{display:flex;gap:6px;}
+  .tab-btn{
+    background:none;border:none;color:var(--text-dim);
+    font-family:'Inter',sans-serif;font-size:.82rem;
+    text-transform:uppercase;letter-spacing:.12em;
+    padding:10px 16px;cursor:pointer;position:relative;
+    transition:color .25s ease;
+  }
+  .tab-btn:hover{color:var(--text);}
+  .tab-btn::after{
+    content:"";position:absolute;left:16px;right:16px;bottom:2px;height:2px;
+    background:var(--gold);transform:scaleX(0);transform-origin:center;
+    transition:transform .3s ease;
+  }
+  .tab-btn.active{color:var(--gold);}
+  .tab-btn.active::after{transform:scaleX(1);}
+  .hamburger{
+    display:none;flex-direction:column;gap:5px;background:none;border:none;cursor:pointer;padding:8px;
+  }
+  .hamburger span{width:26px;height:2px;background:var(--gold);display:block;}
+
+  /* ===== PAGES ===== */
+  main{padding-top:64px;}
+  .page{display:none;}
+  .page.active{display:block;animation:fadeIn .6s ease both;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(12px);}to{opacity:1;transform:translateY(0);}}
+
+  .hero{
+    position:relative;height:46vh;min-height:320px;
+    display:flex;align-items:flex-end;
+    background-size:cover;background-position:center;
+    overflow:hidden;
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(8,8,8,.35) 0%, rgba(8,8,8,.55) 45%, rgba(8,8,8,.96) 100%);
+  }
+  .hero-content{position:relative;z-index:2;max-width:1280px;margin:0 auto;padding:0 28px 42px;width:100%;}
+  .hero-title{font-size:clamp(2.6rem,6vw,4.6rem);color:var(--text);line-height:1;}
+  .hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:1.2rem;margin-top:6px;}
+
+  .section{max-width:1280px;margin:0 auto;padding:64px 28px;}
+  .section-head{text-align:center;margin-bottom:44px;}
+  .section-head h2{font-size:2.4rem;color:var(--text);}
+  .section-head p{color:var(--text-dim);margin-top:8px;font-size:1.02rem;}
+  .gold-rule{width:64px;height:2px;background:var(--gold);margin:14px auto 0;}
+
+  /* ===== CARDS (shared hover treatment) ===== */
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:6px;
+    padding:26px;
+    position:relative;
+    overflow:hidden;
+    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .card::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:3px;
+    background:var(--gold);transform:scaleX(0);transform-origin:left;
+    transition:transform .4s ease;
+  }
+  .card:hover{
+    transform:translateY(-6px);
+    border-color:var(--gold-soft);
+    box-shadow:0 18px 40px -12px rgba(201,168,76,.25);
+  }
+  .card:hover::after{transform:scaleX(1);}
+
+  /* ===== SERVICES FLOW ===== */
+  .flow-steps{display:flex;flex-wrap:wrap;gap:10px;justify-content:center;margin-bottom:48px;}
+  .flow-step-pill{
+    border:1px solid var(--border);border-radius:30px;padding:8px 18px;
+    font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);
+    display:flex;align-items:center;gap:8px;
+  }
+  .flow-step-pill .num{
+    width:20px;height:20px;border-radius:50%;background:var(--border);color:var(--text-dim);
+    display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue';font-size:.85rem;
+  }
+  .flow-step-pill.done{color:var(--gold);border-color:var(--gold-soft);}
+  .flow-step-pill.done .num{background:var(--gold);color:#100c02;}
+
+  .step-block{margin-bottom:56px;opacity:0;max-height:0;overflow:hidden;transition:opacity .5s ease;}
+  .step-block.revealed{opacity:1;max-height:none;overflow:visible;animation:fadeIn .5s ease both;}
+  .step-title{font-size:1.7rem;margin-bottom:6px;}
+  .step-hint{color:var(--text-dim);font-size:.92rem;margin-bottom:26px;}
+
+  .grid{display:grid;gap:22px;}
+  .grid.cols-3{grid-template-columns:repeat(3,1fr);}
+  .grid.cols-2{grid-template-columns:repeat(2,1fr);}
+
+  .select-card{
+    background:var(--card);border:1px solid var(--border);border-radius:6px;
+    padding:22px;cursor:pointer;position:relative;overflow:hidden;
+    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .select-card::after{
+    content:"";position:absolute;left:0;right:0;bottom:0;height:3px;
+    background:var(--gold);transform:scaleX(0);transform-origin:left;transition:transform .4s ease;
+  }
+  .select-card:hover{transform:translateY(-5px);border-color:var(--gold-soft);box-shadow:0 16px 34px -14px rgba(201,168,76,.3);}
+  .select-card:hover::after{transform:scaleX(1);}
+  .select-card.selected{
+    border-color:var(--gold);
+    box-shadow:0 0 0 1px var(--gold), 0 0 26px var(--gold-soft);
+  }
+  .select-card.selected::after{transform:scaleX(1);}
+
+  .monogram{
+    width:64px;height:64px;border-radius:50%;
+    background:linear-gradient(145deg,#1c1710,#0c0a06);
+    border:1px solid var(--gold-soft);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Bebas Neue';font-size:1.7rem;color:var(--gold);
+    margin-bottom:14px;
+  }
+  .select-card h4{font-size:1.25rem;color:var(--text);margin-bottom:2px;}
+  .select-card .role{color:var(--gold);font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;}
+  .select-card .desc{color:var(--text-dim);font-size:.9rem;margin-top:10px;}
+  .select-card .meta-row{display:flex;justify-content:space-between;align-items:center;margin-top:16px;font-family:'Bebas Neue';color:var(--gold);font-size:1.3rem;}
+  .select-card .meta-row small{font-family:'Inter';color:var(--text-dim);font-size:.72rem;text-transform:uppercase;}
+  .check-badge{
+    position:absolute;top:14px;right:14px;width:26px;height:26px;border-radius:50%;
+    background:var(--gold);color:#100c02;display:flex;align-items:center;justify-content:center;
+    font-size:.8rem;opacity:0;transform:scale(.5);transition:all .3s ease;
+  }
+  .select-card.selected .check-badge{opacity:1;transform:scale(1);}
+  .default-pill{
+    position:absolute;top:14px;right:14px;background:var(--border);color:var(--text-dim);
+    font-size:.65rem;text-transform:uppercase;letter-spacing:.08em;padding:4px 9px;border-radius:20px;
+  }
+  .select-card.selected .default-pill{display:none;}
+
+  /* ===== SUMMARY PANEL ===== */
+  .summary-panel{
+    position:sticky;bottom:0;margin-top:20px;
+    background:linear-gradient(180deg, rgba(20,17,10,.7), var(--card));
+    border:1px solid var(--gold-soft);border-radius:10px;
+    padding:26px 30px;box-shadow:0 -10px 40px rgba(0,0,0,.5);
+  }
+  .summary-top{display:flex;flex-wrap:wrap;justify-content:space-between;gap:20px;align-items:flex-start;}
+  .summary-title{font-size:1.5rem;color:var(--gold);margin-bottom:14px;}
+  .summary-list{display:flex;flex-direction:column;gap:8px;min-width:260px;}
+  .summary-row{display:flex;justify-content:space-between;font-size:.92rem;color:var(--text-dim);gap:20px;}
+  .summary-row span:last-child{color:var(--text);text-align:right;}
+  .summary-totals{text-align:right;}
+  .summary-totals .price-num{font-size:3rem;color:var(--gold);line-height:1;}
+  .summary-totals .duration{color:var(--text-dim);font-size:.85rem;margin-top:4px;}
+  .book-btn{
+    margin-top:18px;background:var(--gold);color:#100c02;border:none;
+    padding:14px 34px;font-family:'Inter';font-weight:600;letter-spacing:.06em;
+    text-transform:uppercase;font-size:.85rem;border-radius:4px;cursor:pointer;
+    transition:transform .25s ease, box-shadow .25s ease, opacity .25s ease;
+  }
+  .book-btn:disabled{opacity:.35;cursor:not-allowed;}
+  .book-btn:not(:disabled):hover{transform:translateY(-3px);box-shadow:0 10px 24px -6px var(--gold-soft);}
+  .book-confirm{margin-top:14px;color:var(--gold);font-size:.9rem;display:none;}
+  .book-confirm.show{display:block;}
+
+  .addon-note{font-size:.8rem;color:var(--text-dim);font-style:italic;margin-top:-10px;margin-bottom:20px;}
+
+  /* ===== ADD-ONS (services page bottom section, legacy static) ===== */
+  .addons-static{margin-top:70px;}
+
+  /* ===== TEAM ===== */
+  .team-card{text-align:left;}
+  .team-card .tags{display:flex;flex-wrap:wrap;gap:8px;margin-top:14px;}
+  .tag{border:1px solid var(--gold-soft);color:var(--gold);font-size:.7rem;text-transform:uppercase;letter-spacing:.08em;padding:5px 11px;border-radius:20px;}
+  .team-card .bio{color:var(--text-dim);font-size:.92rem;margin-top:12px;}
+
+  /* ===== LOCATION ===== */
+  .loc-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:40px;align-items:start;}
+  table.hours{width:100%;border-collapse:collapse;}
+  table.hours td{padding:13px 10px;border-bottom:1px solid var(--border);color:var(--text-dim);}
+  table.hours td:first-child{color:var(--text);font-weight:500;}
+  table.hours td:last-child{text-align:right;}
+  table.hours tr.today{background:linear-gradient(90deg, rgba(201,168,76,.14), transparent);}
+  table.hours tr.today td{color:var(--gold);font-weight:600;}
+  .today-pill{
+    background:var(--gold);color:#100c02;font-size:.65rem;text-transform:uppercase;
+    letter-spacing:.08em;padding:3px 9px;border-radius:20px;margin-left:10px;font-weight:700;
+  }
+  .info-block{margin-top:26px;}
+  .info-block h4{color:var(--gold);font-size:1rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:6px;font-family:'Inter';font-weight:600;}
+  .info-block p{color:var(--text-dim);font-size:.94rem;}
+  .map-wrap{border:1px solid var(--border);border-radius:8px;overflow:hidden;margin-bottom:26px;height:320px;}
+  .map-wrap iframe{width:100%;height:100%;border:0;filter:grayscale(.3) invert(.92) contrast(.9);}
+
+  .gallery{display:grid;grid-template-columns:repeat(4,1fr);gap:14px;margin-top:60px;}
+  .gallery img{
+    width:100%;height:160px;object-fit:cover;border-radius:6px;cursor:pointer;
+    border:1px solid var(--border);transition:transform .3s ease, box-shadow .3s ease;
+  }
+  .gallery img:hover{transform:scale(1.04);box-shadow:0 12px 30px -10px rgba(201,168,76,.35);}
+
+  .lightbox{
+    position:fixed;inset:0;background:rgba(3,3,3,.94);z-index:2000;
+    display:none;align-items:center;justify-content:center;padding:40px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:90vw;max-height:86vh;border-radius:6px;border:1px solid var(--gold-soft);}
+  .lightbox-close{
+    position:absolute;top:26px;right:34px;color:var(--gold);font-size:2rem;cursor:pointer;
+    background:none;border:none;line-height:1;
+  }
+
+  /* ===== REVIEWS ===== */
+  .rating-hero{display:flex;flex-wrap:wrap;gap:60px;align-items:center;justify-content:center;margin-bottom:60px;}
+  .rating-score{text-align:center;}
+  .rating-score .num{font-size:5.4rem;color:var(--gold);line-height:1;}
+  .stars{color:var(--gold);font-size:1.3rem;letter-spacing:2px;margin:8px 0;}
+  .rating-score .count{color:var(--text-dim);font-size:.9rem;}
+  .bars{min-width:280px;flex:1;max-width:420px;}
+  .bar-row{display:flex;align-items:center;gap:12px;margin-bottom:9px;font-size:.82rem;color:var(--text-dim);}
+  .bar-row .label{width:40px;}
+  .bar-track{flex:1;height:8px;background:var(--border);border-radius:6px;overflow:hidden;}
+  .bar-fill{height:100%;background:linear-gradient(90deg,#a9822f,var(--gold));}
+  .bar-row .pct{width:36px;text-align:right;}
+
+  .featured-review{
+    background:linear-gradient(135deg, rgba(201,168,76,.09), var(--card));
+    border:1px solid var(--gold-soft);border-radius:8px;padding:34px;margin-bottom:44px;
+  }
+  .featured-review .stars{margin-bottom:10px;}
+  .featured-review p.quote{font-family:'Cormorant Garamond',serif;font-size:1.4rem;font-style:italic;color:var(--text);}
+  .featured-review .who{margin-top:16px;color:var(--gold);font-size:.85rem;text-transform:uppercase;letter-spacing:.08em;}
+
+  .review-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  .review-card p.quote{color:var(--text-dim);font-size:.94rem;margin-top:10px;}
+  .review-card .who{margin-top:14px;color:var(--gold);font-size:.82rem;text-transform:uppercase;letter-spacing:.06em;}
+
+  /* ===== CONTACT ===== */
+  .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:50px;}
+  .ig-btn{
+    display:inline-flex;align-items:center;gap:10px;margin-top:22px;
+    border:1px solid var(--gold);color:var(--gold);padding:12px 26px;border-radius:4px;
+    text-transform:uppercase;font-size:.8rem;letter-spacing:.08em;transition:all .25s ease;
+  }
+  .ig-btn:hover{background:var(--gold);color:#100c02;}
+  form.contact-form{display:flex;flex-direction:column;gap:18px;}
+  form.contact-form label{font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:6px;display:block;}
+  form.contact-form input, form.contact-form textarea{
+    width:100%;background:var(--bg-alt);border:1px solid var(--border);color:var(--text);
+    padding:12px 14px;border-radius:4px;font-family:'Inter';font-size:.94rem;
+  }
+  form.contact-form input:focus, form.contact-form textarea:focus{outline:none;border-color:var(--gold);}
+  form.contact-form button{
+    background:var(--gold);color:#100c02;border:none;padding:14px;border-radius:4px;
+    text-transform:uppercase;letter-spacing:.08em;font-weight:600;cursor:pointer;font-size:.85rem;
+    transition:transform .25s ease;
+  }
+  form.contact-form button:hover{transform:translateY(-3px);}
+  .form-success{
+    display:none;background:rgba(201,168,76,.12);border:1px solid var(--gold-soft);
+    color:var(--gold);padding:16px;border-radius:4px;margin-top:14px;font-size:.9rem;
+  }
+  .form-success.show{display:block;animation:fadeIn .4s ease both;}
+
+  /* ===== FOOTER ===== */
+  footer{
+    border-top:1px solid var(--border);padding:36px 28px;text-align:center;
+    color:var(--text-dim);font-size:.82rem;
+  }
+  footer .f-brand{color:var(--gold);font-family:'Cormorant Garamond';font-size:1.2rem;margin-bottom:6px;}
+
+  /* ===== RESPONSIVE ===== */
+  @media (max-width:900px){
+    .grid.cols-3, .grid.cols-2{grid-template-columns:1fr;}
+    .loc-grid, .contact-grid{grid-template-columns:1fr;}
+    .gallery{grid-template-columns:repeat(2,1fr);}
+    .review-grid{grid-template-columns:1fr;}
+    .rating-hero{flex-direction:column;gap:30px;}
+  }
+  @media (max-width:760px){
+    nav.tabs{
+      position:fixed;top:64px;left:0;right:0;background:var(--bg);
+      flex-direction:column;padding:10px 0;border-bottom:1px solid var(--border);
+      transform:translateY(-120%);opacity:0;transition:all .3s ease;pointer-events:none;
+    }
+    nav.tabs.open{transform:translateY(0);opacity:1;pointer-events:auto;}
+    .tab-btn{width:100%;text-align:left;padding:14px 28px;}
+    .tab-btn::after{display:none;}
+    .tab-btn.active{background:rgba(201,168,76,.08);}
+    .hamburger{display:flex;}
+    .gallery{grid-template-columns:1fr 1fr;}
+    .summary-top{flex-direction:column;}
+    .summary-totals{text-align:left;}
+  }
+  @media (prefers-reduced-motion:reduce){
+    *{animation:none !important;transition:none !important;scroll-behavior:auto !important;}
+  }
+</style>
+</head>
+<body>
+
+<header class="site-nav">
+  <div class="nav-inner">
+    <div class="brand">Bowie Town <span>Barbers</span></div>
+    <nav class="tabs" id="tabs">
+      <button class="tab-btn active" data-page="services">Services</button>
+      <button class="tab-btn" data-page="team">Our Team</button>
+      <button class="tab-btn" data-page="location">Location &amp; Hours</button>
+      <button class="tab-btn" data-page="reviews">Reviews</button>
+      <button class="tab-btn" data-page="contact">Contact Us</button>
+    </nav>
+    <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+  </div>
+</header>
+
+<main>
+
+  <!-- ================= SERVICES ================= -->
+  <section class="page active" id="page-services">
+    <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mUwuob99TCqiKu0szr-Mh0-9ctjuNqzo48eipDA4M88JLq7806mkuYf6E7-ayVu0m779airm_gkqz6iGKJhCRQLDgpZmkUszdtqSqEdFvCqPyO8gnch67NtWqDT1yWULaKgu2buCkPpskb7qGTbI9YNDD5guDI8_ro8t9bePGZVrA96LW_WCik3bZx-x5ofoD985JdwnpZZEYLThdSSbl7NpUPZKy7YzJlIE0TWOhuLGmB9sxMJNbEjzOqvqdOl-qKpO4sihZVHjXs9-l_F10ZkXWc3kNA8yVn009G6_NTGIFB5bzUU7blKsdfEDzwAIcQdNa8Hcda2nogCfPZvcoXE5nv1Hd9W3w9PYbGxEr16HM0dRnf_Y_HO1VkQtR36XZcwecNVJQHxNw2s2WGfQSeen3RH618J3w7qtFCrSvpE6Ka&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU')">
+      <div class="hero-content">
+        <div class="hero-sub">Book Your Chair</div>
+        <h1 class="hero-title">Services</h1>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <h2>Build Your Visit</h2>
+        <p>Choose your barber, your cut, and your finishing touches — watch your total build in real time.</p>
+        <div class="gold-rule"></div>
+      </div>
+
+      <div class="flow-steps">
+        <div class="flow-step-pill" id="pill-1"><span class="num">1</span> Barber</div>
+        <div class="flow-step-pill" id="pill-2"><span class="num">2</span> Service</div>
+        <div class="flow-step-pill" id="pill-3"><span class="num">3</span> Add-Ons</div>
+        <div class="flow-step-pill" id="pill-4"><span class="num">4</span> Summary</div>
+      </div>
+
+      <!-- STEP 1: BARBER -->
+      <div class="step-block revealed" id="step-1">
+        <h3 class="step-title">Step 1 &mdash; Choose Your Barber</h3>
+        <p class="step-hint">Select one barber to continue.</p>
+        <div class="grid cols-3" id="barber-select-grid"></div>
+      </div>
+
+      <!-- STEP 2: SERVICE -->
+      <div class="step-block" id="step-2">
+        <h3 class="step-title">Step 2 &mdash; Choose Your Service</h3>
+        <p class="step-hint">Haircut is our most popular, pre-selected below &mdash; pick another if you'd like something different.</p>
+        <div class="grid cols-3" id="service-select-grid"></div>
+      </div>
+
+      <!-- STEP 3: ADD-ONS -->
+      <div class="step-block" id="step-3">
+        <h3 class="step-title">Step 3 &mdash; Add-Ons</h3>
+        <p class="step-hint addon-note">Optional. Select as many as you'd like.</p>
+        <div class="grid cols-3" id="addon-select-grid"></div>
+      </div>
+
+      <!-- STEP 4: SUMMARY -->
+      <div class="step-block" id="step-4">
+        <div class="summary-panel">
+          <div class="summary-top">
+            <div>
+              <div class="summary-title">Your Visit Summary</div>
+              <div class="summary-list">
+                <div class="summary-row"><span>Barber</span><span id="sum-barber">&mdash;</span></div>
+                <div class="summary-row"><span>Service</span><span id="sum-service">&mdash;</span></div>
+                <div class="summary-row"><span>Add-Ons</span><span id="sum-addons">None</span></div>
+              </div>
+              <button class="book-btn" id="book-btn" disabled>Book Now</button>
+              <div class="book-confirm" id="book-confirm">Request received &mdash; we'll text you shortly to confirm your appointment time.</div>
+            </div>
+            <div class="summary-totals">
+              <div class="price-num" id="sum-price">$0</div>
+              <div class="duration" id="sum-duration">0 min estimated</div>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= OUR TEAM ================= -->
+  <section class="page" id="page-team">
+    <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mUwuob99TCqiKu0szr-Mh0-9ctjuNqzo48eipDA4M88JLq7806mkuYf6E7-ayVu0m779airm_gkqz6iGKJhCRQLDgpZmkUszdtqSqEdFvCqPyO8gnch67NtWqDT1yWULaKgu2buCkPpskb7qGTbI9YNDD5guDI8_ro8t9bePGZVrA96LW_WCik3bZx-x5ofoD985JdwnpZZEYLThdSSbl7NpUPZKy7YzJlIE0TWOhuLGmB9sxMJNbEjzOqvqdOl-qKpO4sihZVHjXs9-l_F10ZkXWc3kNA8yVn009G6_NTGIFB5bzUU7blKsdfEDzwAIcQdNa8Hcda2nogCfPZvcoXE5nv1Hd9W3w9PYbGxEr16HM0dRnf_Y_HO1VkQtR36XZcwecNVJQHxNw2s2WGfQSeen3RH618J3w7qtFCrSvpE6Ka&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU')">
+      <div class="hero-content">
+        <div class="hero-sub">Meet The Chairs</div>
+        <h1 class="hero-title">Our Team</h1>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-head">
+        <h2>Bowie's Finest Barbers</h2>
+        <p>Craftsmen behind every fade, line-up, and shape-up.</p>
+        <div class="gold-rule"></div>
+      </div>
+      <div class="grid cols-3" id="team-grid"></div>
+    </div>
+  </section>
+
+  <!-- ================= LOCATION & HOURS ================= -->
+  <section class="page" id="page-location">
+    <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mhyEmY4uOG27fo4zymxAE7D1hiU5eb6s7A62Hpi8vqVFmwAuOs9H1mhIq90cnoUhkTMVOFUHVbRVF6LuZ0Q1CkpW6MzJhQat7C60q-1fS-kS1T_7upkD1w-kaDNSs3pxsH4F7Fs2YbJB_Ru41v6UMcCMooQ_FX4YldO6wsr3f5sIjVymWiQlEfxR1VzgeV6fg6mpbL3fdfbbOagtqYSVntRrSEeuuvAR033go4T0vX-tSOyoHNgCGEICFQ73hZhr2prwk3F_Ct3zmkCoL79q323aOX2zxNnSZd_HidDF3Q6U6ezmpj9zxbmWntx-74L6OZQFhKSaIHjjOx-hbKpEums_Xke9NQaQtjiepvwyB3awrNzq4P7SmWt1vdWmxT6-j_vsLQ45THdIUTbnljP-KzSryhaFfMDBgsx8TFt3w&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU')">
+      <div class="hero-content">
+        <div class="hero-sub">Find Us In Bowie Town Center</div>
+        <h1 class="hero-title">Location &amp; Hours</h1>
+      </div>
+    </div>
+    <div class="section">
+      <div class="loc-grid">
+        <div>
+          <h2 style="margin-bottom:20px;font-size:1.9rem;">Weekly Hours</h2>
+          <table class="hours" id="hours-table"></table>
+
+          <div class="info-block">
+            <h4>Address</h4>
+            <p>15419 Excelsior Dr, Bowie, MD 20716, USA</p>
+          </div>
+          <div class="info-block">
+            <h4>Phone</h4>
+            <p><a href="tel:+13018058588">(301) 805-8588</a></p>
+          </div>
+          <div class="info-block">
+            <h4>Parking</h4>
+            <p>Free surface-lot parking directly in front of the shop, shared with the Excelsior Dr retail plaza.</p>
+          </div>
+          <div class="info-block">
+            <h4>Accessibility</h4>
+            <p>Step-free ground-level entrance, wide aisles between chairs, and an ADA-compliant restroom on site.</p>
+          </div>
+        </div>
+        <div>
+          <div class="map-wrap">
+            <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              src="https://www.google.com/maps?q=15419+Excelsior+Dr,+Bowie,+MD+20716,+USA&output=embed"></iframe>
+          </div>
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top:60px;">
+        <h2>Gallery</h2>
+        <p>A look inside the shop.</p>
+        <div class="gold-rule"></div>
+      </div>
+      <div class="gallery" id="gallery-grid"></div>
+    </div>
+  </section>
+
+  <!-- ================= REVIEWS ================= -->
+  <section class="page" id="page-reviews">
+    <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3l9JgC5LT-fCo6SsOrcuIqqEeMEYETxdHOyQ6n8VrHSArlGx4Hecark4UBE_6tkM4DlAQd6_ky-qdzg3EinFlJ-MUNZrS_GpU7CLO3elvXBZvLYUOzbAOAyt6Y9JvvuMQvUTirf2pLVt7jlCJX6cYG-bw05tb2DIwvfMgehNYb4mRJpDrhANmb0nr5U69KFX6XhoHh-K3M2lf5bsCF3e3hf6SmW9KdBxhx-HeM-VKLIdlSVztOSoG-FIG6TsfGMm1MvEiyFQWvGCsH_tq7K69sT4QHiUayM66JMjhH998SyaKfasO0yNXA7qakIQDP1dhc2oYyx44I4pHIt0ZacvwvMmHkI2JO2NPr78CEzxX9HP2zM090OcnECoLcIUA13vDyYTuuWruxmq30XvmKf-hkbVuvB0KWvZ0OdjNg1Clk&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU')">
+      <div class="hero-content">
+        <div class="hero-sub">What Bowie Says</div>
+        <h1 class="hero-title">Reviews</h1>
+      </div>
+    </div>
+    <div class="section">
+      <div class="rating-hero">
+        <div class="rating-score">
+          <div class="num">3.9</div>
+          <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9734;</div>
+          <div class="count">Based on 114 Google reviews</div>
+        </div>
+        <div class="bars">
+          <div class="bar-row"><span class="label">5 &#9733;</span><div class="bar-track"><div class="bar-fill" style="width:56%;"></div></div><span class="pct">56%</span></div>
+          <div class="bar-row"><span class="label">4 &#9733;</span><div class="bar-track"><div class="bar-fill" style="width:15%;"></div></div><span class="pct">15%</span></div>
+          <div class="bar-row"><span class="label">3 &#9733;</span><div class="bar-track"><div class="bar-fill" style="width:8%;"></div></div><span class="pct">8%</span></div>
+          <div class="bar-row"><span class="label">2 &#9733;</span><div class="bar-track"><div class="bar-fill" style="width:7%;"></div></div><span class="pct">7%</span></div>
+          <div class="bar-row"><span class="label">1 &#9733;</span><div class="bar-track"><div class="bar-fill" style="width:14%;"></div></div><span class="pct">14%</span></div>
+        </div>
+      </div>
+
+      <div class="featured-review">
+        <div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>
+        <p class="quote">"Came back to Maryland after a couple of years and had to get a cut from my Omar. He delivered a clean fade and a crisp shape-up just like always. Beyond the haircut, the conversations are always meaningful &mdash; we talk about life, growth, and becoming the best version of ourselves as men of God. Even though I hadn't seen him in person for a while, we stayed connected through social media, and the consistency in his work and character really shows. Highly recommend."</p>
+        <div class="who">Marcus T. &mdash; Google Review</div>
+      </div>
+
+      <div class="review-grid" id="review-grid"></div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="page" id="page-contact">
+    <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3nrTU4hx_b-OH51HvjMLspBscWprlUvh7uU4VqDIqXUFCDjaPzQAMCcyLNBP_l52fY6L-q7JRftNiYZyGbqZBjDdzoEflxUXSotmrOwg3EygCJ8vhnIHTB9hXLeVy4wnevciTtSz1lhfUyyGvauB_J4faRWho8YkNmPVwwR-bsd1HeAGzrP5yHOCSjKolrIO36TvDwEs1ZdTKRS6f80WnXY8mztoosP6xHMISG45zky_T50EO4l78NZ2NsdBU6NJNDKaQMuFgYfdwjnkvGimyB-rVJ9hUhuPkZa8UIhIPUyJ-GIitYuY1Uy5XKSz2AAVrgszvHDak7aIqz7DXJ6lzQgP9RoYrkydlN9-lHW-dgA-oLKrAH94bWoqyRpjUkQhLZU3cj_ibFO9XWDFDBLpJk9tGv9D3ymeYkIJLajm6eDqw&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU')">
+      <div class="hero-content">
+        <div class="hero-sub">Let's Get You In The Chair</div>
+        <h1 class="hero-title">Contact Us</h1>
+      </div>
+    </div>
+    <div class="section">
+      <div class="contact-grid">
+        <div>
+          <h2 style="font-size:1.9rem;margin-bottom:16px;">Bowie Town Barbers</h2>
+          <p style="color:var(--text-dim);">15419 Excelsior Dr, Bowie, MD 20716, USA</p>
+          <p style="color:var(--text-dim);margin-top:6px;"><a href="tel:+13018058588">(301) 805-8588</a></p>
+          <a class="ig-btn" href="https://www.instagram.com/explore/locations/16786950/bowie-town-barbers/" target="_blank" rel="noopener">
+            &#9737; Follow on Instagram
+          </a>
+          <div class="info-block">
+            <h4>Walk-Ins</h4>
+            <p>Walk-ins welcome, appointments recommended for guaranteed chair time with your preferred barber.</p>
+          </div>
+        </div>
+        <div>
+          <form class="contact-form" id="contact-form">
+            <div>
+              <label for="cf-name">Name</label>
+              <input type="text" id="cf-name" required>
+            </div>
+            <div>
+              <label for="cf-phone">Phone</label>
+              <input type="tel" id="cf-phone" required>
+            </div>
+            <div>
+              <label for="cf-message">Message</label>
+              <textarea id="cf-message" rows="5" required></textarea>
+            </div>
+            <button type="submit">Send Message</button>
+            <div class="form-success" id="form-success">Thank you &mdash; your message has been sent. We'll get back to you shortly.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="f-brand">Bowie Town Barbers</div>
+  <div>15419 Excelsior Dr, Bowie, MD 20716, USA</div>
+  <div id="copyright-line">&copy; 2026 Bowie Town Barbers. All rights reserved.</div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightbox-close" aria-label="Close">&times;</button>
+  <img src="" alt="Gallery photo" id="lightbox-img">
+</div>
+
+<script>
+(function(){
+
+  /* ---------- DATA ---------- */
+  var barbers = [
+    { id:'omar', name:'Omar "The Fade King"', role:'Master Barber', initials:'O',
+      bio:'Bowie Town\'s most requested barber, known for razor-sharp skin fades and crisp shape-ups &mdash; and for treating every chair like a conversation worth having.',
+      tags:['Skin Fades','Shape-Ups','Line-Ups'], ig:'@okcutsdmv' },
+    { id:'marcus', name:'Marcus Reid', role:'Senior Barber', initials:'M',
+      bio:'A decade behind the chair, Marcus specializes in timeless classic cuts, hot towel shaves, and beard sculpting for the modern gentleman.',
+      tags:['Classic Cuts','Beard Sculpting','Hot Towel Shaves'], ig:null },
+    { id:'devon', name:'Devon Price', role:'Style Specialist', initials:'D',
+      bio:'Devon stays ahead of every trend, from bold restyles to sharp kids\' cuts, bringing precision and patience to every guest.',
+      tags:['Restyles','Kids Cuts','Modern Trends'], ig:null }
+  ];
+
+  var services = [
+    { id:'haircut', name:'Haircut', price:35, duration:30, isDefault:true,
+      desc:'Our signature cut &mdash; consultation, precision scissor or clipper work, and a clean finish.' },
+    { id:'fade', name:'Skin Fade', price:40, duration:40,
+      desc:'A razor-blended fade taken down to the skin for maximum contrast and sharpness.' },
+    { id:'buzz', name:'Buzz Cut', price:25, duration:20,
+      desc:'Fast, clean, all-over clipper cut. Simple, sharp, no fuss.' },
+    { id:'restyle', name:'Restyle / Full Transformation', price:60, duration:60,
+      desc:'A full consultation and cut for guests ready for a completely new look.' },
+    { id:'kids', name:'Kids Cut', price:25, duration:25,
+      desc:'A patient, precise cut for our younger guests, ages 12 and under.' }
+  ];
+
+  var addons = [
+    { id:'beard', name:'Beard Trim', price:15, duration:15, desc:'Shape and tighten your beard line with clippers and straight razor detail.' },
+    { id:'lineup', name:'Line-Up / Edge', price:10, duration:10, desc:'Crisp up your hairline and edges for a fresh-out-the-chair finish.' },
+    { id:'fadeUpgrade', name:'Skin Fade Upgrade', price:10, duration:10, desc:'Upgrade any cut to a full skin fade blend.', hideForService:'fade' },
+    { id:'wash', name:'Wash & Style', price:12, duration:15, desc:'Hot towel shampoo, condition, and finished styling.' },
+    { id:'brow', name:'Eyebrow Cleanup', price:8, duration:5, desc:'Clean, natural brow shaping to finish your look.' }
+  ];
+
+  var reviews = [
+    { text:'If you ever go ask for Omar he is the man good barber but a even better human being.', who:'DeShawn W.' },
+    { text:'Omar always hooks me up with a good line up and I always enjoy our conversations. I recommend Omar if you come here.', who:'Anthony R.' },
+    { text:'Have been coming to this location for about a year and a half now, ever since I’ve been here I only go to Omar for a haircut and have never been disappointed or dissatisfied with the way he cuts.', who:'Chris B.' },
+    { text:'Reached out and was able to get in contact with Omar who made it easy for me to set an appointment up. I’ve been looking for a barber for a long time but now have finally found one. The cut was sharp and clean and Omar did everything I asked him to do. Would 100% recommend if u looking for a barber in the DMV.', who:'Malik J.' },
+    { text:'Clean shop, easy parking, and the fade came out exactly how I described it. Already booked my next appointment.', who:'Jordan P.' },
+    { text:'Took my son in for his first real haircut and Devon was incredibly patient with him. Great experience all around.', who:'Rachel S.' }
+  ];
+
+  var galleryImages = [
+    'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mhyEmY4uOG27fo4zymxAE7D1hiU5eb6s7A62Hpi8vqVFmwAuOs9H1mhIq90cnoUhkTMVOFUHVbRVF6LuZ0Q1CkpW6MzJhQat7C60q-1fS-kS1T_7upkD1w-kaDNSs3pxsH4F7Fs2YbJB_Ru41v6UMcCMooQ_FX4YldO6wsr3f5sIjVymWiQlEfxR1VzgeV6fg6mpbL3fdfbbOagtqYSVntRrSEeuuvAR033go4T0vX-tSOyoHNgCGEICFQ73hZhr2prwk3F_Ct3zmkCoL79q323aOX2zxNnSZd_HidDF3Q6U6ezmpj9zxbmWntx-74L6OZQFhKSaIHjjOx-hbKpEums_Xke9NQaQtjiepvwyB3awrNzq4P7SmWt1vdWmxT6-j_vsLQ45THdIUTbnljP-KzSryhaFfMDBgsx8TFt3w&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU',
+    'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lHSMrbVwlp22HsaBWssljjcbIRpfYP7apue93dZOnEZ0pIXO0eyGXEWXVu_OruhjFTK40reiw_LRbpIhJSk3noiJADlyuCZCyXyhuvP3iKa74NCgQkh8jf-I3pXfwnsgyVbtKAlSqOKuCekI-RLu8lzsbWOtKpXvxCYmnVxIFk-WfzHLrmbXedLdYyb2R2CzmZPzhsCnQJKp9CBuPfwp5939pmI_5Qnz4n2nn1IoGUCmNEBr_MHhlYMbAjkcmUYYL9afIkLR65a0wOIXxw1vqeqWVt5gTPI1kIRAKfa0GA8zTZVOg-muJ0AvFamjHI-5o4gqqArIU4b80gJLRjUnE6qKqfuTnadTTAqld4KVZf-yJW5ExErQEh3aCLWW--2wHMziLF3h8L6BYUeTOazaIzDEmRPVUtfvkLBQZwu-iyMw&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU',
+    'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3l9JgC5LT-fCo6SsOrcuIqqEeMEYETxdHOyQ6n8VrHSArlGx4Hecark4UBE_6tkM4DlAQd6_ky-qdzg3EinFlJ-MUNZrS_GpU7CLO3elvXBZvLYUOzbAOAyt6Y9JvvuMQvUTirf2pLVt7jlCJX6cYG-bw05tb2DIwvfMgehNYb4mRJpDrhANmb0nr5U69KFX6XhoHh-K3M2lf5bsCF3e3hf6SmW9KdBxhx-HeM-VKLIdlSVztOSoG-FIG6TsfGMm1MvEiyFQWvGCsH_tq7K69sT4QHiUayM66JMjhH998SyaKfasO0yNXA7qakIQDP1dhc2oYyx44I4pHIt0ZacvwvMmHkI2JO2NPr78CEzxX9HP2zM090OcnECoLcIUA13vDyYTuuWruxmq30XvmKf-hkbVuvB0KWvZ0OdjNg1Clk&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU',
+    'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3nHCyif9LkTpEo7h53ORBvoY-hnMuKRx0HoSyTlhN2T_sGQJMwH1Hqp_F04u27-K7m79_jLfnXIkDN1J_o0Mrbgh1pabwKKHT49HvSGa9p6nPMVNrXTjidp062jYz8aiDYgKwfj5xcz4bAJBotUGdopvUfj7sT2yabEfKOi2ym6rOxqtAUSZDyOap9ZFUbQPAG8H4254nqGVaVLfc5cwfTtzhaal9JhLjJ7iW4E9x9CNUx8LU_9peyWyo137uXp9VGzxIGPNUiaNCcbHVc3g-NTzrUw5bOBhYXkHD3e-RNO3H5F_Z3rxKA5xSNYEx6sJw0eDBrx2zgA-6o0h8sy9CE_Rly9gLVoSpN3d7mU4Cub-JYKtqR7SwTxrVRymGDH6h5vmQmlxaIZHXTG-o-yqYOTpwEESkaSDA1MmqFKXimXSr-s&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU',
+    'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3k0rTXdCsTNzLCrpQ-ap2sK4Vm7qyObm6j3hft1H80MGHn04sesJuQPweuDH2xA_GigyVMsxYIyzLeFdLKPOU2stor6MgSKCcOfsmVtJQfmQ1SuzU4g8AX2BWPlfnulNDZU4w9kQEXYbe6qDyMTWcPhTkBDYGVDqOfKm3hT3gXX0GJgHoF9yi0eaXKiRv2TCfQvabiE6b2NqIW0-Hbv2gTa11qgXSWC4X6kAhCeJhShstg4dg4vJ2YsYhFUYe4MHE35In7XT8OHOqtNyZLtAhyICI87RSWTkZn1iDP7GOtRw4ZiWT_w4YmvFZShrlgOcJIpiHpEnvy4qS90GooV10AahbbIddBQXTFqbIcdrXFrQP0Ak6uxDg20fxg7HhUGVSXZEZ5qLelpcIcRjap1oWc_YOzg0clQtliQmQSLaNCO-Tw&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU',
+    'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lTcLkQTKlR8bfdkHGJWnrksgVGYbyJ_s4IRt0Zod5dt5mJLZett5duDAyIdOLK8MLXgIuMETGAVmEpCSS9ZYfnsA1I_fnMA7gy76iSx-PQr_39rvumL-HdD_-Nptm2j1xAwn9T0Jj5hpgMy5OslThNFZhNct3EneVcSQuc4rDYT9ezZn2xvz8-uhPa1CznGZd6yGGK8Xyz54tXptDEadcX_B94JJhMVoGK9XdGXN4lnPaR7jTOrgjl_DLRRzPJ0LJVW9BreaDXCESpoKndWSUXHsbDFBGv55nfxuE52HLi3Jn4U8w7hUuwwfRbSWKzq-YPT-ve2vTlF5Lu-axiBCSrhW3a6rrv4ypC_q5G5ybRH8oxC_ULC-dvId0ohgEfZM0Z1yPcxgiz9V3wbRspBvjU8NzDnf0S25UDes3BeJguSMYC&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU',
+    'https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3nrTU4hx_b-OH51HvjMLspBscWprlUvh7uU4VqDIqXUFCDjaPzQAMCcyLNBP_l52fY6L-q7JRftNiYZyGbqZBjDdzoEflxUXSotmrOwg3EygCJ8vhnIHTB9hXLeVy4wnevciTtSz1lhfUyyGvauB_J4faRWho8YkNmPVwwR-bsd1HeAGzrP5yHOCSjKolrIO36TvDwEs1ZdTKRS6f80WnXY8mztoosP6xHMISG45zky_T50EO4l78NZ2NsdBU6NJNDKaQMuFgYfdwjnkvGimyB-rVJ9hUhuPkZa8UIhIPUyJ-GIitYuY1Uy5XKSz2AAVrgszvHDak7aIqz7DXJ6lzQgP9RoYrkydlN9-lHW-dgA-oLKrAH94bWoqyRpjUkQhLZU3cj_ibFO9XWDFDBLpJk9tGv9D3ymeYkIJLajm6eDqw&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU'
+  ];
+
+  var weeklyHours = [
+    { day:'Monday', hours:'9:00 AM – 7:00 PM' },
+    { day:'Tuesday', hours:'9:00 AM – 7:00 PM' },
+    { day:'Wednesday', hours:'9:00 AM – 7:00 PM' },
+    { day:'Thursday', hours:'9:00 AM – 7:00 PM' },
+    { day:'Friday', hours:'9:00 AM – 8:00 PM' },
+    { day:'Saturday', hours:'8:00 AM – 6:00 PM' },
+    { day:'Sunday', hours:'10:00 AM – 4:00 PM' }
+  ];
+
+  /* ---------- NAV ---------- */
+  var tabBtns = document.querySelectorAll('.tab-btn');
+  var pages = document.querySelectorAll('.page');
+  tabBtns.forEach(function(btn){
+    btn.addEventListener('click', function(){
+      tabBtns.forEach(function(b){ b.classList.remove('active'); });
+      pages.forEach(function(p){ p.classList.remove('active'); });
+      btn.classList.add('active');
+      document.getElementById('page-' + btn.dataset.page).classList.add('active');
+      document.getElementById('tabs').classList.remove('open');
+      window.scrollTo({top:0, behavior:'instant' in window ? 'instant' : 'auto'});
+    });
+  });
+  document.getElementById('hamburger').addEventListener('click', function(){
+    document.getElementById('tabs').classList.toggle('open');
+  });
+
+  /* ---------- SERVICES FLOW STATE ---------- */
+  var state = { barber:null, service:'haircut', addonSet:{} };
+
+  var barberGrid = document.getElementById('barber-select-grid');
+  barbers.forEach(function(b){
+    var el = document.createElement('div');
+    el.className = 'select-card';
+    el.dataset.id = b.id;
+    el.innerHTML = '<div class="check-badge">&#10003;</div>' +
+      '<div class="monogram">' + b.initials + '</div>' +
+      '<h4>' + b.name + '</h4><div class="role">' + b.role + '</div>' +
+      '<div class="desc">' + b.tags.join(' &middot; ') + '</div>';
+    el.addEventListener('click', function(){
+      state.barber = b.id;
+      Array.prototype.forEach.call(barberGrid.children, function(c){ c.classList.remove('selected'); });
+      el.classList.add('selected');
+      revealStep(2);
+      renderSummary();
+    });
+    barberGrid.appendChild(el);
+  });
+
+  var serviceGrid = document.getElementById('service-select-grid');
+  services.forEach(function(s){
+    var el = document.createElement('div');
+    el.className = 'select-card' + (s.id === state.service ? ' selected' : '');
+    el.dataset.id = s.id;
+    el.innerHTML = '<div class="check-badge">&#10003;</div>' +
+      (s.isDefault ? '<div class="default-pill">Default</div>' : '') +
+      '<h4>' + s.name + '</h4>' +
+      '<div class="desc">' + s.desc + '</div>' +
+      '<div class="meta-row"><span>$' + s.price + '</span><small>' + s.duration + ' min</small></div>';
+    el.addEventListener('click', function(){
+      state.service = s.id;
+      Array.prototype.forEach.call(serviceGrid.children, function(c){ c.classList.remove('selected'); });
+      el.classList.add('selected');
+      renderAddons();
+      revealStep(3);
+      renderSummary();
+    });
+    serviceGrid.appendChild(el);
+  });
+
+  var addonGrid = document.getElementById('addon-select-grid');
+  function renderAddons(){
+    addonGrid.innerHTML = '';
+    addons.forEach(function(a){
+      if (a.hideForService && a.hideForService === state.service) return;
+      var el = document.createElement('div');
+      el.className = 'select-card' + (state.addonSet[a.id] ? ' selected' : '');
+      el.dataset.id = a.id;
+      el.innerHTML = '<div class="check-badge">&#10003;</div>' +
+        '<h4>' + a.name + '</h4>' +
+        '<div class="desc">' + a.desc + '</div>' +
+        '<div class="meta-row"><span>+$' + a.price + '</span><small>' + a.duration + ' min</small></div>';
+      el.addEventListener('click', function(){
+        if (state.addonSet[a.id]) { delete state.addonSet[a.id]; el.classList.remove('selected'); }
+        else { state.addonSet[a.id] = true; el.classList.add('selected'); }
+        renderSummary();
+      });
+      addonGrid.appendChild(el);
+    });
+  }
+  renderAddons();
+
+  function revealStep(n){
+    var pill = document.getElementById('pill-' + n);
+    if (pill) pill.classList.add('done');
+    var block = document.getElementById('step-' + n);
+    if (block) block.classList.add('revealed');
+    if (n === 2) { document.getElementById('pill-1').classList.add('done'); }
+    document.getElementById('step-4').classList.add('revealed');
+  }
+
+  function renderSummary(){
+    var barber = barbers.find(function(b){ return b.id === state.barber; });
+    var service = services.find(function(s){ return s.id === state.service; });
+    var total = 0, duration = 0, addonNames = [];
+
+    document.getElementById('sum-barber').textContent = barber ? barber.name : '—';
+
+    if (service) {
+      document.getElementById('sum-service').textContent = service.name + ' ($' + service.price + ')';
+      total += service.price; duration += service.duration;
+    } else {
+      document.getElementById('sum-service').textContent = '—';
+    }
+
+    addons.forEach(function(a){
+      if (state.addonSet[a.id]) {
+        addonNames.push(a.name);
+        total += a.price; duration += a.duration;
+      }
+    });
+    document.getElementById('sum-addons').textContent = addonNames.length ? addonNames.join(', ') : 'None';
+    document.getElementById('sum-price').textContent = '$' + total;
+    document.getElementById('sum-duration').textContent = duration + ' min estimated';
+
+    var bookBtn = document.getElementById('book-btn');
+    bookBtn.disabled = !(state.barber && state.service);
+  }
+
+  document.getElementById('book-btn').addEventListener('click', function(){
+    document.getElementById('book-confirm').classList.add('show');
+  });
+
+  renderSummary();
+
+  /* ---------- TEAM ---------- */
+  var teamGrid = document.getElementById('team-grid');
+  barbers.forEach(function(b){
+    var el = document.createElement('div');
+    el.className = 'card team-card';
+    el.innerHTML = '<div class="monogram">' + b.initials + '</div>' +
+      '<h4 style="font-size:1.3rem;">' + b.name + '</h4>' +
+      '<div class="role" style="color:var(--gold);font-size:.78rem;text-transform:uppercase;letter-spacing:.1em;">' + b.role + '</div>' +
+      '<p class="bio">' + b.bio + (b.ig ? ' <a href="https://instagram.com/' + b.ig.replace('@','') + '" target="_blank" rel="noopener">' + b.ig + '</a>' : '') + '</p>' +
+      '<div class="tags">' + b.tags.map(function(t){ return '<span class="tag">' + t + '</span>'; }).join('') + '</div>';
+    teamGrid.appendChild(el);
+  });
+
+  /* ---------- HOURS ---------- */
+  var hoursTable = document.getElementById('hours-table');
+  var todayIndex = new Date().getDay(); // 0 = Sunday
+  var orderIndexMap = [6,0,1,2,3,4,5]; // weeklyHours array index for JS getDay() 0-6 (Sun..Sat)
+  weeklyHours.forEach(function(row, i){
+    var tr = document.createElement('tr');
+    var isToday = (orderIndexMap[todayIndex] === i);
+    if (isToday) tr.className = 'today';
+    tr.innerHTML = '<td>' + row.day + (isToday ? '<span class="today-pill">Today</span>' : '') + '</td><td>' + row.hours + '</td>';
+    hoursTable.appendChild(tr);
+  });
+
+  /* ---------- GALLERY + LIGHTBOX ---------- */
+  var galleryGrid = document.getElementById('gallery-grid');
+  galleryImages.forEach(function(src, i){
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = 'Bowie Town Barbers photo ' + (i + 1);
+    img.loading = 'lazy';
+    img.addEventListener('click', function(){ openLightbox(src); });
+    galleryGrid.appendChild(img);
+  });
+
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightbox-img');
+  function openLightbox(src){
+    lightboxImg.src = src;
+    lightbox.classList.add('open');
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+    lightboxImg.src = '';
+  }
+  document.getElementById('lightbox-close').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e){
+    if (e.target === lightbox) closeLightbox();
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape') closeLightbox();
+  });
+
+  /* ---------- REVIEWS ---------- */
+  var reviewGrid = document.getElementById('review-grid');
+  reviews.forEach(function(r){
+    var el = document.createElement('div');
+    el.className = 'card review-card';
+    el.innerHTML = '<div class="stars">&#9733;&#9733;&#9733;&#9733;&#9733;</div>' +
+      '<p class="quote">"' + r.text + '"</p>' +
+      '<div class="who">' + r.who + '</div>';
+    reviewGrid.appendChild(el);
+  });
+
+  /* ---------- CONTACT FORM ---------- */
+  document.getElementById('contact-form').addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('form-success').classList.add('show');
+    this.reset();
+  });
+
+  /* ---------- COPYRIGHT YEAR ---------- */
+  document.getElementById('copyright-line').textContent =
+    '© ' + new Date().getFullYear() + ' Bowie Town Barbers. All rights reserved.';
+
+})();
+</script>
+
+</body>
+</html>
