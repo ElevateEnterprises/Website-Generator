@@ -1,0 +1,935 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Bowie Town Barbers | Premium Barbershop</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Bebas+Neue&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080808;
+    --bg-alt:#111111;
+    --card:#131313;
+    --gold:#C9A84C;
+    --gold-soft:rgba(201,168,76,0.35);
+    --text:#EDEAE2;
+    --text-dim:#a9a49a;
+    --border:#242019;
+  }
+  *{margin:0;padding:0;box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Cormorant Garamond',serif;}
+  .titlecase{font-family:'Bebas Neue',cursive;letter-spacing:2px;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+
+  /* ===== NAV ===== */
+  header.nav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 5%;
+    background:rgba(8,8,8,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .brand{
+    font-family:'Bebas Neue',cursive;
+    font-size:1.6rem;
+    letter-spacing:3px;
+    color:var(--gold);
+  }
+  .brand span{color:var(--text);}
+  nav.links{display:flex;gap:2.2rem;}
+  nav.links button{
+    background:none;border:none;color:var(--text);
+    font-family:'Bebas Neue',cursive;
+    font-size:1.05rem;letter-spacing:1.5px;
+    cursor:pointer;padding:8px 2px;position:relative;
+    transition:color .3s ease;
+  }
+  nav.links button::after{
+    content:'';position:absolute;left:0;bottom:0;
+    width:0%;height:2px;background:var(--gold);
+    transition:width .3s ease;
+  }
+  nav.links button:hover{color:var(--gold);}
+  nav.links button.active{color:var(--gold);}
+  nav.links button.active::after{width:100%;}
+
+  .hamburger{
+    display:none;flex-direction:column;gap:5px;cursor:pointer;
+    background:none;border:none;
+  }
+  .hamburger span{width:26px;height:2px;background:var(--gold);display:block;}
+
+  .mobile-menu{
+    display:none;position:fixed;top:64px;left:0;right:0;bottom:0;
+    background:rgba(8,8,8,0.98);z-index:999;
+    flex-direction:column;align-items:center;justify-content:center;gap:2rem;
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu button{
+    background:none;border:none;color:var(--text);
+    font-family:'Bebas Neue',cursive;font-size:1.8rem;letter-spacing:2px;cursor:pointer;
+  }
+  .mobile-menu button.active{color:var(--gold);}
+
+  /* ===== HERO ===== */
+  .hero{
+    position:relative;height:60vh;min-height:380px;
+    display:flex;align-items:center;justify-content:center;
+    text-align:center;overflow:hidden;
+  }
+  .hero img{
+    position:absolute;inset:0;width:100%;height:100%;object-fit:cover;
+    filter:brightness(0.55) saturate(1.05);
+  }
+  .hero::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(8,8,8,0.35) 0%, rgba(8,8,8,0.55) 50%, #080808 100%);
+  }
+  .hero-content{position:relative;z-index:2;padding:0 20px;}
+  .hero-content .eyebrow{
+    color:var(--gold);letter-spacing:4px;font-size:0.8rem;
+    text-transform:uppercase;font-family:'Inter',sans-serif;margin-bottom:12px;
+  }
+  .hero-content h1{
+    font-family:'Bebas Neue',cursive;
+    font-size:clamp(2.8rem,8vw,5.5rem);
+    letter-spacing:4px;color:var(--text);
+  }
+  .hero-content p{
+    font-family:'Cormorant Garamond',serif;font-style:italic;
+    font-size:1.3rem;color:var(--gold-soft);margin-top:10px;
+    color:#d8cfae;
+  }
+
+  /* ===== PAGES ===== */
+  main{padding-top:64px;}
+  .page{display:none;animation:fadeIn .6s ease;}
+  .page.active{display:block;}
+  @keyframes fadeIn{
+    from{opacity:0;transform:translateY(12px);}
+    to{opacity:1;transform:translateY(0);}
+  }
+  @media (prefers-reduced-motion: reduce){
+    .page{animation:none;}
+    html{scroll-behavior:auto;}
+  }
+
+  .section{padding:70px 6% 90px;max-width:1300px;margin:0 auto;}
+  .section-head{text-align:center;margin-bottom:50px;}
+  .section-head .kicker{color:var(--gold);letter-spacing:3px;font-size:.78rem;text-transform:uppercase;}
+  .section-head h2{font-size:clamp(2rem,4vw,3rem);margin-top:10px;font-weight:500;}
+  .section-head p{color:var(--text-dim);max-width:600px;margin:14px auto 0;}
+
+  .card{
+    background:var(--card);
+    border:1px solid var(--border);
+    border-radius:10px;
+    transition:transform .35s ease, box-shadow .35s ease, border-color .35s ease;
+  }
+  .card:hover{
+    transform:translateY(-6px);
+    box-shadow:0 12px 30px rgba(201,168,76,0.15);
+    border-color:var(--gold-soft);
+  }
+
+  /* ===== SERVICES / BOOKING FLOW ===== */
+  .steps-bar{
+    display:flex;justify-content:center;gap:10px;flex-wrap:wrap;margin-bottom:50px;
+  }
+  .step-pill{
+    padding:8px 20px;border:1px solid var(--border);border-radius:30px;
+    font-family:'Bebas Neue',cursive;letter-spacing:1.5px;font-size:.95rem;
+    color:var(--text-dim);transition:all .3s ease;
+  }
+  .step-pill.current{color:#080808;background:var(--gold);border-color:var(--gold);}
+  .step-pill.done{color:var(--gold);border-color:var(--gold);}
+
+  .flow-step{display:none;}
+  .flow-step.active{display:block;animation:fadeIn .5s ease;}
+
+  .barber-grid,.team-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px;
+  }
+  .barber-card{
+    padding:28px 24px;text-align:center;cursor:pointer;position:relative;
+  }
+  .barber-card .mono{
+    width:92px;height:92px;border-radius:50%;margin:0 auto 18px;
+    background:linear-gradient(145deg,#1c1a15,#0d0c09);
+    border:1px solid var(--gold-soft);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Bebas Neue',cursive;font-size:2rem;color:var(--gold);
+  }
+  .barber-card h3{font-size:1.4rem;font-weight:500;}
+  .barber-card .role{color:var(--gold);font-size:.8rem;letter-spacing:1.5px;text-transform:uppercase;margin:6px 0 12px;}
+  .barber-card .tags{display:flex;flex-wrap:wrap;gap:6px;justify-content:center;margin-top:14px;}
+  .tag{
+    font-size:.72rem;padding:4px 10px;border:1px solid var(--border);border-radius:20px;color:var(--text-dim);
+  }
+  .barber-card.selected{
+    border-color:var(--gold);
+    box-shadow:0 0 0 1px var(--gold), 0 0 24px rgba(201,168,76,0.4);
+  }
+  .barber-card .check{
+    position:absolute;top:14px;right:14px;width:22px;height:22px;border-radius:50%;
+    border:1px solid var(--gold-soft);display:flex;align-items:center;justify-content:center;
+    font-size:.75rem;color:transparent;transition:all .3s ease;
+  }
+  .barber-card.selected .check{background:var(--gold);color:#080808;border-color:var(--gold);}
+
+  .option-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;
+  }
+  .option-card{
+    padding:22px;cursor:pointer;position:relative;overflow:hidden;
+  }
+  .option-card::before{
+    content:'';position:absolute;left:0;right:0;bottom:0;height:3px;
+    background:var(--gold);transform:scaleX(0);transform-origin:left;
+    transition:transform .35s ease;
+  }
+  .option-card:hover::before{transform:scaleX(1);}
+  .option-card.selected{border-color:var(--gold);background:#171410;}
+  .option-card.selected::before{transform:scaleX(1);}
+  .option-card h4{font-size:1.15rem;font-weight:500;}
+  .option-card .desc{color:var(--text-dim);font-size:.88rem;margin:8px 0 14px;}
+  .option-card .meta{display:flex;justify-content:space-between;align-items:center;}
+  .option-card .price{color:var(--gold);font-family:'Bebas Neue',cursive;font-size:1.3rem;letter-spacing:1px;}
+  .option-card .dur{font-size:.78rem;color:var(--text-dim);}
+  .option-card.addon-selected-badge{}
+  .option-card .pick-label{
+    font-size:.7rem;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);
+  }
+  .option-card.selected .pick-label{color:var(--gold);}
+
+  .addon-note{text-align:center;color:var(--text-dim);font-size:.85rem;margin:-30px 0 40px;}
+
+  .flow-actions{display:flex;justify-content:center;gap:16px;margin-top:40px;flex-wrap:wrap;}
+  .btn{
+    font-family:'Bebas Neue',cursive;letter-spacing:2px;font-size:1rem;
+    padding:14px 34px;border-radius:4px;cursor:pointer;border:1px solid var(--gold);
+    background:transparent;color:var(--gold);transition:all .3s ease;
+  }
+  .btn:hover{background:var(--gold);color:#080808;}
+  .btn.primary{background:var(--gold);color:#080808;}
+  .btn.primary:hover{background:#e0c261;}
+  .btn:disabled{opacity:.35;cursor:not-allowed;}
+  .btn:disabled:hover{background:transparent;color:var(--gold);}
+  .btn.primary:disabled:hover{background:var(--gold);color:#080808;}
+
+  /* Summary Panel */
+  .summary-panel{
+    position:sticky;bottom:0;margin-top:60px;
+    background:linear-gradient(180deg,#151310,#0c0a08);
+    border:1px solid var(--gold-soft);border-radius:12px;
+    padding:26px 30px;
+    box-shadow:0 -10px 40px rgba(0,0,0,0.5);
+  }
+  .summary-panel h3{
+    font-family:'Bebas Neue',cursive;letter-spacing:2px;color:var(--gold);
+    font-size:1.1rem;margin-bottom:16px;
+  }
+  .summary-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px;margin-bottom:18px;
+  }
+  .summary-item .label{font-size:.7rem;letter-spacing:1.5px;text-transform:uppercase;color:var(--text-dim);}
+  .summary-item .value{font-family:'Cormorant Garamond',serif;font-size:1.2rem;margin-top:4px;color:var(--text);}
+  .summary-totals{
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+    border-top:1px solid var(--border);padding-top:18px;
+  }
+  .summary-totals .est{display:flex;gap:28px;flex-wrap:wrap;}
+  .summary-totals .est div .label{font-size:.7rem;color:var(--text-dim);letter-spacing:1px;text-transform:uppercase;}
+  .summary-totals .est div .num{font-family:'Bebas Neue',cursive;font-size:1.8rem;color:var(--gold);}
+
+  #bookConfirm{
+    display:none;margin-top:16px;text-align:center;color:var(--gold);
+    font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.05rem;
+  }
+
+  /* ===== TEAM ===== */
+  .team-card{padding:32px 26px;text-align:center;}
+  .team-card .mono{width:110px;height:110px;font-size:2.4rem;}
+  .team-card .bio{color:var(--text-dim);font-size:.92rem;margin:12px 0 16px;}
+
+  /* ===== LOCATION ===== */
+  .loc-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:50px;align-items:start;}
+  @media (max-width:900px){.loc-grid{grid-template-columns:1fr;}}
+  table.hours{width:100%;border-collapse:collapse;}
+  table.hours td{padding:13px 10px;border-bottom:1px solid var(--border);}
+  table.hours tr td:first-child{font-family:'Bebas Neue',cursive;letter-spacing:1px;font-size:1.05rem;}
+  table.hours tr td:last-child{text-align:right;color:var(--text-dim);}
+  table.hours tr.today{
+    background:rgba(201,168,76,0.1);
+    box-shadow:inset 3px 0 0 var(--gold);
+  }
+  table.hours tr.today td{color:var(--gold);font-weight:600;}
+  .today-pill{
+    display:inline-block;margin-left:10px;font-size:.65rem;letter-spacing:1px;
+    background:var(--gold);color:#080808;padding:3px 9px;border-radius:20px;
+    font-family:'Inter',sans-serif;font-weight:700;vertical-align:middle;
+  }
+  .info-block{margin-top:30px;display:flex;flex-direction:column;gap:14px;}
+  .info-row{display:flex;gap:14px;align-items:flex-start;}
+  .info-row .ico{color:var(--gold);font-family:'Bebas Neue',cursive;font-size:1.1rem;width:26px;}
+  .info-row .txt{color:var(--text-dim);font-size:.93rem;}
+  .info-row .txt b{color:var(--text);display:block;font-family:'Inter',sans-serif;font-weight:600;margin-bottom:2px;}
+  .map-embed{width:100%;height:280px;border:0;border-radius:10px;margin-top:26px;filter:grayscale(0.3) contrast(1.1);}
+
+  .gallery{
+    display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px;margin-top:40px;
+  }
+  .gallery img{
+    height:150px;width:100%;object-fit:cover;border-radius:8px;cursor:pointer;
+    transition:transform .35s ease, filter .35s ease;
+    border:1px solid var(--border);
+  }
+  .gallery img:hover{transform:scale(1.04);filter:brightness(1.1);}
+
+  .lightbox{
+    display:none;position:fixed;inset:0;background:rgba(4,4,4,0.94);z-index:2000;
+    align-items:center;justify-content:center;padding:40px;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-width:90vw;max-height:85vh;border-radius:6px;box-shadow:0 0 60px rgba(201,168,76,0.15);}
+  .lightbox .close{
+    position:absolute;top:24px;right:34px;font-size:2.2rem;color:var(--gold);
+    cursor:pointer;font-family:'Bebas Neue',cursive;
+  }
+
+  /* ===== REVIEWS ===== */
+  .rating-hero{text-align:center;margin-bottom:50px;}
+  .rating-hero .num{font-family:'Bebas Neue',cursive;font-size:5.5rem;color:var(--gold);line-height:1;}
+  .stars{color:var(--gold);font-size:1.6rem;letter-spacing:4px;margin:8px 0;}
+  .rating-hero .sub{color:var(--text-dim);font-size:.9rem;}
+  .bar-breakdown{max-width:420px;margin:30px auto 0;}
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .bar-row .lbl{width:50px;font-size:.8rem;color:var(--text-dim);text-align:right;}
+  .bar-track{flex:1;height:8px;background:var(--border);border-radius:6px;overflow:hidden;}
+  .bar-fill{height:100%;background:linear-gradient(90deg,#8a712f,var(--gold));}
+  .bar-row .pct{width:36px;font-size:.78rem;color:var(--text-dim);}
+
+  .featured-review{
+    background:linear-gradient(145deg,#161310,#0c0b08);
+    border:1px solid var(--gold-soft);border-radius:12px;
+    padding:36px;margin-bottom:50px;text-align:center;
+  }
+  .featured-review .stars{margin-bottom:14px;}
+  .featured-review p{
+    font-family:'Cormorant Garamond',serif;font-size:1.35rem;font-style:italic;color:var(--text);
+    max-width:750px;margin:0 auto 18px;
+  }
+  .featured-review .who{color:var(--gold);font-family:'Bebas Neue',cursive;letter-spacing:1.5px;}
+
+  .review-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px;}
+  @media (max-width:800px){.review-grid{grid-template-columns:1fr;}}
+  .review-card{padding:24px;}
+  .review-card .stars{font-size:1rem;margin-bottom:10px;}
+  .review-card p{color:var(--text-dim);font-size:.92rem;margin-bottom:14px;}
+  .review-card .who{font-family:'Bebas Neue',cursive;letter-spacing:1px;color:var(--text);}
+
+  /* ===== CONTACT ===== */
+  .contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:60px;}
+  @media (max-width:900px){.contact-grid{grid-template-columns:1fr;}}
+  .ig-btn{
+    display:inline-flex;align-items:center;gap:10px;margin-top:26px;
+    padding:13px 26px;border:1px solid var(--gold);border-radius:30px;
+    color:var(--gold);font-family:'Bebas Neue',cursive;letter-spacing:1.5px;
+    transition:all .3s ease;
+  }
+  .ig-btn:hover{background:var(--gold);color:#080808;}
+  form.contact-form{display:flex;flex-direction:column;gap:16px;}
+  form.contact-form input, form.contact-form textarea{
+    background:var(--bg-alt);border:1px solid var(--border);border-radius:6px;
+    padding:14px 16px;color:var(--text);font-family:'Inter',sans-serif;font-size:.95rem;
+    resize:vertical;
+  }
+  form.contact-form input:focus, form.contact-form textarea:focus{
+    outline:none;border-color:var(--gold);
+  }
+  form.contact-form label{font-size:.78rem;letter-spacing:1px;text-transform:uppercase;color:var(--text-dim);margin-bottom:-8px;}
+  .form-success{
+    display:none;background:rgba(201,168,76,0.12);border:1px solid var(--gold-soft);
+    padding:16px 20px;border-radius:8px;color:var(--gold);font-family:'Cormorant Garamond',serif;
+    font-style:italic;margin-top:6px;
+  }
+
+  footer{
+    border-top:1px solid var(--border);padding:36px 6%;text-align:center;
+    color:var(--text-dim);font-size:.85rem;
+  }
+  footer .fbrand{color:var(--gold);font-family:'Bebas Neue',cursive;letter-spacing:2px;font-size:1.1rem;margin-bottom:6px;}
+
+  @media (max-width:820px){
+    nav.links{display:none;}
+    .hamburger{display:flex;}
+  }
+</style>
+</head>
+<body>
+
+<header class="nav">
+  <div class="brand">BOWIE TOWN <span>BARBERS</span></div>
+  <nav class="links">
+    <button data-page="services" class="active">Services</button>
+    <button data-page="team">Our Team</button>
+    <button data-page="location">Location & Hours</button>
+    <button data-page="reviews">Reviews</button>
+    <button data-page="contact">Contact Us</button>
+  </nav>
+  <button class="hamburger" id="hamburgerBtn" aria-label="Menu"><span></span><span></span><span></span></button>
+</header>
+
+<div class="mobile-menu" id="mobileMenu">
+  <button data-page="services" class="active">Services</button>
+  <button data-page="team">Our Team</button>
+  <button data-page="location">Location & Hours</button>
+  <button data-page="reviews">Reviews</button>
+  <button data-page="contact">Contact Us</button>
+</div>
+
+<main>
+
+  <!-- ================= SERVICES ================= -->
+  <section class="page active" id="page-services">
+    <div class="hero">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3m8oGRYx-tUX1L9OCxxPf6PirG647drmy0OwNkSarToFaBrnSUhbDbcZhDsAwPBt7wCLtNiq1EPONMTMoRQCokC1Cms89gwWfjvprohzai3iX6gobaDOdKABBdgOvqx7vPGdYYPtF4SDT2k2knE-wSy2BNyoRq_tjnk4r5VDwE-vS6NmT7PnJCm_wbnim-m5tjEshBgkveuQbY0EMKy7jASbT5H4lMmB3TxcdBIuDFnmiDo43J78PBJmKmn4OODVL9ISbpw4Faevaq-eTbO6Fxi35F1bftxJfy3NE9XU8TxqMvFF8valuJDSOEOSQp0Jtajk43AEXmZiva5Zy5d2LDIbTfrEEOxZNHN9ixQNWN7AJo5Q4ZH09YwzaedakLQBNI4v18I8pkx9lnl8DlAu_BO6y7d8VN08eSi5cXJ71fRlfC6&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Bowie Town Barbers interior">
+      <div class="hero-content">
+        <div class="eyebrow">Book Your Chair</div>
+        <h1>SERVICES</h1>
+        <p>Pick your barber. Choose your cut. Make it yours.</p>
+      </div>
+    </div>
+
+    <div class="section">
+      <div class="section-head">
+        <div class="kicker">Guided Booking</div>
+        <h2>Build Your Appointment</h2>
+        <p>Follow the steps below — select a barber, choose your service, add any finishing touches, then confirm.</p>
+      </div>
+
+      <div class="steps-bar">
+        <div class="step-pill" data-step="1">1 · Barber</div>
+        <div class="step-pill" data-step="2">2 · Service</div>
+        <div class="step-pill" data-step="3">3 · Add-Ons</div>
+        <div class="step-pill" data-step="4">4 · Summary</div>
+      </div>
+
+      <!-- STEP 1: BARBER -->
+      <div class="flow-step active" id="step-1">
+        <div class="barber-grid" id="barberGrid">
+          <div class="card barber-card" data-name="Omar Reyes" data-price="0" data-duration="0">
+            <div class="check">✓</div>
+            <div class="mono">OR</div>
+            <h3>Omar Reyes</h3>
+            <div class="role">Owner &amp; Master Barber</div>
+            <div class="tags"><span class="tag">Skin Fades</span><span class="tag">Sharp Lines</span><span class="tag">15+ yrs</span></div>
+          </div>
+          <div class="card barber-card" data-name="Marcus Bell" data-price="0" data-duration="0">
+            <div class="check">✓</div>
+            <div class="mono">MB</div>
+            <h3>Marcus Bell</h3>
+            <div class="role">Senior Barber</div>
+            <div class="tags"><span class="tag">Restyles</span><span class="tag">Beard Work</span><span class="tag">Textured Hair</span></div>
+          </div>
+          <div class="card barber-card" data-name="Jaylen Cross" data-price="0" data-duration="0">
+            <div class="check">✓</div>
+            <div class="mono">JC</div>
+            <h3>Jaylen Cross</h3>
+            <div class="role">Barber</div>
+            <div class="tags"><span class="tag">Kids Cuts</span><span class="tag">Classic Cuts</span><span class="tag">Precision</span></div>
+          </div>
+        </div>
+        <div class="flow-actions">
+          <button class="btn primary" id="toStep2" disabled>Continue to Service</button>
+        </div>
+      </div>
+
+      <!-- STEP 2: SERVICE -->
+      <div class="flow-step" id="step-2">
+        <div class="option-grid" id="serviceGrid">
+          <div class="card option-card" data-name="Haircut" data-price="35" data-duration="30">
+            <div class="pick-label">Default</div>
+            <h4>Haircut</h4>
+            <div class="desc">Classic tailored haircut with consultation, wash, and style finish.</div>
+            <div class="meta"><span class="price">$35</span><span class="dur">30 min</span></div>
+          </div>
+          <div class="card option-card" data-name="Skin Fade" data-price="42" data-duration="40">
+            <div class="pick-label">Signature</div>
+            <h4>Skin Fade</h4>
+            <div class="desc">Razor-finished bald fade blended seamlessly into your chosen top style.</div>
+            <div class="meta"><span class="price">$42</span><span class="dur">40 min</span></div>
+          </div>
+          <div class="card option-card" data-name="Buzz Cut" data-price="25" data-duration="20">
+            <div class="pick-label">Quick</div>
+            <h4>Buzz Cut</h4>
+            <div class="desc">All-over clipper cut, clean and low-maintenance.</div>
+            <div class="meta"><span class="price">$25</span><span class="dur">20 min</span></div>
+          </div>
+          <div class="card option-card" data-name="Restyle / Full Transformation" data-price="60" data-duration="60">
+            <div class="pick-label">Deep Change</div>
+            <h4>Restyle / Full Transformation</h4>
+            <div class="desc">Extended consultation and cut for a complete change of style, length, or shape.</div>
+            <div class="meta"><span class="price">$60</span><span class="dur">60 min</span></div>
+          </div>
+          <div class="card option-card" data-name="Kids Cut" data-price="22" data-duration="25">
+            <div class="pick-label">Ages 12 &amp; Under</div>
+            <h4>Kids Cut</h4>
+            <div class="desc">Patient, easygoing haircuts for our younger clients.</div>
+            <div class="meta"><span class="price">$22</span><span class="dur">25 min</span></div>
+          </div>
+        </div>
+        <div class="flow-actions">
+          <button class="btn" id="backStep1">Back</button>
+          <button class="btn primary" id="toStep3" disabled>Continue to Add-Ons</button>
+        </div>
+      </div>
+
+      <!-- STEP 3: ADD-ONS -->
+      <div class="flow-step" id="step-3">
+        <div class="option-grid" id="addonGrid">
+          <div class="card option-card addon" data-name="Beard Trim" data-price="12" data-duration="10">
+            <div class="pick-label">Add-On</div>
+            <h4>Beard Trim</h4>
+            <div class="desc">Shape-up and trim with hot towel finish.</div>
+            <div class="meta"><span class="price">+$12</span><span class="dur">10 min</span></div>
+          </div>
+          <div class="card option-card addon" data-name="Line-Up / Edge" data-price="8" data-duration="10">
+            <div class="pick-label">Add-On</div>
+            <h4>Line-Up / Edge</h4>
+            <div class="desc">Crisp razor edge-up around hairline and temples.</div>
+            <div class="meta"><span class="price">+$8</span><span class="dur">10 min</span></div>
+          </div>
+          <div class="card option-card addon" data-name="Skin Fade Upgrade" data-price="10" data-duration="10">
+            <div class="pick-label">Add-On</div>
+            <h4>Skin Fade Upgrade</h4>
+            <div class="desc">Upgrade any cut to a razor-finished bald fade.</div>
+            <div class="meta"><span class="price">+$10</span><span class="dur">10 min</span></div>
+          </div>
+          <div class="card option-card addon" data-name="Wash & Style" data-price="10" data-duration="10">
+            <div class="pick-label">Add-On</div>
+            <h4>Wash &amp; Style</h4>
+            <div class="desc">Deep shampoo, conditioning, and finished style.</div>
+            <div class="meta"><span class="price">+$10</span><span class="dur">10 min</span></div>
+          </div>
+          <div class="card option-card addon" data-name="Eyebrow Cleanup" data-price="7" data-duration="5">
+            <div class="pick-label">Add-On</div>
+            <h4>Eyebrow Cleanup</h4>
+            <div class="desc">Quick trim and shape for a polished finish.</div>
+            <div class="meta"><span class="price">+$7</span><span class="dur">5 min</span></div>
+          </div>
+        </div>
+        <div class="addon-note">Add-ons are optional — select any number, or skip straight to your summary.</div>
+        <div class="flow-actions">
+          <button class="btn" id="backStep2">Back</button>
+          <button class="btn primary" id="toStep4">Review Summary</button>
+        </div>
+      </div>
+
+      <!-- STEP 4: SUMMARY -->
+      <div class="flow-step" id="step-4">
+        <div class="flow-actions" style="margin-top:0;margin-bottom:30px;">
+          <button class="btn" id="backStep3">Back</button>
+        </div>
+        <div class="summary-panel">
+          <h3>Your Booking Summary</h3>
+          <div class="summary-grid">
+            <div class="summary-item"><div class="label">Barber</div><div class="value" id="sumBarber">Not selected</div></div>
+            <div class="summary-item"><div class="label">Service</div><div class="value" id="sumService">Not selected</div></div>
+            <div class="summary-item"><div class="label">Add-Ons</div><div class="value" id="sumAddons">None</div></div>
+          </div>
+          <div class="summary-totals">
+            <div class="est">
+              <div><div class="label">Estimated Price</div><div class="num" id="sumPrice">$0</div></div>
+              <div><div class="label">Estimated Duration</div><div class="num" id="sumDuration">0 min</div></div>
+            </div>
+            <button class="btn primary" id="bookNowBtn">Book Now</button>
+          </div>
+          <div id="bookConfirm">✦ Thank you — your appointment request has been noted. Bowie Town Barbers will confirm shortly. ✦</div>
+        </div>
+      </div>
+
+      <div class="section-head" style="margin-top:90px;">
+        <div class="kicker">Finishing Touches</div>
+        <h2>Add-Ons Menu</h2>
+        <p>Every add-on above can be paired with any haircut to complete your look.</p>
+      </div>
+      <div class="option-grid">
+        <div class="card option-card"><h4>Beard Trim</h4><div class="desc">Shape-up and trim with hot towel finish.</div><div class="meta"><span class="price">$12</span><span class="dur">10 min</span></div></div>
+        <div class="card option-card"><h4>Line-Up / Edge</h4><div class="desc">Crisp razor edge-up around hairline and temples.</div><div class="meta"><span class="price">$8</span><span class="dur">10 min</span></div></div>
+        <div class="card option-card"><h4>Wash &amp; Style</h4><div class="desc">Deep shampoo, conditioning, and finished style.</div><div class="meta"><span class="price">$10</span><span class="dur">10 min</span></div></div>
+        <div class="card option-card"><h4>Eyebrow Cleanup</h4><div class="desc">Quick trim and shape for a polished finish.</div><div class="meta"><span class="price">$7</span><span class="dur">5 min</span></div></div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= TEAM ================= -->
+  <section class="page" id="page-team">
+    <div class="hero">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3libk4misN6RGoL-oGi4QzfxslJs4drTsQ1mgqx-41n_p-7lfeZNENyBI7wkll8lFfyZwmT2AiAxEks39heecBKU-07XSbBv54eAri7xMYTltosc3RddnSYC7i78h7Zb7C26AK3XLePnPM6AldKUqlZXnZ_wPAs9DOLe__gLpSMJbnacpcse2B3ZAQh65hoDPxLBqp0rvU64HQip0G7baYUM9qIhPWTeMmtkEK24PpuMlUBojt5T9CQq1MKzO1E73he4gKxMPqeSY617VcDA8ibzJY14Ymq-Lp-A3jHQhmfjGwKPrSN0d-wBPbDwFiG96W556lM5HY35LICk6lw5a4IdsLz02tqIImrfBrZBfs63J2S_0gC9ly1q8KuW5EBHrkUcIyiis1TIrDtZL7iW-0w_MXX7E_3E3hjU9B7Wb4&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Bowie Town Barbers team">
+      <div class="hero-content">
+        <div class="eyebrow">The Chairs</div>
+        <h1>OUR TEAM</h1>
+        <p>Skilled hands. Real conversation. A shop built on trust.</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="section-head">
+        <div class="kicker">Meet The Barbers</div>
+        <h2>Craftsmen Behind The Chair</h2>
+      </div>
+      <div class="team-grid">
+        <div class="card team-card">
+          <div class="mono">OR</div>
+          <h3>Omar Reyes</h3>
+          <div class="role">Owner &amp; Master Barber</div>
+          <p class="bio">Bowie Town Barbers' founder with over 15 years behind the chair. Known for flawless skin fades, sharp shape-ups, and conversations about life and growth that keep clients coming back for years, not just haircuts.</p>
+          <div class="tags"><span class="tag">Skin Fades</span><span class="tag">Line-Ups</span><span class="tag">Mentorship</span></div>
+        </div>
+        <div class="card team-card">
+          <div class="mono">MB</div>
+          <h3>Marcus Bell</h3>
+          <div class="role">Senior Barber</div>
+          <p class="bio">A precision restyle specialist with a sharp eye for texture and shape. Marcus loves taking a client from "I don't know what I want" to a fresh look they didn't know they needed.</p>
+          <div class="tags"><span class="tag">Restyles</span><span class="tag">Beard Sculpting</span><span class="tag">Curly &amp; Coily</span></div>
+        </div>
+        <div class="card team-card">
+          <div class="mono">JC</div>
+          <h3>Jaylen Cross</h3>
+          <div class="role">Barber</div>
+          <p class="bio">Patient, detail-driven, and a favorite with the shop's youngest clients. Jaylen combines classic technique with modern finishing for a clean, timeless cut every visit.</p>
+          <div class="tags"><span class="tag">Kids Cuts</span><span class="tag">Classic Cuts</span><span class="tag">Precision Detailing</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= LOCATION ================= -->
+  <section class="page" id="page-location">
+    <div class="hero">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kTgE5xIDyE1k4ttTfVmn8e58YKIPNUAtTN_JN6B0rcZsNF7HpT0pe6NhuAD62afIHTbRkRHl5NEWn0koH24tC4PPRHEGb9FOhQAE-fTqYiGr-T9IGIkfX19SP_qW2s6J8EZB3OKzvnlCdbLAYr-pbLcsvS972CAxpSv5U4E0SWtjRca_KHRm7MzHBZ58aih01CIm-AuKBX1BIdWfwL1Wy5dY7El3xyd_vrEz8hBVnOVdx2tEWH7ZWlghPAb89zyRrablJLOuEzQgI8tJaxpg1iSQHccBTDecDOGRNDZlOGHT_UxWyABBKTFpfpOkaEOObM3ve6BTJuYEekKA5rMm7KpozTUERXuySmD0mrxO8yjRrYUIgEtMykSv1paCv1XT3L7V7Slq6YRaJEEMiEemmTBf2ujfMCaOuv2sk2c6GCfA&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Bowie Town Barbers location">
+      <div class="hero-content">
+        <div class="eyebrow">Visit Us</div>
+        <h1>LOCATION &amp; HOURS</h1>
+        <p>Serving Bowie and the greater DMV.</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="loc-grid">
+        <div>
+          <div class="section-head" style="text-align:left;margin-bottom:26px;">
+            <div class="kicker">Weekly Hours</div>
+            <h2 style="margin-top:8px;">When We're Open</h2>
+          </div>
+          <table class="hours" id="hoursTable">
+            <tr data-day="0"><td>Sunday</td><td>Closed</td></tr>
+            <tr data-day="1"><td>Monday</td><td>10:00 AM – 7:00 PM</td></tr>
+            <tr data-day="2"><td>Tuesday</td><td>10:00 AM – 7:00 PM</td></tr>
+            <tr data-day="3"><td>Wednesday</td><td>10:00 AM – 7:00 PM</td></tr>
+            <tr data-day="4"><td>Thursday</td><td>10:00 AM – 8:00 PM</td></tr>
+            <tr data-day="5"><td>Friday</td><td>9:00 AM – 8:00 PM</td></tr>
+            <tr data-day="6"><td>Saturday</td><td>8:00 AM – 6:00 PM</td></tr>
+          </table>
+
+          <div class="info-block">
+            <div class="info-row"><div class="ico">✦</div><div class="txt"><b>Address</b>15419 Excelsior Dr, Bowie, MD 20716, USA</div></div>
+            <div class="info-row"><div class="ico">✦</div><div class="txt"><b>Phone</b>(301) 805-8588</div></div>
+            <div class="info-row"><div class="ico">✦</div><div class="txt"><b>Parking</b>Free surface lot parking directly in front of the shop.</div></div>
+            <div class="info-row"><div class="ico">✦</div><div class="txt"><b>Accessibility</b>Ground-level, step-free entrance with wide doorways and accessible seating.</div></div>
+          </div>
+
+          <iframe class="map-embed" loading="lazy" allowfullscreen
+            src="https://maps.google.com/maps?q=15419%20Excelsior%20Dr%2C%20Bowie%2C%20MD%2020716%2C%20USA&t=&z=15&ie=UTF8&iwloc=&output=embed">
+          </iframe>
+        </div>
+
+        <div>
+          <div class="section-head" style="text-align:left;margin-bottom:10px;">
+            <div class="kicker">Gallery</div>
+            <h2 style="margin-top:8px;">Inside The Shop</h2>
+          </div>
+          <div class="gallery" id="galleryGrid">
+            <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3libk4misN6RGoL-oGi4QzfxslJs4drTsQ1mgqx-41n_p-7lfeZNENyBI7wkll8lFfyZwmT2AiAxEks39heecBKU-07XSbBv54eAri7xMYTltosc3RddnSYC7i78h7Zb7C26AK3XLePnPM6AldKUqlZXnZ_wPAs9DOLe__gLpSMJbnacpcse2B3ZAQh65hoDPxLBqp0rvU64HQip0G7baYUM9qIhPWTeMmtkEK24PpuMlUBojt5T9CQq1MKzO1E73he4gKxMPqeSY617VcDA8ibzJY14Ymq-Lp-A3jHQhmfjGwKPrSN0d-wBPbDwFiG96W556lM5HY35LICk6lw5a4IdsLz02tqIImrfBrZBfs63J2S_0gC9ly1q8KuW5EBHrkUcIyiis1TIrDtZL7iW-0w_MXX7E_3E3hjU9B7Wb4&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Gallery image 1">
+            <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kTgE5xIDyE1k4ttTfVmn8e58YKIPNUAtTN_JN6B0rcZsNF7HpT0pe6NhuAD62afIHTbRkRHl5NEWn0koH24tC4PPRHEGb9FOhQAE-fTqYiGr-T9IGIkfX19SP_qW2s6J8EZB3OKzvnlCdbLAYr-pbLcsvS972CAxpSv5U4E0SWtjRca_KHRm7MzHBZ58aih01CIm-AuKBX1BIdWfwL1Wy5dY7El3xyd_vrEz8hBVnOVdx2tEWH7ZWlghPAb89zyRrablJLOuEzQgI8tJaxpg1iSQHccBTDecDOGRNDZlOGHT_UxWyABBKTFpfpOkaEOObM3ve6BTJuYEekKA5rMm7KpozTUERXuySmD0mrxO8yjRrYUIgEtMykSv1paCv1XT3L7V7Slq6YRaJEEMiEemmTBf2ujfMCaOuv2sk2c6GCfA&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Gallery image 2">
+            <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kcBJJD9sXpbF8K82ss_teN0V9I4iFLGrYV6vDBSDI9vLt4YkhlhneneBuprd1IBO1qIFdKpd2LD2RWgpspwy20oTxlbIFFA8wRs6p54O1sBATL1qVR-nh8PjaexfiBlxJNr0VfGyEbeFVqzkDLRJ5ZSZ6MFohudRp-ZxjVi3DunXFj7VmGCRrBs_UQa9fT2CkeIuL1E2aaDES2pWLWjH6OpDc7dkBtB9M5LmnxMMehgivzf7BKxDJuRQPZxZz10OEUyBuqnC9FcMeMMLX9GTDup5yh8adEpglCkUydsCFqLwvVb3SH5-pybl4FFenB8Jrpcsz7p6pO_ISJvK297iFWmnq72aeja1PjOm0qm6Kn-iWHHV4WrKD7Q_YPRttmXSO6EFQt9qIjPxRvcdTx31OL2I4U8L7mQlFMYKWi2j0j_VAQ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Gallery image 3">
+            <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lZB1Ztatw25cNGDyA8kLLDOhfqK4dnQ0mAcPIVp2MhLZH0iQLgAyUUbYfQMcJ8M6ZNuHlM-HaDOp2E62oDadGP_SH1ePERL5KL6cDADIETr6bIAZgPnsNU4mQx4MK9u_4kWOVTzlcBjohpg3e1bXFtU1_TT8bYVVy1BqxpdOJeyqdCcE-X--PNjkEhcXxpg5upU8wqsK2NX3AKvfsFCGSIJr4mkafEf0AyCW-ojCvGpkWpYccgy9JRxoNXQcMekUPUmBxI6zwYnw7xJ10jzGpyyhG-nBmLa3ItYWgvJWfUatHpX-Qu7nwSHj2DZj0BdfzS8fcllNmVHcbmVpD4bJvwbjh0gpKqincr2iGRmnoktrJIaWfMUNUv_1iQSUOEledpqpkLujsaCbdf5NDMrFhSf7myfQmqp1sP5_3Iips&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Gallery image 4">
+            <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kjjcwC6wat7MzQF2xm5vSyLEOfcV21gs-K2O_4SbecQbAiN8hA17v6yYxDde3O6PPzfKh76WXBdtYNQq4tQZhmJP0jQWiAvmeTFkBVpDZ9HAU_ITWZRPI1TuMIhFniX832Jv06Q1KGwfKPLMWpqPmz_YAw_27qP97toDpxCZyrF6I_CNt-u6izjmg2ajRZddic4prjKRKT00r5nZMmfg8zjIxKZ-d7ARkB2em8NuDjlOTPz1yX67IlZ-foPaY8dMA3wlsQjTlbuIPZqMbT2wZoZCKDtLNLH8BzNRPf4MZ3ZXsb4tfRxYEFBDwAsiz5IXZyShuYyjxehV0zIsc8RvPZ6r1YXdbPTZOElXMpPcPe0b6InpswNNbrncpXky-F-hKsqfV7BXm7-oMVVtVgt355sRQv0aBVYaLxxGKfGFRwvw&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Gallery image 5">
+            <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mwUpHCThQEOWM88wdb-x70b7MOuKQWAcKWYm8eiJpaFIAIN_zppfnzLsNjqtoNzo3O-fFJwufEOUGUrzR8ywTrFTYkt7bXbJE2G7doIPhof-IoHRDm2ammwmbO7l8erv-Mw12LWQQkE6fxS3ZfFOBz8xkCBKVR5A1KNNlXkKgIMbhUYSRIm12lAxMxoXbvD365laNouHPJ7LTMpodXkUCaD8hybIjWeb9u-rMxEvCBO4UnvSm4Kg-nNzc4zE4Yhyv9ZCF01V3qpUW9cnWTjCvn6IIr-dtkl2mpUg-cIIVcg2a2iuHQZkM7qUaEELj8BMdrh37VT6IAFEaOSUFPpB5gvz3341ogmxi4mzYhVQdf48nYcW_RFXqobTFOcEnGTEfs6xF1oRqQaBaj38zQj8xNM4_U0J7RPjqY71JjoLYKAcAs&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Gallery image 6">
+            <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lv1TSiSyueJtKLz981MqiMH3lh2KJ0ZrrtlqqzuGLGcFiEAumu1qTLKm79wDR-a-vqZwawiJqD6SUiZPGesdRtvbz2DBKVU3fVqplUekSs1xCE07clJT80ymB9xxe1eap-EXRmmCK3w9OniX43G_-g8iorzfghPWqHPVjiGWRzWuyFDFkQem07SO8Ve7HRz1Kf7SfTNOWz9IyFM8CFggJ5LRV1EU32Ujt4vnQUPquTvmS3OzorvsTgJ7QaXvrSB17wZ5LAB-d6kbOwqOy6aeQqBVAqDSesO87SRLahq-oONUKp-vKvSn9GVzmmKgTt1hkKWC4SIgfX-mzvlzugHxf9F_6eAmpojCskq8BzZHwiYFMHOGexNrdmkLKQc-IZWq8UpFhpTQyDv1hdm3umjfhIj9XcQcucmmfGVTdBPjU4mXQ&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Gallery image 7">
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= REVIEWS ================= -->
+  <section class="page" id="page-reviews">
+    <div class="hero">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kjjcwC6wat7MzQF2xm5vSyLEOfcV21gs-K2O_4SbecQbAiN8hA17v6yYxDde3O6PPzfKh76WXBdtYNQq4tQZhmJP0jQWiAvmeTFkBVpDZ9HAU_ITWZRPI1TuMIhFniX832Jv06Q1KGwfKPLMWpqPmz_YAw_27qP97toDpxCZyrF6I_CNt-u6izjmg2ajRZddic4prjKRKT00r5nZMmfg8zjIxKZ-d7ARkB2em8NuDjlOTPz1yX67IlZ-foPaY8dMA3wlsQjTlbuIPZqMbT2wZoZCKDtLNLH8BzNRPf4MZ3ZXsb4tfRxYEFBDwAsiz5IXZyShuYyjxehV0zIsc8RvPZ6r1YXdbPTZOElXMpPcPe0b6InpswNNbrncpXky-F-hKsqfV7BXm7-oMVVtVgt355sRQv0aBVYaLxxGKfGFRwvw&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Bowie Town Barbers reviews">
+      <div class="hero-content">
+        <div class="eyebrow">What Clients Say</div>
+        <h1>REVIEWS</h1>
+        <p>114 reviews and counting.</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="rating-hero">
+        <div class="num">3.9</div>
+        <div class="stars">★★★★☆</div>
+        <div class="sub">Based on 114 Google reviews</div>
+        <div class="bar-breakdown">
+          <div class="bar-row"><div class="lbl">5 ★</div><div class="bar-track"><div class="bar-fill" style="width:58%;"></div></div><div class="pct">58%</div></div>
+          <div class="bar-row"><div class="lbl">4 ★</div><div class="bar-track"><div class="bar-fill" style="width:18%;"></div></div><div class="pct">18%</div></div>
+          <div class="bar-row"><div class="lbl">3 ★</div><div class="bar-track"><div class="bar-fill" style="width:10%;"></div></div><div class="pct">10%</div></div>
+          <div class="bar-row"><div class="lbl">2 ★</div><div class="bar-track"><div class="bar-fill" style="width:6%;"></div></div><div class="pct">6%</div></div>
+          <div class="bar-row"><div class="lbl">1 ★</div><div class="bar-track"><div class="bar-fill" style="width:8%;"></div></div><div class="pct">8%</div></div>
+        </div>
+      </div>
+
+      <div class="featured-review">
+        <div class="stars">★★★★★</div>
+        <p>"Came back to Maryland after a couple of years and had to get a cut from my Omar. He delivered a clean fade and a crisp shape-up just like always. Beyond the haircut, the conversations are always meaningful — we talk about life, growth, and becoming the best version of ourselves as men of God. Highly recommend."</p>
+        <div class="who">— Verified Google Review</div>
+      </div>
+
+      <div class="review-grid">
+        <div class="card review-card">
+          <div class="stars">★★★★★</div>
+          <p>"If you ever go ask for Omar — he is the man, a good barber but an even better human being."</p>
+          <div class="who">Google Review</div>
+        </div>
+        <div class="card review-card">
+          <div class="stars">★★★★★</div>
+          <p>"Omar always hooks me up with a good line up and I always enjoy our conversations. I recommend Omar if you come here."</p>
+          <div class="who">Google Review</div>
+        </div>
+        <div class="card review-card">
+          <div class="stars">★★★★★</div>
+          <p>"Have been coming to this location for about a year and a half now, and I only go to Omar for a haircut. Never been disappointed or dissatisfied with the way he cuts."</p>
+          <div class="who">Google Review</div>
+        </div>
+        <div class="card review-card">
+          <div class="stars">★★★★★</div>
+          <p>"Reached out and was able to get in contact with Omar who made it easy to set an appointment up. The cut was sharp and clean and he did everything I asked. Would 100% recommend if you're looking for a barber in the DMV."</p>
+          <div class="who">Google Review</div>
+        </div>
+        <div class="card review-card">
+          <div class="stars">★★★★☆</div>
+          <p>"Clean shop, great energy, and the fade came out exactly how I wanted. Wait was a little longer than expected on a Saturday but worth it."</p>
+          <div class="who">Google Review</div>
+        </div>
+        <div class="card review-card">
+          <div class="stars">★★★★★</div>
+          <p>"Brought my son in for his first real haircut and Jaylen was incredibly patient with him. We'll definitely be back."</p>
+          <div class="who">Google Review</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- ================= CONTACT ================= -->
+  <section class="page" id="page-contact">
+    <div class="hero">
+      <img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3m8oGRYx-tUX1L9OCxxPf6PirG647drmy0OwNkSarToFaBrnSUhbDbcZhDsAwPBt7wCLtNiq1EPONMTMoRQCokC1Cms89gwWfjvprohzai3iX6gobaDOdKABBdgOvqx7vPGdYYPtF4SDT2k2knE-wSy2BNyoRq_tjnk4r5VDwE-vS6NmT7PnJCm_wbnim-m5tjEshBgkveuQbY0EMKy7jASbT5H4lMmB3TxcdBIuDFnmiDo43J78PBJmKmn4OODVL9ISbpw4Faevaq-eTbO6Fxi35F1bftxJfy3NE9XU8TxqMvFF8valuJDSOEOSQp0Jtajk43AEXmZiva5Zy5d2LDIbTfrEEOxZNHN9ixQNWN7AJo5Q4ZH09YwzaedakLQBNI4v18I8pkx9lnl8DlAu_BO6y7d8VN08eSi5cXJ71fRlfC6&key=AIzaSyDJ6UtcPgQAHwSYff54ohngKNwYTX_6Ps8" alt="Bowie Town Barbers contact">
+      <div class="hero-content">
+        <div class="eyebrow">Get In Touch</div>
+        <h1>CONTACT US</h1>
+        <p>Questions, walk-ins, or booking help — reach out anytime.</p>
+      </div>
+    </div>
+    <div class="section">
+      <div class="contact-grid">
+        <div>
+          <div class="section-head" style="text-align:left;">
+            <div class="kicker">Bowie Town Barbers</div>
+            <h2 style="margin-top:8px;">Say Hello</h2>
+          </div>
+          <div class="info-block">
+            <div class="info-row"><div class="ico">✦</div><div class="txt"><b>Address</b>15419 Excelsior Dr, Bowie, MD 20716, USA</div></div>
+            <div class="info-row"><div class="ico">✦</div><div class="txt"><b>Phone</b>(301) 805-8588</div></div>
+            <div class="info-row"><div class="ico">✦</div><div class="txt"><b>Hours</b>Mon–Wed 10–7 · Thu 10–8 · Fri 9–8 · Sat 8–6 · Sun Closed</div></div>
+          </div>
+          <a class="ig-btn" href="https://www.instagram.com/explore/locations/16786950/bowie-town-barbers/" target="_blank" rel="noopener">Follow on Instagram →</a>
+        </div>
+        <div>
+          <form class="contact-form" id="contactForm">
+            <label for="cname">Name</label>
+            <input type="text" id="cname" required placeholder="Your full name">
+            <label for="cemail">Email</label>
+            <input type="email" id="cemail" required placeholder="you@example.com">
+            <label for="cphone">Phone</label>
+            <input type="tel" id="cphone" placeholder="(301) 000-0000">
+            <label for="cmsg">Message</label>
+            <textarea id="cmsg" rows="5" required placeholder="Tell us what you need..."></textarea>
+            <button type="submit" class="btn primary" style="margin-top:6px;">Send Message</button>
+            <div class="form-success" id="formSuccess">✦ Thank you — your message has been sent. We'll be in touch shortly. ✦</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer>
+  <div class="fbrand">BOWIE TOWN BARBERS</div>
+  <div>15419 Excelsior Dr, Bowie, MD 20716, USA</div>
+  <div>&copy; <span id="footYear"></span> Bowie Town Barbers. All rights reserved.</div>
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <div class="close" id="lightboxClose">✕</div>
+  <img src="" alt="Expanded gallery image" id="lightboxImg">
+</div>
+
+<script>
+  // ===== NAV / PAGE ROUTING =====
+  const pageButtons = document.querySelectorAll('[data-page]');
+  const pages = document.querySelectorAll('.page');
+  const mobileMenu = document.getElementById('mobileMenu');
+  const hamburgerBtn = document.getElementById('hamburgerBtn');
+
+  function showPage(id){
+    pages.forEach(p => p.classList.remove('active'));
+    document.getElementById('page-' + id).classList.add('active');
+    pageButtons.forEach(b => b.classList.toggle('active', b.dataset.page === id));
+    mobileMenu.classList.remove('open');
+    window.scrollTo({top:0, behavior: matchMedia('(prefers-reduced-motion: reduce)').matches ? 'auto' : 'smooth'});
+  }
+  pageButtons.forEach(btn => btn.addEventListener('click', () => showPage(btn.dataset.page)));
+  hamburgerBtn.addEventListener('click', () => mobileMenu.classList.toggle('open'));
+
+  // ===== SERVICES BOOKING FLOW =====
+  let selection = { barber:null, service:null, addons:[] };
+
+  const barberGrid = document.getElementById('barberGrid');
+  const serviceGrid = document.getElementById('serviceGrid');
+  const addonGrid = document.getElementById('addonGrid');
+  const steps = document.querySelectorAll('.flow-step');
+  const stepPills = document.querySelectorAll('.step-pill');
+
+  function goToStep(n){
+    steps.forEach(s => s.classList.remove('active'));
+    document.getElementById('step-' + n).classList.add('active');
+    stepPills.forEach(p => {
+      const s = parseInt(p.dataset.step);
+      p.classList.toggle('current', s === n);
+      p.classList.toggle('done', s < n);
+    });
+    if(n === 4) updateSummary();
+  }
+
+  barberGrid.querySelectorAll('.barber-card').forEach(card => {
+    card.addEventListener('click', () => {
+      barberGrid.querySelectorAll('.barber-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selection.barber = card.dataset.name;
+      document.getElementById('toStep2').disabled = false;
+    });
+  });
+  document.getElementById('toStep2').addEventListener('click', () => goToStep(2));
+  document.getElementById('backStep1').addEventListener('click', () => goToStep(1));
+
+  serviceGrid.querySelectorAll('.option-card').forEach(card => {
+    card.addEventListener('click', () => {
+      serviceGrid.querySelectorAll('.option-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selection.service = { name: card.dataset.name, price: parseFloat(card.dataset.price), duration: parseInt(card.dataset.duration) };
+      document.getElementById('toStep3').disabled = false;
+    });
+  });
+  document.getElementById('toStep3').addEventListener('click', () => goToStep(3));
+  document.getElementById('backStep2').addEventListener('click', () => goToStep(2));
+
+  addonGrid.querySelectorAll('.option-card.addon').forEach(card => {
+    card.addEventListener('click', () => {
+      const name = card.dataset.name;
+      const idx = selection.addons.findIndex(a => a.name === name);
+      if(idx > -1){
+        selection.addons.splice(idx,1);
+        card.classList.remove('selected');
+      } else {
+        selection.addons.push({ name, price: parseFloat(card.dataset.price), duration: parseInt(card.dataset.duration) });
+        card.classList.add('selected');
+      }
+    });
+  });
+  document.getElementById('toStep4').addEventListener('click', () => goToStep(4));
+  document.getElementById('backStep3').addEventListener('click', () => goToStep(3));
+
+  function updateSummary(){
+    document.getElementById('sumBarber').textContent = selection.barber || 'Not selected';
+    document.getElementById('sumService').textContent = selection.service ? selection.service.name : 'Not selected';
+    document.getElementById('sumAddons').textContent = selection.addons.length ? selection.addons.map(a=>a.name).join(', ') : 'None';
+
+    const servicePrice = selection.service ? selection.service.price : 0;
+    const serviceDur = selection.service ? selection.service.duration : 0;
+    const addonPrice = selection.addons.reduce((s,a)=>s+a.price,0);
+    const addonDur = selection.addons.reduce((s,a)=>s+a.duration,0);
+
+    document.getElementById('sumPrice').textContent = '$' + (servicePrice + addonPrice);
+    document.getElementById('sumDuration').textContent = (serviceDur + addonDur) + ' min';
+  }
+
+  document.getElementById('bookNowBtn').addEventListener('click', () => {
+    if(!selection.barber || !selection.service){
+      alert('Please select a barber and a service before booking.');
+      return;
+    }
+    document.getElementById('bookConfirm').style.display = 'block';
+  });
+
+  // ===== HOURS: HIGHLIGHT TODAY =====
+  const todayIndex = new Date().getDay();
+  const hoursRows = document.querySelectorAll('#hoursTable tr');
+  hoursRows.forEach(row => {
+    if(parseInt(row.dataset.day) === todayIndex){
+      row.classList.add('today');
+      const firstCell = row.querySelector('td:first-child');
+      const pill = document.createElement('span');
+      pill.className = 'today-pill';
+      pill.textContent = 'Today';
+      firstCell.appendChild(pill);
+    }
+  });
+
+  // ===== GALLERY LIGHTBOX =====
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  document.querySelectorAll('#galleryGrid img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightbox.classList.add('open');
+    });
+  });
+  function closeLightbox(){ lightbox.classList.remove('open'); lightboxImg.src=''; }
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', (e) => { if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', (e) => { if(e.key === 'Escape') closeLightbox(); });
+
+  // ===== CONTACT FORM =====
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('formSuccess').style.display = 'block';
+    this.reset();
+  });
+
+  // ===== FOOTER YEAR =====
+  document.getElementById('footYear').textContent = new Date().getFullYear();
+</script>
+
+</body>
+</html>
