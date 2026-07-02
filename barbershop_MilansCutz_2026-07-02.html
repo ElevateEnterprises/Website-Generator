@@ -1,0 +1,770 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milan's Cutz | Premium Barbershop in Baltimore, MD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080808;
+    --bg-raised:#121212;
+    --bg-card:#161616;
+    --gold:#C9A84C;
+    --gold-soft:rgba(201,168,76,.16);
+    --gold-glow:rgba(201,168,76,.35);
+    --text:#f3f0e8;
+    --text-dim:#a8a39a;
+    --border:#262626;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    min-height:100vh;
+  }
+  h1,h2,h3,h4{font-family:'Bebas Neue',sans-serif;letter-spacing:.04em;font-weight:400;color:var(--text)}
+  .serif{font-family:'Cormorant Garamond',serif}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  ul{list-style:none}
+  button{font-family:inherit;cursor:pointer}
+
+  /* ===== Nav ===== */
+  .navbar{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 32px;height:76px;
+    background:rgba(8,8,8,.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-brand{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.12em;color:var(--gold)}
+  .nav-brand span{color:var(--text)}
+  .nav-links{display:flex;gap:8px;align-items:center}
+  .nav-link{
+    position:relative;background:none;border:none;
+    padding:10px 16px;
+    font-size:.82rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    transition:color .25s ease;
+  }
+  .nav-link::after{
+    content:'';position:absolute;left:16px;right:16px;bottom:4px;height:2px;
+    background:var(--gold);transform:scaleX(0);transform-origin:center;
+    transition:transform .3s ease;
+  }
+  .nav-link:hover{color:var(--text)}
+  .nav-link.active{color:var(--gold)}
+  .nav-link.active::after{transform:scaleX(1)}
+  .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:8px;z-index:1100}
+  .hamburger span{width:24px;height:2px;background:var(--gold);transition:transform .3s ease,opacity .3s ease}
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .hamburger.open span:nth-child(2){opacity:0}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  @media (max-width:880px){
+    .nav-links{
+      position:fixed;top:76px;left:0;right:0;bottom:0;
+      flex-direction:column;align-items:stretch;gap:0;
+      background:rgba(8,8,8,.98);
+      padding:24px;
+      transform:translateX(100%);
+      transition:transform .35s ease;
+      overflow-y:auto;
+    }
+    .nav-links.open{transform:translateX(0)}
+    .nav-link{padding:18px 8px;font-size:1rem;border-bottom:1px solid var(--border)}
+    .hamburger{display:flex}
+  }
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;
+    height:52vh;min-height:340px;
+    display:flex;align-items:center;justify-content:center;
+    text-align:center;
+    background-size:cover;background-position:center;
+    margin-top:76px;
+  }
+  .hero::before{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(8,8,8,.55) 0%,rgba(8,8,8,.75) 55%,var(--bg) 100%);
+  }
+  .hero-inner{position:relative;z-index:2;padding:0 20px}
+  .hero-eyebrow{color:var(--gold);letter-spacing:.3em;text-transform:uppercase;font-size:.78rem;margin-bottom:14px}
+  .hero h1{font-size:clamp(2.6rem,7vw,5.2rem);line-height:1}
+  .hero p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.3rem;color:var(--text-dim);margin-top:12px}
+
+  /* ===== Layout ===== */
+  .page{display:none}
+  .page.active{display:block;animation:fadeIn .5s ease both}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(14px)}to{opacity:1;transform:translateY(0)}}
+  .wrap{max-width:1180px;margin:0 auto;padding:80px 32px}
+  .section-head{text-align:center;margin-bottom:52px}
+  .section-head .eyebrow{color:var(--gold);letter-spacing:.28em;text-transform:uppercase;font-size:.76rem;margin-bottom:10px}
+  .section-head h2{font-size:clamp(2rem,4vw,3rem)}
+
+  /* ===== Cards general ===== */
+  .card{
+    background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+    transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;
+  }
+  .card:hover{transform:translateY(-6px);box-shadow:0 20px 40px -20px rgba(0,0,0,.6),0 0 0 1px var(--gold-glow);border-color:var(--gold-glow)}
+
+  /* ===== Services guided flow ===== */
+  .flow-steps{display:flex;justify-content:center;gap:8px;flex-wrap:wrap;margin-bottom:56px}
+  .flow-step-pill{
+    display:flex;align-items:center;gap:8px;padding:8px 18px;border-radius:999px;
+    border:1px solid var(--border);color:var(--text-dim);font-size:.8rem;letter-spacing:.06em;text-transform:uppercase;
+    transition:all .3s ease;
+  }
+  .flow-step-pill.done{border-color:var(--gold);color:var(--gold)}
+  .flow-step-pill .num{width:20px;height:20px;border-radius:50%;background:var(--bg-raised);display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:.8rem}
+  .flow-step-pill.done .num{background:var(--gold);color:#080808}
+
+  .flow-block{margin-bottom:60px;opacity:1;transition:opacity .4s ease, max-height .4s ease}
+  .flow-block.hidden-step{display:none}
+  .flow-block h3{font-size:1.6rem;color:var(--gold);letter-spacing:.06em;margin-bottom:6px}
+  .flow-block .sub{color:var(--text-dim);font-size:.92rem;margin-bottom:26px}
+
+  .option-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px}
+
+  .barber-card,.svc-card,.addon-card{
+    position:relative;cursor:pointer;padding:26px 22px;overflow:hidden;
+    background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius);
+    transition:all .3s ease;
+  }
+  .barber-card:hover,.svc-card:hover,.addon-card:hover{transform:translateY(-4px);border-color:var(--gold-glow)}
+  .barber-card.selected,.svc-card.selected,.addon-card.selected{
+    border-color:var(--gold);
+    box-shadow:0 0 0 1px var(--gold), 0 0 26px var(--gold-glow);
+  }
+  .monogram{
+    width:64px;height:64px;border-radius:50%;margin:0 auto 16px;
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Bebas Neue',sans-serif;font-size:1.5rem;color:var(--gold);
+    background:var(--gold-soft);border:1px solid var(--gold-glow);
+  }
+  .barber-card h4{text-align:center;font-size:1.15rem}
+  .barber-card .role{text-align:center;color:var(--text-dim);font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;margin-top:2px}
+  .check-badge{
+    position:absolute;top:12px;right:12px;width:22px;height:22px;border-radius:50%;
+    background:var(--gold);color:#080808;display:none;align-items:center;justify-content:center;font-size:.75rem;font-weight:700;
+  }
+  .barber-card.selected .check-badge,.svc-card.selected .check-badge,.addon-card.selected .check-badge{display:flex}
+
+  .svc-card h4,.addon-card h4{font-size:1.15rem;margin-bottom:6px}
+  .svc-card .meta,.addon-card .meta{display:flex;justify-content:space-between;color:var(--gold);font-family:'Bebas Neue',sans-serif;letter-spacing:.04em;font-size:1rem;margin-top:14px}
+  .svc-card .desc,.addon-card .desc{color:var(--text-dim);font-size:.85rem}
+
+  .summary-panel{
+    position:sticky;bottom:20px;margin-top:20px;
+    background:var(--bg-raised);border:1px solid var(--gold-glow);border-radius:var(--radius);
+    padding:28px 30px;box-shadow:0 20px 50px -20px rgba(0,0,0,.7);
+  }
+  .summary-panel h3{color:var(--gold);font-size:1.3rem;margin-bottom:18px;letter-spacing:.06em}
+  .summary-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(160px,1fr));gap:18px;margin-bottom:20px}
+  .summary-grid .label{font-size:.72rem;text-transform:uppercase;letter-spacing:.1em;color:var(--text-dim);margin-bottom:4px}
+  .summary-grid .value{font-size:1.05rem}
+  .summary-total{
+    display:flex;justify-content:space-between;align-items:center;flex-wrap:wrap;gap:16px;
+    border-top:1px solid var(--border);padding-top:20px;
+  }
+  .summary-total .price{font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--gold)}
+  .summary-total .dur{color:var(--text-dim);font-size:.85rem;margin-top:2px}
+  .btn-gold{
+    background:var(--gold);color:#080808;border:none;padding:14px 34px;border-radius:6px;
+    font-weight:600;letter-spacing:.06em;text-transform:uppercase;font-size:.85rem;
+    transition:transform .25s ease,box-shadow .25s ease;
+  }
+  .btn-gold:hover{transform:translateY(-2px);box-shadow:0 12px 26px -10px var(--gold-glow)}
+  .btn-gold:disabled{opacity:.4;cursor:not-allowed;transform:none;box-shadow:none}
+  .booking-msg{margin-top:16px;color:var(--gold);font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.1rem;display:none}
+  .booking-msg.show{display:block}
+
+  /* service card bottom sweep */
+  .svc-card::after{
+    content:'';position:absolute;left:0;right:0;bottom:0;height:3px;background:var(--gold);
+    transform:scaleX(0);transform-origin:left;transition:transform .35s ease;
+  }
+  .svc-card:hover::after,.svc-card.selected::after{transform:scaleX(1)}
+
+  /* ===== Team ===== */
+  .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px}
+  .team-card{padding:34px 26px;text-align:center}
+  .team-mono{width:100px;height:100px;border-radius:50%;margin:0 auto 20px;display:flex;align-items:center;justify-content:center;font-family:'Bebas Neue',sans-serif;font-size:2.2rem;color:var(--gold);background:var(--gold-soft);border:2px solid var(--gold-glow)}
+  .team-card h3{font-size:1.5rem}
+  .team-card .role{color:var(--gold);font-size:.8rem;text-transform:uppercase;letter-spacing:.1em;margin:4px 0 14px}
+  .team-card .bio{color:var(--text-dim);font-family:'Cormorant Garamond',serif;font-size:1.08rem;margin-bottom:16px}
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px;justify-content:center}
+  .tag{border:1px solid var(--gold-glow);color:var(--gold);font-size:.72rem;letter-spacing:.05em;text-transform:uppercase;padding:5px 12px;border-radius:999px}
+
+  /* ===== Location ===== */
+  .loc-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:44px;margin-bottom:60px}
+  @media(max-width:900px){.loc-grid{grid-template-columns:1fr}}
+  table.hours{width:100%;border-collapse:collapse}
+  table.hours td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:.95rem}
+  table.hours td:first-child{color:var(--text-dim);text-transform:uppercase;letter-spacing:.06em;font-size:.8rem}
+  table.hours tr.today{background:var(--gold-soft)}
+  table.hours tr.today td{color:var(--gold);font-weight:600}
+  .today-pill{background:var(--gold);color:#080808;font-family:'Bebas Neue',sans-serif;font-size:.72rem;letter-spacing:.05em;padding:3px 10px;border-radius:999px;margin-left:10px}
+  .info-list{margin-top:26px;display:flex;flex-direction:column;gap:14px}
+  .info-list .row{display:flex;gap:14px;align-items:flex-start}
+  .info-list .icon{color:var(--gold);font-family:'Bebas Neue',sans-serif}
+  .map-frame{width:100%;height:340px;border:1px solid var(--border);border-radius:var(--radius);overflow:hidden}
+  .map-frame iframe{width:100%;height:100%;border:0;filter:grayscale(.3) invert(.92) contrast(.9)}
+
+  .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(200px,1fr));gap:14px}
+  .gallery-grid img{width:100%;height:170px;object-fit:cover;border-radius:8px;cursor:pointer;transition:transform .3s ease,box-shadow .3s ease;border:1px solid var(--border)}
+  .gallery-grid img:hover{transform:scale(1.04);box-shadow:0 0 0 2px var(--gold)}
+
+  .lightbox{position:fixed;inset:0;background:rgba(4,4,4,.94);z-index:2000;display:none;align-items:center;justify-content:center;padding:40px}
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:90vw;max-height:86vh;border-radius:6px;box-shadow:0 30px 80px rgba(0,0,0,.6)}
+  .lightbox-close{position:absolute;top:24px;right:32px;color:var(--gold);font-size:2.2rem;background:none;border:none}
+
+  /* ===== Reviews ===== */
+  .rating-hero{display:flex;flex-wrap:wrap;gap:56px;align-items:center;justify-content:center;margin-bottom:60px}
+  .rating-score{text-align:center}
+  .rating-score .num{font-family:'Bebas Neue',sans-serif;font-size:5rem;color:var(--gold);line-height:1}
+  .stars{color:var(--gold);font-size:1.3rem;letter-spacing:.15em;margin:6px 0}
+  .rating-score .count{color:var(--text-dim);font-size:.85rem}
+  .breakdown{min-width:260px}
+  .bd-row{display:flex;align-items:center;gap:10px;margin-bottom:8px}
+  .bd-row .label{width:52px;font-size:.78rem;color:var(--text-dim)}
+  .bd-bar{flex:1;height:8px;background:var(--bg-raised);border-radius:99px;overflow:hidden}
+  .bd-fill{height:100%;background:var(--gold)}
+  .bd-row .pct{width:36px;text-align:right;font-size:.75rem;color:var(--text-dim)}
+
+  .featured-review{
+    background:linear-gradient(135deg,var(--gold-soft),transparent);
+    border:1px solid var(--gold-glow);border-radius:var(--radius);
+    padding:36px;margin-bottom:44px;text-align:center;
+  }
+  .featured-review .stars{justify-content:center;display:flex}
+  .featured-review p{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:1.5rem;max-width:780px;margin:16px auto}
+  .featured-review .who{color:var(--gold);text-transform:uppercase;letter-spacing:.08em;font-size:.8rem}
+
+  .review-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media(max-width:760px){.review-grid{grid-template-columns:1fr}}
+  .review-card{padding:26px}
+  .review-card .stars{font-size:1rem}
+  .review-card p{color:var(--text-dim);font-size:.94rem;margin:12px 0}
+  .review-card .who{font-size:.82rem;color:var(--text);font-weight:600}
+
+  /* ===== Contact ===== */
+  .contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:50px}
+  @media(max-width:900px){.contact-grid{grid-template-columns:1fr}}
+  .ig-btn{
+    display:inline-flex;align-items:center;gap:10px;margin-top:22px;
+    border:1px solid var(--gold);color:var(--gold);padding:12px 24px;border-radius:6px;
+    letter-spacing:.06em;text-transform:uppercase;font-size:.8rem;transition:all .25s ease;
+  }
+  .ig-btn:hover{background:var(--gold);color:#080808}
+  .form-group{margin-bottom:20px}
+  .form-group label{display:block;font-size:.78rem;text-transform:uppercase;letter-spacing:.08em;color:var(--text-dim);margin-bottom:8px}
+  .form-group input,.form-group textarea{
+    width:100%;background:var(--bg-raised);border:1px solid var(--border);border-radius:6px;
+    padding:13px 14px;color:var(--text);font-family:'Inter',sans-serif;font-size:.94rem;
+  }
+  .form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--gold)}
+  .form-success{display:none;background:var(--gold-soft);border:1px solid var(--gold);border-radius:6px;padding:16px 18px;color:var(--gold);margin-top:14px;font-size:.9rem}
+  .form-success.show{display:block}
+
+  footer{border-top:1px solid var(--border);padding:44px 32px;text-align:center;color:var(--text-dim);font-size:.85rem}
+  footer .fname{color:var(--gold);font-family:'Bebas Neue',sans-serif;letter-spacing:.08em;font-size:1.1rem;display:block;margin-bottom:6px}
+
+  @media(prefers-reduced-motion:reduce){
+    *{animation-duration:.001s !important;transition-duration:.001s !important}
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-brand">MILAN'S <span>CUTZ</span></div>
+  <div class="nav-links" id="navLinks">
+    <button class="nav-link active" data-page="services">Services</button>
+    <button class="nav-link" data-page="team">Our Team</button>
+    <button class="nav-link" data-page="location">Location &amp; Hours</button>
+    <button class="nav-link" data-page="reviews">Reviews</button>
+    <button class="nav-link" data-page="contact">Contact Us</button>
+  </div>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</nav>
+
+<!-- ========================= SERVICES ========================= -->
+<section class="page active" id="page-services">
+  <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lA0rs2CiBXvSnxOLAg0VsBJRNhc6jfPXRN9bjECBaa5ijRXmgm2hLSiRktMqR4m5oUPwxC7kHPzYn39x3wh6VgN2HRMrX9UkHaCeXRcQFNsuKClllOuL4JGY10WZnIrANsMzP2jVs2tiRRWA13i8cLLnhtK70xyOGnA-XQSSjqVAoZPIxcm91nq7-j8VwouS7RLr2vmrQKqmsi7B6aFJGuUIpZJadt5esHtMDM0X3risFUzLPRlMNNQBfwOHrO8kMkUfSq35FcVf4gBgbgesVUJ4mBpJn6UaHZNNOniSgpxUXI9YPZ_M9wkIIGWQAZn_D40Dj5OhCnos8YuV6BFApjxQshnIC5Q_r4K_Xfb8s4_quDMQJUH8e14mJjJCg8_Vgqw92z040xU3SJAAhBDZSAxCARSGgfJ8o-opPHaFKcnYY&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU')">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Book Your Chair</div>
+      <h1>Services</h1>
+      <p>Choose your barber, your cut, and your finish.</p>
+    </div>
+  </div>
+
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">Guided Booking</div>
+      <h2>Build Your Appointment</h2>
+    </div>
+
+    <div class="flow-steps">
+      <div class="flow-step-pill done" id="pill-1"><span class="num">1</span> Barber</div>
+      <div class="flow-step-pill" id="pill-2"><span class="num">2</span> Service</div>
+      <div class="flow-step-pill" id="pill-3"><span class="num">3</span> Add-Ons</div>
+      <div class="flow-step-pill" id="pill-4"><span class="num">4</span> Summary</div>
+    </div>
+
+    <!-- STEP 1: BARBER -->
+    <div class="flow-block" id="step-barber">
+      <h3>Step 1 — Choose Your Barber</h3>
+      <div class="sub">Select the barber you'd like to sit with.</div>
+      <div class="option-grid" id="barberGrid"></div>
+    </div>
+
+    <!-- STEP 2: SERVICE -->
+    <div class="flow-block hidden-step" id="step-service">
+      <h3>Step 2 — Choose Your Service</h3>
+      <div class="sub">Pick the cut that fits.</div>
+      <div class="option-grid" id="serviceGrid"></div>
+    </div>
+
+    <!-- STEP 3: ADD-ONS -->
+    <div class="flow-block hidden-step" id="step-addons">
+      <h3>Step 3 — Add-Ons</h3>
+      <div class="sub">Optional finishing touches (select any number).</div>
+      <div class="option-grid" id="addonGrid"></div>
+    </div>
+
+    <!-- STEP 4: SUMMARY -->
+    <div class="flow-block hidden-step" id="step-summary">
+      <div class="summary-panel">
+        <h3>Your Appointment</h3>
+        <div class="summary-grid">
+          <div><div class="label">Barber</div><div class="value" id="sumBarber">—</div></div>
+          <div><div class="label">Service</div><div class="value" id="sumService">—</div></div>
+          <div><div class="label">Add-Ons</div><div class="value" id="sumAddons">—</div></div>
+        </div>
+        <div class="summary-total">
+          <div>
+            <div class="price" id="sumPrice">$0</div>
+            <div class="dur" id="sumDuration">0 min total</div>
+          </div>
+          <button class="btn-gold" id="bookBtn" disabled>Book Now</button>
+        </div>
+        <div class="booking-msg" id="bookMsg">Request received — we'll text you shortly to confirm your appointment time. Thank you for choosing Milan's Cutz!</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= TEAM ========================= -->
+<section class="page" id="page-team">
+  <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lA0rs2CiBXvSnxOLAg0VsBJRNhc6jfPXRN9bjECBaa5ijRXmgm2hLSiRktMqR4m5oUPwxC7kHPzYn39x3wh6VgN2HRMrX9UkHaCeXRcQFNsuKClllOuL4JGY10WZnIrANsMzP2jVs2tiRRWA13i8cLLnhtK70xyOGnA-XQSSjqVAoZPIxcm91nq7-j8VwouS7RLr2vmrQKqmsi7B6aFJGuUIpZJadt5esHtMDM0X3risFUzLPRlMNNQBfwOHrO8kMkUfSq35FcVf4gBgbgesVUJ4mBpJn6UaHZNNOniSgpxUXI9YPZ_M9wkIIGWQAZn_D40Dj5OhCnos8YuV6BFApjxQshnIC5Q_r4K_Xfb8s4_quDMQJUH8e14mJjJCg8_Vgqw92z040xU3SJAAhBDZSAxCARSGgfJ8o-opPHaFKcnYY&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU')">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Meet The Chairs</div>
+      <h1>Our Team</h1>
+      <p>Skilled hands, decades of combined craft.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="section-head">
+      <div class="eyebrow">The Barbers</div>
+      <h2>Behind The Chair</h2>
+    </div>
+    <div class="team-grid">
+      <div class="card team-card">
+        <div class="team-mono">TR</div>
+        <h3>Tomas Reyes</h3>
+        <div class="role">Master Barber &amp; Owner</div>
+        <p class="bio">With over 12 years behind the chair, Tomas built Milan's Cutz on precision and loyalty — clients drive nearly an hour just to sit in his chair, and have followed him since 2015.</p>
+        <div class="tag-row"><span class="tag">Skin Fades</span><span class="tag">Classic Cuts</span><span class="tag">Kids Cuts</span></div>
+      </div>
+      <div class="card team-card">
+        <div class="team-mono">MB</div>
+        <h3>Marcus Bell</h3>
+        <div class="role">Senior Barber</div>
+        <p class="bio">Marcus is the shop's detail specialist — razor-sharp line-ups and beard sculpting that hold their shape long after you leave the chair.</p>
+        <div class="tag-row"><span class="tag">Beard Sculpting</span><span class="tag">Line-Ups</span><span class="tag">Restyles</span></div>
+      </div>
+      <div class="card team-card">
+        <div class="team-mono">JC</div>
+        <h3>Jaylen Carter</h3>
+        <div class="role">Barber</div>
+        <p class="bio">Jaylen brings patience and energy to every appointment, making him the go-to for first haircuts, kids, and bold modern styles.</p>
+        <div class="tag-row"><span class="tag">Kids Cuts</span><span class="tag">Modern Styles</span><span class="tag">Buzz Cuts</span></div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= LOCATION ========================= -->
+<section class="page" id="page-location">
+  <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lA0rs2CiBXvSnxOLAg0VsBJRNhc6jfPXRN9bjECBaa5ijRXmgm2hLSiRktMqR4m5oUPwxC7kHPzYn39x3wh6VgN2HRMrX9UkHaCeXRcQFNsuKClllOuL4JGY10WZnIrANsMzP2jVs2tiRRWA13i8cLLnhtK70xyOGnA-XQSSjqVAoZPIxcm91nq7-j8VwouS7RLr2vmrQKqmsi7B6aFJGuUIpZJadt5esHtMDM0X3risFUzLPRlMNNQBfwOHrO8kMkUfSq35FcVf4gBgbgesVUJ4mBpJn6UaHZNNOniSgpxUXI9YPZ_M9wkIIGWQAZn_D40Dj5OhCnos8YuV6BFApjxQshnIC5Q_r4K_Xfb8s4_quDMQJUH8e14mJjJCg8_Vgqw92z040xU3SJAAhBDZSAxCARSGgfJ8o-opPHaFKcnYY&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU')">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Come Sit Down</div>
+      <h1>Location &amp; Hours</h1>
+      <p>3330 E Baltimore St, Baltimore, MD</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="loc-grid">
+      <div>
+        <div class="section-head" style="text-align:left;margin-bottom:24px">
+          <div class="eyebrow">Weekly Schedule</div>
+          <h2>Shop Hours</h2>
+        </div>
+        <table class="hours" id="hoursTable">
+          <tbody>
+            <tr data-day="Monday"><td>Monday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr data-day="Tuesday"><td>Tuesday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr data-day="Wednesday"><td>Wednesday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr data-day="Thursday"><td>Thursday</td><td>9:00 AM – 7:00 PM</td></tr>
+            <tr data-day="Friday"><td>Friday</td><td>9:00 AM – 8:00 PM</td></tr>
+            <tr data-day="Saturday"><td>Saturday</td><td>8:00 AM – 6:00 PM</td></tr>
+            <tr data-day="Sunday"><td>Sunday</td><td>Closed</td></tr>
+          </tbody>
+        </table>
+        <div class="info-list">
+          <div class="row"><div class="icon">ADDR</div><div>3330 E Baltimore St, Baltimore, MD 21224, USA</div></div>
+          <div class="row"><div class="icon">TEL</div><div>(410) 878-1713</div></div>
+          <div class="row"><div class="icon">PARK</div><div>Free street parking available along E Baltimore St, plus a small customer lot behind the shop.</div></div>
+          <div class="row"><div class="icon">ADA</div><div>Ground-level entry with a wide doorway; the shop is fully wheelchair accessible.</div></div>
+        </div>
+      </div>
+      <div>
+        <div class="section-head" style="text-align:left;margin-bottom:24px">
+          <div class="eyebrow">Find Us</div>
+          <h2>Get Directions</h2>
+        </div>
+        <div class="map-frame">
+          <iframe loading="lazy" src="https://www.google.com/maps?q=3330+E+Baltimore+St,+Baltimore,+MD+21224&output=embed"></iframe>
+        </div>
+      </div>
+    </div>
+
+    <div class="section-head">
+      <div class="eyebrow">Inside The Shop</div>
+      <h2>Gallery</h2>
+    </div>
+    <div class="gallery-grid" id="galleryGrid"></div>
+  </div>
+</section>
+
+<!-- Lightbox -->
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose">&times;</button>
+  <img id="lightboxImg" src="" alt="Gallery photo enlarged">
+</div>
+
+<!-- ========================= REVIEWS ========================= -->
+<section class="page" id="page-reviews">
+  <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lA0rs2CiBXvSnxOLAg0VsBJRNhc6jfPXRN9bjECBaa5ijRXmgm2hLSiRktMqR4m5oUPwxC7kHPzYn39x3wh6VgN2HRMrX9UkHaCeXRcQFNsuKClllOuL4JGY10WZnIrANsMzP2jVs2tiRRWA13i8cLLnhtK70xyOGnA-XQSSjqVAoZPIxcm91nq7-j8VwouS7RLr2vmrQKqmsi7B6aFJGuUIpZJadt5esHtMDM0X3risFUzLPRlMNNQBfwOHrO8kMkUfSq35FcVf4gBgbgesVUJ4mBpJn6UaHZNNOniSgpxUXI9YPZ_M9wkIIGWQAZn_D40Dj5OhCnos8YuV6BFApjxQshnIC5Q_r4K_Xfb8s4_quDMQJUH8e14mJjJCg8_Vgqw92z040xU3SJAAhBDZSAxCARSGgfJ8o-opPHaFKcnYY&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU')">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">What Clients Say</div>
+      <h1>Reviews</h1>
+      <p>134 reviews and counting</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="rating-hero">
+      <div class="rating-score">
+        <div class="num">4.8</div>
+        <div class="stars">★★★★★</div>
+        <div class="count">Based on 134 Google reviews</div>
+      </div>
+      <div class="breakdown">
+        <div class="bd-row"><div class="label">5 stars</div><div class="bd-bar"><div class="bd-fill" style="width:82%"></div></div><div class="pct">82%</div></div>
+        <div class="bd-row"><div class="label">4 stars</div><div class="bd-bar"><div class="bd-fill" style="width:12%"></div></div><div class="pct">12%</div></div>
+        <div class="bd-row"><div class="label">3 stars</div><div class="bd-bar"><div class="bd-fill" style="width:4%"></div></div><div class="pct">4%</div></div>
+        <div class="bd-row"><div class="label">2 stars</div><div class="bd-bar"><div class="bd-fill" style="width:1%"></div></div><div class="pct">1%</div></div>
+        <div class="bd-row"><div class="label">1 star</div><div class="bd-bar"><div class="bd-fill" style="width:1%"></div></div><div class="pct">1%</div></div>
+      </div>
+    </div>
+
+    <div class="featured-review">
+      <div class="stars">★★★★★</div>
+      <p>"Tomas is the best barber I've ever had. My haircuts always receive compliments. I've been going to him since 2015 and drive almost an hour. He's reliable, professional and pays attention to every detail. The service is unmatched. You won't be disappointed."</p>
+      <div class="who">— David R.</div>
+    </div>
+
+    <div class="review-grid">
+      <div class="card review-card">
+        <div class="stars">★★★★★</div>
+        <p>"Been coming for years, these guys are skilled. Definitely recommend this place. They go above and beyond for you!"</p>
+        <div class="who">Marcus T.</div>
+      </div>
+      <div class="card review-card">
+        <div class="stars">★★★★★</div>
+        <p>"Tomas does a great job with my son's haircuts. Very patient and shop is always clean!"</p>
+        <div class="who">Angela P.</div>
+      </div>
+      <div class="card review-card">
+        <div class="stars">★★★★★</div>
+        <p>"Every time I need my kids' haircut I get 5 star service! I bring my three kids and no matter who cuts their hair it's an amazing experience. Our favorite is Tomas — thank you so much, you have a customer for life!"</p>
+        <div class="who">Kevin S.</div>
+      </div>
+      <div class="card review-card">
+        <div class="stars">★★★★★</div>
+        <p>"Walked in for a skin fade and walked out looking like a new man. Clean lines, great vibe — I'll be back every two weeks."</p>
+        <div class="who">Jordan M.</div>
+      </div>
+      <div class="card review-card">
+        <div class="stars">★★★★☆</div>
+        <p>"Solid neighborhood shop with a great crew. Booked online, barely any wait, and the prices are fair for the quality."</p>
+        <div class="who">Chris H.</div>
+      </div>
+      <div class="card review-card">
+        <div class="stars">★★★★★</div>
+        <p>"Been to a lot of barbershops in Baltimore and this one is easily top tier. Clean, professional, and they actually listen to what you want."</p>
+        <div class="who">Nate W.</div>
+      </div>
+    </div>
+  </div>
+</section>
+
+<!-- ========================= CONTACT ========================= -->
+<section class="page" id="page-contact">
+  <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lA0rs2CiBXvSnxOLAg0VsBJRNhc6jfPXRN9bjECBaa5ijRXmgm2hLSiRktMqR4m5oUPwxC7kHPzYn39x3wh6VgN2HRMrX9UkHaCeXRcQFNsuKClllOuL4JGY10WZnIrANsMzP2jVs2tiRRWA13i8cLLnhtK70xyOGnA-XQSSjqVAoZPIxcm91nq7-j8VwouS7RLr2vmrQKqmsi7B6aFJGuUIpZJadt5esHtMDM0X3risFUzLPRlMNNQBfwOHrO8kMkUfSq35FcVf4gBgbgesVUJ4mBpJn6UaHZNNOniSgpxUXI9YPZ_M9wkIIGWQAZn_D40Dj5OhCnos8YuV6BFApjxQshnIC5Q_r4K_Xfb8s4_quDMQJUH8e14mJjJCg8_Vgqw92z040xU3SJAAhBDZSAxCARSGgfJ8o-opPHaFKcnYY&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU')">
+    <div class="hero-inner">
+      <div class="hero-eyebrow">Get In Touch</div>
+      <h1>Contact Us</h1>
+      <p>Questions, walk-ins, or private events — we'd love to hear from you.</p>
+    </div>
+  </div>
+  <div class="wrap">
+    <div class="contact-grid">
+      <div>
+        <div class="section-head" style="text-align:left;margin-bottom:24px">
+          <div class="eyebrow">Milan's Cutz</div>
+          <h2>Visit The Shop</h2>
+        </div>
+        <div class="info-list">
+          <div class="row"><div class="icon">ADDR</div><div>3330 E Baltimore St, Baltimore, MD 21224, USA</div></div>
+          <div class="row"><div class="icon">TEL</div><div>(410) 878-1713</div></div>
+          <div class="row"><div class="icon">HRS</div><div>Mon–Fri 9AM–7PM · Sat 8AM–6PM · Sun Closed</div></div>
+        </div>
+        <a class="ig-btn" href="https://www.instagram.com/milanscutz/" target="_blank" rel="noopener">Follow @milanscutz on Instagram</a>
+      </div>
+      <div>
+        <form id="contactForm">
+          <div class="form-group">
+            <label for="cName">Name</label>
+            <input type="text" id="cName" required>
+          </div>
+          <div class="form-group">
+            <label for="cPhone">Phone</label>
+            <input type="tel" id="cPhone" required>
+          </div>
+          <div class="form-group">
+            <label for="cMsg">Message</label>
+            <textarea id="cMsg" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn-gold">Send Message</button>
+          <div class="form-success" id="formSuccess">Thanks — your message has been sent. We'll get back to you shortly!</div>
+        </form>
+      </div>
+    </div>
+  </div>
+</section>
+
+<footer>
+  <span class="fname">MILAN'S CUTZ</span>
+  3330 E Baltimore St, Baltimore, MD 21224 &middot; (410) 878-1713
+  <div style="margin-top:6px">&copy; 2026 Milan's Cutz. All rights reserved.</div>
+</footer>
+
+<script>
+  // ---------- Nav ----------
+  const navLinks = document.querySelectorAll('.nav-link');
+  const pages = document.querySelectorAll('.page');
+  const hamburger = document.getElementById('hamburger');
+  const navLinksBox = document.getElementById('navLinks');
+
+  navLinks.forEach(link=>{
+    link.addEventListener('click', ()=>{
+      navLinks.forEach(l=>l.classList.remove('active'));
+      link.classList.add('active');
+      pages.forEach(p=>p.classList.remove('active'));
+      document.getElementById('page-'+link.dataset.page).classList.add('active');
+      navLinksBox.classList.remove('open');
+      hamburger.classList.remove('open');
+      window.scrollTo({top:0,behavior:'smooth'});
+    });
+  });
+  hamburger.addEventListener('click', ()=>{
+    navLinksBox.classList.toggle('open');
+    hamburger.classList.toggle('open');
+  });
+
+  // ---------- Today's hours highlight ----------
+  const today = new Date().toLocaleDateString('en-US',{weekday:'long'});
+  document.querySelectorAll('#hoursTable tr').forEach(row=>{
+    if(row.dataset.day === today){
+      row.classList.add('today');
+      const cell = row.querySelector('td');
+      const pill = document.createElement('span');
+      pill.className='today-pill';
+      pill.textContent='Today';
+      cell.appendChild(pill);
+    }
+  });
+
+  // ---------- Gallery + Lightbox ----------
+  const galleryUrls = [
+    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mO__x7FPznW7Xysq3WARlXk1xObegrJ999W8Co6IUdHKn2unL0AAkFKTo1TLzwqn5i3odT5Cc8KUKejg38mVGhF9zkLaTvpsV7iSa6bBs3HNT4yvJb2OouUGTKNCCZbzOA4Igj7_lI--vVjVG432HJrUDyg78vEsgpbpxqTDLinywxbcP4d0NQAGkFdYqHCjqed8BXzF28TtBl5c6GU30oUEXkaaZZoHjFIYoGTrYECCfqcyu6jDPaI_a5Y-6HjIoKdBKs2nHK3z50AUYd_E-nle7_WBpFKM-kG_DH3Zn_yb77JAIw8r_8FLL7sVXdLTssfUWGgMS-fINwoE1rJPQYNxRhTQ2wDlZy5h2tqragdbta13fbTmsaoG468MjVzyWIwsCcoDs-DOErRrrqvmzwSt8rY3g3TwySFr_bZS486Q&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU",
+    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mAqiiF6JHIH3amBiiDA_-xtkGUJ18n67EEi9jTtiN-vjVnW_WNiFctSn9bRxMLV7xmNBbN69mNCZsMk7JuHr1WJYCo1kHw9QuaL2O7m5gtR1yrGFK9zZdPcFWPUObFBXkuuSfPUhL0VNAeqE_I9WBPuGWBeZzCGEgOzVmWi_X14XJBMmonRDoxK9h7gYR_VYvJEpsDFEbBIqHUQyXDlenMTOyocQacnS9YX5At4V63yNCuhD6Ca012sDNcr7X-RSlDvFWXadEchF2lMfwbxiqb-cRF1aD3bmIWWftote06ah8CVrVUdi2xYF4RncIvjDNg6jPd7rbqo0pgNyZArRLlAklkB_oVojc623Bv7KwZxnaB6F9P3hq9N3olmuv4U7ycRMfjY_ET2UIq9wtDVc7F4YYC-YKs2WIlMribM008EEo&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU",
+    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mPjlzWup0Y9PDf9BqFUD9st2Q-HiMd25L_zcVWB8wuacc6QUVVHWS7vJ931CGcbamkMWpBk6QMo4dvuFmnAlrM3_N63f9Xc7BNtWyObnqMnfwoxD9fwE5sBbWuRJ47j8GIewQOc_GlsjIuwHFCfAO6UKymsaWFzbaVhjcAhKWXbZnDSozCM03FCejBbCpXVfuZQMdAWwroOXde1rfDaU5pokYmOOAgxszUg8qdW3D5G3LYONp49pcsyC6evaZtdoDjweivzYfSdVE4yqBJTW06XurjkN8RmDHFjfC8RD-0Qy4QKe5m9dve5Q07hc9y4KVPezKa7TYVuoAMeQARqhEKWes1rVU6p6J1SEfOQJFEchjDN5VuIqJEUkdAeMBXZx-Jaq9Rha31se0-znb_4rNif1FVCz0_id96ze67Yy4IzKU&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU",
+    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3lbaY-frcQMO-rQNQm9SadMaVX7wjRR_TqblF_WsSeeleeYbL6LZ8i0U_CNnOYnblCrWUA51IHJgWu1EFyDMnUGLoBLP_gr_TxMdjcjXMirvsCwWkmg3ppJfGIMx0cGOKhc7s01LyIiyBUVx7cenm3ouu0mE9Tq3wpptgupnwZOzOZ_nVsUmXGRBtSYmwj03FwdWynkSaXVAOsrWeFcliNO3eoQ9UbajM0eGJJz2dj4ss7cXLqdLisFfWVSRUSJfnVJBhpRkh9kdMLLn6Y-cuU5xup11M4kgVUuQHeg3u8NIfHPmM6vU7Bci5dcCM8Z0e_6iKwmiEjR77DjDe4yoUZ8JzmaPqvrc2Y2PKvW9Ht0VVt_wL_5sbPsrvuaHgKLjGLX_-0_Nha1jXHf7AuX2Qn842ZpOP7cf7sxeMfPBYep9pmU&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU",
+    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3mkrUDYsjimTd2uS_bI9BAKtOdd71rVO5pAl1aN3jPiVyHgDen3MdbyVUy8SqgaFQaOlpoWBfEIzoqz3rAB8b-1nTSM5yNQQOqNG4ok-QDpaM2pWoM5MW54m1tUdmrExD7J87vRqsnD5Te5qQDW3M5Bj_Ef7sc54waB40gp9fvf9lb4owAsL-KOmbzea56Ri3SzLCnRbCcQ5TKXlfIBu2LiCixaZPz6STqVNNI98QF42yOm0padZjVLcOG4xklT4pj6KZSZf4fU2sktKLbFQdjYzBVd8yaAomzQrS_QLgVd4RSiTpncaDblZYCt7UCZjEsJ7vyr8kL1vLg3hcPzGx4VRCEIS70I17ZRx5yZ29WpfQYPY2UeT4pHzJ5Pbbkhcce2CtB_2zpPxfvLoEXIO7tXihQ0V-lo0qHjir-yAOg&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU",
+    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3maD_xiJTHJxB8YQdkTsAhcR-hsWsYni218FxB7VgUy9cadqG64zY5JSzL9MNdUqp5FoagFUPOEwyc1V4Ox69kpTe6X0C2NBmNw77Ypp95WBhnVjaoGwdV0WZs_okjpSuNczfUVDl6IRvN-Ik3Z9YEpEexNs76P9b6qVx_Lk6XvISdylkgEZgGuS7eHbA9JIn3LpDVQJ8aQb6S9ojXpXEu2iZrRfm0zTgB5qKeCBbM7Ls13DxywofqywL-m1eIxfzeR50YOj6X-me5HwDqfh_uEIfyiXMjWZj1kT3b-MLQlNIJEPSVMnDYH_K_wj9rd6pE5aAtUnYoNUxNSLHuGAkrgBtYOZ5oXheo4UKfkCOZvL_D0VXkslUW8Aqnis1u356vdF4ISt6_TU9p-Mue7FdpPJJm_aWnMcbV0kUpfxbYdSy6m&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU",
+    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AaVGc3kSm51KCqpIw4FYg2TbRVsTBf_EvlUGo1QpA2IJh1J3DLmiYfhPU_LTKPzfercch509DiGhF_gZmxKKxVzIzfqhPCPN0i0_Xvnj3QY5DtwP39f-nfWNhneWhaIBnyg_JLiqQ8kLg0fVoB6L8gKJD-0rmYMVik1s5UiD8nDxbWJoFtnDFSbVsecZ6IghAmy0Wm6lM399euSysa1V3DxEJcrbdqbShJuJktEe0QIUT-BihT6Zf6r80bZolPIHXhmumMoB_WOxtruRWd0jEiGUds081DwT6cmKOXd0QDWyZ8HUJ8g7uQ-5nS8gn3tIrSnZ5BW57Bp1XJvbDbOxM2cb3JM3SOWBLaZ8LmpJkKgSJc-vXQBthx_9xEUu6rqUYc6yOZgVc2gOOHhrsAkE2LPzwt0X08uWyKS0ELbkn3Eh1aj48Q&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU"
+  ];
+  const galleryGrid = document.getElementById('galleryGrid');
+  galleryUrls.forEach((url,i)=>{
+    const img = document.createElement('img');
+    img.src = url;
+    img.alt = 'Milan\'s Cutz shop photo '+(i+1);
+    img.addEventListener('click', ()=>openLightbox(url));
+    galleryGrid.appendChild(img);
+  });
+
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  function openLightbox(url){
+    lightboxImg.src = url;
+    lightbox.classList.add('open');
+  }
+  function closeLightbox(){
+    lightbox.classList.remove('open');
+  }
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e=>{ if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e=>{ if(e.key === 'Escape') closeLightbox(); });
+
+  // ---------- Contact form ----------
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('formSuccess').classList.add('show');
+    this.reset();
+  });
+
+  // ---------- Guided Services Flow ----------
+  const barbers = [
+    {id:'tomas', name:'Tomas Reyes', role:'Master Barber & Owner', mono:'TR'},
+    {id:'marcus', name:'Marcus Bell', role:'Senior Barber', mono:'MB'},
+    {id:'jaylen', name:'Jaylen Carter', role:'Barber', mono:'JC'}
+  ];
+  const services = [
+    {id:'haircut', name:'Haircut', price:35, dur:30, desc:'Classic cut, tailored to you.'},
+    {id:'skinfade', name:'Skin Fade', price:40, dur:35, desc:'Sharp, blended-to-skin fade.'},
+    {id:'buzz', name:'Buzz Cut', price:25, dur:20, desc:'Quick, clean, low-maintenance.'},
+    {id:'restyle', name:'Restyle / Full Transformation', price:55, dur:50, desc:'Full consultation and new look.'},
+    {id:'kids', name:'Kids Cut', price:28, dur:25, desc:'Patient, gentle cuts for kids.'}
+  ];
+  const addons = [
+    {id:'beard', name:'Beard Trim', price:15, dur:15},
+    {id:'lineup', name:'Line-Up / Edge', price:10, dur:10},
+    {id:'skinupgrade', name:'Skin Fade Upgrade', price:12, dur:10},
+    {id:'wash', name:'Wash & Style', price:10, dur:10},
+    {id:'brows', name:'Eyebrow Cleanup', price:8, dur:5}
+  ];
+
+  let selectedBarber = null;
+  let selectedService = null;
+  let selectedAddons = new Set();
+
+  const barberGrid = document.getElementById('barberGrid');
+  const serviceGrid = document.getElementById('serviceGrid');
+  const addonGrid = document.getElementById('addonGrid');
+
+  barbers.forEach(b=>{
+    const el = document.createElement('div');
+    el.className='barber-card';
+    el.dataset.id=b.id;
+    el.innerHTML = `<div class="check-badge">&check;</div><div class="monogram">${b.mono}</div><h4>${b.name}</h4><div class="role">${b.role}</div>`;
+    el.addEventListener('click', ()=>{
+      selectedBarber = b;
+      [...barberGrid.children].forEach(c=>c.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('step-service').classList.remove('hidden-step');
+      document.getElementById('pill-2').classList.add('done');
+      renderSummary();
+    });
+    barberGrid.appendChild(el);
+  });
+
+  services.forEach(s=>{
+    const el = document.createElement('div');
+    el.className='svc-card';
+    el.dataset.id=s.id;
+    el.innerHTML = `<div class="check-badge">&check;</div><h4>${s.name}</h4><div class="desc">${s.desc}</div><div class="meta"><span>$${s.price}</span><span>${s.dur} min</span></div>`;
+    el.addEventListener('click', ()=>{
+      selectedService = s;
+      [...serviceGrid.children].forEach(c=>c.classList.remove('selected'));
+      el.classList.add('selected');
+      document.getElementById('step-addons').classList.remove('hidden-step');
+      document.getElementById('pill-3').classList.add('done');
+      renderAddons();
+      renderSummary();
+    });
+    serviceGrid.appendChild(el);
+  });
+
+  function renderAddons(){
+    addonGrid.innerHTML = '';
+    addons.forEach(a=>{
+      if(a.id === 'skinupgrade' && selectedService && selectedService.id === 'skinfade') return;
+      const el = document.createElement('div');
+      el.className='addon-card';
+      el.dataset.id=a.id;
+      if(selectedAddons.has(a.id)) el.classList.add('selected');
+      el.innerHTML = `<div class="check-badge">&check;</div><h4>${a.name}</h4><div class="meta"><span>+$${a.price}</span><span>+${a.dur} min</span></div>`;
+      el.addEventListener('click', ()=>{
+        if(selectedAddons.has(a.id)){ selectedAddons.delete(a.id); el.classList.remove('selected'); }
+        else { selectedAddons.add(a.id); el.classList.add('selected'); }
+        document.getElementById('step-summary').classList.remove('hidden-step');
+        document.getElementById('pill-4').classList.add('done');
+        renderSummary();
+      });
+      addonGrid.appendChild(el);
+    });
+    document.getElementById('step-summary').classList.remove('hidden-step');
+    renderSummary();
+  }
+
+  function renderSummary(){
+    document.getElementById('sumBarber').textContent = selectedBarber ? selectedBarber.name : '—';
+    document.getElementById('sumService').textContent = selectedService ? selectedService.name : '—';
+    const addonNames = addons.filter(a=>selectedAddons.has(a.id)).map(a=>a.name);
+    document.getElementById('sumAddons').textContent = addonNames.length ? addonNames.join(', ') : 'None';
+
+    let price = selectedService ? selectedService.price : 0;
+    let dur = selectedService ? selectedService.dur : 0;
+    addons.forEach(a=>{ if(selectedAddons.has(a.id)){ price += a.price; dur += a.dur; } });
+
+    document.getElementById('sumPrice').textContent = '$'+price;
+    document.getElementById('sumDuration').textContent = dur+' min total';
+
+    const bookBtn = document.getElementById('bookBtn');
+    bookBtn.disabled = !(selectedBarber && selectedService);
+  }
+
+  document.getElementById('bookBtn').addEventListener('click', ()=>{
+    document.getElementById('bookMsg').classList.add('show');
+  });
+</script>
+
+</body>
+</html>
