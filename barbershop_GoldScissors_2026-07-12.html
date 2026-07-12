@@ -1,0 +1,820 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Gold Scissors | Premium Barbershop in Baltimore, MD</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080808;
+    --bg-raised:#121212;
+    --bg-card:#161616;
+    --gold:#C9A84C;
+    --gold-soft:rgba(201,168,76,.16);
+    --gold-glow:rgba(201,168,76,.35);
+    --text:#f3f0e8;
+    --text-dim:#a8a39a;
+    --border:#262626;
+    --radius:10px;
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html{scroll-behavior:smooth}
+  body{
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-weight:400;
+    line-height:1.6;
+    min-height:100vh;
+  }
+  h1,h2,h3,h4{font-family:'Bebas Neue',sans-serif;letter-spacing:.04em;font-weight:400;color:var(--text)}
+  .serif{font-family:'Cormorant Garamond',serif}
+  a{color:inherit;text-decoration:none}
+  img{max-width:100%;display:block}
+  ul{list-style:none}
+  button{font-family:inherit;cursor:pointer}
+
+  /* ===== Nav ===== */
+  .navbar{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:0 32px;height:76px;
+    background:rgba(8,8,8,.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--border);
+  }
+  .nav-brand{font-family:'Bebas Neue',sans-serif;font-size:1.6rem;letter-spacing:.12em;color:var(--gold)}
+  .nav-brand span{color:var(--text)}
+  .nav-links{display:flex;gap:8px;align-items:center}
+  .nav-link{
+    position:relative;
+    padding:10px 16px;
+    font-size:.82rem;
+    letter-spacing:.08em;
+    text-transform:uppercase;
+    color:var(--text-dim);
+    transition:color .25s ease;
+  }
+  .nav-link::after{
+    content:'';position:absolute;left:16px;right:16px;bottom:4px;height:2px;
+    background:var(--gold);transform:scaleX(0);transform-origin:center;
+    transition:transform .3s ease;
+  }
+  .nav-link:hover{color:var(--text)}
+  .nav-link.active{color:var(--gold)}
+  .nav-link.active::after{transform:scaleX(1)}
+  .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:8px;z-index:1100}
+  .hamburger span{width:24px;height:2px;background:var(--gold);transition:transform .3s ease,opacity .3s ease}
+  .hamburger.open span:nth-child(1){transform:translateY(7px) rotate(45deg)}
+  .hamburger.open span:nth-child(2){opacity:0}
+  .hamburger.open span:nth-child(3){transform:translateY(-7px) rotate(-45deg)}
+
+  @media (max-width:880px){
+    .nav-links{
+      position:fixed;top:76px;left:0;right:0;bottom:0;
+      flex-direction:column;align-items:stretch;gap:0;
+      background:rgba(8,8,8,.98);
+      padding:24px;
+      transform:translateX(100%);
+      transition:transform .35s ease;
+      overflow-y:auto;
+    }
+    .nav-links.show{transform:translateX(0)}
+    .nav-link{padding:18px 8px;font-size:1rem;border-bottom:1px solid var(--border)}
+    .nav-link::after{display:none}
+    .hamburger{display:flex}
+  }
+
+  /* ===== Pages / Hero ===== */
+  main{padding-top:76px}
+  .page{display:none}
+  .page.active{display:block;animation:fadeIn .6s ease both}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(8px)}to{opacity:1;transform:translateY(0)}}
+
+  .hero{
+    position:relative;height:46vh;min-height:300px;
+    display:flex;align-items:flex-end;
+    background-size:cover;background-position:center;
+    overflow:hidden;
+  }
+  .hero::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(180deg,rgba(8,8,8,.35) 0%,rgba(8,8,8,.75) 65%,#080808 100%);
+  }
+  .hero-content{position:relative;z-index:2;padding:0 32px 40px;max-width:1200px;margin:0 auto;width:100%}
+  .hero-title{font-size:clamp(2.6rem,7vw,5rem);letter-spacing:.05em;color:#fff}
+  .hero-sub{font-family:'Cormorant Garamond',serif;font-style:italic;color:var(--gold);font-size:1.2rem;margin-top:6px}
+
+  .container{max-width:1200px;margin:0 auto;padding:60px 32px}
+  .section-label{color:var(--gold);text-transform:uppercase;letter-spacing:.18em;font-size:.78rem;font-weight:600;margin-bottom:8px}
+  .section-title{font-size:2.2rem;margin-bottom:28px}
+
+  /* ===== Cards generic ===== */
+  .card-lift{
+    transition:transform .3s ease,box-shadow .3s ease,border-color .3s ease;
+    border:1px solid var(--border);
+    background:var(--bg-card);
+    border-radius:var(--radius);
+  }
+  .card-lift:hover{transform:translateY(-6px);box-shadow:0 14px 32px var(--gold-glow);border-color:var(--gold)}
+
+  /* ===== Services / Booking Flow ===== */
+  .booking-flow{display:flex;flex-direction:column;gap:48px}
+  .step{opacity:1;transition:opacity .4s ease}
+  .step.hidden{display:none}
+  .step-header{display:flex;align-items:center;gap:14px;margin-bottom:22px}
+  .step-number{
+    width:34px;height:34px;border-radius:50%;
+    border:1px solid var(--gold);color:var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Bebas Neue',sans-serif;font-size:1.1rem;flex-shrink:0;
+  }
+  .step-title{font-size:1.5rem}
+
+  .barber-grid,.service-grid,.addon-grid{
+    display:grid;grid-template-columns:repeat(auto-fit,minmax(220px,1fr));gap:20px;
+  }
+
+  .barber-card{
+    padding:24px;text-align:center;cursor:pointer;position:relative;
+  }
+  .barber-card .monogram{
+    width:72px;height:72px;border-radius:50%;margin:0 auto 14px;
+    background:var(--gold-soft);border:1px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Bebas Neue',sans-serif;font-size:1.6rem;color:var(--gold);
+  }
+  .barber-card h4{font-size:1.3rem;margin-bottom:4px}
+  .barber-card p{color:var(--text-dim);font-size:.85rem}
+  .barber-card.selected{
+    border-color:var(--gold);
+    box-shadow:0 0 0 1px var(--gold),0 0 26px var(--gold-glow);
+  }
+  .barber-card.selected::before{
+    content:'✓ Selected';position:absolute;top:10px;right:12px;
+    color:var(--gold);font-size:.7rem;letter-spacing:.08em;text-transform:uppercase;
+  }
+
+  .service-option,.addon-option{
+    padding:20px;cursor:pointer;display:flex;flex-direction:column;gap:6px;position:relative;
+  }
+  .service-option.selected,.addon-option.selected{
+    border-color:var(--gold);background:var(--gold-soft);
+    box-shadow:0 0 18px var(--gold-glow);
+  }
+  .opt-name{font-size:1.1rem;font-weight:600}
+  .opt-meta{display:flex;justify-content:space-between;color:var(--text-dim);font-size:.85rem}
+  .opt-meta .price{color:var(--gold);font-weight:600}
+  .check-dot{
+    position:absolute;top:14px;right:14px;width:18px;height:18px;border-radius:50%;
+    border:1px solid var(--text-dim);
+  }
+  .service-option.selected .check-dot,.addon-option.selected .check-dot{
+    border-color:var(--gold);background:var(--gold);
+  }
+
+  .summary-panel{
+    position:sticky;bottom:0;
+    margin-top:10px;
+    background:var(--bg-raised);
+    border:1px solid var(--gold);
+    border-radius:var(--radius);
+    padding:26px 28px;
+    box-shadow:0 -10px 30px rgba(0,0,0,.5);
+  }
+  .summary-panel h3{color:var(--gold);font-size:1.3rem;margin-bottom:16px}
+  .summary-row{display:flex;justify-content:space-between;padding:6px 0;font-size:.92rem;color:var(--text-dim);border-bottom:1px dashed var(--border)}
+  .summary-row span:last-child{color:var(--text)}
+  .summary-total{display:flex;justify-content:space-between;align-items:center;margin-top:16px;padding-top:14px;border-top:1px solid var(--border)}
+  .summary-total .amount{font-family:'Bebas Neue',sans-serif;font-size:1.8rem;color:var(--gold)}
+  .btn-book{
+    margin-top:20px;width:100%;padding:16px;border:none;border-radius:6px;
+    background:var(--gold);color:#080808;font-weight:700;letter-spacing:.08em;
+    text-transform:uppercase;font-size:.9rem;transition:background .25s ease,transform .2s ease;
+  }
+  .btn-book:hover{background:#e2c167;transform:translateY(-2px)}
+  .btn-book:disabled{background:#3a3528;color:#7a7565;cursor:not-allowed;transform:none}
+  .book-confirm{margin-top:14px;color:var(--gold);font-size:.85rem;text-align:center;display:none}
+  .book-confirm.show{display:block}
+
+  .addons-note{color:var(--text-dim);font-size:.85rem;margin-bottom:8px}
+
+  /* ===== Team ===== */
+  .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:28px}
+  .team-card{padding:30px}
+  .team-card .monogram-lg{
+    width:96px;height:96px;border-radius:50%;margin-bottom:18px;
+    background:var(--gold-soft);border:1px solid var(--gold);
+    display:flex;align-items:center;justify-content:center;
+    font-family:'Bebas Neue',sans-serif;font-size:2.1rem;color:var(--gold);
+  }
+  .team-card h3{font-size:1.6rem;margin-bottom:2px}
+  .team-card .role{color:var(--gold);font-size:.82rem;text-transform:uppercase;letter-spacing:.1em;margin-bottom:14px}
+  .team-card .bio{color:var(--text-dim);font-size:.92rem;margin-bottom:16px}
+  .tag-row{display:flex;flex-wrap:wrap;gap:8px}
+  .tag{
+    border:1px solid var(--gold);color:var(--gold);font-size:.72rem;
+    padding:5px 12px;border-radius:20px;letter-spacing:.04em;text-transform:uppercase;
+  }
+
+  /* ===== Location ===== */
+  .location-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:40px}
+  @media (max-width:900px){.location-grid{grid-template-columns:1fr}}
+  .hours-table{width:100%;border-collapse:collapse;margin-bottom:30px}
+  .hours-table td{padding:14px 16px;border-bottom:1px solid var(--border);font-size:.95rem}
+  .hours-table td:first-child{font-weight:600}
+  .hours-table td:last-child{text-align:right;color:var(--text-dim)}
+  .hours-table tr.today{background:var(--gold-soft)}
+  .hours-table tr.today td{color:var(--gold);font-weight:700}
+  .today-pill{
+    display:inline-block;margin-left:10px;background:var(--gold);color:#080808;
+    font-size:.65rem;padding:3px 9px;border-radius:20px;letter-spacing:.06em;
+    text-transform:uppercase;font-weight:700;vertical-align:middle;
+  }
+  .info-card{padding:24px;margin-bottom:18px}
+  .info-card h4{color:var(--gold);font-size:1rem;text-transform:uppercase;letter-spacing:.08em;margin-bottom:8px}
+  .info-card p{color:var(--text-dim);font-size:.92rem}
+  .map-embed{border:1px solid var(--border);border-radius:var(--radius);overflow:hidden;height:280px;margin-bottom:30px}
+  .map-embed iframe{width:100%;height:100%;border:0}
+
+  .gallery-grid{display:grid;grid-template-columns:repeat(auto-fill,minmax(160px,1fr));gap:14px}
+  .gallery-item{
+    aspect-ratio:1/1;overflow:hidden;border-radius:8px;cursor:pointer;
+    border:1px solid var(--border);position:relative;
+  }
+  .gallery-item img{width:100%;height:100%;object-fit:cover;transition:transform .4s ease}
+  .gallery-item:hover img{transform:scale(1.08)}
+
+  .lightbox{
+    position:fixed;inset:0;background:rgba(0,0,0,.92);z-index:2000;
+    display:none;align-items:center;justify-content:center;padding:40px;
+  }
+  .lightbox.open{display:flex}
+  .lightbox img{max-width:90vw;max-height:85vh;border-radius:6px;box-shadow:0 0 60px rgba(201,168,76,.2)}
+  .lightbox-close{
+    position:absolute;top:24px;right:32px;background:none;border:1px solid var(--gold);
+    color:var(--gold);width:40px;height:40px;border-radius:50%;font-size:1.2rem;
+  }
+
+  /* ===== Reviews ===== */
+  .rating-hero{display:flex;align-items:center;gap:40px;flex-wrap:wrap;margin-bottom:40px;padding:32px;background:var(--bg-card);border:1px solid var(--border);border-radius:var(--radius)}
+  .rating-score{font-family:'Bebas Neue',sans-serif;font-size:4.5rem;color:var(--gold);line-height:1}
+  .rating-stars{color:var(--gold);font-size:1.3rem;margin:6px 0}
+  .rating-count{color:var(--text-dim);font-size:.88rem}
+  .star-breakdown{flex:1;min-width:240px;display:flex;flex-direction:column;gap:8px}
+  .star-row{display:flex;align-items:center;gap:10px;font-size:.8rem;color:var(--text-dim)}
+  .star-row .bar-track{flex:1;height:7px;background:var(--border);border-radius:6px;overflow:hidden}
+  .star-row .bar-fill{height:100%;background:var(--gold)}
+
+  .featured-review{
+    padding:30px;margin-bottom:30px;border:1px solid var(--gold);background:var(--gold-soft);
+    border-radius:var(--radius);position:relative;
+  }
+  .featured-review::before{
+    content:'Featured Review';position:absolute;top:-12px;left:24px;background:var(--gold);
+    color:#080808;font-size:.68rem;letter-spacing:.08em;text-transform:uppercase;
+    padding:4px 12px;border-radius:20px;font-weight:700;
+  }
+  .featured-review p{font-family:'Cormorant Garamond',serif;font-size:1.25rem;font-style:italic;margin-top:8px}
+  .featured-review .reviewer{margin-top:14px;color:var(--gold);font-size:.85rem;text-transform:uppercase;letter-spacing:.06em}
+
+  .review-grid{display:grid;grid-template-columns:1fr 1fr;gap:22px}
+  @media (max-width:800px){.review-grid{grid-template-columns:1fr}}
+  .review-card{padding:24px}
+  .review-card .stars{color:var(--gold);font-size:.9rem;margin-bottom:10px}
+  .review-card p{color:var(--text-dim);font-size:.92rem;margin-bottom:14px}
+  .review-card .reviewer{font-size:.85rem;font-weight:600}
+
+  /* ===== Contact ===== */
+  .contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:50px}
+  @media (max-width:880px){.contact-grid{grid-template-columns:1fr}}
+  .ig-btn{
+    display:inline-flex;align-items:center;gap:10px;margin-top:18px;padding:13px 24px;
+    border:1px solid var(--gold);color:var(--gold);border-radius:6px;font-size:.85rem;
+    text-transform:uppercase;letter-spacing:.07em;transition:background .25s ease,color .25s ease;
+  }
+  .ig-btn:hover{background:var(--gold);color:#080808}
+  .form-group{margin-bottom:18px}
+  .form-group label{display:block;font-size:.82rem;color:var(--text-dim);margin-bottom:7px;text-transform:uppercase;letter-spacing:.06em}
+  .form-group input,.form-group textarea{
+    width:100%;padding:13px 14px;background:var(--bg-card);border:1px solid var(--border);
+    border-radius:6px;color:var(--text);font-family:inherit;font-size:.95rem;
+    transition:border-color .25s ease;
+  }
+  .form-group input:focus,.form-group textarea:focus{outline:none;border-color:var(--gold)}
+  .btn-submit{
+    padding:15px 34px;background:var(--gold);border:none;border-radius:6px;color:#080808;
+    font-weight:700;text-transform:uppercase;letter-spacing:.07em;font-size:.88rem;
+    transition:background .25s ease,transform .2s ease;
+  }
+  .btn-submit:hover{background:#e2c167;transform:translateY(-2px)}
+  .form-success{
+    display:none;margin-top:16px;padding:16px;border:1px solid var(--gold);
+    background:var(--gold-soft);border-radius:6px;color:var(--gold);font-size:.9rem;
+  }
+  .form-success.show{display:block;animation:fadeIn .4s ease both}
+
+  /* ===== Footer ===== */
+  .site-footer{
+    border-top:1px solid var(--border);padding:34px 32px;text-align:center;
+    color:var(--text-dim);font-size:.82rem;
+  }
+  .site-footer .f-name{color:var(--gold);font-family:'Bebas Neue',sans-serif;font-size:1.2rem;letter-spacing:.08em;display:block;margin-bottom:6px}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation-duration:.001ms !important;animation-iteration-count:1 !important;transition-duration:.001ms !important;scroll-behavior:auto !important}
+  }
+</style>
+</head>
+<body>
+
+<nav class="navbar">
+  <div class="nav-brand">GOLD <span>SCISSORS</span></div>
+  <ul class="nav-links" id="navLinks">
+    <li><a href="#" class="nav-link active" data-page="services">Services</a></li>
+    <li><a href="#" class="nav-link" data-page="team">Our Team</a></li>
+    <li><a href="#" class="nav-link" data-page="location">Location &amp; Hours</a></li>
+    <li><a href="#" class="nav-link" data-page="reviews">Reviews</a></li>
+    <li><a href="#" class="nav-link" data-page="contact">Contact Us</a></li>
+  </ul>
+  <button class="hamburger" id="hamburger" aria-label="Toggle menu"><span></span><span></span><span></span></button>
+</nav>
+
+<main>
+
+  <!-- SERVICES -->
+  <section class="page active" data-page="services" id="page-services">
+    <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydg9hzJbWKCYG6Py9L9tCDboDZtS4varTMjzE3GV7HIDqywTSnesmqXZ_jWeXHlNqKDQW_gEW3dOCq7j-xHRI5hB5F-8CJig4aMEAjAbb54cGTaU0aV5ZYNVsF1gHAQqF0NhF_BHg8nKDLIvGecT4GNOJievItrbRiTsVCad0h3G2ETd2fSyMHfCEf2g54awxBl41iO_L30ifIpjiBIrL5ogs9bH4woGNp3AEFridEvWBnNp5oyMj155JZMhqn4JO6RyVGZ-nrA8q00Hm6q5CN0-SeQpukq8T7bb0la5fP8XiVl-EW49h5_3f7Dp8QCmaou-uO55IiYgPQD3zv1C7cPN25o7Mjahh8i8mUn6OliSsUFO80KFmHR8y1mM3ngoZxZ3gMEgrTQjYkduFC_E9hfvx1XiuEq1FW1zYQtruVnd6Q&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU')">
+      <div class="hero-content">
+        <div class="hero-sub">Book Your Visit</div>
+        <h1 class="hero-title">SERVICES</h1>
+      </div>
+    </div>
+
+    <div class="container">
+      <div class="section-label">Build Your Appointment</div>
+      <h2 class="section-title">Choose Your Barber, Service &amp; Add-Ons</h2>
+
+      <div class="booking-flow">
+
+        <div class="step" id="step1">
+          <div class="step-header"><div class="step-number">1</div><div class="step-title">Choose Your Barber</div></div>
+          <div class="barber-grid">
+            <div class="barber-card card-lift" data-barber="Antonio &quot;Ace&quot; Rivera" tabindex="0" role="button">
+              <div class="monogram">A</div>
+              <h4>Antonio "Ace" Rivera</h4>
+              <p>Owner &amp; Master Barber · 12+ yrs</p>
+            </div>
+            <div class="barber-card card-lift" data-barber="Deja Coleman" tabindex="0" role="button">
+              <div class="monogram">D</div>
+              <h4>Deja Coleman</h4>
+              <p>Senior Barber · Fades &amp; Design Work</p>
+            </div>
+            <div class="barber-card card-lift" data-barber="Malik Reeves" tabindex="0" role="button">
+              <div class="monogram">M</div>
+              <h4>Malik Reeves</h4>
+              <p>Barber · Classic Cuts &amp; Kids Cuts</p>
+            </div>
+          </div>
+        </div>
+
+        <div class="step hidden" id="step2">
+          <div class="step-header"><div class="step-number">2</div><div class="step-title">Choose Your Service</div></div>
+          <div class="service-grid">
+            <div class="service-option card-lift" data-service="Haircut" data-price="35" data-duration="30">
+              <span class="check-dot"></span>
+              <span class="opt-name">Haircut</span>
+              <span class="opt-meta"><span>30 min</span><span class="price">$35</span></span>
+            </div>
+            <div class="service-option card-lift" data-service="Skin Fade" data-price="45" data-duration="40">
+              <span class="check-dot"></span>
+              <span class="opt-name">Skin Fade</span>
+              <span class="opt-meta"><span>40 min</span><span class="price">$45</span></span>
+            </div>
+            <div class="service-option card-lift" data-service="Buzz Cut" data-price="25" data-duration="20">
+              <span class="check-dot"></span>
+              <span class="opt-name">Buzz Cut</span>
+              <span class="opt-meta"><span>20 min</span><span class="price">$25</span></span>
+            </div>
+            <div class="service-option card-lift" data-service="Restyle / Full Transformation" data-price="65" data-duration="60">
+              <span class="check-dot"></span>
+              <span class="opt-name">Restyle / Full Transformation</span>
+              <span class="opt-meta"><span>60 min</span><span class="price">$65</span></span>
+            </div>
+            <div class="service-option card-lift" data-service="Kids Cut" data-price="20" data-duration="20">
+              <span class="check-dot"></span>
+              <span class="opt-name">Kids Cut</span>
+              <span class="opt-meta"><span>20 min</span><span class="price">$20</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="step hidden" id="step3">
+          <div class="step-header"><div class="step-number">3</div><div class="step-title">Choose Add-Ons</div></div>
+          <p class="addons-note">Optional — select as many as you'd like.</p>
+          <div class="addon-grid">
+            <div class="addon-option card-lift" data-addon="Beard Trim" data-price="15" data-duration="15">
+              <span class="check-dot"></span>
+              <span class="opt-name">Beard Trim</span>
+              <span class="opt-meta"><span>15 min</span><span class="price">$15</span></span>
+            </div>
+            <div class="addon-option card-lift" data-addon="Line-up / Edge" data-price="10" data-duration="10">
+              <span class="check-dot"></span>
+              <span class="opt-name">Line-up / Edge</span>
+              <span class="opt-meta"><span>10 min</span><span class="price">$10</span></span>
+            </div>
+            <div class="addon-option card-lift" data-addon="Skin Fade Upgrade" data-price="10" data-duration="10" id="fadeUpgrade">
+              <span class="check-dot"></span>
+              <span class="opt-name">Skin Fade Upgrade</span>
+              <span class="opt-meta"><span>10 min</span><span class="price">$10</span></span>
+            </div>
+            <div class="addon-option card-lift" data-addon="Wash &amp; Style" data-price="12" data-duration="15">
+              <span class="check-dot"></span>
+              <span class="opt-name">Wash &amp; Style</span>
+              <span class="opt-meta"><span>15 min</span><span class="price">$12</span></span>
+            </div>
+            <div class="addon-option card-lift" data-addon="Eyebrow Cleanup" data-price="8" data-duration="5">
+              <span class="check-dot"></span>
+              <span class="opt-name">Eyebrow Cleanup</span>
+              <span class="opt-meta"><span>5 min</span><span class="price">$8</span></span>
+            </div>
+          </div>
+        </div>
+
+        <div class="summary-panel">
+          <h3>Your Summary</h3>
+          <div class="summary-row"><span>Barber</span><span id="sumBarber">—</span></div>
+          <div class="summary-row"><span>Service</span><span id="sumService">—</span></div>
+          <div class="summary-row"><span>Add-Ons</span><span id="sumAddons">—</span></div>
+          <div class="summary-row"><span>Estimated Duration</span><span id="sumDuration">0 min</span></div>
+          <div class="summary-total"><span>Estimated Total</span><span class="amount" id="sumPrice">$0</span></div>
+          <button class="btn-book" id="bookBtn" disabled>Book Now</button>
+          <div class="book-confirm" id="bookConfirm">Thanks! Your request has been noted — we'll confirm your appointment by phone or Instagram shortly.</div>
+        </div>
+
+      </div>
+    </div>
+  </section>
+
+  <!-- TEAM -->
+  <section class="page" data-page="team" id="page-team">
+    <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydg9hzJbWKCYG6Py9L9tCDboDZtS4varTMjzE3GV7HIDqywTSnesmqXZ_jWeXHlNqKDQW_gEW3dOCq7j-xHRI5hB5F-8CJig4aMEAjAbb54cGTaU0aV5ZYNVsF1gHAQqF0NhF_BHg8nKDLIvGecT4GNOJievItrbRiTsVCad0h3G2ETd2fSyMHfCEf2g54awxBl41iO_L30ifIpjiBIrL5ogs9bH4woGNp3AEFridEvWBnNp5oyMj155JZMhqn4JO6RyVGZ-nrA8q00Hm6q5CN0-SeQpukq8T7bb0la5fP8XiVl-EW49h5_3f7Dp8QCmaou-uO55IiYgPQD3zv1C7cPN25o7Mjahh8i8mUn6OliSsUFO80KFmHR8y1mM3ngoZxZ3gMEgrTQjYkduFC_E9hfvx1XiuEq1FW1zYQtruVnd6Q&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU')">
+      <div class="hero-content">
+        <div class="hero-sub">Meet The Barbers</div>
+        <h1 class="hero-title">OUR TEAM</h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="section-label">The Craftsmen</div>
+      <h2 class="section-title">Skilled Hands, Precise Results</h2>
+      <div class="team-grid">
+        <div class="team-card card-lift">
+          <div class="monogram-lg">A</div>
+          <h3>Antonio "Ace" Rivera</h3>
+          <div class="role">Owner &amp; Master Barber</div>
+          <p class="bio">Ace opened Gold Scissors on South Broadway with one goal: bring old-school barbershop craftsmanship back to Baltimore. Over 12 years behind the chair, he's built a reputation for razor-sharp lines and fades that hold their shape for weeks. Regulars book him for milestone cuts and can't-miss occasions.</p>
+          <div class="tag-row"><span class="tag">Skin Fades</span><span class="tag">Sharp Lines</span><span class="tag">Classic Cuts</span></div>
+        </div>
+        <div class="team-card card-lift">
+          <div class="monogram-lg">D</div>
+          <h3>Deja Coleman</h3>
+          <div class="role">Senior Barber</div>
+          <p class="bio">Deja is the shop's go-to for intricate fade designs and full transformations. She trained in both barbering and freehand hair art, and clients travel across the city specifically for her detail work. Patient, precise, and always up on the latest styles.</p>
+          <div class="tag-row"><span class="tag">Design Work</span><span class="tag">Restyles</span><span class="tag">Beard Sculpting</span></div>
+        </div>
+        <div class="team-card card-lift">
+          <div class="monogram-lg">M</div>
+          <h3>Malik Reeves</h3>
+          <div class="role">Barber</div>
+          <p class="bio">Malik built his following on consistency — clean, classic cuts delivered the same way every single visit. He's especially great with first-time and younger clients, keeping the chair relaxed and the conversation easy while he works.</p>
+          <div class="tag-row"><span class="tag">Classic Cuts</span><span class="tag">Kids Cuts</span><span class="tag">Line-ups</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- LOCATION -->
+  <section class="page" data-page="location" id="page-location">
+    <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydg9hzJbWKCYG6Py9L9tCDboDZtS4varTMjzE3GV7HIDqywTSnesmqXZ_jWeXHlNqKDQW_gEW3dOCq7j-xHRI5hB5F-8CJig4aMEAjAbb54cGTaU0aV5ZYNVsF1gHAQqF0NhF_BHg8nKDLIvGecT4GNOJievItrbRiTsVCad0h3G2ETd2fSyMHfCEf2g54awxBl41iO_L30ifIpjiBIrL5ogs9bH4woGNp3AEFridEvWBnNp5oyMj155JZMhqn4JO6RyVGZ-nrA8q00Hm6q5CN0-SeQpukq8T7bb0la5fP8XiVl-EW49h5_3f7Dp8QCmaou-uO55IiYgPQD3zv1C7cPN25o7Mjahh8i8mUn6OliSsUFO80KFmHR8y1mM3ngoZxZ3gMEgrTQjYkduFC_E9hfvx1XiuEq1FW1zYQtruVnd6Q&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU')">
+      <div class="hero-content">
+        <div class="hero-sub">Find Us</div>
+        <h1 class="hero-title">LOCATION &amp; HOURS</h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="location-grid">
+        <div>
+          <h2 class="section-title">Weekly Hours</h2>
+          <table class="hours-table" id="hoursTable">
+            <tbody>
+              <tr data-day="1"><td>Monday</td><td>Closed</td></tr>
+              <tr data-day="2"><td>Tuesday</td><td>9:00 AM – 7:00 PM</td></tr>
+              <tr data-day="3"><td>Wednesday</td><td>9:00 AM – 7:00 PM</td></tr>
+              <tr data-day="4"><td>Thursday</td><td>9:00 AM – 8:00 PM</td></tr>
+              <tr data-day="5"><td>Friday</td><td>9:00 AM – 8:00 PM</td></tr>
+              <tr data-day="6"><td>Saturday</td><td>8:00 AM – 6:00 PM</td></tr>
+              <tr data-day="0"><td>Sunday</td><td>10:00 AM – 4:00 PM</td></tr>
+            </tbody>
+          </table>
+
+          <div class="info-card card-lift">
+            <h4>Address</h4>
+            <p>244 S Broadway, Baltimore, MD 21231, USA</p>
+          </div>
+          <div class="info-card card-lift">
+            <h4>Phone</h4>
+            <p>(443) 683-6780</p>
+          </div>
+          <div class="info-card card-lift">
+            <h4>Parking</h4>
+            <p>Free street parking is available along S Broadway, with additional spaces in the public lot one block north near Fleet St.</p>
+          </div>
+          <div class="info-card card-lift">
+            <h4>Accessibility</h4>
+            <p>Step-free, ground-level entrance with wide aisles for wheelchair access. Please call ahead if you'd like extra assistance during your visit.</p>
+          </div>
+        </div>
+
+        <div>
+          <h2 class="section-title">Map &amp; Gallery</h2>
+          <div class="map-embed">
+            <iframe loading="lazy" referrerpolicy="no-referrer-when-downgrade"
+              src="https://maps.google.com/maps?q=244%20S%20Broadway%2C%20Baltimore%2C%20MD%2021231&t=&z=15&ie=UTF8&iwloc=&output=embed">
+            </iframe>
+          </div>
+          <div class="gallery-grid" id="galleryGrid">
+            <div class="gallery-item"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydgJT_MkK_gjnUdbMdhdRzh4xUer1CShStG2zT_A4pRnJRLr0Mu8UbtV6xIN3KhkoBBs_z1Mqr7bwT9Q0GmdcJMgewKa5sPOhhVuYjBr1GjoY7KxbtQhkUog4w8J-6ExLY993Kv-_-ku60WDRvac38zk0s5KYYeTykqpB_vWC2z_rxQHDAeIQOHBqfCqJVBcRkpJNnk1F2a3tRVVV8VG8WPO6yA_sl871QARqMwcxEGxYSvlw8BKMlxXt6JasGvEx9cWsxv7PZy1vCa5kmYkqMDcpwqwQO7o5r-8bDUJKWGb-uktkIL-4wL3W3c4GCVLDTQy7uI4_QHks8i8gVKz0nezTc-aSbQszFm2y-wFDnVimPg_U-zKgef8-RTd41bS-tTqsOrOJtJhh3rA3LPmxZQGB5hX9jHzMX5MZnagE0DAnnN4&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU" alt="Gold Scissors barbershop interior"></div>
+            <div class="gallery-item"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydiPm5hAriu1sl5gMDkhtE7Iunp1rpNTNHoXsYVIwewWFx4Uk7uMNvAUlGcOx527ScZ5fgfph8V66PUv77NOV0RcRWRjcb3RDi4cANr853ATg2A5tbNy8-6A6gSLK-jGt3rL_JjibvP72iG2TTmm8Ncn8dGEL6qsnteio8adn0TehxlBKvIOBXzAi9xtmeXQDQDAteIOrNeLlcmRx8NxJLROaXNySUFsEO9E7PbPmbANgw8SWS4hwUdaZguTz2N0RcWT34xufU-CJFzVnqxt4m5D34Yh2xMwwyV4p6zd8qMhkxQ4EyeiFTgpLE5R05BqnnhCPFPjC23asu_wsyjLdml97obLykNUPwKL2wZYEJNIPAn37ipE1U5LBlPrS3LKaHMpQvDkgNFL1iRAHJ1SuWqK4qiZgiU9hTpvQj1PV3-X1I4x&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU" alt="Fresh skin fade at Gold Scissors"></div>
+            <div class="gallery-item"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydgPDE5sSgVTu8igCVRC2teEM1h2xhBsXp6IZNQxjhwdqMyik84F4yFw9SzB7PYac55WePYpTW_r_y1gHczSdmW5wtK7KMqwnGFEizSa4FloXdGG7RMtqHLBy4s3XFEB-9XmjSjPkShxbjm4YTmiXFdABJ2jDqGq6ucnfVMPT9w7PsLLDP75lHB88TxrBcu61cZ_EApD4HCx3I0vU7KJToclNsHWHzS9NNOHqsEDjCUP409sGQumkPLJM8seV_aXC2F1rhpuYv6Z2zfSmqfdHm4vVeXu1PiJb2TtuvdF0NSH-VL78PRkBCwxtuAmD0-eclme7D3bLvqW-Hcx05f1xggW7CWU-gMMGAHJ8NRMtzbfDPQZbZkXkrH6p5stct9Ko2kAA4QT9bsESJXosl4QGB2T8fL-E1Yhtt-vz4TKfDimb0hR&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU" alt="Barber station at Gold Scissors"></div>
+            <div class="gallery-item"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydilkhuH7RsmUeuf4q7c3xf19eHkIbmXgJYk_cY6vUw67ZaRBscMno3l233HIw6gzqWVlOr2QF-QpwlJwiPqBcRozel9d8c4XG23aIX0mCYfYpHrbtcahyLZ41inS6IIa21NNNDP1rjDqGtPjxhnR7uxUzQ_KKIaLBAKb6d_g_qnlm3ORBUti0--sWuY4XzE96gHoMSQaTFNPwP2lDRflk2UPXrUMeidKDYXVqn9bMR5pJeAlazSJrZOvEM_w3FFcSlLlitCG5e_LUikrbklEDEAJYH9Dxljvxz_RCkF1Ji73srjTvq6E7HNA0Ugjs8TYvPrptTaoCdRbNVRwKmstxrDkH2tKVLlbudzRGPauaQZhFMYqC4MFrgS5SiftMqC6s--YfKj_NG0R1CF-ZJ7diPA2bnA8zthCVerK5nLKMA&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU" alt="Detail haircut work at Gold Scissors"></div>
+            <div class="gallery-item"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydgFI4F94Wl2RKwZJQpOYruPLWpPa3_zUis7fC4XUbdsAWV8NbGtuY1CrTER0YhLSNXflwOvUhiAlvoV0pJSnO0xpM3rdkM2Y2odxrdiSgw2tsLh--pck6GYIDyLheut4KYUrisXV7dSb4lUIeUdyFBYcDrtuPtH_TNzDNUtWmORl4hBAem_cIjcb50Jl25I_ooLZls_J9e0ZXVpeUs6n4xZ9pIR8FWbvG1in8lKutpHAgsZaao4Ck4QZHI2gDqEWlRjDrobb8vXdgqe4MN5ES5OilrQI1ccmd7XXNryHO6T1yHqEzTvdETmk6HzyW6cMWgMYovHEMRy_AHQEPCxOFvV9rIo1j7v4TW31lTB5ghwEfP977drRZ4maHMvEh2Fb94eEsT4-WoFLACALXR4UK27N3Z3PXVU-Io9axO1JnRKyNl9&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU" alt="Gold Scissors barbershop chairs"></div>
+            <div class="gallery-item"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydgHxdwgHp0wJ4leoNCryHVUu_lGwc6ue54f56xLMhMWL-c_twJWVfNHGiLqz6I-8c283mCp-z0Q8S7C4eDgn5xMvesu0ENyq3uSBoVv_z3XUGFoOAGY5sOvgIXnNkkPyaJuQzpnvkn8NyAvbo7gUCtl1E-q3nlYv4sJSP5YEngwAyx8JHy6bJwyWI9TiRfQDVvHuNkSaBWvxRlAByvnz3hLWwFCQPntMPdbEr6_aU92lK6MPSlNyUU1y_JkCfh6t0oYJqIEZOmIGn0boRSkgWB4EJe8IWMrdAG-nYhW0OIavrLxhjruda6ZwdZpIui66H4m4TAW4bkn1-IO0iU5oHGUh3cSm9rXktkszmSpflrYvdl-6ZJ-ukAQOmho1K7eCMDBSRpOSNkVYKsOxreNot1Ek3ny5X_BRERezO5ZFfJ2lhFS&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU" alt="Gold Scissors storefront on S Broadway"></div>
+            <div class="gallery-item"><img src="https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydiBMORCUik0i2ZKPes-HoCZ224hWB8yATUx_8Hnrpa3BdOzTG-tjdwXuH9xIuBnSvUnKH0ZOFb1xHj4CPI8XpdRlIa-6BJwwRKdAbXVURcLfRc3luaqwiY3Bkv6zpqppR67PY7ZEDG6mP6AmqoNREiiRynqSRltnNf37ptm_hxOF34Wt6F88HC_xJEfX94VT5SByqHFezkCEDA-9hfld4Ft8UEVx9Zhri9OE0k4xEn5LLq-VT8eOZuphjfkErQneaFqYJcybold1qAXbDb_Rcs8tmY3jXF6AMj_0bgz_fWhewZIBQkM2YLIFisZe6fGMXuzmlBHn68Eik6NjMaXnVJhfv7yUadaE1HZT4GHncSq3OLjWUKKH6pEVucZglvAFlHH3dm1E7gOS8TdJXIntUw6k5oUN_c5RhSVspQxILmDXWI&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU" alt="Finished cut at Gold Scissors"></div>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- REVIEWS -->
+  <section class="page" data-page="reviews" id="page-reviews">
+    <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydg9hzJbWKCYG6Py9L9tCDboDZtS4varTMjzE3GV7HIDqywTSnesmqXZ_jWeXHlNqKDQW_gEW3dOCq7j-xHRI5hB5F-8CJig4aMEAjAbb54cGTaU0aV5ZYNVsF1gHAQqF0NhF_BHg8nKDLIvGecT4GNOJievItrbRiTsVCad0h3G2ETd2fSyMHfCEf2g54awxBl41iO_L30ifIpjiBIrL5ogs9bH4woGNp3AEFridEvWBnNp5oyMj155JZMhqn4JO6RyVGZ-nrA8q00Hm6q5CN0-SeQpukq8T7bb0la5fP8XiVl-EW49h5_3f7Dp8QCmaou-uO55IiYgPQD3zv1C7cPN25o7Mjahh8i8mUn6OliSsUFO80KFmHR8y1mM3ngoZxZ3gMEgrTQjYkduFC_E9hfvx1XiuEq1FW1zYQtruVnd6Q&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU')">
+      <div class="hero-content">
+        <div class="hero-sub">What Clients Say</div>
+        <h1 class="hero-title">REVIEWS</h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="rating-hero">
+        <div>
+          <div class="rating-score">5.0</div>
+          <div class="rating-stars">★★★★★</div>
+          <div class="rating-count">Based on Google reviews</div>
+        </div>
+        <div class="star-breakdown">
+          <div class="star-row"><span>5★</span><div class="bar-track"><div class="bar-fill" style="width:100%"></div></div><span>100%</span></div>
+          <div class="star-row"><span>4★</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span>0%</span></div>
+          <div class="star-row"><span>3★</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span>0%</span></div>
+          <div class="star-row"><span>2★</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span>0%</span></div>
+          <div class="star-row"><span>1★</span><div class="bar-track"><div class="bar-fill" style="width:0%"></div></div><span>0%</span></div>
+        </div>
+      </div>
+
+      <div class="featured-review">
+        <div class="rating-stars">★★★★★</div>
+        <p>"Did a great job on the cut and design."</p>
+        <div class="reviewer">Marcus T. · Google Review</div>
+      </div>
+
+      <div class="review-grid">
+        <div class="review-card card-lift">
+          <div class="stars">★★★★★</div>
+          <p>Ace lined me up perfectly for my cousin's wedding. Clean shop, great music, and he took his time to get every edge razor sharp. Already booked my next appointment.</p>
+          <div class="reviewer">Dominique H.</div>
+        </div>
+        <div class="review-card card-lift">
+          <div class="stars">★★★★★</div>
+          <p>Deja did an amazing fade design for me — exactly what I showed her in the picture, maybe even better. Definitely the most detailed work I've had done in Baltimore.</p>
+          <div class="reviewer">Jordan A.</div>
+        </div>
+        <div class="review-card card-lift">
+          <div class="stars">★★★★★</div>
+          <p>Took my son in for his first real haircut and Malik was so patient with him. Great with kids, great cut, and the shop has such a good energy. Highly recommend.</p>
+          <div class="reviewer">Renee W.</div>
+        </div>
+        <div class="review-card card-lift">
+          <div class="stars">★★★★★</div>
+          <p>Been coming here every three weeks since they opened on Broadway. Never had a bad cut, never a long wait, and the guys always remember exactly how I like it.</p>
+          <div class="reviewer">Curtis B.</div>
+        </div>
+        <div class="review-card card-lift">
+          <div class="stars">★★★★★</div>
+          <p>Walked in without an appointment and still got seen quickly. The beard trim and line-up combo is worth every penny. Gold Scissors is my new spot for good.</p>
+          <div class="reviewer">Trevon M.</div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- CONTACT -->
+  <section class="page" data-page="contact" id="page-contact">
+    <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydg9hzJbWKCYG6Py9L9tCDboDZtS4varTMjzE3GV7HIDqywTSnesmqXZ_jWeXHlNqKDQW_gEW3dOCq7j-xHRI5hB5F-8CJig4aMEAjAbb54cGTaU0aV5ZYNVsF1gHAQqF0NhF_BHg8nKDLIvGecT4GNOJievItrbRiTsVCad0h3G2ETd2fSyMHfCEf2g54awxBl41iO_L30ifIpjiBIrL5ogs9bH4woGNp3AEFridEvWBnNp5oyMj155JZMhqn4JO6RyVGZ-nrA8q00Hm6q5CN0-SeQpukq8T7bb0la5fP8XiVl-EW49h5_3f7Dp8QCmaou-uO55IiYgPQD3zv1C7cPN25o7Mjahh8i8mUn6OliSsUFO80KFmHR8y1mM3ngoZxZ3gMEgrTQjYkduFC_E9hfvx1XiuEq1FW1zYQtruVnd6Q&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU')">
+      <div class="hero-content">
+        <div class="hero-sub">Get In Touch</div>
+        <h1 class="hero-title">CONTACT US</h1>
+      </div>
+    </div>
+    <div class="container">
+      <div class="contact-grid">
+        <div>
+          <div class="section-label">Visit The Shop</div>
+          <h2 class="section-title">Gold Scissors</h2>
+          <div class="info-card card-lift"><h4>Address</h4><p>244 S Broadway, Baltimore, MD 21231, USA</p></div>
+          <div class="info-card card-lift"><h4>Phone</h4><p>(443) 683-6780</p></div>
+          <div class="info-card card-lift"><h4>Rating</h4><p>5.0 ★ on Google Reviews</p></div>
+          <a class="ig-btn" href="https://www.instagram.com/goldscissors_/?hl=en" target="_blank" rel="noopener noreferrer">Follow Us on Instagram</a>
+        </div>
+        <div>
+          <form id="contactForm" novalidate>
+            <div class="form-group">
+              <label for="cName">Name</label>
+              <input type="text" id="cName" name="name" required>
+            </div>
+            <div class="form-group">
+              <label for="cEmail">Email</label>
+              <input type="email" id="cEmail" name="email" required>
+            </div>
+            <div class="form-group">
+              <label for="cPhone">Phone</label>
+              <input type="tel" id="cPhone" name="phone">
+            </div>
+            <div class="form-group">
+              <label for="cMessage">Message</label>
+              <textarea id="cMessage" name="message" rows="5" required></textarea>
+            </div>
+            <button type="submit" class="btn-submit">Send Message</button>
+            <div class="form-success" id="formSuccess">Thank you! Your message has been sent — we'll get back to you shortly.</div>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+
+</main>
+
+<footer class="site-footer">
+  <span class="f-name">GOLD SCISSORS</span>
+  244 S Broadway, Baltimore, MD 21231, USA<br>
+  &copy; <span id="footYear"></span> Gold Scissors. All rights reserved.
+</footer>
+
+<div class="lightbox" id="lightbox">
+  <button class="lightbox-close" id="lightboxClose" aria-label="Close">&times;</button>
+  <img id="lightboxImg" src="" alt="">
+</div>
+
+<script>
+  document.getElementById('footYear').textContent = new Date().getFullYear();
+
+  const navLinks = document.querySelectorAll('.nav-link');
+  const pages = document.querySelectorAll('.page');
+  const navLinksWrap = document.getElementById('navLinks');
+  const hamburger = document.getElementById('hamburger');
+
+  function goToPage(name){
+    pages.forEach(p => p.classList.toggle('active', p.dataset.page === name));
+    navLinks.forEach(l => l.classList.toggle('active', l.dataset.page === name));
+    window.scrollTo({top:0, behavior:'smooth'});
+  }
+
+  navLinks.forEach(link => {
+    link.addEventListener('click', e => {
+      e.preventDefault();
+      goToPage(link.dataset.page);
+      navLinksWrap.classList.remove('show');
+      hamburger.classList.remove('open');
+    });
+  });
+
+  hamburger.addEventListener('click', () => {
+    navLinksWrap.classList.toggle('show');
+    hamburger.classList.toggle('open');
+  });
+
+  // ===== Booking Flow =====
+  const selection = { barber:null, service:null, addons:new Map() };
+
+  const step1 = document.getElementById('step1');
+  const step2 = document.getElementById('step2');
+  const step3 = document.getElementById('step3');
+  const bookBtn = document.getElementById('bookBtn');
+  const bookConfirm = document.getElementById('bookConfirm');
+
+  document.querySelectorAll('.barber-card').forEach(card => {
+    card.addEventListener('click', () => {
+      document.querySelectorAll('.barber-card').forEach(c => c.classList.remove('selected'));
+      card.classList.add('selected');
+      selection.barber = card.dataset.barber;
+      step2.classList.remove('hidden');
+      updateSummary();
+    });
+  });
+
+  document.querySelectorAll('.service-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      document.querySelectorAll('.service-option').forEach(o => o.classList.remove('selected'));
+      opt.classList.add('selected');
+      selection.service = { name:opt.dataset.service, price:Number(opt.dataset.price), duration:Number(opt.dataset.duration) };
+      const fadeUpgrade = document.getElementById('fadeUpgrade');
+      fadeUpgrade.style.display = opt.dataset.service === 'Skin Fade' ? 'none' : '';
+      if(opt.dataset.service === 'Skin Fade'){
+        fadeUpgrade.classList.remove('selected');
+        selection.addons.delete('Skin Fade Upgrade');
+      }
+      step3.classList.remove('hidden');
+      updateSummary();
+    });
+  });
+
+  document.querySelectorAll('.addon-option').forEach(opt => {
+    opt.addEventListener('click', () => {
+      const name = opt.dataset.addon;
+      if(selection.addons.has(name)){
+        selection.addons.delete(name);
+        opt.classList.remove('selected');
+      } else {
+        selection.addons.set(name, { price:Number(opt.dataset.price), duration:Number(opt.dataset.duration) });
+        opt.classList.add('selected');
+      }
+      updateSummary();
+    });
+  });
+
+  function updateSummary(){
+    document.getElementById('sumBarber').textContent = selection.barber || '—';
+    document.getElementById('sumService').textContent = selection.service ? selection.service.name : '—';
+
+    let addonNames = Array.from(selection.addons.keys());
+    document.getElementById('sumAddons').textContent = addonNames.length ? addonNames.join(', ') : 'None';
+
+    let totalPrice = (selection.service ? selection.service.price : 0);
+    let totalDuration = (selection.service ? selection.service.duration : 0);
+    selection.addons.forEach(a => { totalPrice += a.price; totalDuration += a.duration; });
+
+    document.getElementById('sumPrice').textContent = '$' + totalPrice;
+    document.getElementById('sumDuration').textContent = totalDuration + ' min';
+
+    bookBtn.disabled = !(selection.barber && selection.service);
+  }
+
+  bookBtn.addEventListener('click', () => {
+    if(bookBtn.disabled) return;
+    bookConfirm.classList.add('show');
+    setTimeout(() => bookConfirm.classList.remove('show'), 6000);
+  });
+
+  // ===== Today highlight =====
+  const todayIndex = new Date().getDay();
+  const todayRow = document.querySelector('#hoursTable tr[data-day="' + todayIndex + '"]');
+  if(todayRow){
+    todayRow.classList.add('today');
+    const pill = document.createElement('span');
+    pill.className = 'today-pill';
+    pill.textContent = 'Today';
+    todayRow.children[0].appendChild(pill);
+  }
+
+  // ===== Lightbox =====
+  const lightbox = document.getElementById('lightbox');
+  const lightboxImg = document.getElementById('lightboxImg');
+  const lightboxClose = document.getElementById('lightboxClose');
+
+  document.querySelectorAll('.gallery-item img').forEach(img => {
+    img.addEventListener('click', () => {
+      lightboxImg.src = img.src;
+      lightboxImg.alt = img.alt;
+      lightbox.classList.add('open');
+    });
+  });
+
+  function closeLightbox(){ lightbox.classList.remove('open'); lightboxImg.src=''; }
+
+  lightboxClose.addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', e => { if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', e => { if(e.key === 'Escape') closeLightbox(); });
+
+  // ===== Contact form =====
+  const contactForm = document.getElementById('contactForm');
+  const formSuccess = document.getElementById('formSuccess');
+  contactForm.addEventListener('submit', e => {
+    e.preventDefault();
+    formSuccess.classList.add('show');
+    contactForm.reset();
+  });
+</script>
+
+</body>
+</html>
