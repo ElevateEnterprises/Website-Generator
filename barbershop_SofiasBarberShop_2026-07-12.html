@@ -1,0 +1,797 @@
+<title>Sofia's Barber Shop | Premium Barbering in Baltimore</title>
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta name="description" content="Sofia's Barber Shop — premium barbering on Eastern Ave, Baltimore, MD. Precision fades, classic cuts, and expert grooming.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Bebas+Neue&family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,500&family=Inter:wght@300;400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --bg:#080808;
+    --bg-raised:#121212;
+    --bg-card:#151515;
+    --gold:#C9A84C;
+    --gold-soft:rgba(201,168,76,0.35);
+    --gold-glow:rgba(201,168,76,0.18);
+    --text:#f2ede2;
+    --text-dim:#a8a29a;
+    --line:#262420;
+    --radius:14px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--bg);
+    color:var(--text);
+    font-family:'Inter',sans-serif;
+    font-weight:400;
+    -webkit-font-smoothing:antialiased;
+    overflow-x:hidden;
+  }
+  h1,h2,h3,.display{font-family:'Cormorant Garamond',serif;}
+  .title-num, .brand-name, .btn, nav .tab, .hero h1, .step-title, .price-num{font-family:'Bebas Neue',sans-serif;letter-spacing:0.06em;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  button{font-family:inherit;cursor:pointer;}
+
+  /* ---------- NAV ---------- */
+  header.topnav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    display:flex;align-items:center;justify-content:space-between;
+    padding:18px 5%;
+    background:rgba(8,8,8,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .brand-name{font-size:1.6rem;color:var(--gold);letter-spacing:0.08em;}
+  nav.tabs{display:flex;gap:2.2rem;}
+  nav .tab{
+    background:none;border:none;color:var(--text-dim);
+    font-size:1rem;letter-spacing:0.08em;padding:6px 2px;position:relative;
+    transition:color .25s ease;
+  }
+  nav .tab::after{
+    content:'';position:absolute;left:0;right:0;bottom:-6px;height:2px;
+    background:var(--gold);transform:scaleX(0);transform-origin:center;
+    transition:transform .3s ease;
+  }
+  nav .tab:hover{color:var(--text);}
+  nav .tab.active{color:var(--gold);}
+  nav .tab.active::after{transform:scaleX(1);}
+  .hamburger{display:none;flex-direction:column;gap:5px;background:none;border:none;padding:6px;}
+  .hamburger span{width:26px;height:2px;background:var(--gold);display:block;}
+  .mobile-menu{
+    display:none;position:fixed;top:64px;left:0;right:0;z-index:999;
+    background:#0c0c0c;border-bottom:1px solid var(--line);
+    flex-direction:column;padding:10px 0;
+  }
+  .mobile-menu.open{display:flex;}
+  .mobile-menu button{
+    background:none;border:none;color:var(--text-dim);text-align:left;
+    padding:14px 6%;font-size:1.05rem;letter-spacing:0.06em;border-bottom:1px solid var(--line);
+    font-family:'Bebas Neue',sans-serif;
+  }
+  .mobile-menu button.active{color:var(--gold);}
+
+  @media (max-width:860px){
+    nav.tabs{display:none;}
+    .hamburger{display:flex;}
+  }
+
+  /* ---------- PAGE / HERO ---------- */
+  .page{display:none;padding-top:64px;animation:fadeIn .55s ease;}
+  .page.active{display:block;}
+  @keyframes fadeIn{from{opacity:0;transform:translateY(10px);}to{opacity:1;transform:translateY(0);}}
+
+  .hero{
+    position:relative;height:52vh;min-height:320px;
+    background-size:cover;background-position:center;
+    display:flex;align-items:flex-end;
+  }
+  .hero::after{
+    content:'';position:absolute;inset:0;
+    background:linear-gradient(180deg, rgba(8,8,8,0.35) 0%, rgba(8,8,8,0.55) 45%, rgba(8,8,8,0.97) 100%);
+  }
+  .hero-inner{position:relative;z-index:2;padding:0 5% 3rem;}
+  .hero h1{
+    font-size:clamp(2.6rem,7vw,5rem);color:var(--gold);margin:0;line-height:0.95;
+  }
+  .hero p{color:var(--text-dim);font-family:'Cormorant Garamond',serif;font-size:1.3rem;margin-top:0.6rem;font-style:italic;}
+
+  .section{padding:4rem 5%;max-width:1200px;margin:0 auto;}
+  .section-head{text-align:center;margin-bottom:2.8rem;}
+  .section-head h2{font-size:2.6rem;color:var(--gold);margin:0 0 0.4rem;}
+  .section-head p{color:var(--text-dim);font-size:1.05rem;}
+
+  .card{
+    background:var(--bg-card);border:1px solid var(--line);border-radius:var(--radius);
+    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .card:hover{transform:translateY(-6px);box-shadow:0 14px 34px var(--gold-glow);border-color:var(--gold-soft);}
+
+  footer{
+    padding:2.4rem 5%;border-top:1px solid var(--line);text-align:center;
+    color:var(--text-dim);font-size:0.9rem;
+  }
+  footer .fname{color:var(--gold);font-family:'Bebas Neue',sans-serif;letter-spacing:0.08em;font-size:1.1rem;display:block;margin-bottom:6px;}
+
+  /* ============ SERVICES / BOOKING FLOW ============ */
+  .flow-wrap{display:grid;grid-template-columns:1fr 340px;gap:2.5rem;align-items:flex-start;}
+  @media (max-width:900px){.flow-wrap{grid-template-columns:1fr;}}
+
+  .steps-track{display:flex;gap:1rem;margin-bottom:2.4rem;flex-wrap:wrap;}
+  .step-pill{
+    padding:8px 16px;border-radius:30px;border:1px solid var(--line);
+    color:var(--text-dim);font-size:0.85rem;letter-spacing:0.05em;
+  }
+  .step-pill.current{border-color:var(--gold);color:var(--gold);}
+  .step-pill.done{border-color:var(--gold-soft);color:var(--gold);}
+
+  .step-block{margin-bottom:3rem;}
+  .step-title{color:var(--gold);font-size:1.6rem;margin-bottom:1.2rem;display:flex;align-items:center;gap:10px;}
+  .step-title .num{
+    display:inline-flex;align-items:center;justify-content:center;
+    width:30px;height:30px;border-radius:50%;border:1px solid var(--gold);color:var(--gold);
+    font-size:0.95rem;
+  }
+  .step-block.locked{opacity:0.35;pointer-events:none;filter:grayscale(0.4);}
+
+  .grid-cards{display:grid;grid-template-columns:repeat(auto-fit,minmax(210px,1fr));gap:1.2rem;}
+
+  .pick-card{
+    padding:1.4rem;cursor:pointer;position:relative;overflow:hidden;
+  }
+  .pick-card.selected{
+    border-color:var(--gold);box-shadow:0 0 0 1px var(--gold), 0 0 22px var(--gold-glow);
+  }
+  .pick-card .monogram{
+    width:56px;height:56px;border-radius:50%;background:linear-gradient(145deg,#1c1a15,#0c0b09);
+    border:1px solid var(--gold-soft);color:var(--gold);font-family:'Bebas Neue',sans-serif;
+    display:flex;align-items:center;justify-content:center;font-size:1.4rem;margin-bottom:0.8rem;
+  }
+  .pick-card h4{margin:0 0 4px;font-family:'Cormorant Garamond',serif;font-size:1.3rem;}
+  .pick-card .sub{color:var(--text-dim);font-size:0.85rem;margin:0 0 8px;}
+  .pick-card .meta{display:flex;justify-content:space-between;color:var(--gold);font-size:0.95rem;font-family:'Bebas Neue',sans-serif;letter-spacing:0.04em;}
+  .pick-card .check{
+    position:absolute;top:12px;right:12px;width:22px;height:22px;border-radius:50%;
+    border:1px solid var(--line);display:flex;align-items:center;justify-content:center;font-size:0.75rem;color:transparent;
+  }
+  .pick-card.selected .check{border-color:var(--gold);color:var(--gold);background:var(--gold-glow);}
+
+  .service-fade-sweep{position:relative;}
+  .service-fade-sweep::before{
+    content:'';position:absolute;left:0;right:0;bottom:0;height:2px;background:var(--gold);
+    transform:scaleX(0);transform-origin:left;transition:transform .35s ease;
+  }
+  .service-fade-sweep:hover::before{transform:scaleX(1);}
+
+  .addon-row{
+    display:flex;align-items:center;justify-content:space-between;gap:1rem;
+    padding:1rem 1.2rem;margin-bottom:0.7rem;cursor:pointer;
+  }
+  .addon-row.selected{border-color:var(--gold);}
+  .addon-row .left{display:flex;align-items:center;gap:12px;}
+  .addon-row .box{width:20px;height:20px;border:1px solid var(--line);border-radius:5px;flex-shrink:0;display:flex;align-items:center;justify-content:center;color:transparent;}
+  .addon-row.selected .box{border-color:var(--gold);color:var(--gold);background:var(--gold-glow);}
+  .addon-row .name{font-family:'Cormorant Garamond',serif;font-size:1.15rem;}
+  .addon-row .info{color:var(--gold);font-size:0.85rem;font-family:'Bebas Neue',sans-serif;letter-spacing:0.03em;white-space:nowrap;}
+
+  .summary-panel{
+    position:sticky;top:90px;background:var(--bg-raised);border:1px solid var(--gold-soft);
+    border-radius:var(--radius);padding:1.8rem;
+  }
+  .summary-panel h3{color:var(--gold);margin:0 0 1.2rem;font-size:1.5rem;}
+  .summary-row{display:flex;justify-content:space-between;padding:0.55rem 0;border-bottom:1px solid var(--line);font-size:0.95rem;}
+  .summary-row .lbl{color:var(--text-dim);}
+  .summary-row .val{color:var(--text);text-align:right;max-width:60%;}
+  .summary-total{display:flex;justify-content:space-between;align-items:baseline;margin-top:1.2rem;padding-top:1rem;border-top:1px solid var(--gold-soft);}
+  .summary-total .price-num{font-size:2.4rem;color:var(--gold);}
+  .summary-total .dur{color:var(--text-dim);font-size:0.9rem;}
+  .btn{
+    display:inline-block;width:100%;text-align:center;margin-top:1.4rem;padding:14px;
+    background:var(--gold);color:#0c0b08;border:none;border-radius:8px;font-size:1.1rem;letter-spacing:0.08em;
+    transition:filter .2s ease, transform .2s ease;
+  }
+  .btn:hover{filter:brightness(1.12);transform:translateY(-2px);}
+  .btn:disabled{background:#3a3730;color:#777161;cursor:not-allowed;transform:none;}
+  .book-confirm{
+    margin-top:0.9rem;padding:10px;text-align:center;border:1px solid var(--gold-soft);
+    border-radius:8px;color:var(--gold);font-size:0.9rem;display:none;
+  }
+  .book-confirm.show{display:block;}
+
+  .addons-note{color:var(--text-dim);font-size:0.85rem;margin-top:-0.6rem;margin-bottom:1.2rem;}
+
+  /* ============ TEAM ============ */
+  .team-grid{display:grid;grid-template-columns:repeat(auto-fit,minmax(260px,1fr));gap:1.6rem;}
+  .team-card{padding:2rem;text-align:center;}
+  .team-card .monogram-lg{
+    width:96px;height:96px;border-radius:50%;margin:0 auto 1.1rem;
+    background:linear-gradient(145deg,#1c1a15,#0c0b09);border:1px solid var(--gold-soft);
+    display:flex;align-items:center;justify-content:center;color:var(--gold);
+    font-family:'Bebas Neue',sans-serif;font-size:2.1rem;
+  }
+  .team-card h3{margin:0 0 2px;font-size:1.7rem;}
+  .team-card .role{color:var(--gold);font-size:0.9rem;letter-spacing:0.08em;margin-bottom:0.9rem;font-family:'Bebas Neue',sans-serif;}
+  .team-card p.bio{color:var(--text-dim);font-size:0.95rem;line-height:1.55;margin-bottom:1.1rem;}
+  .tags{display:flex;flex-wrap:wrap;gap:8px;justify-content:center;}
+  .tag{border:1px solid var(--gold-soft);color:var(--gold);border-radius:20px;padding:4px 12px;font-size:0.78rem;}
+
+  /* ============ LOCATION ============ */
+  .loc-grid{display:grid;grid-template-columns:1.1fr 1fr;gap:2.5rem;}
+  @media (max-width:900px){.loc-grid{grid-template-columns:1fr;}}
+  table.hours{width:100%;border-collapse:collapse;}
+  table.hours td{padding:0.85rem 0.5rem;border-bottom:1px solid var(--line);}
+  table.hours tr.today td{background:linear-gradient(90deg, rgba(201,168,76,0.14), transparent);}
+  table.hours .day{font-family:'Bebas Neue',sans-serif;letter-spacing:0.05em;}
+  .today-pill{
+    background:var(--gold);color:#0c0b08;font-size:0.68rem;padding:2px 9px;border-radius:20px;
+    margin-left:8px;font-family:'Inter',sans-serif;font-weight:700;letter-spacing:0.04em;vertical-align:middle;
+  }
+  .info-list{margin-top:1.6rem;display:flex;flex-direction:column;gap:0.9rem;}
+  .info-list .row{display:flex;gap:12px;color:var(--text-dim);font-size:0.95rem;}
+  .info-list .row b{color:var(--text);min-width:110px;font-family:'Bebas Neue',sans-serif;font-weight:400;letter-spacing:0.04em;}
+  .map-embed{border-radius:var(--radius);overflow:hidden;border:1px solid var(--line);height:280px;margin-top:1.6rem;}
+  .map-embed iframe{width:100%;height:100%;border:0;filter:grayscale(0.3) invert(0.92) contrast(0.9);}
+
+  .gallery{display:grid;grid-template-columns:repeat(auto-fill,minmax(150px,1fr));gap:0.8rem;margin-top:1.2rem;}
+  .gallery img{
+    width:100%;height:150px;object-fit:cover;border-radius:10px;cursor:pointer;
+    border:1px solid var(--line);transition:transform .3s ease, border-color .3s ease;
+  }
+  .gallery img:hover{transform:scale(1.04);border-color:var(--gold-soft);}
+
+  .lightbox{
+    position:fixed;inset:0;background:rgba(4,4,4,0.92);z-index:2000;
+    display:none;align-items:center;justify-content:center;padding:5%;
+  }
+  .lightbox.open{display:flex;}
+  .lightbox img{max-height:88vh;max-width:88vw;border-radius:10px;border:1px solid var(--gold-soft);}
+  .lightbox .close-x{
+    position:absolute;top:22px;right:30px;color:var(--gold);font-size:2.2rem;background:none;border:none;
+  }
+
+  /* ============ REVIEWS ============ */
+  .rating-hero{display:flex;gap:2.5rem;align-items:center;flex-wrap:wrap;justify-content:center;margin-bottom:3rem;}
+  .rating-big{text-align:center;}
+  .rating-big .num{font-size:5rem;color:var(--gold);font-family:'Bebas Neue',sans-serif;line-height:1;}
+  .stars{color:var(--gold);font-size:1.4rem;letter-spacing:2px;margin:6px 0;}
+  .rating-big .count{color:var(--text-dim);font-size:0.9rem;}
+  .bars{flex:1;min-width:260px;max-width:420px;}
+  .bar-row{display:flex;align-items:center;gap:10px;margin-bottom:8px;}
+  .bar-row span{width:44px;color:var(--text-dim);font-size:0.85rem;}
+  .bar-track{flex:1;height:8px;background:var(--line);border-radius:6px;overflow:hidden;}
+  .bar-fill{height:100%;background:var(--gold);border-radius:6px;}
+
+  .featured-review{
+    padding:2.2rem;text-align:center;margin-bottom:2.6rem;border-color:var(--gold-soft);
+    background:linear-gradient(145deg, rgba(201,168,76,0.06), transparent);
+  }
+  .featured-review .stars{justify-content:center;}
+  .featured-review p{font-family:'Cormorant Garamond',serif;font-size:1.5rem;font-style:italic;color:var(--text);line-height:1.5;}
+  .featured-review .who{color:var(--gold);margin-top:0.8rem;font-size:0.9rem;letter-spacing:0.05em;}
+
+  .review-grid{display:grid;grid-template-columns:1fr 1fr;gap:1.4rem;}
+  @media (max-width:760px){.review-grid{grid-template-columns:1fr;}}
+  .review-card{padding:1.6rem;}
+  .review-card .stars{font-size:1rem;margin-bottom:0.5rem;}
+  .review-card p{color:var(--text-dim);font-size:0.95rem;line-height:1.55;margin:0 0 0.8rem;}
+  .review-card .who{color:var(--text);font-size:0.85rem;font-family:'Bebas Neue',sans-serif;letter-spacing:0.05em;}
+
+  /* ============ CONTACT ============ */
+  .contact-grid{display:grid;grid-template-columns:1fr 1.1fr;gap:2.8rem;}
+  @media (max-width:900px){.contact-grid{grid-template-columns:1fr;}}
+  .ig-btn{
+    display:inline-flex;align-items:center;gap:10px;margin-top:1.4rem;padding:12px 22px;
+    border:1px solid var(--gold);color:var(--gold);border-radius:8px;font-size:0.95rem;letter-spacing:0.05em;
+    font-family:'Bebas Neue',sans-serif;transition:background .25s ease, color .25s ease;
+  }
+  .ig-btn:hover{background:var(--gold);color:#0c0b08;}
+  form.contact-form{display:flex;flex-direction:column;gap:1rem;}
+  form.contact-form label{font-size:0.85rem;color:var(--text-dim);margin-bottom:4px;display:block;}
+  form.contact-form input, form.contact-form textarea{
+    width:100%;padding:12px 14px;background:var(--bg-raised);border:1px solid var(--line);
+    border-radius:8px;color:var(--text);font-family:'Inter',sans-serif;font-size:0.95rem;
+  }
+  form.contact-form input:focus, form.contact-form textarea:focus{outline:none;border-color:var(--gold-soft);}
+  .form-success{
+    display:none;padding:1.2rem;border:1px solid var(--gold-soft);border-radius:10px;color:var(--gold);
+    text-align:center;font-family:'Cormorant Garamond',serif;font-size:1.2rem;
+  }
+  .form-success.show{display:block;}
+
+  @media (prefers-reduced-motion: reduce){
+    *{animation:none !important;transition:none !important;scroll-behavior:auto !important;}
+  }
+</style>
+
+<header class="topnav">
+  <div class="brand-name">SOFIA'S <span style="color:var(--text);">BARBER SHOP</span></div>
+  <nav class="tabs" id="navTabs">
+    <button class="tab active" data-page="services">Services</button>
+    <button class="tab" data-page="team">Our Team</button>
+    <button class="tab" data-page="location">Location &amp; Hours</button>
+    <button class="tab" data-page="reviews">Reviews</button>
+    <button class="tab" data-page="contact">Contact Us</button>
+  </nav>
+  <button class="hamburger" id="hamburger" aria-label="Menu"><span></span><span></span><span></span></button>
+</header>
+<div class="mobile-menu" id="mobileMenu">
+  <button class="active" data-page="services">Services</button>
+  <button data-page="team">Our Team</button>
+  <button data-page="location">Location &amp; Hours</button>
+  <button data-page="reviews">Reviews</button>
+  <button data-page="contact">Contact Us</button>
+</div>
+
+<!-- ================= SERVICES ================= -->
+<section class="page active" id="page-services">
+  <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydiupH5hRVHzccOxIgPpOUuzzj0Ahl6htfTJ9DxDIHLx65RjZ-V4RNYxoNbPot0ryY5RIGkJlI2sE7awQh9laPohr1fbES_TwX4hjiOG8tCF-QqDHNWuBbD43d2RqJ8-Z5nhB6FNqzDSk_X5YvWlNKwJD8sjegZqwtKPtkc7hyHVSWFQYHNxUKAKytqXwQFYMDr5VXrESdHJXOMGvlUtfRbjoyBDxjUTn9FJmzCM0zsBEkYTw9PVyYkThU099CDJK-Qpg-GjjnP6EvgKmudfr77K00LRzpDl1FRgOEGcxRbQZjxml2-YWc6LGFwu0joFxehMJSL9EobbXRO1V4jeGO4U7etzWeRe3nCNaZQ4NLKqvtIVvzdyCdcHvQSsuYSaq7OtDy-B_td721CHEgvKcwuUgWkI0dRbSUMkftg&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU');">
+    <div class="hero-inner">
+      <h1>SERVICES</h1>
+      <p>Book your chair — barber, cut, and finishing touches, all in one flow.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="steps-track" id="stepsTrack">
+      <div class="step-pill current" data-step="1">1 · Barber</div>
+      <div class="step-pill" data-step="2">2 · Service</div>
+      <div class="step-pill" data-step="3">3 · Add-Ons</div>
+      <div class="step-pill" data-step="4">4 · Summary</div>
+    </div>
+
+    <div class="flow-wrap">
+      <div>
+        <!-- STEP 1: BARBER -->
+        <div class="step-block" id="block-barber">
+          <div class="step-title"><span class="num">1</span> Choose Your Barber</div>
+          <div class="grid-cards" id="barberCards"></div>
+        </div>
+
+        <!-- STEP 2: SERVICE -->
+        <div class="step-block locked" id="block-service">
+          <div class="step-title"><span class="num">2</span> Choose Your Service</div>
+          <div class="grid-cards" id="serviceCards"></div>
+        </div>
+
+        <!-- STEP 3: ADD-ONS -->
+        <div class="step-block locked" id="block-addons">
+          <div class="step-title"><span class="num">3</span> Add-Ons</div>
+          <p class="addons-note">Optional — select as many as you like to complete your visit.</p>
+          <div id="addonRows"></div>
+        </div>
+      </div>
+
+      <!-- STEP 4: SUMMARY -->
+      <div class="summary-panel">
+        <h3>Your Booking</h3>
+        <div class="summary-row"><span class="lbl">Barber</span><span class="val" id="sumBarber">Not selected</span></div>
+        <div class="summary-row"><span class="lbl">Service</span><span class="val" id="sumService">Not selected</span></div>
+        <div class="summary-row"><span class="lbl">Add-Ons</span><span class="val" id="sumAddons">None</span></div>
+        <div class="summary-total">
+          <div><div class="price-num" id="sumPrice">$0</div><div class="dur" id="sumDuration">0 min</div></div>
+        </div>
+        <button class="btn" id="bookBtn" disabled>Book Now</button>
+        <div class="book-confirm" id="bookConfirm">Thank you! Your request has been noted — we'll confirm your appointment by phone or Instagram shortly.</div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span class="fname">Sofia's Barber Shop</span>
+    2241 Eastern Ave, Baltimore, MD 21231 · &copy; <span id="year1"></span> Sofia's Barber Shop. All rights reserved.
+  </footer>
+</section>
+
+<!-- ================= TEAM ================= -->
+<section class="page" id="page-team">
+  <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydj-ZeIS_n6e-w06QTnGhVZPoVq8oyf72xx--Y_46rN74J0DodhZkYmOS_qASGejxd3Okpwjz7RIG_1v3ocwvlIN_4P3ZRPNHwQt0GOz1DgykIEv2u_nxvQyouo3m9qeEf3U2IkwOa51Lri0syqgrokdZHCgQ3fTGQBe5tsmrBGXm2AatWP5c0JKU0BUoxcsmd_5VWhSk6XvyiqgNfwkbSYN--CIfvZlVNAaNPNzHl0ywMePYz0f3ddEATxPo_6VFIghfvlSEXjLhiq0TgpCehQhYa96VZpa_KAg9kzk2pbsZ4jZHz2CejMooW1HB1bcR15YE7xtm-iIjTd6egJfI8c3iBuAJwCcMdEObgAIZAk1oyyw3QoRq_pEFHwwvhnzWH26ylmVx8Sv6ewDYgBZFbIDTsvdMjii9FU7OvgAIf45gIPB&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU');">
+    <div class="hero-inner">
+      <h1>OUR TEAM</h1>
+      <p>The hands behind every clean line and sharp fade.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="section-head">
+      <h2>Meet the Barbers</h2>
+      <p>Experienced, detail-obsessed, and dedicated to your best look.</p>
+    </div>
+    <div class="team-grid">
+      <div class="card team-card">
+        <div class="monogram-lg">SR</div>
+        <h3>Sofia Ramirez</h3>
+        <div class="role">OWNER &amp; MASTER BARBER</div>
+        <p class="bio">With over 15 years behind the chair, Sofia built this shop on precision and genuine care for every client. Regulars say the same thing after their very first visit — it feels like they've been coming for years.</p>
+        <div class="tags"><span class="tag">Precision Fades</span><span class="tag">Classic Cuts</span><span class="tag">Consultations</span></div>
+      </div>
+      <div class="card team-card">
+        <div class="monogram-lg">NB</div>
+        <h3>Nolan Brooks</h3>
+        <div class="role">SENIOR BARBER</div>
+        <p class="bio">Trained directly under Sofia, Nolan has become a client favorite for his sharp modern fades and relaxed, easygoing chair-side manner. Known for turning first-timers into regulars.</p>
+        <div class="tags"><span class="tag">Modern Fades</span><span class="tag">Beard Sculpting</span><span class="tag">Line-Ups</span></div>
+      </div>
+      <div class="card team-card">
+        <div class="monogram-lg">ML</div>
+        <h3>Marcus Lee</h3>
+        <div class="role">BARBER &amp; STYLIST</div>
+        <p class="bio">Marcus brings a patient, detail-first approach to every cut, with a particular gift for working with kids and first-time clients who want something a little different.</p>
+        <div class="tags"><span class="tag">Textured Crops</span><span class="tag">Kids Cuts</span><span class="tag">Restyles</span></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span class="fname">Sofia's Barber Shop</span>
+    2241 Eastern Ave, Baltimore, MD 21231 · &copy; <span id="year2"></span> Sofia's Barber Shop. All rights reserved.
+  </footer>
+</section>
+
+<!-- ================= LOCATION & HOURS ================= -->
+<section class="page" id="page-location">
+  <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydh70iKFzIkmbVxL_EM-g-LwqfAwsgCAjCjpIynVKCDJvpPOcQKkpWyjHEpHDeXd6DFbe262YHyZBBTTTjnNuIkNtZ3JaJMnlo7p6wK9-OTW_vU0mcmEcTzqrZ0Sw25J4b0QszeLzCnVsg75nEY-0qzfB7zqXfbAGyF30MIfZOHPA7f3wW_Ugaf1vJde4if9UQFRVfIW0oN0b31k_GarCrqYCXcVG46PaLW5kBsAqOZ4Z76lDHDyUbKbPVtXmlZ9MHjaA553eUetPt92rD5zbW1i8alMKaMNY5F1P0SdkbGCKDF5M8o_CDjrnCsjj8EwbA7AL5NLhUvlTRQQ4xXSHysTU6UkYEj9z4xUQYXHj_cCTSh2lqZzmtjHyX1119UNyl-5bqjVeYOtxTUtmilgEvEZwT_m9pn9HFLSINt3kMQojw&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU');">
+    <div class="hero-inner">
+      <h1>LOCATION &amp; HOURS</h1>
+      <p>Stop by Eastern Ave — walk-ins welcome.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="loc-grid">
+      <div>
+        <div class="section-head" style="text-align:left;margin-bottom:1.4rem;">
+          <h2 style="font-size:2rem;">Weekly Hours</h2>
+        </div>
+        <table class="hours" id="hoursTable">
+          <tr data-day="1"><td class="day">Monday</td><td>Closed</td></tr>
+          <tr data-day="2"><td class="day">Tuesday</td><td>9:00 AM – 7:00 PM</td></tr>
+          <tr data-day="3"><td class="day">Wednesday</td><td>9:00 AM – 7:00 PM</td></tr>
+          <tr data-day="4"><td class="day">Thursday</td><td>9:00 AM – 7:00 PM</td></tr>
+          <tr data-day="5"><td class="day">Friday</td><td>9:00 AM – 8:00 PM</td></tr>
+          <tr data-day="6"><td class="day">Saturday</td><td>8:00 AM – 6:00 PM</td></tr>
+          <tr data-day="0"><td class="day">Sunday</td><td>10:00 AM – 4:00 PM</td></tr>
+        </table>
+
+        <div class="info-list">
+          <div class="row"><b>Address</b><span>2241 Eastern Ave, Baltimore, MD 21231, USA</span></div>
+          <div class="row"><b>Phone</b><span>(443) 630-8330</span></div>
+          <div class="row"><b>Parking</b><span>Free 2-hour street parking along Eastern Ave, plus a metered lot one block west.</span></div>
+          <div class="row"><b>Accessibility</b><span>Street-level, no-step entrance with a wide doorway — fully wheelchair accessible.</span></div>
+        </div>
+
+        <div class="map-embed">
+          <iframe src="https://www.google.com/maps?q=2241+Eastern+Ave,+Baltimore,+MD+21231&output=embed" loading="lazy" allowfullscreen title="Sofia's Barber Shop location map"></iframe>
+        </div>
+      </div>
+
+      <div>
+        <div class="section-head" style="text-align:left;margin-bottom:1.4rem;">
+          <h2 style="font-size:2rem;">Gallery</h2>
+        </div>
+        <div class="gallery" id="galleryGrid"></div>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span class="fname">Sofia's Barber Shop</span>
+    2241 Eastern Ave, Baltimore, MD 21231 · &copy; <span id="year3"></span> Sofia's Barber Shop. All rights reserved.
+  </footer>
+</section>
+
+<div class="lightbox" id="lightbox">
+  <button class="close-x" id="lightboxClose">&times;</button>
+  <img id="lightboxImg" src="" alt="Gallery image">
+</div>
+
+<!-- ================= REVIEWS ================= -->
+<section class="page" id="page-reviews">
+  <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydha-RY-gqliOZVISeOxTDdsEWlXIREzjvjpJAiP4G7Sn-1Hxh6b9xoKs4PGI7BPbz6zlKEH0YoVDpAfO6KehkBy979yN3Dt2w4wDlv4PFI4ojhQh4__nfga9Xv3s2jE9cp4pNfWsqaxHBz4FV18NDblcw1JP0mod_HWfHZSZkneV0NVFNrOVToJtdEfSsVwhlp-9bkmQ2-0Ogz4w7Xq2f7vJNmd_fYpcwgn4xnmGe2ow7nGkvuTrCPNtCAlyWEBCdDDsThhdVT-afKkCJwGgr8KQXF0Mxk60856jxaPWEfq5ug-jS_CsxYNA8KCwr6pNk909LUZSzVbDgJwjQ30790Wreqc2zlwU7Wr5KCFmQpg2iGsPnxRsCBcQGGBaoar8Q1eepCcDnRZHIcpHBJV067BBCxBBxJ3MfHPqxj-4dY3UJNv&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU');">
+    <div class="hero-inner">
+      <h1>REVIEWS</h1>
+      <p>What our clients say after they sit in the chair.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="rating-hero">
+      <div class="rating-big">
+        <div class="num">4.8</div>
+        <div class="stars">★★★★★</div>
+        <div class="count">Based on 43 Google reviews</div>
+      </div>
+      <div class="bars">
+        <div class="bar-row"><span>5 stars</span><div class="bar-track"><div class="bar-fill" style="width:88%;"></div></div><span>88%</span></div>
+        <div class="bar-row"><span>4 stars</span><div class="bar-track"><div class="bar-fill" style="width:9%;"></div></div><span>9%</span></div>
+        <div class="bar-row"><span>3 stars</span><div class="bar-track"><div class="bar-fill" style="width:2%;"></div></div><span>2%</span></div>
+        <div class="bar-row"><span>2 stars</span><div class="bar-track"><div class="bar-fill" style="width:1%;"></div></div><span>1%</span></div>
+        <div class="bar-row"><span>1 star</span><div class="bar-track"><div class="bar-fill" style="width:0%;"></div></div><span>0%</span></div>
+      </div>
+    </div>
+
+    <div class="card featured-review">
+      <div class="stars">★★★★★</div>
+      <p>"Finding this place has been a huge relief. I've tried many places in the area and no one stacks up to Sofia's attention to detail. She is attentive, kind, and extremely detail oriented. I have been going to this place for over a year and I have never received a bad haircut. Highly recommended."</p>
+      <div class="who">— Verified Google Review</div>
+    </div>
+
+    <div class="review-grid" id="reviewGrid"></div>
+  </div>
+
+  <footer>
+    <span class="fname">Sofia's Barber Shop</span>
+    2241 Eastern Ave, Baltimore, MD 21231 · &copy; <span id="year4"></span> Sofia's Barber Shop. All rights reserved.
+  </footer>
+</section>
+
+<!-- ================= CONTACT ================= -->
+<section class="page" id="page-contact">
+  <div class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydgVNSsk2ee_riVCpZMi_SuYebNjOU0g51V919MiG9sH3w6rQwkXa8_Xc-yBMkhKs7huhTUc7Bo39VYWztSaWeBmu387dURk_77p6uU-zxc5L8Mkzekn729lgNnqcm-nTVPMjwWKvdXUf60KGurLRYF3BKUkAtSXz9bvwcH9niX-eUveAK2UbUfTGCWdBhPkLktz2Hei4I4-0P7c1lqez-abLMk9HxcFloJV7YYcICldb_4-5RcMhkhH8wOvSR_QiOFjE7lYvMtHZ6gN8RR3kLEG0etjMEemNbUvqTMPxdQMCZgMfFua1tXuHoEB6WvbuT0PEZWKD7PD02z5paKMEb2OZfa92Dr_84OCD7EupAemdF9pVc6xvpZ6GI5e-bLbJeRiI5aqwlmTtcQrdKA_67cSPYNn__gWrjc2tORXxKNA7TQ&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU');">
+    <div class="hero-inner">
+      <h1>CONTACT US</h1>
+      <p>Questions, walk-ins, or private events — we'd love to hear from you.</p>
+    </div>
+  </div>
+
+  <div class="section">
+    <div class="contact-grid">
+      <div>
+        <div class="section-head" style="text-align:left;margin-bottom:1.4rem;">
+          <h2 style="font-size:2rem;">Get In Touch</h2>
+        </div>
+        <div class="info-list">
+          <div class="row"><b>Shop</b><span>Sofia's Barber Shop</span></div>
+          <div class="row"><b>Address</b><span>2241 Eastern Ave, Baltimore, MD 21231, USA</span></div>
+          <div class="row"><b>Phone</b><span>(443) 630-8330</span></div>
+        </div>
+        <a class="ig-btn" href="https://www.instagram.com/p/BI1Q-SwjcKC/" target="_blank" rel="noopener">Follow us on Instagram →</a>
+      </div>
+
+      <div>
+        <form class="contact-form" id="contactForm">
+          <div>
+            <label for="cf-name">Name</label>
+            <input type="text" id="cf-name" required>
+          </div>
+          <div>
+            <label for="cf-email">Email</label>
+            <input type="email" id="cf-email" required>
+          </div>
+          <div>
+            <label for="cf-phone">Phone</label>
+            <input type="tel" id="cf-phone">
+          </div>
+          <div>
+            <label for="cf-message">Message</label>
+            <textarea id="cf-message" rows="5" required></textarea>
+          </div>
+          <button type="submit" class="btn">Send Message</button>
+          <div class="form-success" id="formSuccess">Thank you — your message has been sent! We'll get back to you shortly.</div>
+        </form>
+      </div>
+    </div>
+  </div>
+
+  <footer>
+    <span class="fname">Sofia's Barber Shop</span>
+    2241 Eastern Ave, Baltimore, MD 21231 · &copy; <span id="year5"></span> Sofia's Barber Shop. All rights reserved.
+  </footer>
+</section>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ---------- NAV ---------- */
+  var pages = document.querySelectorAll('.page');
+  var tabButtons = document.querySelectorAll('nav.tabs .tab');
+  var mobileButtons = document.querySelectorAll('.mobile-menu button');
+  var mobileMenu = document.getElementById('mobileMenu');
+  var hamburger = document.getElementById('hamburger');
+
+  function showPage(id){
+    pages.forEach(function(p){ p.classList.toggle('active', p.id === 'page-' + id); });
+    tabButtons.forEach(function(b){ b.classList.toggle('active', b.dataset.page === id); });
+    mobileButtons.forEach(function(b){ b.classList.toggle('active', b.dataset.page === id); });
+    mobileMenu.classList.remove('open');
+    window.scrollTo({top:0, behavior:'auto'});
+  }
+  tabButtons.forEach(function(b){ b.addEventListener('click', function(){ showPage(b.dataset.page); }); });
+  mobileButtons.forEach(function(b){ b.addEventListener('click', function(){ showPage(b.dataset.page); }); });
+  hamburger.addEventListener('click', function(){ mobileMenu.classList.toggle('open'); });
+
+  /* ---------- FOOTER YEARS ---------- */
+  var yr = new Date().getFullYear();
+  ['year1','year2','year3','year4','year5'].forEach(function(id){
+    var el = document.getElementById(id);
+    if(el) el.textContent = yr;
+  });
+
+  /* ---------- TODAY HIGHLIGHT ---------- */
+  var todayIdx = new Date().getDay();
+  var todayRow = document.querySelector('#hoursTable tr[data-day="' + todayIdx + '"]');
+  if(todayRow){
+    todayRow.classList.add('today');
+    var dayCell = todayRow.querySelector('.day');
+    var pill = document.createElement('span');
+    pill.className = 'today-pill';
+    pill.textContent = 'Today';
+    dayCell.appendChild(pill);
+  }
+
+  /* ---------- GALLERY + LIGHTBOX ---------- */
+  var galleryImages = [
+    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydiupH5hRVHzccOxIgPpOUuzzj0Ahl6htfTJ9DxDIHLx65RjZ-V4RNYxoNbPot0ryY5RIGkJlI2sE7awQh9laPohr1fbES_TwX4hjiOG8tCF-QqDHNWuBbD43d2RqJ8-Z5nhB6FNqzDSk_X5YvWlNKwJD8sjegZqwtKPtkc7hyHVSWFQYHNxUKAKytqXwQFYMDr5VXrESdHJXOMGvlUtfRbjoyBDxjUTn9FJmzCM0zsBEkYTw9PVyYkThU099CDJK-Qpg-GjjnP6EvgKmudfr77K00LRzpDl1FRgOEGcxRbQZjxml2-YWc6LGFwu0joFxehMJSL9EobbXRO1V4jeGO4U7etzWeRe3nCNaZQ4NLKqvtIVvzdyCdcHvQSsuYSaq7OtDy-B_td721CHEgvKcwuUgWkI0dRbSUMkftg&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU",
+    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydh70iKFzIkmbVxL_EM-g-LwqfAwsgCAjCjpIynVKCDJvpPOcQKkpWyjHEpHDeXd6DFbe262YHyZBBTTTjnNuIkNtZ3JaJMnlo7p6wK9-OTW_vU0mcmEcTzqrZ0Sw25J4b0QszeLzCnVsg75nEY-0qzfB7zqXfbAGyF30MIfZOHPA7f3wW_Ugaf1vJde4if9UQFRVfIW0oN0b31k_GarCrqYCXcVG46PaLW5kBsAqOZ4Z76lDHDyUbKbPVtXmlZ9MHjaA553eUetPt92rD5zbW1i8alMKaMNY5F1P0SdkbGCKDF5M8o_CDjrnCsjj8EwbA7AL5NLhUvlTRQQ4xXSHysTU6UkYEj9z4xUQYXHj_cCTSh2lqZzmtjHyX1119UNyl-5bqjVeYOtxTUtmilgEvEZwT_m9pn9HFLSINt3kMQojw&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU",
+    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydha-RY-gqliOZVISeOxTDdsEWlXIREzjvjpJAiP4G7Sn-1Hxh6b9xoKs4PGI7BPbz6zlKEH0YoVDpAfO6KehkBy979yN3Dt2w4wDlv4PFI4ojhQh4__nfga9Xv3s2jE9cp4pNfWsqaxHBz4FV18NDblcw1JP0mod_HWfHZSZkneV0NVFNrOVToJtdEfSsVwhlp-9bkmQ2-0Ogz4w7Xq2f7vJNmd_fYpcwgn4xnmGe2ow7nGkvuTrCPNtCAlyWEBCdDDsThhdVT-afKkCJwGgr8KQXF0Mxk60856jxaPWEfq5ug-jS_CsxYNA8KCwr6pNk909LUZSzVbDgJwjQ30790Wreqc2zlwU7Wr5KCFmQpg2iGsPnxRsCBcQGGBaoar8Q1eepCcDnRZHIcpHBJV067BBCxBBxJ3MfHPqxj-4dY3UJNv&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU",
+    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydgVNSsk2ee_riVCpZMi_SuYebNjOU0g51V919MiG9sH3w6rQwkXa8_Xc-yBMkhKs7huhTUc7Bo39VYWztSaWeBmu387dURk_77p6uU-zxc5L8Mkzekn729lgNnqcm-nTVPMjwWKvdXUf60KGurLRYF3BKUkAtSXz9bvwcH9niX-eUveAK2UbUfTGCWdBhPkLktz2Hei4I4-0P7c1lqez-abLMk9HxcFloJV7YYcICldb_4-5RcMhkhH8wOvSR_QiOFjE7lYvMtHZ6gN8RR3kLEG0etjMEemNbUvqTMPxdQMCZgMfFua1tXuHoEB6WvbuT0PEZWKD7PD02z5paKMEb2OZfa92Dr_84OCD7EupAemdF9pVc6xvpZ6GI5e-bLbJeRiI5aqwlmTtcQrdKA_67cSPYNn__gWrjc2tORXxKNA7TQ&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU",
+    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydhcJ92NK5cuYGDs6zm93yfqAR8zjDkqgom0M4XYvlIkb5DSbc2dv2iY_jyWaxJWhLUNjMtQQBOCZGI6Yj-llrHyf_TngA0qObZ9TXhIfLLBEObvno-3ft_U6s3pbCsYx6IFqUa1WCXp_rnBRtG6szxRE3kMXoFZSNroATMvfn1vDIPH5loMkUvo7mAe-lLUtoM1uQpnZOs3QWm-b-xcwbowlQ_CPP-k1rCQFQI6ADk_mEQcdJ4KSDnhr_lllZ51m-whK8XXB2C_BOhTXR-Kq5GfGBZ_88JmIhDimA81gism-VDhS8mF2JRkYyff_k6s142gfQuizA1AKg7P4IbZsH1fBcQhB2AXrvh0iWG2Rwe1SGEiluFqlswSS000Dxoow6H09RUWsyXReHTi7D3S0fnO8gl0z4WIWFMwLtz-hTEKVA&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU",
+    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydixt2fdLh5wTuToxbo1HOATqtLhhFf4rxDJ5BosO6MIaPf21EGKzOzZgjs1Nh70PEAP_YWCebqGqWEldcb43sTxEU9IQkCfTvMesm_Tybea0oq5w9ZSAewHZozs5mf_ymIfC-UZl-FxySygii69YpyDmdwAiBEtOjwRr3h0FHvWAklLGbB6GmtUq22HNSdYjyN-Zzqma2-c-aI2Qi3y8IY_L8hfYH3OG89JYFIS_JOqakmoVuAAcpXP09mc6TzV_mAj2LJNpgUia3Ia4uGUM3XzH_TJGZDEpgtMjr_oKoJoK_QxglybZHE3Mo9CZscDtY8fCXgMS7RQ5XgdVQevm6Ytt8yDLNM9zcjBXmooImgNH39aNdLqYACBuwlAuVIKNBfIUNsMPq4tGbGzNscKphY0-N8QzVRb6TyNlyM1TBHrqv-Y&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU",
+    "https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydgQq1Ji4GfffspDJRwA8ht0lWBnF9QasS2-VFTDf9DgKcFOIPNmHcZP-fMkOkg4qoZlHlfoE7oNMLlNg8qGDxj9VjSYTvTHyDOv9vJoCo_1or8DSZH_LhkKSreSF6O6F4f4eGcqxCJZCeLGsJbc-MTfZ4K7nGFLUfO6k0S5A7Uoe3f9UlVb-pyJ1U7cKUj3n9oKRoS2Y_EBoxF1zsCTcgTW80qfOluY5WRjJGQ2BTOt78jGRsDCdmod2n49XJrn8bafhBDMPdItgkVSijZJ_H2tJ4SaG76zfi3-Ow4ji6BDdA1HaX2ibJZ1Xp6k4MVXIe30IhgrsUWQ4qpeVMyu-tZHXnoS4l6e1U3O5AyZiyJddpuhImhdXZC1mlyFFJ3wQqTbqEP6QykK6ZKDeQ9ar7GccUD1PdjV-s7i9iA7kYamlQ&key=AIzaSyCj0Ryd2VMFQixaJ0HN9UpCuGvutRFaRFU"
+  ];
+  var galleryGrid = document.getElementById('galleryGrid');
+  galleryImages.forEach(function(src){
+    var img = document.createElement('img');
+    img.src = src;
+    img.alt = "Sofia's Barber Shop gallery photo";
+    img.addEventListener('click', function(){ openLightbox(src); });
+    galleryGrid.appendChild(img);
+  });
+
+  var lightbox = document.getElementById('lightbox');
+  var lightboxImg = document.getElementById('lightboxImg');
+  function openLightbox(src){ lightboxImg.src = src; lightbox.classList.add('open'); }
+  function closeLightbox(){ lightbox.classList.remove('open'); lightboxImg.src=''; }
+  document.getElementById('lightboxClose').addEventListener('click', closeLightbox);
+  lightbox.addEventListener('click', function(e){ if(e.target === lightbox) closeLightbox(); });
+  document.addEventListener('keydown', function(e){ if(e.key === 'Escape') closeLightbox(); });
+
+  /* ---------- REVIEWS ---------- */
+  var reviews = [
+    {stars:5, text:"Sofia is a professional. She took care of me for the very first time and it felt like I was one of her loyal and regular clients. Although I'm a regular client at her shop, I usually am taken care of by one of her subordinates, Nolan, who is also good. Get your hair cut at Sofia's. You won't be disappointed.", who:"Verified Google Review"},
+    {stars:5, text:"My barber had the hands of a goddess and the experience was absolutely lovely. Great environment and vibe. Would recommend for men and women of all ages.", who:"Verified Google Review"},
+    {stars:5, text:"Sophia is amazing barber!! Very friendly and has great haircut recommendations!", who:"Verified Google Review"},
+    {stars:5, text:"Same barber for the past 3 years she's great why change. I got a surprise about 3 months ago while waiting for my turn — I looked at the poster of different hairstyles and low and behold I'm featured #16 & #17.", who:"Verified Google Review"},
+    {stars:5, text:"The energy in this shop is unmatched. Clean, professional, and every cut has been on point. This is my only stop for a fresh fade now.", who:"Verified Google Review"},
+    {stars:4, text:"Great cut and friendly staff — parking can be tight on weekends but it's always worth the wait.", who:"Verified Google Review"}
+  ];
+  var reviewGrid = document.getElementById('reviewGrid');
+  reviews.forEach(function(r){
+    var card = document.createElement('div');
+    card.className = 'card review-card';
+    card.innerHTML = '<div class="stars">' + '★'.repeat(r.stars) + '☆'.repeat(5-r.stars) + '</div>' +
+      '<p>"' + r.text + '"</p><div class="who">— ' + r.who + '</div>';
+    reviewGrid.appendChild(card);
+  });
+
+  /* ---------- CONTACT FORM ---------- */
+  document.getElementById('contactForm').addEventListener('submit', function(e){
+    e.preventDefault();
+    document.getElementById('formSuccess').classList.add('show');
+    this.reset();
+  });
+
+  /* ===================================================== */
+  /* ================= BOOKING FLOW ===================== */
+  /* ===================================================== */
+  var barbers = [
+    {id:'sofia', name:'Sofia Ramirez', role:'Owner & Master Barber', mono:'SR'},
+    {id:'nolan', name:'Nolan Brooks', role:'Senior Barber', mono:'NB'},
+    {id:'marcus', name:'Marcus Lee', role:'Barber & Stylist', mono:'ML'}
+  ];
+  var services = [
+    {id:'haircut', name:'Haircut', desc:'Classic tailored cut with consultation, wash & style.', price:35, dur:30, isDefault:true},
+    {id:'skinfade', name:'Skin Fade', desc:'Precision fade blended to bare skin for a crisp finish.', price:45, dur:40},
+    {id:'buzz', name:'Buzz Cut', desc:'Fast, clean all-over clipper cut.', price:25, dur:15},
+    {id:'restyle', name:'Restyle / Full Transformation', desc:'Complete consultation and transformation for a fresh new look.', price:65, dur:60},
+    {id:'kids', name:'Kids Cut', desc:'Gentle, patient haircuts for our youngest clients (12 & under).', price:28, dur:25}
+  ];
+  var addons = [
+    {id:'beard', name:'Beard Trim', price:15, dur:10},
+    {id:'lineup', name:'Line-Up / Edge', price:10, dur:10},
+    {id:'skinfadeup', name:'Skin Fade Upgrade', price:12, dur:10, hideIfService:'skinfade'},
+    {id:'wash', name:'Wash & Style', price:10, dur:10},
+    {id:'eyebrow', name:'Eyebrow Cleanup', price:8, dur:5}
+  ];
+
+  var state = { barber:null, service:null, addons:[] };
+
+  var barberCards = document.getElementById('barberCards');
+  barbers.forEach(function(b){
+    var el = document.createElement('div');
+    el.className = 'card pick-card';
+    el.innerHTML = '<div class="check">✓</div><div class="monogram">' + b.mono + '</div>' +
+      '<h4>' + b.name + '</h4><p class="sub">' + b.role + '</p>';
+    el.addEventListener('click', function(){
+      state.barber = b;
+      document.querySelectorAll('#barberCards .pick-card').forEach(function(c){ c.classList.remove('selected'); });
+      el.classList.add('selected');
+      document.getElementById('block-service').classList.remove('locked');
+      advanceStep(2);
+      renderSummary();
+    });
+    barberCards.appendChild(el);
+  });
+
+  var serviceCards = document.getElementById('serviceCards');
+  services.forEach(function(s){
+    var el = document.createElement('div');
+    el.className = 'card pick-card service-fade-sweep';
+    el.innerHTML = '<div class="check">✓</div><h4>' + s.name + (s.isDefault ? ' <span style="color:var(--gold);font-size:0.7rem;">(default)</span>' : '') + '</h4>' +
+      '<p class="sub">' + s.desc + '</p>' +
+      '<div class="meta"><span>$' + s.price + '</span><span>' + s.dur + ' min</span></div>';
+    el.addEventListener('click', function(){
+      state.service = s;
+      document.querySelectorAll('#serviceCards .pick-card').forEach(function(c){ c.classList.remove('selected'); });
+      el.classList.add('selected');
+      document.getElementById('block-addons').classList.remove('locked');
+      renderAddons();
+      advanceStep(3);
+      renderSummary();
+    });
+    serviceCards.appendChild(el);
+  });
+
+  var addonRows = document.getElementById('addonRows');
+  function renderAddons(){
+    addonRows.innerHTML = '';
+    addons.forEach(function(a){
+      if(state.service && a.hideIfService === state.service.id) return;
+      var row = document.createElement('div');
+      row.className = 'card addon-row';
+      if(state.addons.indexOf(a.id) !== -1) row.classList.add('selected');
+      row.innerHTML = '<div class="left"><div class="box">✓</div><div class="name">' + a.name + '</div></div>' +
+        '<div class="info">+$' + a.price + ' · ' + a.dur + ' min</div>';
+      row.addEventListener('click', function(){
+        var idx = state.addons.indexOf(a.id);
+        if(idx === -1){ state.addons.push(a.id); } else { state.addons.splice(idx,1); }
+        renderAddons();
+        renderSummary();
+      });
+      addonRows.appendChild(row);
+    });
+  }
+
+  function advanceStep(n){
+    document.querySelectorAll('.step-pill').forEach(function(p){
+      var s = parseInt(p.dataset.step, 10);
+      p.classList.remove('current','done');
+      if(s < n) p.classList.add('done');
+      if(s === n) p.classList.add('current');
+    });
+  }
+
+  function renderSummary(){
+    document.getElementById('sumBarber').textContent = state.barber ? state.barber.name : 'Not selected';
+    document.getElementById('sumService').textContent = state.service ? state.service.name : 'Not selected';
+
+    var addonNames = state.addons.map(function(id){
+      var a = addons.find(function(x){ return x.id === id; });
+      return a ? a.name : '';
+    }).filter(Boolean);
+    document.getElementById('sumAddons').textContent = addonNames.length ? addonNames.join(', ') : 'None';
+
+    var price = 0, dur = 0;
+    if(state.service){ price += state.service.price; dur += state.service.dur; }
+    state.addons.forEach(function(id){
+      var a = addons.find(function(x){ return x.id === id; });
+      if(a){ price += a.price; dur += a.dur; }
+    });
+    document.getElementById('sumPrice').textContent = '$' + price;
+    document.getElementById('sumDuration').textContent = dur + ' min';
+
+    var bookBtn = document.getElementById('bookBtn');
+    var ready = !!(state.barber && state.service);
+    bookBtn.disabled = !ready;
+    if(ready) advanceStep(4);
+  }
+
+  document.getElementById('bookBtn').addEventListener('click', function(){
+    document.getElementById('bookConfirm').classList.add('show');
+  });
+
+  renderSummary();
+})();
+</script>
