@@ -1,0 +1,1140 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Milan's Cutz | Premier Barbershop in Baltimore, MD</title>
+<meta name="description" content="Milan's Cutz is Baltimore's premier barbershop, offering precision haircuts, fades, beard grooming, and straight razor shaves. Book your barber today.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@600;700;800&family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#0a0a0a;
+    --charcoal:#1c1c1e;
+    --charcoal-2:#232326;
+    --silver:#c9ccd1;
+    --silver-dim:#9a9ea6;
+    --white:#f7f7f8;
+    --light-gray:#e9e9eb;
+    --metal:#b8860b;
+    --metal-soft: rgba(184,134,11,0.35);
+    --line: rgba(255,255,255,0.08);
+    --radius: 14px;
+    --shadow: 0 10px 30px rgba(0,0,0,0.35);
+    --shadow-soft: 0 4px 18px rgba(0,0,0,0.25);
+    --maxw: 1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    background:var(--black);
+    color:var(--white);
+    font-family:'Inter',sans-serif;
+    line-height:1.65;
+    -webkit-font-smoothing:antialiased;
+  }
+  h1,h2,h3,h4{
+    font-family:'Playfair Display', serif;
+    font-weight:700;
+    letter-spacing:0.2px;
+    margin:0 0 .5em;
+    color:var(--white);
+  }
+  p{margin:0 0 1em; color:var(--silver);}
+  a{color:inherit; text-decoration:none;}
+  ul{margin:0;padding:0;list-style:none;}
+  img{max-width:100%; display:block;}
+  .wrap{max-width:var(--maxw); margin:0 auto; padding:0 24px;}
+  .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:3px;
+    font-size:12.5px;
+    font-weight:600;
+    color:var(--metal);
+    margin-bottom:12px;
+    display:inline-block;
+  }
+  section{padding:96px 0;}
+  .section-head{text-align:center; max-width:680px; margin:0 auto 56px;}
+  .section-head h2{font-size:clamp(28px,4vw,42px);}
+  .section-head p{font-size:17px;}
+
+  /* ===== Buttons ===== */
+  .btn{
+    display:inline-flex; align-items:center; justify-content:center; gap:8px;
+    padding:15px 30px;
+    border-radius:8px;
+    font-weight:600;
+    font-size:15px;
+    letter-spacing:.3px;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:all .25s ease;
+    white-space:nowrap;
+  }
+  .btn-primary{
+    background:linear-gradient(135deg,#d4af37,#8a6a1f);
+    color:#0a0a0a;
+    box-shadow:0 6px 20px rgba(184,134,11,0.25);
+  }
+  .btn-primary:hover{ transform:translateY(-2px); box-shadow:0 10px 26px rgba(184,134,11,0.4); }
+  .btn-outline{
+    background:transparent;
+    border:1px solid rgba(255,255,255,0.25);
+    color:var(--white);
+  }
+  .btn-outline:hover{ border-color:var(--metal); color:var(--metal); transform:translateY(-2px); }
+  .btn-block{width:100%;}
+  .btn-sm{padding:10px 18px; font-size:13.5px;}
+  .btn:disabled{opacity:.4; cursor:not-allowed; transform:none;}
+
+  /* ===== Nav ===== */
+  header{
+    position:fixed; top:0; left:0; right:0; z-index:1000;
+    background:rgba(10,10,10,0.85);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid var(--line);
+  }
+  .navbar{
+    max-width:var(--maxw); margin:0 auto; padding:0 24px;
+    height:78px; display:flex; align-items:center; justify-content:space-between;
+  }
+  .brand{display:flex; align-items:center; gap:10px; font-family:'Playfair Display',serif; font-size:21px; font-weight:700; color:var(--white);}
+  .brand .dot{width:8px; height:8px; border-radius:50%; background:var(--metal);}
+  nav.links{display:flex; align-items:center; gap:36px;}
+  nav.links a{
+    font-size:14.5px; font-weight:500; color:var(--silver);
+    position:relative; padding:6px 0; transition:color .2s;
+  }
+  nav.links a::after{
+    content:''; position:absolute; left:0; bottom:0; width:0; height:1px; background:var(--metal); transition:width .25s;
+  }
+  nav.links a:hover, nav.links a.active{color:var(--white);}
+  nav.links a.active::after, nav.links a:hover::after{width:100%;}
+  .nav-actions{display:flex; align-items:center; gap:18px;}
+  .hamburger{display:none; flex-direction:column; gap:5px; cursor:pointer; background:none; border:none;}
+  .hamburger span{width:24px; height:2px; background:var(--white); display:block;}
+
+  /* ===== Hero ===== */
+  .hero{
+    position:relative;
+    min-height:92vh;
+    display:flex; align-items:center;
+    padding-top:78px;
+    background-size:cover; background-position:center;
+  }
+  .hero::before{
+    content:'';
+    position:absolute; inset:0;
+    background:linear-gradient(180deg, rgba(10,10,10,0.55) 0%, rgba(10,10,10,0.78) 55%, rgba(10,10,10,0.96) 100%);
+  }
+  .hero-content{position:relative; z-index:2; max-width:640px; padding:60px 24px;}
+  .hero-content .eyebrow{color:var(--metal);}
+  .hero-content h1{font-size:clamp(36px,6vw,60px); line-height:1.08; margin-bottom:20px;}
+  .hero-content p{font-size:18px; color:var(--silver); max-width:520px;}
+  .hero-actions{display:flex; gap:16px; margin-top:32px; flex-wrap:wrap;}
+
+  /* ===== Trust bar ===== */
+  .trust{
+    background:var(--charcoal);
+    border-top:1px solid var(--line);
+    border-bottom:1px solid var(--line);
+    padding:40px 0;
+  }
+  .trust-grid{
+    display:grid; grid-template-columns:repeat(5,1fr); gap:24px; text-align:center;
+  }
+  .trust-item .num{font-family:'Playfair Display',serif; font-size:26px; font-weight:700; color:var(--white);}
+  .trust-item .label{font-size:12.5px; color:var(--silver-dim); text-transform:uppercase; letter-spacing:1.5px; margin-top:6px;}
+
+  /* ===== Cards ===== */
+  .grid{display:grid; gap:24px;}
+  .grid-4{grid-template-columns:repeat(4,1fr);}
+  .grid-3{grid-template-columns:repeat(3,1fr);}
+  .grid-2{grid-template-columns:repeat(2,1fr);}
+  .card{
+    background:var(--charcoal);
+    border:1px solid var(--line);
+    border-radius:var(--radius);
+    padding:30px;
+    box-shadow:var(--shadow-soft);
+    transition:transform .3s ease, box-shadow .3s ease, border-color .3s ease;
+  }
+  .card:hover{ transform:translateY(-6px); box-shadow:var(--shadow); border-color:rgba(184,134,11,0.3); }
+  .card-icon{
+    width:52px; height:52px; border-radius:10px;
+    background:linear-gradient(135deg, rgba(184,134,11,0.18), rgba(184,134,11,0.05));
+    border:1px solid var(--metal-soft);
+    display:flex; align-items:center; justify-content:center;
+    margin-bottom:18px; font-size:22px;
+  }
+  .service-mini{
+    background:var(--charcoal); border:1px solid var(--line); border-radius:12px;
+    padding:20px; text-align:center; transition:.25s;
+  }
+  .service-mini:hover{ border-color:var(--metal-soft); transform:translateY(-4px); }
+  .service-mini .ic{font-size:26px; margin-bottom:10px;}
+  .service-mini h4{font-size:15px; margin:0;}
+
+  /* ===== Pages ===== */
+  .page{display:none;}
+  .page.active{display:block; animation:fadeIn .5s ease;}
+  @keyframes fadeIn{from{opacity:0; transform:translateY(8px);} to{opacity:1; transform:translateY(0);}}
+  .page-hero{
+    padding:160px 0 60px;
+    text-align:center;
+    background:linear-gradient(180deg, var(--charcoal), var(--black));
+    border-bottom:1px solid var(--line);
+  }
+  .page-hero .eyebrow{color:var(--metal);}
+  .page-hero h1{font-size:clamp(32px,5vw,48px);}
+  .page-hero p{max-width:600px; margin:0 auto; font-size:17px;}
+
+  /* ===== Gallery ===== */
+  .gallery-grid{
+    columns:4 220px; column-gap:16px;
+  }
+  .gallery-grid img{
+    width:100%; margin-bottom:16px; border-radius:10px; break-inside:avoid;
+    filter:grayscale(15%) contrast(1.02);
+    transition:transform .4s ease, filter .4s ease;
+    border:1px solid var(--line);
+  }
+  .gallery-grid a{display:block; overflow:hidden; border-radius:10px;}
+  .gallery-grid img:hover{transform:scale(1.04); filter:grayscale(0%);}
+
+  /* ===== Testimonials ===== */
+  .testimonial{
+    background:var(--charcoal); border:1px solid var(--line); border-radius:var(--radius);
+    padding:28px; box-shadow:var(--shadow-soft);
+  }
+  .testimonial .stars{color:var(--metal); font-size:14px; margin-bottom:12px; letter-spacing:2px;}
+  .testimonial .who{display:flex; align-items:center; gap:12px; margin-top:18px;}
+  .avatar{
+    width:42px; height:42px; border-radius:50%;
+    background:linear-gradient(135deg,#2a2a2d,#141416);
+    border:1px solid var(--metal-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-weight:700; font-size:14px; color:var(--metal); flex-shrink:0;
+  }
+  .who .name{font-weight:600; color:var(--white); font-size:14.5px;}
+  .who .loc{font-size:12.5px; color:var(--silver-dim);}
+
+  /* ===== Barber cards ===== */
+  .barber-card{
+    background:var(--charcoal); border:1px solid var(--line); border-radius:var(--radius);
+    padding:26px; text-align:center; box-shadow:var(--shadow-soft); transition:.3s;
+  }
+  .barber-card.selected{ border-color:var(--metal); box-shadow:0 0 0 1px var(--metal), var(--shadow); }
+  .barber-avatar{
+    width:96px; height:96px; border-radius:50%; margin:0 auto 18px;
+    background:linear-gradient(135deg,#2c2c30,#141416);
+    border:2px solid var(--metal-soft);
+    display:flex; align-items:center; justify-content:center;
+    font-family:'Playfair Display',serif; font-size:30px; font-weight:700; color:var(--metal);
+  }
+  .barber-card h3{font-size:19px; margin-bottom:2px;}
+  .barber-meta{font-size:13px; color:var(--silver-dim); margin-bottom:10px;}
+  .stars-sm{color:var(--metal); font-size:13px; margin-bottom:10px;}
+  .tag-row{display:flex; flex-wrap:wrap; gap:6px; justify-content:center; margin:14px 0;}
+  .tag{
+    font-size:11.5px; padding:5px 10px; border-radius:20px;
+    background:rgba(255,255,255,0.06); border:1px solid var(--line); color:var(--silver);
+  }
+
+  /* ===== Pricing wizard ===== */
+  .wizard-steps{display:flex; justify-content:center; gap:8px; margin-bottom:50px; flex-wrap:wrap;}
+  .wstep{
+    display:flex; align-items:center; gap:8px; font-size:13px; color:var(--silver-dim);
+    padding:8px 14px; border-radius:20px; border:1px solid var(--line);
+  }
+  .wstep .n{
+    width:22px; height:22px; border-radius:50%; background:rgba(255,255,255,0.06);
+    display:flex; align-items:center; justify-content:center; font-size:11.5px; font-weight:700;
+  }
+  .wstep.active{border-color:var(--metal-soft); color:var(--white);}
+  .wstep.active .n{background:var(--metal); color:#0a0a0a;}
+  .wstep.done .n{background:#3a3a3a; color:var(--silver);}
+
+  .booking-layout{display:grid; grid-template-columns:1fr 340px; gap:36px; align-items:start;}
+  .booking-main .step-panel{display:none;}
+  .booking-main .step-panel.active{display:block; animation:fadeIn .4s ease;}
+
+  .svc-card{
+    background:var(--charcoal); border:1px solid var(--line); border-radius:var(--radius);
+    padding:26px; cursor:pointer; transition:.25s; position:relative;
+  }
+  .svc-card:hover{border-color:var(--metal-soft); transform:translateY(-3px);}
+  .svc-card.selected{border-color:var(--metal); box-shadow:0 0 0 1px var(--metal);}
+  .svc-card .price{color:var(--metal); font-weight:700; font-size:20px; margin:6px 0;}
+  .svc-card .time{font-size:12.5px; color:var(--silver-dim);}
+  .svc-card .check{
+    position:absolute; top:16px; right:16px; width:22px; height:22px; border-radius:50%;
+    border:1px solid var(--line); display:flex; align-items:center; justify-content:center; font-size:12px;
+  }
+  .svc-card.selected .check{background:var(--metal); color:#0a0a0a; border-color:var(--metal);}
+
+  .addon-row{
+    display:flex; align-items:center; justify-content:space-between; gap:16px;
+    background:var(--charcoal); border:1px solid var(--line); border-radius:12px;
+    padding:18px 20px; margin-bottom:12px; transition:.2s;
+  }
+  .addon-row.on{border-color:var(--metal-soft);}
+  .addon-left{display:flex; align-items:center; gap:14px;}
+  .addon-ic{width:38px; height:38px; border-radius:8px; background:rgba(184,134,11,0.1); display:flex; align-items:center; justify-content:center; font-size:17px;}
+  .addon-name{font-weight:600; font-size:14.5px; color:var(--white);}
+  .addon-desc{font-size:12.5px; color:var(--silver-dim);}
+  .addon-price{font-weight:700; color:var(--metal); font-size:14px; margin-right:14px; white-space:nowrap;}
+
+  .switch{position:relative; width:44px; height:24px; flex-shrink:0;}
+  .switch input{opacity:0; width:0; height:0;}
+  .slider{position:absolute; cursor:pointer; inset:0; background:#3a3a3d; border-radius:24px; transition:.25s;}
+  .slider::before{content:''; position:absolute; width:18px; height:18px; left:3px; top:3px; background:#fff; border-radius:50%; transition:.25s;}
+  .switch input:checked + .slider{background:var(--metal);}
+  .switch input:checked + .slider::before{transform:translateX(20px);}
+
+  .summary-box{
+    position:sticky; top:100px;
+    background:var(--charcoal); border:1px solid var(--line); border-radius:var(--radius);
+    padding:26px; box-shadow:var(--shadow);
+  }
+  .summary-box h4{font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--silver-dim); margin-bottom:18px;}
+  .sum-row{display:flex; justify-content:space-between; font-size:14px; padding:8px 0; border-bottom:1px dashed var(--line); color:var(--silver);}
+  .sum-row span:last-child{color:var(--white); font-weight:500; text-align:right;}
+  .sum-total{display:flex; justify-content:space-between; font-size:19px; font-weight:700; margin-top:16px; color:var(--white);}
+  .sum-total span:last-child{color:var(--metal);}
+
+  .cal-grid{display:grid; grid-template-columns:repeat(7,1fr); gap:8px; margin-bottom:30px;}
+  .cal-day{
+    background:var(--charcoal); border:1px solid var(--line); border-radius:10px;
+    padding:14px 6px; text-align:center; cursor:pointer; transition:.2s;
+  }
+  .cal-day .dow{font-size:11px; color:var(--silver-dim); text-transform:uppercase;}
+  .cal-day .dnum{font-family:'Playfair Display',serif; font-size:19px; margin-top:4px;}
+  .cal-day.selected{border-color:var(--metal); background:rgba(184,134,11,0.1);}
+  .cal-day.disabled{opacity:.3; cursor:not-allowed;}
+
+  .time-groups{display:grid; grid-template-columns:repeat(3,1fr); gap:24px;}
+  .time-group h5{font-size:12.5px; text-transform:uppercase; letter-spacing:1.5px; color:var(--silver-dim); margin-bottom:12px;}
+  .time-slot{
+    display:block; width:100%; margin-bottom:8px; padding:10px; text-align:center;
+    background:var(--charcoal); border:1px solid var(--line); border-radius:8px; cursor:pointer; font-size:13.5px; transition:.2s;
+  }
+  .time-slot:hover:not(.disabled){border-color:var(--metal-soft);}
+  .time-slot.selected{background:var(--metal); color:#0a0a0a; font-weight:700; border-color:var(--metal);}
+  .time-slot.disabled{opacity:.25; cursor:not-allowed; text-decoration:line-through;}
+
+  .form-grid{display:grid; grid-template-columns:1fr 1fr; gap:18px;}
+  .field{margin-bottom:18px;}
+  .field label{display:block; font-size:13px; color:var(--silver-dim); margin-bottom:8px; font-weight:500;}
+  .field input, .field textarea, .field select{
+    width:100%; background:var(--charcoal-2); border:1px solid var(--line); border-radius:8px;
+    padding:13px 14px; color:var(--white); font-family:'Inter',sans-serif; font-size:14.5px;
+  }
+  .field input:focus, .field textarea:focus{outline:none; border-color:var(--metal);}
+  .checkline{display:flex; align-items:center; gap:10px; font-size:13.5px; color:var(--silver);}
+
+  .confirm-box{text-align:center; padding:40px 0;}
+  .confirm-icon{
+    width:80px; height:80px; border-radius:50%; margin:0 auto 24px;
+    background:linear-gradient(135deg,#d4af37,#8a6a1f); color:#0a0a0a;
+    display:flex; align-items:center; justify-content:center; font-size:36px;
+  }
+  .step-nav{display:flex; justify-content:space-between; margin-top:36px;}
+
+  /* ===== Contact ===== */
+  .contact-grid{display:grid; grid-template-columns:1fr 1fr; gap:40px;}
+  .info-row{display:flex; gap:16px; margin-bottom:22px;}
+  .info-ic{
+    width:44px; height:44px; border-radius:10px; background:rgba(184,134,11,0.1);
+    border:1px solid var(--metal-soft); display:flex; align-items:center; justify-content:center; font-size:18px; flex-shrink:0;
+  }
+  .info-row h4{margin-bottom:4px; font-size:15px;}
+  .info-row p{margin:0; font-size:14.5px;}
+  .map-frame{border-radius:var(--radius); overflow:hidden; border:1px solid var(--line); height:280px;}
+  .map-frame iframe{width:100%; height:100%; border:0; filter:grayscale(30%) contrast(1.1);}
+
+  /* ===== Footer ===== */
+  footer{background:var(--charcoal); border-top:1px solid var(--line); padding:64px 0 24px;}
+  .footer-grid{display:grid; grid-template-columns:2fr 1fr 1fr 1fr; gap:40px; margin-bottom:40px;}
+  footer h4{font-size:13px; text-transform:uppercase; letter-spacing:1.5px; color:var(--silver-dim); margin-bottom:18px;}
+  footer .brand{margin-bottom:14px;}
+  footer li{margin-bottom:10px;}
+  footer a{color:var(--silver); font-size:14px; transition:color .2s;}
+  footer a:hover{color:var(--metal);}
+  .footer-bottom{
+    border-top:1px solid var(--line); padding-top:24px; display:flex; justify-content:space-between;
+    font-size:13px; color:var(--silver-dim); flex-wrap:wrap; gap:12px;
+  }
+  .social-row{display:flex; gap:12px; margin-top:16px;}
+  .social-row a{
+    width:36px; height:36px; border-radius:50%; border:1px solid var(--line);
+    display:flex; align-items:center; justify-content:center; font-size:15px; transition:.2s;
+  }
+  .social-row a:hover{border-color:var(--metal); color:var(--metal);}
+
+  @media (max-width: 980px){
+    .trust-grid{grid-template-columns:repeat(3,1fr);}
+    .grid-4{grid-template-columns:repeat(2,1fr);}
+    .grid-3{grid-template-columns:repeat(2,1fr);}
+    .booking-layout{grid-template-columns:1fr;}
+    .summary-box{position:relative; top:0;}
+    .contact-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr 1fr;}
+    .time-groups{grid-template-columns:1fr;}
+  }
+  @media (max-width: 640px){
+    nav.links{
+      position:fixed; top:78px; left:0; right:0; background:var(--black);
+      flex-direction:column; align-items:flex-start; padding:24px; gap:20px;
+      border-bottom:1px solid var(--line); transform:translateY(-140%); transition:transform .3s ease;
+    }
+    nav.links.open{transform:translateY(0);}
+    .hamburger{display:flex;}
+    .nav-actions .btn-primary{padding:11px 18px; font-size:13px;}
+    .trust-grid{grid-template-columns:repeat(2,1fr);}
+    .grid-4, .grid-3, .grid-2{grid-template-columns:1fr;}
+    .form-grid{grid-template-columns:1fr;}
+    .footer-grid{grid-template-columns:1fr;}
+    .gallery-grid{columns:2 160px;}
+    section{padding:64px 0;}
+  }
+</style>
+</head>
+<body>
+
+<header>
+  <div class="navbar">
+    <a href="#home" class="brand" onclick="showPage('home')"><span class="dot"></span>Milan's Cutz</a>
+    <nav class="links" id="navLinks">
+      <a href="#home" data-page="home" onclick="showPage('home')">Home</a>
+      <a href="#services" data-page="services" onclick="showPage('services')">Services</a>
+      <a href="#pricing" data-page="pricing" onclick="showPage('pricing')">Pricing</a>
+      <a href="#about" data-page="about" onclick="showPage('about')">About Us</a>
+      <a href="#contact" data-page="contact" onclick="showPage('contact')">Contact</a>
+    </nav>
+    <div class="nav-actions">
+      <a class="btn btn-primary btn-sm" href="#pricing" onclick="showPage('pricing')">Book a Barber</a>
+      <button class="hamburger" onclick="document.getElementById('navLinks').classList.toggle('open')" aria-label="Menu">
+        <span></span><span></span><span></span>
+      </button>
+    </div>
+  </div>
+</header>
+
+<!-- ============ HOME ============ -->
+<main id="home" class="page active">
+  <section class="hero" style="background-image:url('https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydjp7-2R20CDcMXPg2FsgfdEhAiAW_evPsl1nhj7YDCIx3Yp41RxXI5fNRT80CUSq1z_AohjmZyZc9m6Ieyz0Q6zRmok7GLvzKsWWm_MDYC253upBnCbQzwuxucFu-H0odJX0Pf-CRv4cJcETs6Geito_DMPi69jxGR2wXpmi34DBHi5N9CHXsYFj8TMGJslsOajohNX1xqhEWY-T0hkzmn9p1oM7RqhXG_Ao-ifD2H4nyOpI0zwEkxukaWs9h0bHPHtDGXngTx2Hy6Gwmku58rlT-xCaYjiKytvn_z_kbzF1DP5Se8cO5osAlXxSTMSzqaW17WwudKdZZW7MzQgOaT6lehdoMdhjHMM8chrbLU28kO0NMQvyk7vtJ31b1lELHeUOA5hqfaSZGiwLHeTzTREckYrIhsJO5EM9aLF6ukelZk&key=AIzaSyC_w-pKNTdaGmAt6E2H1AahzJNmkK1MEjM');">
+    <div class="hero-content">
+      <span class="eyebrow">Baltimore, Maryland</span>
+      <h1>Precision Cuts. Timeless Craft.</h1>
+      <p>Milan's Cutz is Baltimore's premier barbershop — where sharp fades, straight razor shaves, and genuine hospitality come together in one chair. Trusted by our neighborhood for years of consistent, professional grooming.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" href="#pricing" onclick="showPage('pricing')">Book a Barber</a>
+        <a class="btn btn-outline" href="#pricing" onclick="showPage('pricing')">View Pricing</a>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust" style="padding:0;">
+    <div class="wrap" style="padding-top:40px; padding-bottom:40px;">
+      <div class="trust-grid">
+        <div class="trust-item"><div class="num">★ 4.8</div><div class="label">Average Rating</div></div>
+        <div class="trust-item"><div class="num">134+</div><div class="label">Happy Clients</div></div>
+        <div class="trust-item"><div class="num">Locally</div><div class="label">Trusted</div></div>
+        <div class="trust-item"><div class="num">Pro</div><div class="label">Barbers</div></div>
+        <div class="trust-item"><div class="num">Clear</div><div class="label">Transparent Pricing</div></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">What We Do</span>
+        <h2>Our Services</h2>
+        <p>From classic cuts to sharp modern fades, every service at Milan's Cutz is delivered with precision and care.</p>
+      </div>
+      <div class="grid grid-4" id="serviceMiniGrid"></div>
+      <div style="text-align:center; margin-top:40px;">
+        <a class="btn btn-outline" href="#services" onclick="showPage('services')">View All Services</a>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--charcoal); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Investment</span>
+        <h2>Pricing Preview</h2>
+        <p>Transparent pricing for every stage of life — no surprises, just honest craftsmanship.</p>
+      </div>
+      <div class="grid grid-4">
+        <div class="card"><div class="card-icon">✂</div><h4>Kids Haircuts</h4><p style="color:var(--metal); font-weight:700; font-size:20px;">From $25</p></div>
+        <div class="card"><div class="card-icon">✂</div><h4>Adult Haircuts</h4><p style="color:var(--metal); font-weight:700; font-size:20px;">From $35</p></div>
+        <div class="card"><div class="card-icon">✂</div><h4>Senior Haircuts</h4><p style="color:var(--metal); font-weight:700; font-size:20px;">From $28</p></div>
+        <div class="card"><div class="card-icon">✂</div><h4>Popular Fades</h4><p style="color:var(--metal); font-weight:700; font-size:20px;">From $38</p></div>
+      </div>
+      <div style="text-align:center; margin-top:40px;">
+        <a class="btn btn-primary" href="#pricing" onclick="showPage('pricing')">See Full Pricing</a>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap" style="text-align:center;">
+      <span class="eyebrow">Ready When You Are</span>
+      <h2 style="font-size:clamp(28px,4vw,40px); max-width:640px; margin:0 auto 18px;">Your Next Great Haircut Starts Here</h2>
+      <p style="max-width:520px; margin:0 auto 30px;">Reserve your seat with one of our professional barbers in just a few minutes.</p>
+      <a class="btn btn-primary" href="#pricing" onclick="showPage('pricing')">Book a Barber</a>
+    </div>
+  </section>
+</main>
+
+<!-- ============ SERVICES ============ -->
+<main id="services" class="page">
+  <div class="page-hero">
+    <span class="eyebrow">What We Offer</span>
+    <h1>Our Services</h1>
+    <p>Every cut, trim, and shave is performed with precision, patience, and premium products.</p>
+  </div>
+  <section>
+    <div class="wrap">
+      <div class="grid grid-3">
+        <div class="card">
+          <div class="card-icon">✂</div>
+          <h3>Haircuts</h3>
+          <p>Precision haircuts tailored to your style, face shape, and personal preferences for a fresh, clean look.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🌀</div>
+          <h3>Fade Haircuts</h3>
+          <p>Expertly blended low, mid, high, taper, and skin fades with smooth transitions and sharp finishes.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🧔</div>
+          <h3>Beard Trims &amp; Shaping</h3>
+          <p>Professional beard trimming and contouring to keep your facial hair clean, balanced, and well-defined.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">🪒</div>
+          <h3>Straight Razor Shaves</h3>
+          <p>A traditional hot towel straight razor shave that delivers an exceptionally close, smooth, and refreshing finish.</p>
+        </div>
+        <div class="card">
+          <div class="card-icon">💈</div>
+          <h3>Hair &amp; Beard Combo</h3>
+          <p>The complete grooming experience, combining a haircut and beard service for a polished, coordinated appearance.</p>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--charcoal); border-top:1px solid var(--line);">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Every Style, Covered</span>
+        <h2>Cuts &amp; Styles We Specialize In</h2>
+      </div>
+      <div class="grid grid-4" id="serviceStyleGrid"></div>
+      <div style="text-align:center; margin-top:44px;">
+        <a class="btn btn-primary" href="#pricing" onclick="showPage('pricing')">Book a Barber</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ PRICING / BOOKING ============ -->
+<main id="pricing" class="page">
+  <div class="page-hero">
+    <span class="eyebrow">Book Your Appointment</span>
+    <h1>Barber Pricing</h1>
+    <p>Choose your barber, service, and add-ons — see your total update live as you build your appointment.</p>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="wizard-steps" id="wizardSteps"></div>
+
+      <div class="booking-layout">
+        <div class="booking-main">
+
+          <!-- STEP 1: BARBER -->
+          <div class="step-panel active" data-step="1">
+            <div class="section-head" style="margin-bottom:36px;">
+              <span class="eyebrow">Step 1</span>
+              <h2>Choose Your Barber</h2>
+              <p>Select the barber you'd like to book your appointment with.</p>
+            </div>
+            <div class="grid grid-4" id="barberGrid"></div>
+          </div>
+
+          <!-- STEP 2: SERVICE -->
+          <div class="step-panel" data-step="2">
+            <div class="section-head" style="margin-bottom:36px;">
+              <span class="eyebrow">Step 2</span>
+              <h2>Choose Your Service</h2>
+              <p>Pick the primary service for your visit.</p>
+            </div>
+            <div class="grid grid-3" id="serviceGrid"></div>
+          </div>
+
+          <!-- STEP 3: ADD-ONS -->
+          <div class="step-panel" data-step="3">
+            <div class="section-head" style="margin-bottom:36px;">
+              <span class="eyebrow">Step 3</span>
+              <h2>Add Extra Services</h2>
+              <p>Enhance your visit with premium add-ons. Select as many as you'd like.</p>
+            </div>
+            <div id="addonList"></div>
+          </div>
+
+          <!-- STEP 4: DATE/TIME -->
+          <div class="step-panel" data-step="4">
+            <div class="section-head" style="margin-bottom:36px;">
+              <span class="eyebrow">Step 4</span>
+              <h2>Choose Date &amp; Time</h2>
+              <p>Pick a day and available time slot that works for you.</p>
+            </div>
+            <div class="cal-grid" id="calGrid"></div>
+            <div class="time-groups" id="timeGroups"></div>
+          </div>
+
+          <!-- STEP 5: CUSTOMER INFO -->
+          <div class="step-panel" data-step="5">
+            <div class="section-head" style="margin-bottom:36px;">
+              <span class="eyebrow">Step 5</span>
+              <h2>Your Information</h2>
+              <p>Tell us a bit about you so we can confirm your appointment.</p>
+            </div>
+            <div class="form-grid">
+              <div class="field"><label>Full Name</label><input type="text" id="custName" placeholder="Jordan Smith"></div>
+              <div class="field"><label>Phone Number</label><input type="tel" id="custPhone" placeholder="(410) 555-0134"></div>
+            </div>
+            <div class="field"><label>Email Address</label><input type="email" id="custEmail" placeholder="you@email.com"></div>
+            <div class="field"><label>Optional Notes</label><textarea rows="3" id="custNotes" placeholder="Anything your barber should know..."></textarea></div>
+            <label class="checkline"><input type="checkbox" id="rememberMe"> Remember me for faster booking next time.</label>
+          </div>
+
+          <!-- STEP 6: CONFIRMATION -->
+          <div class="step-panel" data-step="6">
+            <div class="section-head" style="margin-bottom:36px;">
+              <span class="eyebrow">Step 6</span>
+              <h2>Confirm Your Appointment</h2>
+              <p>Review your appointment details before booking.</p>
+            </div>
+            <div class="card" id="confirmSummary" style="margin-bottom:30px;"></div>
+            <button class="btn btn-primary btn-block" onclick="bookAppointment()" style="padding:18px; font-size:16px;">Book Appointment</button>
+          </div>
+
+          <!-- STEP 7: DONE -->
+          <div class="step-panel" data-step="7">
+            <div class="confirm-box">
+              <div class="confirm-icon">✓</div>
+              <h2>Your appointment has been successfully scheduled.</h2>
+              <p style="max-width:460px; margin:0 auto 30px;">A confirmation has been sent to your email. We look forward to seeing you at Milan's Cutz.</p>
+              <div style="display:flex; gap:14px; justify-content:center; flex-wrap:wrap;">
+                <button class="btn btn-outline" onclick="alert('Calendar event added.')">Add to Calendar</button>
+                <button class="btn btn-outline" onclick="goToStep(6)">View Appointment</button>
+                <button class="btn btn-primary" onclick="resetBooking()">Book Another Appointment</button>
+              </div>
+            </div>
+          </div>
+
+          <div class="step-nav" id="stepNav">
+            <button class="btn btn-outline" onclick="prevStep()" id="btnPrev">Back</button>
+            <button class="btn btn-primary" onclick="nextStep()" id="btnNext">Continue</button>
+          </div>
+        </div>
+
+        <aside class="summary-box" id="summaryBoxWrap">
+          <h4>Appointment Summary</h4>
+          <div class="sum-row"><span>Barber</span><span id="sumBarber">—</span></div>
+          <div class="sum-row"><span>Service</span><span id="sumService">—</span></div>
+          <div class="sum-row"><span>Add-ons</span><span id="sumAddons">—</span></div>
+          <div class="sum-row"><span>Date &amp; Time</span><span id="sumDateTime">—</span></div>
+          <div class="sum-row"><span>Duration</span><span id="sumDuration">—</span></div>
+          <div class="sum-row"><span>Subtotal</span><span id="sumSubtotal">$0</span></div>
+          <div class="sum-row"><span>Tax (est. 6%)</span><span id="sumTax">$0</span></div>
+          <div class="sum-total"><span>Estimated Total</span><span id="sumTotal">$0</span></div>
+        </aside>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ ABOUT ============ -->
+<main id="about" class="page">
+  <div class="page-hero">
+    <span class="eyebrow">Our Story</span>
+    <h1>About Our Shop</h1>
+    <p>Get to know the barbers and philosophy behind Milan's Cutz.</p>
+  </div>
+
+  <section>
+    <div class="wrap" style="max-width:820px;">
+      <span class="eyebrow">Introduction</span>
+      <h2 style="font-size:clamp(26px,4vw,38px);">Crafting Confidence, One Cut at a Time</h2>
+      <p>Milan's Cutz was built on a simple idea: every client should leave the chair looking sharp and feeling confident. Located in the heart of Baltimore on E Baltimore St, our shop has become a trusted destination for men and families who expect more than just a haircut.</p>
+      <p>We combine traditional barbering techniques with modern style, so whether you're after a classic clean fade, a straight razor shave, or a full grooming combo, you're getting the same level of precision and attention every visit. Our barbers take the time to understand exactly what you want before the clippers ever touch your head.</p>
+      <p>Cleanliness, consistency, and craftsmanship are non-negotiable here. From the moment you walk in, our goal is to make sure you feel taken care of — and that you leave looking better than when you arrived.</p>
+    </div>
+  </section>
+
+  <section style="background:var(--charcoal); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Our Team</span>
+        <h2>Meet Our Barbers</h2>
+      </div>
+      <div class="grid grid-4" id="aboutBarberGrid"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">The Difference</span>
+        <h2>Why Choose Us</h2>
+      </div>
+      <div class="grid grid-4" id="whyChooseGrid"></div>
+    </div>
+  </section>
+
+  <section style="background:var(--charcoal); border-top:1px solid var(--line); border-bottom:1px solid var(--line);">
+    <div class="wrap" style="max-width:760px; text-align:center;">
+      <span class="eyebrow">Our Mission</span>
+      <h2>Built on Trust, Precision &amp; Consistency</h2>
+      <p>Our mission is to build lasting relationships with every client who sits in our chair. We're committed to delivering exceptional haircuts, staying current with modern trends, and creating a welcoming atmosphere where everyone leaves feeling confident. Milan's Cutz isn't just a barbershop — it's a neighborhood staple built one satisfied client at a time.</p>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">★ 4.8 Rating · 134+ Reviews</span>
+        <h2>Customer Reviews</h2>
+      </div>
+      <div class="grid grid-2" id="reviewGrid"></div>
+    </div>
+  </section>
+
+  <section style="background:var(--charcoal); border-top:1px solid var(--line);">
+    <div class="wrap">
+      <div class="section-head">
+        <span class="eyebrow">Inside The Shop</span>
+        <h2>Gallery</h2>
+        <p>A look at our space, our barbers, and the work we're proud of.</p>
+      </div>
+      <div class="gallery-grid" id="galleryGrid"></div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ CONTACT ============ -->
+<main id="contact" class="page">
+  <div class="page-hero">
+    <span class="eyebrow">Get In Touch</span>
+    <h1>Contact / Book a Barber</h1>
+    <p>Reach out, stop by, or book online — we'd love to see you in the chair.</p>
+  </div>
+
+  <section>
+    <div class="wrap">
+      <div class="contact-grid">
+        <div>
+          <div class="info-row">
+            <div class="info-ic">📍</div>
+            <div><h4>Address</h4><p>3330 E Baltimore St, Baltimore, MD 21224, USA</p></div>
+          </div>
+          <div class="info-row">
+            <div class="info-ic">📞</div>
+            <div><h4>Phone</h4><p>(410) 878-1713</p></div>
+          </div>
+          <div class="info-row">
+            <div class="info-ic">🕒</div>
+            <div>
+              <h4>Business Hours</h4>
+              <p>Mon: Closed<br>Tue – Fri: 9:00 AM – 7:00 PM<br>Sat: 8:00 AM – 6:00 PM<br>Sun: 10:00 AM – 4:00 PM</p>
+            </div>
+          </div>
+          <div class="info-row">
+            <div class="info-ic">📷</div>
+            <div><h4>Instagram</h4><p>@milanscutz</p></div>
+          </div>
+          <div style="display:flex; gap:14px; flex-wrap:wrap; margin-top:20px;">
+            <a class="btn btn-primary" href="tel:+14108781713">Call Now</a>
+            <a class="btn btn-outline" href="https://maps.google.com/?cid=1198232069827158047" target="_blank" rel="noopener">Get Directions</a>
+            <a class="btn btn-outline" href="https://www.instagram.com/milanscutz/" target="_blank" rel="noopener">Instagram</a>
+          </div>
+          <div class="map-frame" style="margin-top:30px;">
+            <iframe src="https://www.google.com/maps?q=3330+E+Baltimore+St,+Baltimore,+MD+21224&output=embed" loading="lazy" referrerpolicy="no-referrer-when-downgrade" title="Milan's Cutz location"></iframe>
+          </div>
+        </div>
+
+        <div class="card">
+          <h3 style="margin-bottom:20px;">Send a Message</h3>
+          <form id="contactForm" onsubmit="return handleContactSubmit(event)">
+            <div class="field"><label>Full Name</label><input type="text" required placeholder="Your name"></div>
+            <div class="field"><label>Email Address</label><input type="email" required placeholder="you@email.com"></div>
+            <div class="field"><label>Phone Number</label><input type="tel" placeholder="(410) 555-0134"></div>
+            <div class="field"><label>Message</label><textarea rows="4" required placeholder="How can we help?"></textarea></div>
+            <button class="btn btn-primary btn-block" type="submit">Send Message</button>
+            <p id="contactMsg" style="display:none; color:var(--metal); margin-top:14px; text-align:center;">Thanks — we'll be in touch shortly.</p>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="footer-grid">
+      <div>
+        <div class="brand"><span class="dot"></span>Milan's Cutz</div>
+        <p style="max-width:300px;">Baltimore's premier barbershop for precision haircuts, fades, and traditional grooming.</p>
+        <div class="social-row">
+          <a href="https://www.instagram.com/milanscutz/" target="_blank" rel="noopener" aria-label="Instagram">IG</a>
+          <a href="tel:+14108781713" aria-label="Call">☎</a>
+        </div>
+      </div>
+      <div>
+        <h4>Navigate</h4>
+        <ul>
+          <li><a href="#home" onclick="showPage('home')">Home</a></li>
+          <li><a href="#services" onclick="showPage('services')">Services</a></li>
+          <li><a href="#pricing" onclick="showPage('pricing')">Pricing</a></li>
+          <li><a href="#about" onclick="showPage('about')">About Us</a></li>
+          <li><a href="#contact" onclick="showPage('contact')">Contact</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Contact</h4>
+        <ul>
+          <li>3330 E Baltimore St</li>
+          <li>Baltimore, MD 21224</li>
+          <li>(410) 878-1713</li>
+          <li><a href="https://maps.google.com/?cid=1198232069827158047" target="_blank" rel="noopener">Get Directions</a></li>
+        </ul>
+      </div>
+      <div>
+        <h4>Hours</h4>
+        <ul>
+          <li>Mon: Closed</li>
+          <li>Tue – Fri: 9am – 7pm</li>
+          <li>Sat: 8am – 6pm</li>
+          <li>Sun: 10am – 4pm</li>
+        </ul>
+      </div>
+    </div>
+    <div class="footer-bottom">
+      <span>© 2026 Milan's Cutz. All rights reserved.</span>
+      <span><a href="#" onclick="alert('Privacy Policy available upon request.'); return false;">Privacy Policy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+/* ---------- Data ---------- */
+const BARBERS = [
+  {id:'milan', name:'Milan Reyes', title:'Owner & Master Barber', years:15, rating:5.0, desc:"Founder of Milan's Cutz, known for razor-sharp fades and classic precision cuts.", tags:['Precision Fades','Classic Cuts','Straight Razor Shaves']},
+  {id:'tomas', name:'Tomas Vega', title:'Senior Barber', years:11, rating:5.0, desc:'A client favorite loved for his patience with kids and meticulous beard work.', tags:['Kids Haircuts','Beard Sculpting','Classic Cuts']},
+  {id:'marcus', name:'Marcus Dale', title:'Barber', years:7, rating:4.9, desc:'Specializes in bold modern fades and crisp line-ups for a fresh, sharp look.', tags:['Modern Styles','Precision Fades','Line Ups']},
+  {id:'jordan', name:'Jordan Reese', title:'Barber', years:5, rating:4.8, desc:'Brings a modern eye to longer styles and detailed beard sculpting.', tags:['Long Hair','Modern Styles','Beard Sculpting']}
+];
+
+const SERVICES = [
+  {id:'haircut', name:'Haircuts', icon:'✂', price:35, time:'30 min', desc:'Precision haircuts tailored to your style and face shape.'},
+  {id:'fade', name:'Fade Haircuts', icon:'🌀', price:40, time:'40 min', desc:'Expertly blended low, mid, high, and skin fades.'},
+  {id:'beard', name:'Beard Trims & Shaping', icon:'🧔', price:25, time:'20 min', desc:'Clean, balanced beard trimming and contouring.'},
+  {id:'razor', name:'Straight Razor Shaves', icon:'🪒', price:45, time:'35 min', desc:'Traditional hot towel straight razor shave.'},
+  {id:'combo', name:'Hair & Beard Combo', icon:'💈', price:60, time:'55 min', desc:'The complete haircut and beard grooming experience.'}
+];
+
+const ADDONS = [
+  {id:'hottowel', name:'Hot Towel Treatment', icon:'♨', price:8, desc:'Softens skin and opens pores before your service.'},
+  {id:'wash', name:'Hair Wash', icon:'💧', price:6, desc:'Refreshing shampoo and rinse.'},
+  {id:'styling', name:'Hair Styling', icon:'💇', price:10, desc:'Finished styling with premium product.'},
+  {id:'brow', name:'Eyebrow Cleanup', icon:'✏', price:8, desc:'Light trim and shape for a polished look.'},
+  {id:'wax', name:'Facial Waxing', icon:'🕯', price:12, desc:'Clean waxing for ears, nose, or brows.'},
+  {id:'mask', name:'Black Mask Facial', icon:'🖤', price:15, desc:'Deep-cleansing charcoal facial mask.'},
+  {id:'scalp', name:'Scalp Massage', icon:'🤲', price:10, desc:'Relaxing massage to close out your visit.'},
+  {id:'condition', name:'Deep Conditioning', icon:'🧴', price:12, desc:'Restores moisture and shine to hair.'},
+  {id:'design', name:'Hair Design', icon:'⚡', price:15, desc:'Custom line art or design detailing.'},
+  {id:'gray', name:'Gray Coverage', icon:'🎨', price:18, desc:'Blends or covers gray for a natural look.'},
+  {id:'oil', name:'Premium Beard Oil', icon:'🫙', price:8, desc:'Nourishing oil applied and sent home with you.'},
+  {id:'product', name:'Premium Styling Product', icon:'🧪', price:10, desc:'Take-home pomade or styling cream.'}
+];
+
+const REVIEWS = [
+  {text:"Tomas does a great job with my son's haircuts. Very patient and shop is always clean!", name:'James R.'},
+  {text:"Been coming for years, these guys are skilled. Definitely recommend this place. They go above and beyond for you! My barber left unfortunately, so I'm going to be following him but nonetheless there are other skilled barbers here!", name:'Andre M.'},
+  {text:"Tomas is the best barber I've ever had. My haircuts always receive compliments. I've been going to him since 2015 and drive almost an hour. He's reliable, professional and pays attention to every detail. The service is unmatched. You won't be disappointed.", name:'Chris D.'},
+  {text:"Every time I need my kids haircut I get 5 star service! I bring my three kids to get their haircut & no matter who cuts their hair it is an amazing experience. Our favorite barber to go to is Tomas who makes a boring visit into an amazing experience. Thank you so much! You have a customer for life!", name:'Denise K.'}
+];
+
+const GALLERY = [
+"https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydi2Vz63kGzQ-Tk-cG7Vf17hLK51bxX-MvGNqEdUObIQtBppcHrzx0NEGrhXWZaeVG9mLdzWgFRw51Af22Pz7FigWDVuMAQ_Ba9Oku6PddBo9-m4b-TxFgULIL6rBQLY7v38XqM-g1Vldq02qUCItVxCLCSE_XfG5HfpvjFuJD3wCrXhC58eRElGFWEgZSwT54LzWuNZj0nB3mFjMgqyDw5B393uRZFDyK0QaX50XPkPyKU94CqV4reWwHVJ5EpSfqlCxGiVub6o4coR5Vpzv1XYv1uSGAlb8DHPiGrv-o1TMsjs9SP1yYJxgUZSujzFOFg6KUpcG_Wx6Wk9rN2bJSMKCVNkKd6wFOrLVn9AWIPcHqVTCnxA3K13_WmcGuSE0YbTjhj6DbfwuEc3NNkEw27Iu5aRel975nS_gNsvvfZwRA&key=AIzaSyC_w-pKNTdaGmAt6E2H1AahzJNmkK1MEjM",
+"https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydiJd3fDG5GU-xEt8-Mglaisi6ZLLyTeO8ZmcHNsmgDhu8W8r18sM6hYHKcO8gb_ZMXh6wrLmz30AKiuwYzGZM9YXWW014JrRLirkIiN14hch96uf2xpbhJayJTVn4TqrHWjRvjs703OGMDQnF6-6_QOx62IG7T_Ra0ohKNI9DVUcmw97eFY0OYAca9nECLK9aFqKPmPVJMA3ffuD1Ff14WZGyv1q3CnaTyku3UjVZum418m_nmD0VwP3lWXGcWOHxCTA98BuSIK1KdwPPttCc_Tx-UJTs8WgUqndEm-DXpvcE9sHLnaFx2KXUXEbq-49Iv7qHNHc2f6am0CLz1Kc9PoMgaqfJkg0wBKLIzDaoxfO-Y6yjGv9a65YnxaBL2fcteONKW4620YDEUaLv6KpauHsPlyAr-h71TGFq8NyWjkKVc&key=AIzaSyC_w-pKNTdaGmAt6E2H1AahzJNmkK1MEjM",
+"https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydjKAGkLf16lqyqXtBIh1LTaL3x1oINHUpNj51jxUxuOyz8WpJFK3bSqqXbhHdrIPCg3bvGBLzhR1Pj2RZm_aD0S_GdkWwK5llNrQUBTgGKOdWIvrS_tWCfkIZP4rJvTrqo4wivNIhhjmGcbKB3u_Hbch07Q76oOsPmHwgykkTvFX7HubXTXSOmKm3kGZ8WcjynfOYcvoLVU99zTDCuCXBLj7jNLF_ZniOeI--R6MSiv_hZrZs6J167jijDD_dVNYWiDO6RUtSX7aXxxv6wHQvvDy1tiafdoTj4e-PlOLLbuSFYaArODK1WFOHiDcN1NdY85jhjQVvcs4h_JPHFtPzFjoYy2wVLWZfT8XiasvOYpSYKW5DMH8-Xi0eHnLU7WFOz9UFsNRiKKJFr7pNXEoGniri2bKOuB_qYH4YxLnG5erfc&key=AIzaSyC_w-pKNTdaGmAt6E2H1AahzJNmkK1MEjM",
+"https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydhERf0-xTvDX4o3sg7O4SA1BU_ihYvJO9aiPVYbh5BjZS76S4pwcuQQNbDAywk5igJBQGJ9I404tuK-tTq0zx4Psy53W3MXIzU4m_mvrXO5Wvp-FhrW8r5s971yA71_ijrznyk2D_clL_qPJzjXPI228MvAD5GaJsI93MGJGb4TOPsn2k76gwhs0c8OUiYSaJyxYNg6c55FaElF-9FiquDqtT3-FfL7QKKoMjzOxYQG0qUIknZZkbA6EOfmYMRqCtrZzcqDlQwKjVtuswkxiEjPwv2zFEqAMWTcI9ZJB0xBXgx2Tn67PzhR6_GZ8_1I9CZHdOIQoIDMCueXwy7Y3nlH4yG41Dlmu3qGtBUtCBLlJKwEApCaxYrbF4sgF1JK9E9BIILLgWhyf9-6es_Bxaf5ogPYKVoXAgDOPBSDCg5IB695&key=AIzaSyC_w-pKNTdaGmAt6E2H1AahzJNmkK1MEjM",
+"https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydgFFLxYOh8ukCjxN1bqvn93ZJXNupcncGowzIndq4KmqnvQRYR6H0oRemrs13IjwWTd_kvFCe40jgukq5yWS3OJ5nV0eRA9GYcTb6QoVxpcbsQfJK9jpkTrfPIZqDCmOEf7wqslYl6yU3-peU_rSkbmUlCZ5Lo24BG0E_s9vVQMCLkFHYTNbJz4YGTXgB9enI1m5vbRjJjocs-iXhMROIP6pFe6UQe0_WdYguFC0pPYodlmoIb7I26pZAdVw1jumqpjkcC8MIH2fiHHshjNCZNZ0Jah_V__fdQyI_h2NkIO0HAcdGghVe_J51i5ZlvoKuIZHOS9rWjGrP7pYxGwTIGNIreWg079F5cNWRfGjmEdk6UZtMMcytMkwKMhiODDm0-PDPLfniQK1sMzhNGBVqrAw3aOEhofkMFXTXIGC1U&key=AIzaSyC_w-pKNTdaGmAt6E2H1AahzJNmkK1MEjM",
+"https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydj0zyZrFQhtI-j27c-BaJxcNg78BrDGen7IBEDrakThstXmGFNgOnlD5Fd7Sda7j85H7xR6rUH0jVAhlU5PcJqGqJCJBTvk10J2iuCcGfBt2s5mj2iqqkWhpLkdCcr-XoQBenZzlJbqQgo2J3ShVdIowLGJaKFC8VZ_c5uJcRJTDNadnfueWu8oEBjFHtHGCISP57RbgyfKHFvq5TXAPLdiCruBC6BwQUdmCjjfgxpDdKfucRKaiccyd_oT1UvtlOm7J6ELqc5h6eX7Iny3quwndzmLXKMlmFsdu8enxhXjbKPpUPac1GGs2eslySg60M3js7C73Sf1lReeMOhw0doRu2sNWjSE1vAcpXb3cuZ0D6L7lQKxCzZHIO9zHvQbk7xfiFAKRkaYMnjsHKfLu1uNEJHztPA3B_okULg0zYzC9bHN&key=AIzaSyC_w-pKNTdaGmAt6E2H1AahzJNmkK1MEjM",
+"https://maps.googleapis.com/maps/api/place/photo?maxwidth=1600&photo_reference=AWCwydgTURuYWWX5yGRelFOaAd2kBoYyKOZ3zpchrC2ZKxqL1pveXjj0b51-JgHbvE5zyhEPU2L6aaDE6iUn8LpojQcNv9vcMKpj3tokQcszNZny8O6PaAMapEoHyl0WENiJm8vzUcsN9hP-ODidsBq334HhWCWozqo9dUv8BlrjGPfJbcAJdGkAYG5Fe3oRQXtJslWptZYZCbORfksjYjpLh3FIBic0GwDQi5FKt2NPMIixpQORxEWdinVhltW5_ri-9BKRMkgSsycdzZLpPcF8CRD8Xxjy7HmyZgDdDHbzzW0y-nNs1hgZLOiwIkDeVCS2HwP3jQU7KLP7m5Xp1Bw96jefH6tX1RAJlC1iC2yn6FzEcJSfXv5TatcxOOQdhqk4AZDIIEuRg3ShSbI2DNb0RBgJ6XDML2UwdoPaA0HVrOq55w&key=AIzaSyC_w-pKNTdaGmAt6E2H1AahzJNmkK1MEjM"
+];
+
+const STYLE_LIST = ['Classic Haircut','Skin Fade','Taper Fade','Burst Fade','Drop Fade','Bald Fade','Buzz Cut','Scissor Cut','Kids Haircut','Senior Haircut','Beard Trim','Beard Shaping','Straight Razor Shave','Hot Towel Shave','Mustache Trim','Line Up (Edge Up)'];
+
+const WHY = [
+  {icon:'👔', title:'Experienced Professional Barbers'},
+  {icon:'💬', title:'Personalized Consultations'},
+  {icon:'✂', title:'Precision Cutting Techniques'},
+  {icon:'🧼', title:'Clean & Sanitized Environment'},
+  {icon:'🧴', title:'Premium Grooming Products'},
+  {icon:'🛋', title:'Relaxing Atmosphere'},
+  {icon:'📅', title:'Online Booking'},
+  {icon:'⭐', title:'Consistent High-Quality Service'}
+];
+
+function initials(name){ return name.split(' ').map(w=>w[0]).join(''); }
+
+/* ---------- Render static content ---------- */
+function renderStatic(){
+  document.getElementById('serviceMiniGrid').innerHTML = SERVICES.concat([
+    {name:'Classic Haircut', icon:'✂'},{name:'Skin Fade', icon:'🌀'},{name:'Line Up (Edge Up)', icon:'📐'}
+  ]).slice(0,8).map(s=>`<div class="service-mini"><div class="ic">${s.icon}</div><h4>${s.name}</h4></div>`).join('') ||
+    STYLE_LIST.slice(0,8).map(s=>`<div class="service-mini"><div class="ic">✂</div><h4>${s}</h4></div>`).join('');
+  document.getElementById('serviceMiniGrid').innerHTML = STYLE_LIST.slice(0,8).map(s=>`<div class="service-mini"><div class="ic">✂</div><h4>${s}</h4></div>`).join('');
+
+  document.getElementById('serviceStyleGrid').innerHTML = STYLE_LIST.map(s=>`<div class="service-mini"><div class="ic">💈</div><h4>${s}</h4></div>`).join('');
+
+  document.getElementById('aboutBarberGrid').innerHTML = BARBERS.map(b=>`
+    <div class="barber-card">
+      <div class="barber-avatar">${initials(b.name)}</div>
+      <h3>${b.name}</h3>
+      <div class="barber-meta">${b.title} · ${b.years} yrs experience</div>
+      <div class="stars-sm">${'★'.repeat(Math.round(b.rating))} ${b.rating.toFixed(1)}</div>
+      <p style="font-size:13.5px;">${b.desc}</p>
+      <div class="tag-row">${b.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      <a class="btn btn-outline btn-sm btn-block" href="#pricing" onclick="showPage('pricing'); selectBarber('${b.id}');">Book with This Barber</a>
+    </div>`).join('');
+
+  document.getElementById('whyChooseGrid').innerHTML = WHY.map(w=>`
+    <div class="card" style="text-align:center;">
+      <div class="card-icon" style="margin:0 auto 16px;">${w.icon}</div>
+      <h4 style="font-size:15px;">${w.title}</h4>
+    </div>`).join('');
+
+  document.getElementById('reviewGrid').innerHTML = REVIEWS.map(r=>`
+    <div class="testimonial">
+      <div class="stars">★★★★★</div>
+      <p>"${r.text}"</p>
+      <div class="who">
+        <div class="avatar">${initials(r.name)}</div>
+        <div><div class="name">${r.name}</div><div class="loc">Verified Google Review</div></div>
+      </div>
+    </div>`).join('');
+
+  document.getElementById('galleryGrid').innerHTML = GALLERY.map(g=>`<a href="${g}" target="_blank" rel="noopener"><img src="${g}" alt="Milan's Cutz gallery photo" loading="lazy"></a>`).join('');
+}
+
+/* ---------- Page nav ---------- */
+function showPage(id){
+  document.querySelectorAll('.page').forEach(p=>p.classList.remove('active'));
+  document.getElementById(id).classList.add('active');
+  document.querySelectorAll('nav.links a').forEach(a=>a.classList.toggle('active', a.dataset.page===id));
+  document.getElementById('navLinks').classList.remove('open');
+  window.scrollTo({top:0, behavior:'smooth'});
+  history.replaceState(null,'','#'+id);
+}
+
+/* ---------- Booking wizard ---------- */
+const state = { barber:null, service:null, addons:new Set(), date:null, time:null };
+let currentStep = 1;
+const STEP_LABELS = ['Barber','Service','Add-ons','Date & Time','Your Info','Confirm'];
+
+function renderWizardSteps(){
+  document.getElementById('wizardSteps').innerHTML = STEP_LABELS.map((label,i)=>{
+    const n = i+1;
+    const cls = n===currentStep ? 'active' : (n<currentStep ? 'done' : '');
+    return `<div class="wstep ${cls}"><span class="n">${n<currentStep?'✓':n}</span>${label}</div>`;
+  }).join('');
+}
+
+function renderBarbers(){
+  document.getElementById('barberGrid').innerHTML = BARBERS.map(b=>`
+    <div class="barber-card ${state.barber===b.id?'selected':''}" onclick="selectBarber('${b.id}')">
+      <div class="barber-avatar">${initials(b.name)}</div>
+      <h3>${b.name}</h3>
+      <div class="barber-meta">${b.years} yrs experience</div>
+      <div class="stars-sm">${'★'.repeat(Math.round(b.rating))} ${b.rating.toFixed(1)}</div>
+      <p style="font-size:13px;">${b.desc}</p>
+      <div class="tag-row">${b.tags.map(t=>`<span class="tag">${t}</span>`).join('')}</div>
+      <button class="btn ${state.barber===b.id?'btn-primary':'btn-outline'} btn-sm btn-block">${state.barber===b.id?'Selected':'Select Barber'}</button>
+    </div>`).join('');
+}
+function selectBarber(id){ state.barber=id; renderBarbers(); updateSummary(); }
+
+function renderServices(){
+  document.getElementById('serviceGrid').innerHTML = SERVICES.map(s=>`
+    <div class="svc-card ${state.service===s.id?'selected':''}" onclick="selectService('${s.id}')">
+      <div class="check">${state.service===s.id?'✓':''}</div>
+      <div class="card-icon">${s.icon}</div>
+      <h3 style="font-size:18px;">${s.name}</h3>
+      <div class="price">From $${s.price}</div>
+      <div class="time">${s.time}</div>
+      <p style="font-size:13px; margin-top:10px;">${s.desc}</p>
+    </div>`).join('');
+}
+function selectService(id){ state.service=id; renderServices(); updateSummary(); setTimeout(()=>nextStep(),250); }
+
+function renderAddons(){
+  document.getElementById('addonList').innerHTML = ADDONS.map(a=>`
+    <div class="addon-row ${state.addons.has(a.id)?'on':''}">
+      <div class="addon-left">
+        <div class="addon-ic">${a.icon}</div>
+        <div><div class="addon-name">${a.name}</div><div class="addon-desc">${a.desc}</div></div>
+      </div>
+      <div style="display:flex; align-items:center;">
+        <div class="addon-price">+$${a.price}</div>
+        <label class="switch">
+          <input type="checkbox" ${state.addons.has(a.id)?'checked':''} onchange="toggleAddon('${a.id}')">
+          <span class="slider"></span>
+        </label>
+      </div>
+    </div>`).join('');
+}
+function toggleAddon(id){
+  if(state.addons.has(id)) state.addons.delete(id); else state.addons.add(id);
+  renderAddons(); updateSummary();
+}
+
+function buildCalendar(){
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  let html='';
+  for(let i=0;i<7;i++){
+    const disabled = i===0;
+    html += `<div class="cal-day ${disabled?'disabled':''} ${state.date===i?'selected':''}" ${disabled?'':`onclick="selectDate(${i})"`}>
+      <div class="dow">${days[i]}</div><div class="dnum">${15+i}</div>
+    </div>`;
+  }
+  document.getElementById('calGrid').innerHTML = html;
+
+  const slots = {
+    Morning:['9:00 AM','10:00 AM','11:00 AM'],
+    Afternoon:['12:00 PM','1:30 PM','3:00 PM'],
+    Evening:['4:30 PM','5:30 PM','6:30 PM']
+  };
+  const unavailable = new Set(['11:00 AM','1:30 PM']);
+  document.getElementById('timeGroups').innerHTML = Object.entries(slots).map(([label,times])=>`
+    <div class="time-group">
+      <h5>${label}</h5>
+      ${times.map(t=>`<div class="time-slot ${unavailable.has(t)?'disabled':''} ${state.time===t?'selected':''}" ${unavailable.has(t)?'':`onclick="selectTime('${t}')"`}>${t}${unavailable.has(t)?' · Booked':''}</div>`).join('')}
+    </div>`).join('');
+}
+function selectDate(i){ state.date=i; buildCalendar(); updateSummary(); }
+function selectTime(t){ state.time=t; buildCalendar(); updateSummary(); }
+
+function calcTotals(){
+  const svc = SERVICES.find(s=>s.id===state.service);
+  let subtotal = svc ? svc.price : 0;
+  let minutes = svc ? parseInt(svc.time) : 0;
+  state.addons.forEach(id=>{ const a=ADDONS.find(x=>x.id===id); if(a){ subtotal+=a.price; minutes+=10; } });
+  const tax = subtotal*0.06;
+  return {subtotal, tax, total:subtotal+tax, minutes};
+}
+
+function updateSummary(){
+  const barber = BARBERS.find(b=>b.id===state.barber);
+  const svc = SERVICES.find(s=>s.id===state.service);
+  const {subtotal, tax, total, minutes} = calcTotals();
+  document.getElementById('sumBarber').textContent = barber ? barber.name : '—';
+  document.getElementById('sumService').textContent = svc ? svc.name : '—';
+  document.getElementById('sumAddons').textContent = state.addons.size ? [...state.addons].map(id=>ADDONS.find(a=>a.id===id).name).join(', ') : 'None';
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  document.getElementById('sumDateTime').textContent = (state.date!==null && state.time) ? `${days[state.date]} · ${state.time}` : '—';
+  document.getElementById('sumDuration').textContent = minutes ? minutes+' min' : '—';
+  document.getElementById('sumSubtotal').textContent = '$'+subtotal.toFixed(2);
+  document.getElementById('sumTax').textContent = '$'+tax.toFixed(2);
+  document.getElementById('sumTotal').textContent = '$'+total.toFixed(2);
+}
+
+function renderConfirm(){
+  const barber = BARBERS.find(b=>b.id===state.barber);
+  const svc = SERVICES.find(s=>s.id===state.service);
+  const {subtotal, tax, total, minutes} = calcTotals();
+  const days=['Sun','Mon','Tue','Wed','Thu','Fri','Sat'];
+  const name = document.getElementById('custName').value || '—';
+  const phone = document.getElementById('custPhone').value || '—';
+  const email = document.getElementById('custEmail').value || '—';
+  document.getElementById('confirmSummary').innerHTML = `
+    <div class="sum-row"><span>Barber</span><span>${barber?barber.name:'—'}</span></div>
+    <div class="sum-row"><span>Service</span><span>${svc?svc.name:'—'}</span></div>
+    <div class="sum-row"><span>Add-ons</span><span>${state.addons.size?[...state.addons].map(id=>ADDONS.find(a=>a.id===id).name).join(', '):'None'}</span></div>
+    <div class="sum-row"><span>Date &amp; Time</span><span>${(state.date!==null&&state.time)?days[state.date]+' · '+state.time:'—'}</span></div>
+    <div class="sum-row"><span>Duration</span><span>${minutes} min</span></div>
+    <div class="sum-row"><span>Name</span><span>${name}</span></div>
+    <div class="sum-row"><span>Phone</span><span>${phone}</span></div>
+    <div class="sum-row"><span>Email</span><span>${email}</span></div>
+    <div class="sum-total"><span>Estimated Total</span><span>$${total.toFixed(2)}</span></div>
+  `;
+}
+
+function goToStep(n){
+  currentStep = n;
+  document.querySelectorAll('.step-panel').forEach(p=>p.classList.toggle('active', +p.dataset.step===n));
+  renderWizardSteps();
+  const nav = document.getElementById('stepNav');
+  const summaryWrap = document.getElementById('summaryBoxWrap');
+  if(n===7){ nav.style.display='none'; summaryWrap.style.display='none'; }
+  else { nav.style.display='flex'; summaryWrap.style.display='block'; }
+  document.getElementById('btnPrev').style.visibility = n===1 ? 'hidden' : 'visible';
+  document.getElementById('btnNext').textContent = n===6 ? 'Confirm & Book' : 'Continue';
+  document.getElementById('btnNext').style.display = n===6 ? 'none' : 'inline-flex';
+  if(n===6) renderConfirm();
+  window.scrollTo({top: document.getElementById('pricing').offsetTop - 90, behavior:'smooth'});
+}
+function nextStep(){
+  if(currentStep===1 && !state.barber){ alert('Please select a barber to continue.'); return; }
+  if(currentStep===2 && !state.service){ alert('Please select a service to continue.'); return; }
+  if(currentStep===4 && (state.date===null || !state.time)){ alert('Please select a date and time to continue.'); return; }
+  if(currentStep===5){
+    if(!document.getElementById('custName').value || !document.getElementById('custPhone').value || !document.getElementById('custEmail').value){
+      alert('Please fill in your name, phone, and email to continue.'); return;
+    }
+  }
+  if(currentStep < 6) goToStep(currentStep+1);
+}
+function prevStep(){ if(currentStep>1) goToStep(currentStep-1); }
+function bookAppointment(){ goToStep(7); }
+function resetBooking(){
+  state.barber=null; state.service=null; state.addons=new Set(); state.date=null; state.time=null;
+  document.getElementById('custName').value=''; document.getElementById('custPhone').value='';
+  document.getElementById('custEmail').value=''; document.getElementById('custNotes').value='';
+  renderBarbers(); renderServices(); renderAddons(); buildCalendar(); updateSummary();
+  goToStep(1);
+}
+
+function handleContactSubmit(e){
+  e.preventDefault();
+  document.getElementById('contactMsg').style.display='block';
+  e.target.reset();
+  return false;
+}
+
+/* ---------- Init ---------- */
+renderStatic();
+renderBarbers();
+renderServices();
+renderAddons();
+buildCalendar();
+updateSummary();
+renderWizardSteps();
+goToStep(1);
+showPage(location.hash ? location.hash.replace('#','') : 'home');
+</script>
+</body>
+</html>
