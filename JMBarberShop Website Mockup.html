@@ -1,0 +1,1234 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>JM Barber Shop | Premium Barbershop in Charlottesville, VA</title>
+<meta name="description" content="JM Barber Shop — precision fades, classic cuts, and traditional straight razor shaves in Charlottesville, VA. Book your appointment today.">
+<style>
+  :root{
+    --black:#0b0d10;
+    --charcoal:#181b1f;
+    --charcoal-2:#22262b;
+    --silver:#c7ccd1;
+    --silver-dim:#9aa1a8;
+    --white:#f7f7f8;
+    --lightgray:#eef0f2;
+    --navy:#1b2740;
+    --navy-2:#26365a;
+    --metallic:#b8bec4;
+    --line:#2b3036;
+    --line-light:#e2e5e8;
+    --radius:14px;
+    --radius-sm:8px;
+    --shadow:0 20px 40px -20px rgba(0,0,0,.35);
+    --shadow-sm:0 8px 20px -10px rgba(0,0,0,.25);
+    --ease:cubic-bezier(.22,1,.36,1);
+    --maxw:1180px;
+  }
+  *{box-sizing:border-box;}
+  html{scroll-behavior:smooth;}
+  body{
+    margin:0;
+    font-family:"Segoe UI",-apple-system,BlinkMacSystemFont,"Inter",Helvetica,Arial,sans-serif;
+    background:var(--lightgray);
+    color:var(--charcoal);
+    -webkit-font-smoothing:antialiased;
+    line-height:1.6;
+  }
+  h1,h2,h3,h4{
+    font-family:"Georgia","Times New Roman",serif;
+    font-weight:700;
+    letter-spacing:.2px;
+    margin:0 0 .5em;
+    color:var(--black);
+  }
+  p{margin:0 0 1em;color:#4a5157;}
+  a{color:inherit;text-decoration:none;}
+  img{max-width:100%;display:block;}
+  .wrap{max-width:var(--maxw);margin:0 auto;padding:0 28px;}
+  .eyebrow{
+    text-transform:uppercase;
+    letter-spacing:3px;
+    font-size:12px;
+    font-weight:700;
+    color:var(--navy);
+    display:inline-block;
+    margin-bottom:14px;
+  }
+  .eyebrow.on-dark{color:var(--metallic);}
+  section{padding:96px 0;}
+  .btn{
+    display:inline-flex;
+    align-items:center;
+    justify-content:center;
+    gap:8px;
+    padding:15px 30px;
+    border-radius:999px;
+    font-weight:700;
+    font-size:14px;
+    letter-spacing:.4px;
+    text-transform:uppercase;
+    cursor:pointer;
+    border:1px solid transparent;
+    transition:transform .35s var(--ease), box-shadow .35s var(--ease), background .35s var(--ease), color .35s var(--ease), border-color .35s var(--ease);
+    white-space:nowrap;
+  }
+  .btn-primary{background:linear-gradient(135deg,#171a1e,#000);color:#fff;box-shadow:var(--shadow-sm);}
+  .btn-primary:hover{transform:translateY(-2px);box-shadow:0 14px 28px -10px rgba(0,0,0,.5);}
+  .btn-outline{background:transparent;color:var(--black);border-color:#c9cdd1;}
+  .btn-outline:hover{border-color:var(--black);transform:translateY(-2px);}
+  .btn-outline.on-dark{color:#fff;border-color:rgba(255,255,255,.4);}
+  .btn-outline.on-dark:hover{border-color:#fff;}
+  .btn-navy{background:linear-gradient(135deg,var(--navy-2),var(--navy));color:#fff;}
+  .btn-navy:hover{transform:translateY(-2px);box-shadow:0 14px 28px -10px rgba(27,39,64,.6);}
+  .btn-block{width:100%;}
+  .btn:disabled{opacity:.4;cursor:not-allowed;transform:none!important;}
+
+  /* NAV */
+  #topnav{
+    position:fixed;top:0;left:0;right:0;z-index:1000;
+    background:rgba(11,13,16,.88);
+    backdrop-filter:blur(10px);
+    border-bottom:1px solid rgba(255,255,255,.08);
+    transition:background .3s var(--ease);
+  }
+  .nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:78px;}
+  .brand{display:flex;align-items:center;gap:12px;color:#fff;cursor:pointer;}
+  .brand-mark{
+    width:40px;height:40px;border-radius:50%;
+    background:conic-gradient(from 0deg,var(--navy) 0deg 90deg,#fff 90deg 180deg,var(--navy) 180deg 270deg,#fff 270deg 360deg);
+    box-shadow:0 0 0 2px rgba(255,255,255,.25), inset 0 0 6px rgba(0,0,0,.5);
+    flex:none;
+  }
+  .brand-name{font-family:Georgia,serif;font-size:19px;font-weight:700;letter-spacing:.4px;}
+  .brand-name span{display:block;font-family:"Segoe UI",sans-serif;font-size:10px;letter-spacing:3px;color:var(--metallic);font-weight:600;text-transform:uppercase;}
+  .nav-links{display:flex;align-items:center;gap:34px;}
+  .nav-links a{
+    color:var(--silver);
+    font-size:13px;
+    letter-spacing:1px;
+    text-transform:uppercase;
+    font-weight:600;
+    padding:8px 2px;
+    position:relative;
+    cursor:pointer;
+  }
+  .nav-links a::after{
+    content:"";position:absolute;left:0;bottom:0;height:2px;width:0;
+    background:linear-gradient(90deg,var(--metallic),#fff);
+    transition:width .3s var(--ease);
+  }
+  .nav-links a:hover,.nav-links a.active{color:#fff;}
+  .nav-links a:hover::after,.nav-links a.active::after{width:100%;}
+  .nav-cta{display:flex;align-items:center;gap:18px;}
+  .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:8px;}
+  .hamburger span{width:24px;height:2px;background:#fff;display:block;}
+  @media (max-width:920px){
+    .nav-links{
+      position:fixed;top:78px;left:0;right:0;bottom:0;
+      background:var(--black);
+      flex-direction:column;
+      align-items:flex-start;
+      padding:32px 28px;
+      gap:22px;
+      transform:translateX(100%);
+      transition:transform .35s var(--ease);
+      overflow-y:auto;
+    }
+    .nav-links.open{transform:translateX(0);}
+    .nav-cta .btn-primary{display:none;}
+    .hamburger{display:flex;}
+  }
+
+  /* HERO */
+  .hero{
+    position:relative;
+    min-height:96vh;
+    display:flex;
+    align-items:center;
+    color:#fff;
+    overflow:hidden;
+    background:
+      radial-gradient(circle at 18% 20%, rgba(38,54,90,.55), transparent 55%),
+      radial-gradient(circle at 82% 78%, rgba(184,190,196,.12), transparent 45%),
+      linear-gradient(155deg,#050608 0%,#111418 45%,#1a1e24 100%);
+  }
+  .hero::before{
+    content:"";position:absolute;inset:0;
+    background-image:
+      repeating-linear-gradient(115deg, rgba(255,255,255,.035) 0px, rgba(255,255,255,.035) 1px, transparent 1px, transparent 90px),
+      repeating-linear-gradient(25deg, rgba(255,255,255,.025) 0px, rgba(255,255,255,.025) 1px, transparent 1px, transparent 120px);
+    opacity:.6;
+  }
+  .hero::after{
+    content:"";position:absolute;inset:0;
+    background:linear-gradient(0deg, rgba(0,0,0,.55), transparent 55%);
+  }
+  .hero-inner{position:relative;z-index:2;max-width:var(--maxw);margin:0 auto;padding:150px 28px 100px;width:100%;}
+  .hero-badge{
+    display:inline-flex;align-items:center;gap:8px;
+    border:1px solid rgba(255,255,255,.25);
+    padding:8px 16px;border-radius:999px;
+    font-size:12px;letter-spacing:2px;text-transform:uppercase;color:var(--metallic);
+    margin-bottom:28px;
+    background:rgba(255,255,255,.04);
+  }
+  .hero h1{color:#fff;font-size:clamp(38px,6vw,68px);line-height:1.05;max-width:820px;margin-bottom:24px;}
+  .hero h1 em{font-style:normal;color:var(--metallic);}
+  .hero p.lead{color:#c7cbd0;font-size:18px;max-width:560px;margin-bottom:40px;}
+  .hero-actions{display:flex;gap:18px;flex-wrap:wrap;margin-bottom:64px;}
+  .hero-stats{display:flex;gap:44px;flex-wrap:wrap;border-top:1px solid rgba(255,255,255,.15);padding-top:32px;}
+  .hero-stat b{display:block;font-family:Georgia,serif;font-size:28px;color:#fff;}
+  .hero-stat span{font-size:12px;letter-spacing:1.5px;text-transform:uppercase;color:var(--silver-dim);}
+
+  /* TRUST */
+  .trust{background:var(--white);padding:56px 0;border-bottom:1px solid var(--line-light);}
+  .trust-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:18px;}
+  .trust-card{
+    text-align:center;padding:22px 12px;border-radius:var(--radius-sm);
+    border:1px solid var(--line-light);background:#fff;
+    transition:transform .3s var(--ease), box-shadow .3s var(--ease);
+  }
+  .trust-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm);}
+  .trust-card b{display:block;font-family:Georgia,serif;font-size:20px;color:var(--black);margin-bottom:4px;}
+  .trust-card span{font-size:12px;color:var(--silver-dim);text-transform:uppercase;letter-spacing:.6px;}
+  @media (max-width:900px){.trust-grid{grid-template-columns:repeat(2,1fr);}}
+
+  /* SECTION HEADERS */
+  .sec-head{max-width:640px;margin:0 auto 56px;text-align:center;}
+  .sec-head h2{font-size:clamp(28px,4vw,42px);}
+  .sec-head.left{margin:0 0 56px;text-align:left;}
+
+  /* SERVICE CARDS GRID (preview + full) */
+  .svc-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .svc-chip{
+    background:#fff;border:1px solid var(--line-light);border-radius:var(--radius-sm);
+    padding:26px 20px;transition:all .3s var(--ease);cursor:default;
+  }
+  .svc-chip:hover{transform:translateY(-5px);box-shadow:var(--shadow-sm);border-color:#d5d9dd;}
+  .svc-chip .ico{width:38px;height:38px;border-radius:8px;background:linear-gradient(135deg,var(--navy-2),var(--black));margin-bottom:16px;display:flex;align-items:center;justify-content:center;color:#fff;font-size:16px;}
+  .svc-chip h4{font-size:16px;margin-bottom:4px;}
+  .svc-chip p{font-size:13px;margin:0;color:var(--silver-dim);}
+  @media (max-width:1000px){.svc-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.svc-grid{grid-template-columns:1fr;}}
+
+  .cta-link{display:inline-flex;align-items:center;gap:8px;font-weight:700;font-size:13px;letter-spacing:1px;text-transform:uppercase;color:var(--navy);margin-top:36px;cursor:pointer;}
+  .cta-link:after{content:"→";transition:transform .3s var(--ease);}
+  .cta-link:hover:after{transform:translateX(6px);}
+  .center{text-align:center;}
+
+  /* PRICING PREVIEW */
+  .price-strip{background:var(--charcoal);color:#fff;}
+  .price-cards{display:grid;grid-template-columns:repeat(3,1fr);gap:22px;margin-bottom:20px;}
+  .price-card{background:var(--charcoal-2);border:1px solid rgba(255,255,255,.08);border-radius:var(--radius);padding:32px 26px;}
+  .price-card h4{color:#fff;font-size:15px;text-transform:uppercase;letter-spacing:1px;margin-bottom:10px;}
+  .price-card .amt{font-family:Georgia,serif;font-size:34px;color:var(--metallic);margin-bottom:10px;}
+  .price-card .amt small{font-size:14px;color:var(--silver-dim);}
+  .price-card p{color:#9aa1a8;font-size:13px;margin:0;}
+  @media (max-width:900px){.price-cards{grid-template-columns:1fr;}}
+
+  /* CTA SECTION */
+  .cta-band{
+    position:relative;color:#fff;text-align:center;
+    background:linear-gradient(135deg,#0c1220,#1b2740 55%,#0c1220);
+    padding:110px 0;overflow:hidden;
+  }
+  .cta-band::before{content:"";position:absolute;inset:0;background:radial-gradient(circle at 50% 0%, rgba(255,255,255,.08),transparent 60%);}
+  .cta-band h2{color:#fff;position:relative;z-index:1;}
+  .cta-band p{color:#c2c8d4;max-width:520px;margin:0 auto 36px;position:relative;z-index:1;}
+  .cta-band .btn-primary{position:relative;z-index:1;}
+
+  /* PAGES base */
+  .page{display:none;}
+  .page.active{display:block;animation:fadein .5s var(--ease);}
+  @keyframes fadein{from{opacity:0;transform:translateY(8px);}to{opacity:1;transform:translateY(0);}}
+  .page-hero{
+    background:linear-gradient(155deg,#0b0d10,#181b1f 60%,#1b2740);
+    color:#fff;padding:180px 0 80px;text-align:center;
+  }
+  .page-hero h1{color:#fff;font-size:clamp(32px,5vw,54px);margin-bottom:10px;}
+  .page-hero p{color:var(--silver-dim);max-width:560px;margin:0 auto;}
+
+  /* DETAILED SERVICE CARDS */
+  .detail-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:26px;}
+  .detail-card{
+    background:#fff;border:1px solid var(--line-light);border-radius:var(--radius);
+    padding:36px;transition:all .35s var(--ease);
+  }
+  .detail-card:hover{box-shadow:var(--shadow);transform:translateY(-4px);}
+  .detail-card .num{font-family:Georgia,serif;font-size:13px;color:var(--metallic);letter-spacing:2px;margin-bottom:14px;display:block;}
+  .detail-card h3{font-size:22px;margin-bottom:12px;}
+  @media (max-width:860px){.detail-grid{grid-template-columns:1fr;}}
+
+  .all-services-title{margin-top:100px;}
+
+  /* ABOUT */
+  .about-hero-grid{display:grid;grid-template-columns:1.1fr .9fr;gap:60px;align-items:center;}
+  .about-hero-grid p{font-size:16px;}
+  .about-panel{
+    background:var(--charcoal);color:#fff;border-radius:var(--radius);padding:44px;
+    background-image:radial-gradient(circle at 80% 10%, rgba(184,190,196,.12), transparent 55%);
+  }
+  .about-panel h3{color:#fff;}
+  .about-panel ul{list-style:none;margin:0;padding:0;}
+  .about-panel li{padding:12px 0;border-bottom:1px solid rgba(255,255,255,.1);font-size:14px;color:var(--silver);display:flex;justify-content:space-between;}
+  .about-panel li:last-child{border-bottom:none;}
+  @media (max-width:900px){.about-hero-grid{grid-template-columns:1fr;}}
+
+  .barber-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:28px;}
+  .barber-card{
+    background:#fff;border:1px solid var(--line-light);border-radius:var(--radius);overflow:hidden;
+    transition:all .35s var(--ease);
+  }
+  .barber-card:hover{box-shadow:var(--shadow);transform:translateY(-4px);}
+  .barber-photo{
+    height:220px;
+    background:linear-gradient(135deg,var(--navy-2),var(--charcoal));
+    display:flex;align-items:center;justify-content:center;color:#fff;
+    font-family:Georgia,serif;font-size:52px;letter-spacing:2px;position:relative;
+  }
+  .barber-photo::after{content:"";position:absolute;inset:0;background:repeating-linear-gradient(45deg, rgba(255,255,255,.05) 0 2px, transparent 2px 14px);}
+  .barber-body{padding:26px;}
+  .barber-body h4{font-size:19px;margin-bottom:2px;}
+  .barber-role{font-size:12px;color:var(--navy);text-transform:uppercase;letter-spacing:1px;font-weight:700;margin-bottom:10px;}
+  .barber-meta{display:flex;gap:16px;font-size:12px;color:var(--silver-dim);margin-bottom:14px;}
+  .barber-tags{display:flex;flex-wrap:wrap;gap:6px;margin-bottom:18px;}
+  .barber-tags span{background:var(--lightgray);border:1px solid var(--line-light);border-radius:999px;padding:5px 12px;font-size:11px;text-transform:uppercase;letter-spacing:.5px;color:#4a5157;}
+  @media (max-width:800px){.barber-grid{grid-template-columns:1fr;}}
+
+  .why-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:20px;}
+  .why-card{background:#fff;border:1px solid var(--line-light);border-radius:var(--radius-sm);padding:28px 22px;transition:all .3s var(--ease);}
+  .why-card:hover{transform:translateY(-4px);box-shadow:var(--shadow-sm);}
+  .why-card .ico{width:34px;height:34px;border-radius:50%;border:2px solid var(--navy);margin-bottom:14px;}
+  .why-card h4{font-size:15px;margin-bottom:6px;}
+  .why-card p{font-size:13px;margin:0;}
+  @media (max-width:1000px){.why-grid{grid-template-columns:repeat(2,1fr);}}
+  @media (max-width:560px){.why-grid{grid-template-columns:1fr;}}
+
+  .mission-band{background:var(--charcoal);color:#fff;}
+  .mission-grid{display:grid;grid-template-columns:repeat(5,1fr);gap:16px;margin-top:40px;}
+  .mission-item{border-top:2px solid var(--metallic);padding-top:14px;}
+  .mission-item h4{color:#fff;font-size:14px;margin-bottom:6px;}
+  .mission-item p{color:var(--silver-dim);font-size:13px;margin:0;}
+  @media (max-width:900px){.mission-grid{grid-template-columns:repeat(2,1fr);}}
+
+  .testi-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:24px;}
+  .testi-card{background:#fff;border:1px solid var(--line-light);border-radius:var(--radius);padding:30px;position:relative;}
+  .testi-stars{color:var(--navy);letter-spacing:2px;margin-bottom:14px;font-size:14px;}
+  .testi-card p{font-style:italic;color:#3c4247;font-size:14px;}
+  .testi-name{font-weight:700;font-size:13px;color:var(--black);margin-top:16px;}
+  @media (max-width:900px){.testi-grid{grid-template-columns:1fr;}}
+
+  .gallery-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  .gallery-tile{
+    aspect-ratio:4/3;border-radius:var(--radius-sm);position:relative;overflow:hidden;
+    display:flex;align-items:flex-end;padding:18px;color:#fff;
+    transition:transform .4s var(--ease);
+  }
+  .gallery-tile:hover{transform:scale(1.03);}
+  .gallery-tile span{position:relative;z-index:1;font-family:Georgia,serif;font-size:15px;letter-spacing:.5px;}
+  .gallery-tile::before{content:"";position:absolute;inset:0;background:linear-gradient(0deg, rgba(0,0,0,.65), transparent 60%);}
+  .g1{background:linear-gradient(135deg,#1b2740,#0b0d10);}
+  .g2{background:linear-gradient(135deg,#22262b,#3a4048);}
+  .g3{background:linear-gradient(135deg,#0b0d10,#26365a);}
+  .g4{background:linear-gradient(135deg,#3a4048,#181b1f);}
+  .g5{background:linear-gradient(135deg,#26365a,#0b0d10);}
+  .g6{background:linear-gradient(135deg,#181b1f,#22262b);}
+  @media (max-width:860px){.gallery-grid{grid-template-columns:repeat(2,1fr);}}
+
+  /* CONTACT */
+  .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:50px;align-items:flex-start;}
+  .contact-info-card{background:var(--charcoal);color:#fff;border-radius:var(--radius);padding:38px;}
+  .contact-info-card h3{color:#fff;}
+  .contact-row{display:flex;gap:14px;padding:16px 0;border-bottom:1px solid rgba(255,255,255,.1);}
+  .contact-row:last-of-type{border-bottom:none;}
+  .contact-row .ico{width:36px;height:36px;border-radius:50%;background:rgba(255,255,255,.08);display:flex;align-items:center;justify-content:center;flex:none;font-size:15px;}
+  .contact-row b{display:block;color:#fff;font-size:13px;text-transform:uppercase;letter-spacing:.6px;margin-bottom:4px;}
+  .contact-row span, .contact-row a{color:var(--silver-dim);font-size:14px;}
+  .contact-btn-row{display:flex;gap:12px;margin-top:26px;flex-wrap:wrap;}
+  .map-box{
+    margin-top:24px;border-radius:var(--radius-sm);overflow:hidden;border:1px solid rgba(255,255,255,.12);
+    height:220px;background:linear-gradient(135deg,#22262b,#0b0d10);
+    display:flex;align-items:center;justify-content:center;color:var(--silver-dim);font-size:13px;text-align:center;padding:20px;
+  }
+  .form-card{background:#fff;border:1px solid var(--line-light);border-radius:var(--radius);padding:38px;box-shadow:var(--shadow-sm);}
+  .field{margin-bottom:20px;}
+  .field label{display:block;font-size:12px;text-transform:uppercase;letter-spacing:.8px;font-weight:700;color:#4a5157;margin-bottom:8px;}
+  .field input, .field textarea, .field select{
+    width:100%;border:1px solid #d7dbdf;border-radius:8px;padding:13px 14px;font-size:14px;font-family:inherit;background:#fbfbfc;
+    transition:border-color .25s;
+  }
+  .field input:focus, .field textarea:focus, .field select:focus{outline:none;border-color:var(--navy);background:#fff;}
+  .field-row{display:grid;grid-template-columns:1fr 1fr;gap:18px;}
+  @media (max-width:900px){.contact-grid{grid-template-columns:1fr;}.field-row{grid-template-columns:1fr;}}
+
+  /* FOOTER */
+  footer{background:var(--black);color:var(--silver-dim);padding:70px 0 30px;}
+  .foot-grid{display:grid;grid-template-columns:1.4fr 1fr 1fr;gap:40px;margin-bottom:50px;}
+  .foot-brand .brand-name{color:#fff;}
+  footer h5{color:#fff;font-size:13px;text-transform:uppercase;letter-spacing:1.2px;margin-bottom:18px;}
+  footer p, footer li, footer a{font-size:13px;color:var(--silver-dim);}
+  footer ul{list-style:none;margin:0;padding:0;}
+  footer li{margin-bottom:10px;}
+  footer a:hover{color:#fff;}
+  .foot-bottom{border-top:1px solid rgba(255,255,255,.1);padding-top:24px;display:flex;justify-content:space-between;flex-wrap:wrap;gap:12px;font-size:12px;}
+  @media (max-width:800px){.foot-grid{grid-template-columns:1fr;}}
+
+  /* BOOKING (PRICING PAGE) */
+  .book-steps{display:flex;gap:8px;flex-wrap:wrap;margin-bottom:50px;justify-content:center;}
+  .book-step-pill{
+    display:flex;align-items:center;gap:8px;font-size:12px;letter-spacing:.5px;text-transform:uppercase;
+    padding:9px 16px;border-radius:999px;border:1px solid var(--line-light);color:var(--silver-dim);font-weight:700;
+    transition:all .3s var(--ease);
+  }
+  .book-step-pill b{width:20px;height:20px;border-radius:50%;background:var(--line-light);color:#4a5157;display:flex;align-items:center;justify-content:center;font-size:11px;}
+  .book-step-pill.active{border-color:var(--navy);color:var(--navy);background:#eef1f7;}
+  .book-step-pill.active b{background:var(--navy);color:#fff;}
+  .book-step-pill.done{color:var(--black);}
+  .book-step-pill.done b{background:var(--black);color:#fff;}
+
+  .booking-layout{display:grid;grid-template-columns:1fr 340px;gap:36px;align-items:flex-start;}
+  @media (max-width:980px){.booking-layout{grid-template-columns:1fr;}}
+  .book-panel{background:#fff;border:1px solid var(--line-light);border-radius:var(--radius);padding:40px;min-height:420px;}
+  .book-panel h3{margin-bottom:6px;}
+  .book-panel .sub{color:var(--silver-dim);font-size:14px;margin-bottom:30px;}
+
+  .barber-select-grid{display:grid;grid-template-columns:repeat(2,1fr);gap:20px;}
+  @media (max-width:640px){.barber-select-grid{grid-template-columns:1fr;}}
+  .select-card{
+    border:2px solid var(--line-light);border-radius:var(--radius-sm);padding:20px;cursor:pointer;
+    transition:all .25s var(--ease);position:relative;
+  }
+  .select-card:hover{border-color:#b9c0c7;transform:translateY(-3px);}
+  .select-card.picked{border-color:var(--navy);background:#eef1f7;box-shadow:0 0 0 3px rgba(27,39,64,.08);}
+  .select-card .check{position:absolute;top:14px;right:14px;width:20px;height:20px;border-radius:50%;border:2px solid #c9cdd1;background:#fff;}
+  .select-card.picked .check{background:var(--navy);border-color:var(--navy);}
+  .select-card.picked .check::after{content:"✓";color:#fff;font-size:12px;display:flex;align-items:center;justify-content:center;height:100%;}
+  .mini-photo{width:52px;height:52px;border-radius:50%;background:linear-gradient(135deg,var(--navy-2),var(--charcoal));color:#fff;display:flex;align-items:center;justify-content:center;font-family:Georgia,serif;margin-bottom:12px;}
+  .select-card h4{font-size:16px;margin-bottom:2px;}
+  .select-card .meta{font-size:12px;color:var(--silver-dim);margin-bottom:8px;}
+  .select-card p{font-size:12.5px;margin:0 0 8px;}
+
+  .service-select-grid{display:grid;grid-template-columns:repeat(3,1fr);gap:18px;}
+  @media (max-width:760px){.service-select-grid{grid-template-columns:1fr 1fr;}}
+  @media (max-width:520px){.service-select-grid{grid-template-columns:1fr;}}
+  .service-select-grid .select-card{text-align:center;}
+  .service-select-grid .ico{font-size:26px;margin-bottom:10px;}
+  .service-select-grid .price{font-family:Georgia,serif;font-size:20px;color:var(--navy);margin:6px 0 2px;}
+  .service-select-grid .time{font-size:11px;color:var(--silver-dim);text-transform:uppercase;letter-spacing:.5px;}
+
+  .addon-list{display:flex;flex-direction:column;gap:14px;}
+  .addon-row{
+    display:flex;align-items:center;justify-content:space-between;gap:16px;
+    border:1px solid var(--line-light);border-radius:var(--radius-sm);padding:16px 18px;
+    transition:all .25s var(--ease);
+  }
+  .addon-row.on{border-color:var(--navy);background:#eef1f7;}
+  .addon-left{display:flex;align-items:center;gap:14px;}
+  .addon-ico{width:36px;height:36px;border-radius:8px;background:var(--lightgray);display:flex;align-items:center;justify-content:center;font-size:16px;flex:none;}
+  .addon-left b{display:block;font-size:14px;}
+  .addon-left span{font-size:12px;color:var(--silver-dim);}
+  .addon-price{font-weight:700;font-size:14px;color:var(--navy);white-space:nowrap;}
+  .toggle{width:44px;height:24px;border-radius:999px;background:#d7dbdf;position:relative;cursor:pointer;flex:none;transition:background .25s;}
+  .toggle::after{content:"";position:absolute;top:3px;left:3px;width:18px;height:18px;border-radius:50%;background:#fff;transition:left .25s;box-shadow:0 1px 3px rgba(0,0,0,.3);}
+  .addon-row.on .toggle{background:var(--navy);}
+  .addon-row.on .toggle::after{left:23px;}
+
+  .cal-wrap{display:grid;grid-template-columns:1fr 1fr;gap:34px;}
+  @media (max-width:760px){.cal-wrap{grid-template-columns:1fr;}}
+  .day-grid{display:grid;grid-template-columns:repeat(4,1fr);gap:10px;}
+  .day-cell{
+    border:1px solid var(--line-light);border-radius:8px;padding:12px 4px;text-align:center;cursor:pointer;
+    transition:all .2s var(--ease);
+  }
+  .day-cell span{display:block;font-size:11px;color:var(--silver-dim);text-transform:uppercase;}
+  .day-cell b{display:block;font-family:Georgia,serif;font-size:17px;margin-top:4px;}
+  .day-cell:hover{border-color:#b9c0c7;}
+  .day-cell.picked{border-color:var(--navy);background:#eef1f7;}
+  .time-groups{display:flex;flex-direction:column;gap:18px;}
+  .time-group h5{font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--silver-dim);margin-bottom:10px;}
+  .time-slots{display:flex;flex-wrap:wrap;gap:8px;}
+  .time-slot{
+    border:1px solid var(--line-light);border-radius:8px;padding:8px 12px;font-size:12.5px;cursor:pointer;
+    transition:all .2s var(--ease);
+  }
+  .time-slot:hover{border-color:#b9c0c7;}
+  .time-slot.picked{background:var(--navy);color:#fff;border-color:var(--navy);}
+  .time-slot.disabled{color:#c3c8cc;text-decoration:line-through;cursor:not-allowed;background:#f4f5f6;}
+
+  .checkbox-row{display:flex;align-items:center;gap:10px;font-size:13px;color:#4a5157;margin-top:6px;}
+
+  .summary-card{
+    position:sticky;top:100px;background:var(--charcoal);color:#fff;border-radius:var(--radius);padding:28px;
+  }
+  .summary-card h4{color:#fff;font-size:14px;text-transform:uppercase;letter-spacing:1px;margin-bottom:20px;}
+  .sum-row{display:flex;justify-content:space-between;font-size:13px;padding:10px 0;border-bottom:1px solid rgba(255,255,255,.1);color:var(--silver);}
+  .sum-row span:last-child{color:#fff;font-weight:600;text-align:right;}
+  .sum-total{display:flex;justify-content:space-between;padding-top:18px;font-family:Georgia,serif;font-size:22px;color:#fff;}
+  .sum-total small{font-size:11px;display:block;color:var(--silver-dim);font-family:"Segoe UI",sans-serif;text-transform:uppercase;letter-spacing:1px;}
+  .mobile-summary{display:none;}
+  @media (max-width:980px){
+    .summary-card{position:static;}
+    .booking-layout > .summary-card{display:none;}
+    .mobile-summary{
+      display:flex;position:fixed;bottom:0;left:0;right:0;z-index:900;
+      background:var(--black);color:#fff;padding:14px 20px;align-items:center;justify-content:space-between;
+      box-shadow:0 -10px 30px rgba(0,0,0,.3);
+    }
+    .mobile-summary b{font-family:Georgia,serif;font-size:18px;}
+    body{padding-bottom:70px;}
+  }
+
+  .step-nav{display:flex;justify-content:space-between;margin-top:36px;}
+
+  .confirm-box{text-align:center;padding:40px 20px;}
+  .confirm-check{
+    width:74px;height:74px;border-radius:50%;background:var(--navy);color:#fff;
+    display:flex;align-items:center;justify-content:center;font-size:32px;margin:0 auto 24px;
+  }
+  .confirm-summary{max-width:480px;margin:28px auto;text-align:left;border:1px solid var(--line-light);border-radius:var(--radius-sm);padding:24px;}
+  .confirm-summary .sum-row{color:#4a5157;}
+  .confirm-summary .sum-row span:last-child{color:var(--black);}
+  .confirm-actions{display:flex;gap:14px;justify-content:center;flex-wrap:wrap;margin-top:26px;}
+
+  ::selection{background:var(--navy);color:#fff;}
+</style>
+</head>
+<body>
+
+<nav id="topnav">
+  <div class="nav-inner">
+    <div class="brand" onclick="goTo('home')">
+      <div class="brand-mark"></div>
+      <div class="brand-name">JM Barber Shop<span>Charlottesville, VA</span></div>
+    </div>
+    <div class="nav-links" id="navLinks">
+      <a data-page="home" onclick="goTo('home')">Home</a>
+      <a data-page="services" onclick="goTo('services')">Services</a>
+      <a data-page="pricing" onclick="goTo('pricing')">Pricing</a>
+      <a data-page="about" onclick="goTo('about')">About Us</a>
+      <a data-page="contact" onclick="goTo('contact')">Contact</a>
+      <a class="btn btn-primary" style="margin-top:10px;" onclick="goTo('pricing')">Book a Barber</a>
+    </div>
+    <div class="nav-cta">
+      <a class="btn btn-primary" onclick="goTo('pricing')">Book a Barber</a>
+      <button class="hamburger" id="hamburger" onclick="toggleNav()"><span></span><span></span><span></span></button>
+    </div>
+  </div>
+</nav>
+
+<!-- ============ HOME ============ -->
+<main id="page-home" class="page active">
+  <section class="hero">
+    <div class="hero-inner">
+      <div class="hero-badge">★ 4.9 Rated Charlottesville Barbershop</div>
+      <h1>Precision Cuts. <em>Timeless</em> Craftsmanship.</h1>
+      <p class="lead">JM Barber Shop brings traditional barbering skill and modern style together — sharp fades, classic cuts, and straight razor finishes for men who take their look seriously.</p>
+      <div class="hero-actions">
+        <a class="btn btn-primary" onclick="goTo('pricing')">Book a Barber</a>
+        <a class="btn btn-outline on-dark" onclick="goTo('pricing')">View Pricing</a>
+      </div>
+      <div class="hero-stats">
+        <div class="hero-stat"><b>4.9 ★</b><span>Average Rating</span></div>
+        <div class="hero-stat"><b>187+</b><span>Happy Clients</span></div>
+        <div class="hero-stat"><b>Est. Local</b><span>Charlottesville, VA</span></div>
+        <div class="hero-stat"><b>7 Days</b><span>A Week Booking</span></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="trust">
+    <div class="wrap trust-grid">
+      <div class="trust-card"><b>★ 4.9</b><span>Client Rating</span></div>
+      <div class="trust-card"><b>187+</b><span>Happy Clients</span></div>
+      <div class="trust-card"><b>Locally</b><span>Trusted</span></div>
+      <div class="trust-card"><b>Certified</b><span>Professional Barbers</span></div>
+      <div class="trust-card"><b>Transparent</b><span>Pricing</span></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">What We Do</span>
+        <h2>Our Signature Services</h2>
+        <p>From precision fades to traditional straight razor shaves, every service is delivered with the same standard of craftsmanship.</p>
+      </div>
+      <div class="svc-grid" id="homeSvcGrid"></div>
+      <div class="center"><a class="cta-link" onclick="goTo('services')">View All Services</a></div>
+    </div>
+  </section>
+
+  <section class="price-strip">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow on-dark">Investment</span>
+        <h2 style="color:#fff;">Pricing Preview</h2>
+        <p style="color:var(--silver-dim);">Straightforward, transparent pricing for every chair in the shop.</p>
+      </div>
+      <div class="price-cards">
+        <div class="price-card"><h4>Kids Haircuts</h4><div class="amt">$25<small>starting</small></div><p>Ages 12 &amp; under, patient and precise.</p></div>
+        <div class="price-card"><h4>Adult Haircuts</h4><div class="amt">$35<small>starting</small></div><p>Classic and modern cuts, tailored to you.</p></div>
+        <div class="price-card"><h4>Senior Haircuts</h4><div class="amt">$28<small>starting</small></div><p>Ages 65+, comfortable and courteous service.</p></div>
+        <div class="price-card"><h4>Popular Fades</h4><div class="amt">$40<small>starting</small></div><p>Skin, taper, burst, drop &amp; bald fades.</p></div>
+        <div class="price-card"><h4>Hair &amp; Beard Combo</h4><div class="amt">$55<small>starting</small></div><p>The complete grooming experience.</p></div>
+        <div class="price-card"><h4>Add-Ons</h4><div class="amt">$8+<small>each</small></div><p>Hot towel, scalp massage, styling &amp; more.</p></div>
+      </div>
+      <div class="center"><a class="btn btn-outline on-dark" onclick="goTo('pricing')">See Full Pricing</a></div>
+    </div>
+  </section>
+
+  <section class="cta-band">
+    <div class="wrap">
+      <span class="eyebrow on-dark">Reserve Your Chair</span>
+      <h2>Ready for a Fresh Cut?</h2>
+      <p>Choose your barber, your service, and your time — booking takes less than two minutes.</p>
+      <a class="btn btn-primary" onclick="goTo('pricing')">Book a Barber</a>
+    </div>
+  </section>
+</main>
+
+<!-- ============ SERVICES ============ -->
+<main id="page-services" class="page">
+  <div class="page-hero">
+    <span class="eyebrow on-dark">What We Offer</span>
+    <h1>Our Services</h1>
+    <p>Every service at JM Barber Shop is performed with precision tools, premium products, and an eye for detail.</p>
+  </div>
+  <section>
+    <div class="wrap">
+      <div class="detail-grid">
+        <div class="detail-card">
+          <span class="num">01 / Haircuts</span>
+          <h3>Haircuts</h3>
+          <p>Precision haircuts tailored to your style, face shape, and personal preferences for a fresh, clean look.</p>
+        </div>
+        <div class="detail-card">
+          <span class="num">02 / Fades</span>
+          <h3>Fade Haircuts</h3>
+          <p>Expertly blended low, mid, high, taper, and skin fades with smooth transitions and sharp finishes.</p>
+        </div>
+        <div class="detail-card">
+          <span class="num">03 / Beard Care</span>
+          <h3>Beard Trims &amp; Shaping</h3>
+          <p>Professional beard trimming and contouring to keep your facial hair clean, balanced, and well-defined.</p>
+        </div>
+        <div class="detail-card">
+          <span class="num">04 / Traditional Shave</span>
+          <h3>Straight Razor Shaves</h3>
+          <p>A traditional hot towel straight razor shave that delivers an exceptionally close, smooth, and refreshing finish.</p>
+        </div>
+        <div class="detail-card" style="grid-column:1 / -1;">
+          <span class="num">05 / Full Service</span>
+          <h3>Hair &amp; Beard Combo</h3>
+          <p>The complete grooming experience, combining a haircut and beard service for a polished, coordinated appearance.</p>
+        </div>
+      </div>
+
+      <div class="sec-head all-services-title">
+        <span class="eyebrow">Full Menu</span>
+        <h2>Every Cut &amp; Style We Offer</h2>
+      </div>
+      <div class="svc-grid" id="allSvcGrid"></div>
+
+      <div class="center" style="margin-top:60px;">
+        <a class="btn btn-navy" onclick="goTo('pricing')">Book a Barber</a>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ PRICING / BOOKING ============ -->
+<main id="page-pricing" class="page">
+  <div class="page-hero">
+    <span class="eyebrow on-dark">Book Your Appointment</span>
+    <h1>Barber Pricing</h1>
+    <p>Build your appointment in a few simple steps — choose your barber, your service, and your time.</p>
+  </div>
+  <section>
+    <div class="wrap">
+      <div class="book-steps" id="bookSteps"></div>
+
+      <div class="booking-layout">
+        <div class="book-panel" id="bookPanel"></div>
+
+        <div class="summary-card" id="summaryCardDesktop"></div>
+      </div>
+    </div>
+  </section>
+  <div class="mobile-summary" id="mobileSummary"></div>
+</main>
+
+<!-- ============ ABOUT ============ -->
+<main id="page-about" class="page">
+  <div class="page-hero">
+    <span class="eyebrow on-dark">Our Story</span>
+    <h1>About Our Shop</h1>
+    <p>Get to know the shop, the barbers, and the standard we hold every cut to.</p>
+  </div>
+
+  <section>
+    <div class="wrap about-hero-grid">
+      <div>
+        <span class="eyebrow">Welcome to JM Barber Shop</span>
+        <h2>Crafting Confidence, One Cut at a Time</h2>
+        <p>JM Barber Shop was built on a simple idea: every client should leave the chair looking sharper and feeling more confident than when they sat down. What started as a small neighborhood shop has grown into one of Charlottesville's most trusted names in men's grooming, built on consistency, skill, and genuine care for every client who walks through the door.</p>
+        <p>Our team blends traditional barbering techniques — straight razor shaves, hot towel treatments, hand-detailed line-ups — with modern fades and contemporary styling. Whether you're due for a routine cleanup or a full transformation, we take the time to understand exactly what you want before the clippers ever touch your head.</p>
+        <p>We keep our chairs staffed by barbers who treat the craft seriously: continuing education, sanitized tools and stations, and premium products on every service. It's this attention to detail, visit after visit, that keeps our clients coming back — and referring their friends and family.</p>
+      </div>
+      <div class="about-panel">
+        <h3>Shop at a Glance</h3>
+        <ul>
+          <li><span>Established</span><span>Locally Owned</span></li>
+          <li><span>Rating</span><span>4.9 ★ (187+ Reviews)</span></li>
+          <li><span>Barbers on Staff</span><span>4 Professionals</span></li>
+          <li><span>Specialties</span><span>Fades &amp; Straight Razor</span></li>
+          <li><span>Booking</span><span>Online, 7 Days a Week</span></li>
+        </ul>
+      </div>
+    </div>
+  </section>
+
+  <section style="background:var(--white);border-top:1px solid var(--line-light);">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">The Team</span>
+        <h2>Meet Our Barbers</h2>
+        <p>Every barber on our team is hand-selected for skill, professionalism, and genuine care for the craft.</p>
+      </div>
+      <div class="barber-grid" id="aboutBarberGrid"></div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Why Clients Choose Us</span>
+        <h2>The JM Barber Shop Standard</h2>
+      </div>
+      <div class="why-grid">
+        <div class="why-card"><div class="ico"></div><h4>Experienced Professional Barbers</h4><p>Skilled hands with years of dedicated craft behind every cut.</p></div>
+        <div class="why-card"><div class="ico"></div><h4>Personalized Consultations</h4><p>Every visit starts with a conversation about the look you want.</p></div>
+        <div class="why-card"><div class="ico"></div><h4>Precision Cutting Techniques</h4><p>Sharp lines, clean fades, and balanced proportions every time.</p></div>
+        <div class="why-card"><div class="ico"></div><h4>Clean &amp; Sanitized Environment</h4><p>Tools and stations sanitized between every single client.</p></div>
+        <div class="why-card"><div class="ico"></div><h4>Premium Grooming Products</h4><p>Quality products used and recommended for lasting results.</p></div>
+        <div class="why-card"><div class="ico"></div><h4>Relaxing Atmosphere</h4><p>A calm, welcoming space to unwind while you're in the chair.</p></div>
+        <div class="why-card"><div class="ico"></div><h4>Online Booking</h4><p>Reserve your barber and time slot in under two minutes.</p></div>
+        <div class="why-card"><div class="ico"></div><h4>Consistent High-Quality Service</h4><p>The same standard of excellence, cut after cut, visit after visit.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section class="mission-band">
+    <div class="wrap">
+      <span class="eyebrow on-dark">Our Mission</span>
+      <h2 style="color:#fff;max-width:640px;">Helping Every Client Look — and Feel — Their Best</h2>
+      <div class="mission-grid">
+        <div class="mission-item"><h4>Lasting Relationships</h4><p>Building trust with every client, visit after visit.</p></div>
+        <div class="mission-item"><h4>Exceptional Haircuts</h4><p>Delivering precision and consistency in every chair.</p></div>
+        <div class="mission-item"><h4>Modern Trends</h4><p>Staying current with the styles clients ask for most.</p></div>
+        <div class="mission-item"><h4>Welcoming Atmosphere</h4><p>A shop that feels like part of the neighborhood.</p></div>
+        <div class="mission-item"><h4>Client Confidence</h4><p>Every client leaves looking — and feeling — sharper.</p></div>
+      </div>
+    </div>
+  </section>
+
+  <section>
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Client Reviews</span>
+        <h2>What Our Clients Say</h2>
+        <p>★ 4.9 average rating from 187+ happy clients.</p>
+      </div>
+      <div class="testi-grid" id="testiGrid"></div>
+    </div>
+  </section>
+
+  <section style="background:var(--white);border-top:1px solid var(--line-light);">
+    <div class="wrap">
+      <div class="sec-head">
+        <span class="eyebrow">Gallery</span>
+        <h2>Inside the Shop</h2>
+        <p>A look at our space, our craft, and the client experience at JM Barber Shop.</p>
+      </div>
+      <div class="gallery-grid">
+        <div class="gallery-tile g1"><span>The Shop</span></div>
+        <div class="gallery-tile g2"><span>Master Barbers</span></div>
+        <div class="gallery-tile g3"><span>Signature Fades</span></div>
+        <div class="gallery-tile g4"><span>Beard Artistry</span></div>
+        <div class="gallery-tile g5"><span>Straight Razor Finish</span></div>
+        <div class="gallery-tile g6"><span>Client Experience</span></div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<!-- ============ CONTACT ============ -->
+<main id="page-contact" class="page">
+  <div class="page-hero">
+    <span class="eyebrow on-dark">Get In Touch</span>
+    <h1>Contact / Book a Barber</h1>
+    <p>Questions, walk-in availability, or ready to book — we're one call or message away.</p>
+  </div>
+  <section>
+    <div class="wrap contact-grid">
+      <div>
+        <div class="contact-info-card">
+          <h3>Contact Information</h3>
+          <div class="contact-row"><div class="ico">☎</div><div><b>Phone</b><a href="tel:+14342290873">(434) 229-0873</a></div></div>
+          <div class="contact-row"><div class="ico">⚑</div><div><b>Address</b><span>1428 Emmet Street North, Charlottesville, VA 22903</span></div></div>
+          <div class="contact-row"><div class="ico">◎</div><div><b>Instagram</b><a href="https://www.instagram.com/jm_barberialatinos/" target="_blank" rel="noopener">@jm_barberialatinos</a></div></div>
+          <div class="contact-row"><div class="ico">✎</div><div><b>Business Hours</b><span>Monday – Sunday: 6:00 AM – 12:00 PM</span></div></div>
+          <div class="contact-btn-row">
+            <a class="btn btn-primary" href="tel:+14342290873">Call Now</a>
+            <a class="btn btn-outline on-dark" href="https://www.google.com/maps/search/?api=1&query=JM+Barber+Shop+1428+Emmet+Street+North+Charlottesville+VA+22903" target="_blank" rel="noopener">Get Directions</a>
+            <a class="btn btn-outline on-dark" href="https://www.instagram.com/jm_barberialatinos/" target="_blank" rel="noopener">Instagram</a>
+          </div>
+          <div class="map-box">
+            <div>
+              <div style="font-size:22px;margin-bottom:8px;">⚑</div>
+              1428 Emmet Street North, Charlottesville, VA 22903<br>
+              <a href="https://www.google.com/maps/search/?api=1&query=JM+Barber+Shop+1428+Emmet+Street+North+Charlottesville+VA+22903" target="_blank" rel="noopener" style="text-decoration:underline;color:#fff;">Open in Google Maps →</a>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div>
+        <div class="form-card">
+          <h3>Send Us a Message</h3>
+          <p style="margin-bottom:24px;">Fill out the form and our team will get back to you shortly.</p>
+          <form onsubmit="submitContact(event)">
+            <div class="field-row">
+              <div class="field"><label>Full Name</label><input type="text" required placeholder="Your name"></div>
+              <div class="field"><label>Phone Number</label><input type="tel" required placeholder="(434) 000-0000"></div>
+            </div>
+            <div class="field"><label>Email Address</label><input type="email" required placeholder="you@email.com"></div>
+            <div class="field"><label>Message</label><textarea rows="4" placeholder="How can we help?"></textarea></div>
+            <button class="btn btn-navy btn-block" type="submit">Send Message</button>
+          </form>
+        </div>
+      </div>
+    </div>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div class="foot-grid">
+      <div class="foot-brand">
+        <div class="brand" style="margin-bottom:16px;">
+          <div class="brand-mark"></div>
+          <div class="brand-name">JM Barber Shop</div>
+        </div>
+        <p>Precision cuts, classic shaves, and modern style in the heart of Charlottesville, Virginia.</p>
+        <p>1428 Emmet Street North, Charlottesville, VA 22903</p>
+        <p>(434) 229-0873</p>
+      </div>
+      <div>
+        <h5>Hours</h5>
+        <ul>
+          <li>Monday – Sunday</li>
+          <li>6:00 AM – 12:00 PM</li>
+        </ul>
+      </div>
+      <div>
+        <h5>Shop</h5>
+        <ul>
+          <li><a onclick="goTo('services')">Services</a></li>
+          <li><a onclick="goTo('pricing')">Pricing &amp; Booking</a></li>
+          <li><a onclick="goTo('about')">About Us</a></li>
+          <li><a href="https://www.instagram.com/jm_barberialatinos/" target="_blank" rel="noopener">Instagram</a></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=JM+Barber+Shop+1428+Emmet+Street+North+Charlottesville+VA+22903" target="_blank" rel="noopener">Google Maps</a></li>
+        </ul>
+      </div>
+    </div>
+    <div class="foot-bottom">
+      <span>© 2026 JM Barber Shop. All rights reserved.</span>
+      <span><a href="#" onclick="return false;">Privacy Policy</a></span>
+    </div>
+  </div>
+</footer>
+
+<script>
+  // ---------- DATA ----------
+  const SERVICES_FULL = [
+    ["Classic Haircut","Timeless, tailored, and clean."],
+    ["Skin Fade","Blended to bare skin for max contrast."],
+    ["Taper Fade","Subtle, gradual blend at the edges."],
+    ["Burst Fade","Rounded fade that bursts around the ear."],
+    ["Drop Fade","Curved fade that drops behind the ear."],
+    ["Bald Fade","Fully bald blend for a sharp, clean look."],
+    ["Buzz Cut","Fast, even, low-maintenance length."],
+    ["Scissor Cut","Hand-cut detail and natural texture."],
+    ["Kids Haircut","Patient, friendly cuts for younger clients."],
+    ["Senior Haircut","Comfortable, courteous service."],
+    ["Beard Trim","Clean, defined edges and length control."],
+    ["Beard Shaping","Contoured shape to suit your face."],
+    ["Straight Razor Shave","Traditional hot towel straight razor finish."],
+    ["Hot Towel Shave","A close shave with a relaxing hot towel."],
+    ["Mustache Trim","Precise detailing for a clean mustache."],
+    ["Line Up (Edge Up)","Sharp, crisp hairline and edges."]
+  ];
+  const HOME_SERVICES = SERVICES_FULL.slice(0,8);
+
+  const BARBERS = [
+    {id:"jose", name:"Jose Martinez", role:"Owner &amp; Master Barber", years:15, rating:"5.0",
+     bio:"Jose founded JM Barber Shop with a passion for traditional barbering and a commitment to the Charlottesville community. Trained in both classic and modern technique, he specializes in precision fades and straight razor shaves.",
+     tags:["Precision Fades","Straight Razor Shaves","Classic Cuts"],
+     favorite:"Skin Fade with a Straight Razor Line-Up", lang:"English, Spanish"},
+    {id:"miguel", name:"Miguel Ángel Torres", role:"Senior Barber", years:9, rating:"4.9",
+     bio:"Miguel brings a sharp eye for modern menswear styling and detailed beard sculpting. Clients trust him for clean, contemporary looks that hold up all week.",
+     tags:["Modern Styles","Beard Sculpting","Precision Fades"],
+     favorite:"Textured Crop with Taper Fade", lang:"English, Spanish"},
+    {id:"carlos", name:"Carlos Ramirez", role:"Barber", years:6, rating:"4.8",
+     bio:"Carlos is a favorite among families for his patient, friendly approach with kids and his steady hand on classic cuts and longer styles.",
+     tags:["Kids Haircuts","Classic Cuts","Long Hair"],
+     favorite:"Classic Scissor Cut", lang:"English, Spanish"},
+    {id:"ana", name:"Ana Delgado", role:"Barber &amp; Grooming Specialist", years:7, rating:"4.9",
+     bio:"Ana specializes in beard artistry and traditional shaving rituals, bringing a meticulous, relaxing touch to every grooming service.",
+     tags:["Beard Sculpting","Straight Razor Shaves","Modern Styles"],
+     favorite:"Hot Towel Straight Razor Shave", lang:"English, Spanish"}
+  ];
+
+  const BOOK_SERVICES = [
+    {id:"haircut", ico:"✂", name:"Haircuts", price:35, time:"30 min", desc:"Precision haircuts tailored to your style and face shape."},
+    {id:"fade", ico:"⧉", name:"Fade Haircuts", price:40, time:"40 min", desc:"Expertly blended fades with sharp, smooth transitions."},
+    {id:"beard", ico:"⌇", name:"Beard Trims & Shaping", price:25, time:"20 min", desc:"Clean, balanced contouring for defined facial hair."},
+    {id:"razor", ico:"⎓", name:"Straight Razor Shaves", price:38, time:"35 min", desc:"Traditional hot towel straight razor for a smooth finish."},
+    {id:"combo", ico:"◆", name:"Hair & Beard Combo", price:55, time:"60 min", desc:"The complete grooming experience, cut and beard together."}
+  ];
+
+  const ADDONS = [
+    {id:"towel", ico:"♨", name:"Hot Towel Treatment", price:10, desc:"A warm towel to open pores and soften skin."},
+    {id:"wash", ico:"◈", name:"Hair Wash", price:8, desc:"Deep cleanse before your cut or shave."},
+    {id:"style", ico:"✺", name:"Hair Styling", price:10, desc:"Finished with premium styling product."},
+    {id:"brow", ico:"⌒", name:"Eyebrow Cleanup", price:10, desc:"Clean, natural brow shaping."},
+    {id:"wax", ico:"❖", name:"Facial Waxing", price:15, desc:"Precise waxing for a polished finish."},
+    {id:"mask", ico:"■", name:"Black Mask Facial", price:20, desc:"Deep-cleansing facial for refreshed skin."},
+    {id:"scalp", ico:"◍", name:"Scalp Massage", price:12, desc:"Relaxing massage to relieve tension."},
+    {id:"cond", ico:"❋", name:"Deep Conditioning", price:15, desc:"Restorative treatment for healthy hair."},
+    {id:"design", ico:"✎", name:"Hair Design", price:20, desc:"Custom line art and detailing."},
+    {id:"gray", ico:"◐", name:"Gray Coverage", price:25, desc:"Natural-looking coverage for gray hair."},
+    {id:"oil", ico:"●", name:"Premium Beard Oil", price:12, desc:"Nourishing oil applied and sent home with you."},
+    {id:"product", ico:"◆", name:"Premium Styling Product", price:15, desc:"Take home a premium product from your service."}
+  ];
+
+  const TESTIMONIALS = [
+    {name:"David R.", text:"Jose lined me up perfect for my wedding. Best fade I've had in Charlottesville, hands down. Booking online was easy too."},
+    {name:"Marcus T.", text:"Carlos is amazing with my son — patient, quick, and the cut always looks great. We won't go anywhere else."},
+    {name:"Anthony P.", text:"The straight razor shave with Ana is the most relaxing 30 minutes of my week. Clean shop, great music, even better cuts."}
+  ];
+
+  // ---------- NAV ----------
+  function goTo(page){
+    document.querySelectorAll(".page").forEach(p=>p.classList.remove("active"));
+    document.getElementById("page-"+page).classList.add("active");
+    document.querySelectorAll(".nav-links a[data-page]").forEach(a=>{
+      a.classList.toggle("active", a.dataset.page===page);
+    });
+    document.getElementById("navLinks").classList.remove("open");
+    window.scrollTo({top:0,behavior:"smooth"});
+    location.hash = page;
+  }
+  function toggleNav(){ document.getElementById("navLinks").classList.toggle("open"); }
+  window.addEventListener("hashchange",()=>{
+    const p = location.hash.replace("#","") || "home";
+    if(document.getElementById("page-"+p)) goTo(p);
+  });
+
+  // ---------- RENDER SERVICE GRIDS ----------
+  function renderSvcGrid(el, list){
+    el.innerHTML = list.map(([n,d])=>`
+      <div class="svc-chip"><div class="ico">✂</div><h4>${n}</h4><p>${d}</p></div>
+    `).join("");
+  }
+  renderSvcGrid(document.getElementById("homeSvcGrid"), HOME_SERVICES);
+  renderSvcGrid(document.getElementById("allSvcGrid"), SERVICES_FULL);
+
+  // ---------- ABOUT BARBERS ----------
+  document.getElementById("aboutBarberGrid").innerHTML = BARBERS.map(b=>`
+    <div class="barber-card">
+      <div class="barber-photo">${b.name.split(" ").map(w=>w[0]).slice(0,2).join("")}</div>
+      <div class="barber-body">
+        <h4>${b.name}</h4>
+        <div class="barber-role">${b.role}</div>
+        <div class="barber-meta"><span>${b.years} yrs experience</span><span>★ ${b.rating}</span></div>
+        <p>${b.bio}</p>
+        <div class="barber-tags">${b.tags.map(t=>`<span>${t}</span>`).join("")}</div>
+        <p style="font-size:12px;"><b>Favorite Style:</b> ${b.favorite}<br><b>Languages:</b> ${b.lang}</p>
+        <a class="btn btn-outline btn-block" onclick="goTo('pricing')">Book with ${b.name.split(" ")[0]}</a>
+      </div>
+    </div>
+  `).join("");
+
+  // ---------- TESTIMONIALS ----------
+  document.getElementById("testiGrid").innerHTML = TESTIMONIALS.map(t=>`
+    <div class="testi-card">
+      <div class="testi-stars">★★★★★</div>
+      <p>"${t.text}"</p>
+      <div class="testi-name">${t.name}</div>
+    </div>
+  `).join("");
+
+  // ---------- CONTACT FORM ----------
+  function submitContact(e){
+    e.preventDefault();
+    alert("Thank you! Your message has been sent. JM Barber Shop will get back to you shortly.");
+    e.target.reset();
+  }
+
+  // ================= BOOKING FLOW =================
+  const STEP_LABELS = ["Barber","Service","Add-Ons","Date & Time","Your Info","Confirm"];
+  let step = 1;
+  const booking = { barber:null, service:null, addons:[], day:null, time:null, name:"", phone:"", email:"", notes:"", remember:false, confirmed:false };
+
+  function taxRate(){ return 0.053; } // VA sales tax reference rate for optional tax line
+  function subtotal(){
+    let s = 0;
+    const svc = BOOK_SERVICES.find(x=>x.id===booking.service);
+    if(svc) s += svc.price;
+    booking.addons.forEach(id=>{
+      const a = ADDONS.find(x=>x.id===id);
+      if(a) s += a.price;
+    });
+    return s;
+  }
+  function estDuration(){
+    const svc = BOOK_SERVICES.find(x=>x.id===booking.service);
+    let mins = svc ? parseInt(svc.time) : 0;
+    mins += booking.addons.length * 8;
+    return mins;
+  }
+
+  function renderSteps(){
+    document.getElementById("bookSteps").innerHTML = STEP_LABELS.map((l,i)=>{
+      const n = i+1;
+      const cls = n===step ? "active" : (n<step ? "done" : "");
+      return `<div class="book-step-pill ${cls}"><b>${n<step?"✓":n}</b>${l}</div>`;
+    }).join("");
+  }
+
+  function renderSummary(){
+    const svc = BOOK_SERVICES.find(x=>x.id===booking.service);
+    const barber = BARBERS.find(x=>x.id===booking.barber);
+    const sub = subtotal();
+    const tax = sub * taxRate();
+    const total = sub + tax;
+    const addonNames = booking.addons.map(id=>ADDONS.find(a=>a.id===id).name);
+    const html = `
+      <h4>Appointment Summary</h4>
+      <div class="sum-row"><span>Barber</span><span>${barber ? barber.name : "—"}</span></div>
+      <div class="sum-row"><span>Service</span><span>${svc ? svc.name : "—"}</span></div>
+      <div class="sum-row"><span>Add-Ons</span><span>${addonNames.length ? addonNames.join(", ") : "None"}</span></div>
+      <div class="sum-row"><span>Duration</span><span>${svc ? estDuration()+" min" : "—"}</span></div>
+      <div class="sum-row"><span>Subtotal</span><span>$${sub.toFixed(2)}</span></div>
+      <div class="sum-row"><span>Tax (est.)</span><span>$${tax.toFixed(2)}</span></div>
+      <div class="sum-total"><span><small>Estimated Total</small>Total</span><span>$${total.toFixed(2)}</span></div>
+    `;
+    document.getElementById("summaryCardDesktop").innerHTML = html;
+    document.getElementById("mobileSummary").innerHTML = `
+      <div><small style="text-transform:uppercase;letter-spacing:1px;font-size:10px;color:var(--silver-dim);">Estimated Total</small><b>$${total.toFixed(2)}</b></div>
+      <div style="font-size:12px;color:var(--silver-dim);">${svc?svc.name:"Choose a service"}</div>
+    `;
+  }
+
+  function panelBarbers(){
+    return `
+      <h3>Step 1 — Choose Your Barber</h3>
+      <div class="sub">Select the barber you'd like to book with.</div>
+      <div class="barber-select-grid">
+        ${BARBERS.map(b=>`
+          <div class="select-card ${booking.barber===b.id?"picked":""}" onclick="pickBarber('${b.id}')">
+            <div class="check"></div>
+            <div class="mini-photo">${b.name.split(" ").map(w=>w[0]).slice(0,2).join("")}</div>
+            <h4>${b.name}</h4>
+            <div class="meta">${b.years} yrs · ★ ${b.rating}</div>
+            <p>${b.bio}</p>
+            <div class="barber-tags">${b.tags.map(t=>`<span>${t}</span>`).join("")}</div>
+          </div>
+        `).join("")}
+      </div>
+      <div class="step-nav"><span></span><button class="btn btn-navy" ${booking.barber?"":"disabled"} onclick="nextStep()">Continue</button></div>
+    `;
+  }
+  function pickBarber(id){ booking.barber=id; renderPanel(); renderSummary(); }
+
+  function panelServices(){
+    return `
+      <h3>Step 2 — Choose Your Service</h3>
+      <div class="sub">Select your primary service for this visit.</div>
+      <div class="service-select-grid">
+        ${BOOK_SERVICES.map(s=>`
+          <div class="select-card ${booking.service===s.id?"picked":""}" onclick="pickService('${s.id}')">
+            <div class="check"></div>
+            <div class="ico">${s.ico}</div>
+            <h4>${s.name}</h4>
+            <div class="price">$${s.price}</div>
+            <div class="time">${s.time}</div>
+            <p>${s.desc}</p>
+          </div>
+        `).join("")}
+      </div>
+      <div class="step-nav"><button class="btn btn-outline" onclick="prevStep()">Back</button><button class="btn btn-navy" ${booking.service?"":"disabled"} onclick="nextStep()">Continue</button></div>
+    `;
+  }
+  function pickService(id){ booking.service=id; renderPanel(); renderSummary(); }
+
+  function panelAddons(){
+    return `
+      <h3>Step 3 — Add Extra Services</h3>
+      <div class="sub">Enhance your visit with premium add-ons. Select as many as you like.</div>
+      <div class="addon-list">
+        ${ADDONS.map(a=>`
+          <div class="addon-row ${booking.addons.includes(a.id)?"on":""}" onclick="toggleAddon('${a.id}')">
+            <div class="addon-left"><div class="addon-ico">${a.ico}</div><div><b>${a.name}</b><span>${a.desc}</span></div></div>
+            <div style="display:flex;align-items:center;gap:14px;"><span class="addon-price">+$${a.price}</span><div class="toggle"></div></div>
+          </div>
+        `).join("")}
+      </div>
+      <div class="step-nav"><button class="btn btn-outline" onclick="prevStep()">Back</button><button class="btn btn-navy" onclick="nextStep()">Continue</button></div>
+    `;
+  }
+  function toggleAddon(id){
+    const i = booking.addons.indexOf(id);
+    if(i>-1) booking.addons.splice(i,1); else booking.addons.push(id);
+    renderPanel(); renderSummary();
+  }
+
+  const DAYS = (()=>{
+    const names = ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"];
+    const arr = [];
+    for(let i=1;i<=7;i++){ arr.push({label:names[i%7], num:i+9}); }
+    return arr;
+  })();
+  const TIME_SLOTS = {
+    Morning:["9:00 AM","9:30 AM","10:00 AM","10:30 AM","11:00 AM (Booked)"],
+    Afternoon:["12:00 PM","12:30 PM","1:30 PM (Booked)","2:00 PM","3:00 PM"],
+    Evening:["4:00 PM","4:30 PM","5:00 PM (Booked)","5:30 PM","6:00 PM"]
+  };
+
+  function panelDate(){
+    return `
+      <h3>Step 5 — Choose Date &amp; Time</h3>
+      <div class="sub">Pick an available day and time slot.</div>
+      <div class="cal-wrap">
+        <div>
+          <h5 style="font-size:11px;text-transform:uppercase;letter-spacing:1px;color:var(--silver-dim);margin-bottom:10px;">Available Days</h5>
+          <div class="day-grid">
+            ${DAYS.map(d=>`<div class="day-cell ${booking.day===d.num?"picked":""}" onclick="pickDay(${d.num})"><span>${d.label}</span><b>${d.num}</b></div>`).join("")}
+          </div>
+        </div>
+        <div class="time-groups">
+          ${Object.entries(TIME_SLOTS).map(([grp,slots])=>`
+            <div class="time-group">
+              <h5>${grp} Appointments</h5>
+              <div class="time-slots">
+                ${slots.map(t=>{
+                  const disabled = t.includes("Booked");
+                  const clean = t.replace(" (Booked)","");
+                  const picked = booking.time===clean;
+                  return `<div class="time-slot ${disabled?"disabled":""} ${picked?"picked":""}" onclick="${disabled?"":`pickTime('${clean}')`}">${t}</div>`;
+                }).join("")}
+              </div>
+            </div>
+          `).join("")}
+        </div>
+      </div>
+      <div class="step-nav"><button class="btn btn-outline" onclick="prevStep()">Back</button><button class="btn btn-navy" ${booking.day&&booking.time?"":"disabled"} onclick="nextStep()">Continue</button></div>
+    `;
+  }
+  function pickDay(n){ booking.day=n; renderPanel(); }
+  function pickTime(t){ booking.time=t; renderPanel(); }
+
+  function panelInfo(){
+    return `
+      <h3>Step 6 — Customer Information</h3>
+      <div class="sub">Tell us how to reach you to confirm your appointment.</div>
+      <div class="field-row">
+        <div class="field"><label>Full Name</label><input id="cf-name" type="text" value="${booking.name}" placeholder="Your full name"></div>
+        <div class="field"><label>Phone Number</label><input id="cf-phone" type="tel" value="${booking.phone}" placeholder="(434) 000-0000"></div>
+      </div>
+      <div class="field"><label>Email Address</label><input id="cf-email" type="email" value="${booking.email}" placeholder="you@email.com"></div>
+      <div class="field"><label>Optional Notes</label><textarea id="cf-notes" rows="3" placeholder="Anything your barber should know?">${booking.notes}</textarea></div>
+      <label class="checkbox-row"><input type="checkbox" id="cf-remember" ${booking.remember?"checked":""}> Remember me for faster booking next time.</label>
+      <div class="step-nav"><button class="btn btn-outline" onclick="prevStep()">Back</button><button class="btn btn-navy" onclick="saveInfoAndNext()">Continue</button></div>
+    `;
+  }
+  function saveInfoAndNext(){
+    booking.name = document.getElementById("cf-name").value || "Guest";
+    booking.phone = document.getElementById("cf-phone").value;
+    booking.email = document.getElementById("cf-email").value;
+    booking.notes = document.getElementById("cf-notes").value;
+    booking.remember = document.getElementById("cf-remember").checked;
+    nextStep();
+  }
+
+  function panelConfirm(){
+    const svc = BOOK_SERVICES.find(x=>x.id===booking.service);
+    const barber = BARBERS.find(x=>x.id===booking.barber);
+    const addonNames = booking.addons.map(id=>ADDONS.find(a=>a.id===id).name);
+    const total = (subtotal()*(1+taxRate())).toFixed(2);
+
+    if(!booking.confirmed){
+      return `
+        <h3>Step 7 — Confirm Your Appointment</h3>
+        <div class="sub">Review your details, then confirm your booking.</div>
+        <div class="confirm-summary">
+          <div class="sum-row"><span>Barber</span><span>${barber?barber.name:"—"}</span></div>
+          <div class="sum-row"><span>Service</span><span>${svc?svc.name:"—"}</span></div>
+          <div class="sum-row"><span>Extras</span><span>${addonNames.length?addonNames.join(", "):"None"}</span></div>
+          <div class="sum-row"><span>Date</span><span>July ${booking.day}, 2026</span></div>
+          <div class="sum-row"><span>Time</span><span>${booking.time||"—"}</span></div>
+          <div class="sum-row"><span>Estimated Price</span><span>$${total}</span></div>
+          <div class="sum-row"><span>Name</span><span>${booking.name}</span></div>
+          <div class="sum-row"><span>Phone</span><span>${booking.phone}</span></div>
+          <div class="sum-row"><span>Email</span><span>${booking.email}</span></div>
+        </div>
+        <div class="step-nav"><button class="btn btn-outline" onclick="prevStep()">Back</button><button class="btn btn-navy btn-block" style="max-width:280px;" onclick="confirmBooking()">Book Appointment</button></div>
+      `;
+    }
+    return `
+      <div class="confirm-box">
+        <div class="confirm-check">✓</div>
+        <h3>Your appointment has been successfully scheduled.</h3>
+        <p>A confirmation has been noted for ${booking.name} on July ${booking.day}, 2026 at ${booking.time} with ${barber?barber.name:""}.</p>
+        <div class="confirm-summary">
+          <div class="sum-row"><span>Barber</span><span>${barber?barber.name:"—"}</span></div>
+          <div class="sum-row"><span>Service</span><span>${svc?svc.name:"—"}</span></div>
+          <div class="sum-row"><span>Extras</span><span>${addonNames.length?addonNames.join(", "):"None"}</span></div>
+          <div class="sum-row"><span>Date</span><span>July ${booking.day}, 2026</span></div>
+          <div class="sum-row"><span>Time</span><span>${booking.time||"—"}</span></div>
+          <div class="sum-row"><span>Estimated Total</span><span>$${total}</span></div>
+        </div>
+        <div class="confirm-actions">
+          <button class="btn btn-outline" onclick="alert('Appointment added to calendar.')">Add to Calendar</button>
+          <button class="btn btn-outline" onclick="alert('Appointment for ${booking.name} — ${svc?svc.name:""} on July ${booking.day} at ${booking.time}.')">View Appointment</button>
+          <button class="btn btn-navy" onclick="resetBooking()">Book Another Appointment</button>
+        </div>
+      </div>
+    `;
+  }
+  function confirmBooking(){ booking.confirmed = true; renderPanel(); }
+  function resetBooking(){
+    step = 1;
+    Object.assign(booking, {barber:null, service:null, addons:[], day:null, time:null, name:"", phone:"", email:"", notes:"", remember:false, confirmed:false});
+    renderAll();
+  }
+
+  function renderPanel(){
+    const panel = document.getElementById("bookPanel");
+    const panels = [panelBarbers, panelServices, panelAddons, panelDate, panelInfo, panelConfirm];
+    panel.innerHTML = panels[step-1]();
+    renderSteps();
+  }
+  function nextStep(){ if(step<6){ step++; renderPanel(); window.scrollTo({top:document.getElementById("bookPanel").offsetTop-100,behavior:"smooth"}); } }
+  function prevStep(){ if(step>1){ step--; renderPanel(); } }
+  function renderAll(){ renderPanel(); renderSummary(); }
+  renderAll();
+
+  // init nav state on load
+  goTo((location.hash||"#home").replace("#",""));
+</script>
+</body>
+</html>
