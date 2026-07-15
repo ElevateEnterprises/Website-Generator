@@ -3,8 +3,8 @@
 <head>
 <meta charset="UTF-8">
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>JM Barber Shop | Premium Barbershop in Charlottesville, VA</title>
-<meta name="description" content="JM Barber Shop — precision fades, classic cuts, and traditional straight razor shaves in Charlottesville, VA. Book your appointment today.">
+<title>JM Barber Shop | Premium Barbershop Serving Lynchburg, VA</title>
+<meta name="description" content="JM Barber Shop — precision fades, classic cuts, and traditional straight razor shaves serving Lynchburg, VA. Book your appointment today.">
 <style>
   :root{
     --black:#0b0d10;
@@ -95,14 +95,7 @@
   }
   .nav-inner{max-width:var(--maxw);margin:0 auto;padding:0 28px;display:flex;align-items:center;justify-content:space-between;height:78px;}
   .brand{display:flex;align-items:center;gap:12px;color:#fff;cursor:pointer;}
-  .brand-mark{
-    width:40px;height:40px;border-radius:50%;
-    background:conic-gradient(from 0deg,var(--navy) 0deg 90deg,#fff 90deg 180deg,var(--navy) 180deg 270deg,#fff 270deg 360deg);
-    box-shadow:0 0 0 2px rgba(255,255,255,.25), inset 0 0 6px rgba(0,0,0,.5);
-    flex:none;
-  }
   .brand-name{font-family:Georgia,serif;font-size:19px;font-weight:700;letter-spacing:.4px;}
-  .brand-name span{display:block;font-family:"Segoe UI",sans-serif;font-size:10px;letter-spacing:3px;color:var(--metallic);font-weight:600;text-transform:uppercase;}
   .nav-links{display:flex;align-items:center;gap:34px;}
   .nav-links a{
     color:var(--silver);
@@ -124,9 +117,11 @@
   .nav-cta{display:flex;align-items:center;gap:18px;}
   .hamburger{display:none;flex-direction:column;gap:5px;cursor:pointer;background:none;border:none;padding:8px;}
   .hamburger span{width:24px;height:2px;background:#fff;display:block;}
+  .nav-book-mobile{display:none;}
   @media (max-width:920px){
     .nav-links{
-      position:fixed;top:78px;left:0;right:0;bottom:0;
+      position:fixed;top:78px;left:0;right:0;
+      height:calc(100vh - 78px);
       background:var(--black);
       flex-direction:column;
       align-items:flex-start;
@@ -138,6 +133,7 @@
     }
     .nav-links.open{transform:translateX(0);}
     .nav-cta .btn-primary{display:none;}
+    .nav-book-mobile{display:inline-flex;}
     .hamburger{display:flex;}
   }
 
@@ -500,8 +496,7 @@
 <nav id="topnav">
   <div class="nav-inner">
     <div class="brand" onclick="goTo('home')">
-      <div class="brand-mark"></div>
-      <div class="brand-name">JM Barber Shop<span>Charlottesville, VA</span></div>
+      <div class="brand-name">JM Barber Shop</div>
     </div>
     <div class="nav-links" id="navLinks">
       <a data-page="home" onclick="goTo('home')">Home</a>
@@ -509,7 +504,7 @@
       <a data-page="pricing" onclick="goTo('pricing')">Pricing</a>
       <a data-page="about" onclick="goTo('about')">About Us</a>
       <a data-page="contact" onclick="goTo('contact')">Contact</a>
-      <a class="btn btn-primary" style="margin-top:10px;" onclick="goTo('pricing')">Book a Barber</a>
+      <a class="btn btn-primary nav-book-mobile" style="margin-top:10px;" onclick="goTo('pricing')">Book a Barber</a>
     </div>
     <div class="nav-cta">
       <a class="btn btn-primary" onclick="goTo('pricing')">Book a Barber</a>
@@ -522,7 +517,7 @@
 <main id="page-home" class="page active">
   <section class="hero">
     <div class="hero-inner">
-      <div class="hero-badge">★ 4.9 Rated Charlottesville Barbershop</div>
+      <div class="hero-badge">★ 4.9 Rated Lynchburg Barbershop</div>
       <h1>Precision Cuts. <em>Timeless</em> Craftsmanship.</h1>
       <p class="lead">JM Barber Shop brings traditional barbering skill and modern style together — sharp fades, classic cuts, and straight razor finishes for men who take their look seriously.</p>
       <div class="hero-actions">
@@ -532,7 +527,7 @@
       <div class="hero-stats">
         <div class="hero-stat"><b>4.9 ★</b><span>Average Rating</span></div>
         <div class="hero-stat"><b>187+</b><span>Happy Clients</span></div>
-        <div class="hero-stat"><b>Est. Local</b><span>Charlottesville, VA</span></div>
+        <div class="hero-stat"><b>Est. Local</b><span>Lynchburg, VA</span></div>
         <div class="hero-stat"><b>7 Days</b><span>A Week Booking</span></div>
       </div>
     </div>
@@ -673,7 +668,7 @@
       <div>
         <span class="eyebrow">Welcome to JM Barber Shop</span>
         <h2>Crafting Confidence, One Cut at a Time</h2>
-        <p>JM Barber Shop was built on a simple idea: every client should leave the chair looking sharper and feeling more confident than when they sat down. What started as a small neighborhood shop has grown into one of Charlottesville's most trusted names in men's grooming, built on consistency, skill, and genuine care for every client who walks through the door.</p>
+        <p>JM Barber Shop was built on a simple idea: every client should leave the chair looking sharper and feeling more confident than when they sat down. What started as a small neighborhood shop has grown into one of Lynchburg's most trusted names in men's grooming, built on consistency, skill, and genuine care for every client who walks through the door.</p>
         <p>Our team blends traditional barbering techniques — straight razor shaves, hot towel treatments, hand-detailed line-ups — with modern fades and contemporary styling. Whether you're due for a routine cleanup or a full transformation, we take the time to understand exactly what you want before the clippers ever touch your head.</p>
         <p>We keep our chairs staffed by barbers who treat the craft seriously: continuing education, sanitized tools and stations, and premium products on every service. It's this attention to detail, visit after visit, that keeps our clients coming back — and referring their friends and family.</p>
       </div>
@@ -777,19 +772,19 @@
         <div class="contact-info-card">
           <h3>Contact Information</h3>
           <div class="contact-row"><div class="ico">☎</div><div><b>Phone</b><a href="tel:+14342290873">(434) 229-0873</a></div></div>
-          <div class="contact-row"><div class="ico">⚑</div><div><b>Address</b><span>1428 Emmet Street North, Charlottesville, VA 22903</span></div></div>
+          <div class="contact-row"><div class="ico">⚑</div><div><b>Service Area</b><span>Lynchburg, VA &amp; Surrounding Areas</span></div></div>
           <div class="contact-row"><div class="ico">◎</div><div><b>Instagram</b><a href="https://www.instagram.com/jm_barberialatinos/" target="_blank" rel="noopener">@jm_barberialatinos</a></div></div>
           <div class="contact-row"><div class="ico">✎</div><div><b>Business Hours</b><span>Monday – Sunday: 6:00 AM – 12:00 PM</span></div></div>
           <div class="contact-btn-row">
             <a class="btn btn-primary" href="tel:+14342290873">Call Now</a>
-            <a class="btn btn-outline on-dark" href="https://www.google.com/maps/search/?api=1&query=JM+Barber+Shop+1428+Emmet+Street+North+Charlottesville+VA+22903" target="_blank" rel="noopener">Get Directions</a>
+            <a class="btn btn-outline on-dark" href="https://www.google.com/maps/search/?api=1&query=JM+Barber+Shop+Lynchburg+VA" target="_blank" rel="noopener">Get Directions</a>
             <a class="btn btn-outline on-dark" href="https://www.instagram.com/jm_barberialatinos/" target="_blank" rel="noopener">Instagram</a>
           </div>
           <div class="map-box">
             <div>
               <div style="font-size:22px;margin-bottom:8px;">⚑</div>
-              1428 Emmet Street North, Charlottesville, VA 22903<br>
-              <a href="https://www.google.com/maps/search/?api=1&query=JM+Barber+Shop+1428+Emmet+Street+North+Charlottesville+VA+22903" target="_blank" rel="noopener" style="text-decoration:underline;color:#fff;">Open in Google Maps →</a>
+              Proudly serving Lynchburg, VA &amp; surrounding areas<br>
+              <a href="https://www.google.com/maps/search/?api=1&query=JM+Barber+Shop+Lynchburg+VA" target="_blank" rel="noopener" style="text-decoration:underline;color:#fff;">Open in Google Maps →</a>
             </div>
           </div>
         </div>
@@ -818,11 +813,10 @@
     <div class="foot-grid">
       <div class="foot-brand">
         <div class="brand" style="margin-bottom:16px;">
-          <div class="brand-mark"></div>
           <div class="brand-name">JM Barber Shop</div>
         </div>
-        <p>Precision cuts, classic shaves, and modern style in the heart of Charlottesville, Virginia.</p>
-        <p>1428 Emmet Street North, Charlottesville, VA 22903</p>
+        <p>Precision cuts, classic shaves, and modern style, proudly serving Lynchburg, Virginia.</p>
+        <p>Lynchburg, VA &amp; Surrounding Areas</p>
         <p>(434) 229-0873</p>
       </div>
       <div>
@@ -839,7 +833,7 @@
           <li><a onclick="goTo('pricing')">Pricing &amp; Booking</a></li>
           <li><a onclick="goTo('about')">About Us</a></li>
           <li><a href="https://www.instagram.com/jm_barberialatinos/" target="_blank" rel="noopener">Instagram</a></li>
-          <li><a href="https://www.google.com/maps/search/?api=1&query=JM+Barber+Shop+1428+Emmet+Street+North+Charlottesville+VA+22903" target="_blank" rel="noopener">Google Maps</a></li>
+          <li><a href="https://www.google.com/maps/search/?api=1&query=JM+Barber+Shop+Lynchburg+VA" target="_blank" rel="noopener">Google Maps</a></li>
         </ul>
       </div>
     </div>
@@ -873,8 +867,8 @@
   const HOME_SERVICES = SERVICES_FULL.slice(0,8);
 
   const BARBERS = [
-    {id:"jose", name:"Jose Martinez", role:"Owner &amp; Master Barber", years:15, rating:"5.0",
-     bio:"Jose founded JM Barber Shop with a passion for traditional barbering and a commitment to the Charlottesville community. Trained in both classic and modern technique, he specializes in precision fades and straight razor shaves.",
+    {id:"jose", name:"Jose Gutierrez", role:"Owner &amp; Master Barber", years:5, rating:"5.0",
+     bio:"Jose founded JM Barber Shop with a passion for traditional barbering and a commitment to the Lynchburg community. Trained in both classic and modern technique, he specializes in precision fades and straight razor shaves.",
      tags:["Precision Fades","Straight Razor Shaves","Classic Cuts"],
      favorite:"Skin Fade with a Straight Razor Line-Up", lang:"English, Spanish"},
     {id:"miguel", name:"Miguel Ángel Torres", role:"Senior Barber", years:9, rating:"4.9",
@@ -915,7 +909,7 @@
   ];
 
   const TESTIMONIALS = [
-    {name:"David R.", text:"Jose lined me up perfect for my wedding. Best fade I've had in Charlottesville, hands down. Booking online was easy too."},
+    {name:"David R.", text:"Jose lined me up perfect for my wedding. Best fade I've had in Lynchburg, hands down. Booking online was easy too."},
     {name:"Marcus T.", text:"Carlos is amazing with my son — patient, quick, and the cut always looks great. We won't go anywhere else."},
     {name:"Anthony P.", text:"The straight razor shave with Ana is the most relaxing 30 minutes of my week. Clean shop, great music, even better cuts."}
   ];
