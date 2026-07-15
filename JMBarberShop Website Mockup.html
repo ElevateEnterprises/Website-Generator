@@ -332,12 +332,21 @@
   .g4{background:linear-gradient(135deg,#3a4048,#181b1f);}
   .g5{background:linear-gradient(135deg,#26365a,#0b0d10);}
   .g6{background:linear-gradient(135deg,#181b1f,#22262b);}
-  .gallery-grid.has-media{grid-template-columns:repeat(4,1fr);}
-  .gallery-tile.media{aspect-ratio:9/16;padding:0;background:var(--charcoal);}
-  .gallery-tile.media::before{display:none;}
-  .gallery-tile.media video,
-  .gallery-tile.media img{width:100%;height:100%;object-fit:cover;display:block;}
-  @media (max-width:860px){.gallery-grid{grid-template-columns:repeat(2,1fr);}.gallery-grid.has-media{grid-template-columns:repeat(2,1fr);}}
+  .gallery-grid.ig{grid-template-columns:repeat(auto-fill,minmax(300px,1fr));align-items:start;}
+  .gallery-grid.ig blockquote.instagram-media{
+    margin:0 auto!important;width:100%!important;max-width:540px!important;min-width:0!important;
+    border-radius:var(--radius-sm)!important;box-shadow:var(--shadow-sm)!important;
+  }
+  .ig-fallback{
+    display:flex;flex-direction:column;align-items:center;justify-content:center;gap:14px;
+    aspect-ratio:9/14;border-radius:var(--radius-sm);
+    background:linear-gradient(150deg,var(--charcoal),var(--navy) 130%);
+    color:var(--silver);text-align:center;padding:24px;font-size:13px;letter-spacing:.5px;
+  }
+  .ig-fallback .cam{width:44px;height:44px;border-radius:12px;border:2px solid var(--metallic);position:relative;}
+  .ig-fallback .cam::after{content:"";position:absolute;inset:9px;border-radius:50%;border:2px solid var(--metallic);}
+  .ig-fallback a{color:#fff;font-weight:700;text-decoration:underline;}
+  @media (max-width:860px){.gallery-grid{grid-template-columns:repeat(2,1fr);}}
 
   /* CONTACT */
   .contact-grid{display:grid;grid-template-columns:.9fr 1.1fr;gap:50px;align-items:flex-start;}
@@ -753,13 +762,28 @@
         <h2>Inside the Shop</h2>
         <p>A look at our space, our craft, and the client experience at JM Barber Shop.</p>
       </div>
-      <div class="gallery-grid" id="galleryGrid">
-        <div class="gallery-tile g1"><span>The Shop</span></div>
-        <div class="gallery-tile g2"><span>Master Barbers</span></div>
-        <div class="gallery-tile g3"><span>Signature Fades</span></div>
-        <div class="gallery-tile g4"><span>Beard Artistry</span></div>
-        <div class="gallery-tile g5"><span>Straight Razor Finish</span></div>
-        <div class="gallery-tile g6"><span>Client Experience</span></div>
+      <div class="gallery-grid ig" id="galleryGrid">
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DVqKv2OjVvn/" data-instgrm-version="14">
+          <div class="ig-fallback"><div class="cam"></div><a href="https://www.instagram.com/reel/DVqKv2OjVvn/" target="_blank" rel="noopener">Watch this cut on Instagram</a></div>
+        </blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DWKXOHmkVP1/" data-instgrm-version="14">
+          <div class="ig-fallback"><div class="cam"></div><a href="https://www.instagram.com/reel/DWKXOHmkVP1/" target="_blank" rel="noopener">Watch this cut on Instagram</a></div>
+        </blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DVMBdWPEf3L/" data-instgrm-version="14">
+          <div class="ig-fallback"><div class="cam"></div><a href="https://www.instagram.com/reel/DVMBdWPEf3L/" target="_blank" rel="noopener">Watch this cut on Instagram</a></div>
+        </blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DVIFIXkDK9t/" data-instgrm-version="14">
+          <div class="ig-fallback"><div class="cam"></div><a href="https://www.instagram.com/reel/DVIFIXkDK9t/" target="_blank" rel="noopener">Watch this cut on Instagram</a></div>
+        </blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DU9S9RxiZAo/" data-instgrm-version="14">
+          <div class="ig-fallback"><div class="cam"></div><a href="https://www.instagram.com/reel/DU9S9RxiZAo/" target="_blank" rel="noopener">Watch this cut on Instagram</a></div>
+        </blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DU3znPUEQ-o/" data-instgrm-version="14">
+          <div class="ig-fallback"><div class="cam"></div><a href="https://www.instagram.com/reel/DU3znPUEQ-o/" target="_blank" rel="noopener">Watch this cut on Instagram</a></div>
+        </blockquote>
+        <blockquote class="instagram-media" data-instgrm-permalink="https://www.instagram.com/reel/DUJ-y4NjLX6/" data-instgrm-version="14">
+          <div class="ig-fallback"><div class="cam"></div><a href="https://www.instagram.com/reel/DUJ-y4NjLX6/" target="_blank" rel="noopener">Watch this cut on Instagram</a></div>
+        </blockquote>
       </div>
     </div>
   </section>
@@ -930,6 +954,11 @@
     document.getElementById("navLinks").classList.remove("open");
     window.scrollTo({top:0,behavior:"smooth"});
     location.hash = page;
+    // Instagram embeds render at zero size while their page is hidden —
+    // reprocess them whenever the About page becomes visible.
+    if(page==="about" && window.instgrm && window.instgrm.Embeds){
+      window.instgrm.Embeds.process();
+    }
   }
   function toggleNav(){ document.getElementById("navLinks").classList.toggle("open"); }
   window.addEventListener("hashchange",()=>{
@@ -1227,52 +1256,9 @@
   function renderAll(){ renderPanel(); renderSummary(); }
   renderAll();
 
-  // ---------- INSTAGRAM MEDIA GALLERY ----------
-  // Media files from the shop's Instagram reels. Place the downloaded files in an
-  // "instagram-media" folder next to this HTML file, named <shortcode>.mp4 (or .jpg
-  // for photos), and they will replace the stylized placeholder tiles automatically.
-  const IG_MEDIA_CODES = [
-    "DVqKv2OjVvn","DWKXOHmkVP1","DVMBdWPEf3L","DVIFIXkDK9t",
-    "DU9S9RxiZAo","DU3znPUEQ-o","DUJ-y4NjLX6"
-  ];
-  const IG_MEDIA_DIR = "instagram-media/";
-
-  function loadIgMedia(){
-    const results = new Array(IG_MEDIA_CODES.length).fill(null);
-    let pending = IG_MEDIA_CODES.length;
-    function done(){
-      if(--pending) return;
-      const loaded = results.filter(Boolean);
-      if(!loaded.length) return;
-      const grid = document.getElementById("galleryGrid");
-      grid.classList.add("has-media");
-      grid.innerHTML = "";
-      loaded.forEach(el=>{
-        const tile = document.createElement("div");
-        tile.className = "gallery-tile media";
-        tile.appendChild(el);
-        grid.appendChild(tile);
-      });
-    }
-    IG_MEDIA_CODES.forEach((code,i)=>{
-      const v = document.createElement("video");
-      v.muted = true; v.loop = true; v.playsInline = true;
-      v.preload = "metadata"; v.controls = true;
-      v.addEventListener("loadeddata", ()=>{ results[i]=v; done(); }, {once:true});
-      v.addEventListener("error", ()=>{
-        const img = new Image();
-        img.alt = "JM Barber Shop — Instagram";
-        img.addEventListener("load", ()=>{ results[i]=img; done(); }, {once:true});
-        img.addEventListener("error", done, {once:true});
-        img.src = IG_MEDIA_DIR + code + ".jpg";
-      }, {once:true});
-      v.src = IG_MEDIA_DIR + code + ".mp4";
-    });
-  }
-  loadIgMedia();
-
   // init nav state on load
   goTo((location.hash||"#home").replace("#",""));
 </script>
+<script async src="https://www.instagram.com/embed.js"></script>
 </body>
 </html>
